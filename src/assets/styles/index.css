@@ -1,0 +1,169 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "iranyekan";
+  font-weight: 400 !important;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: #eaeaff87 !important;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.MuiFormHelperText-root {
+  color: #f74b4a !important;
+  font-size: 0.75rem;
+}
+
+.muirtl-wk9fww-MuiPaper-root-MuiAccordion-root:last-of-type {
+  border-radius: 20px !important;
+  padding: 10px 0 !important;
+}
+.MuiFilledInput-root {
+  border-radius: 20px !important;
+}
+
+.MuiFilledInput-root::before {
+  display: none;
+}
+
+.calender-style {
+  border-radius: 30px !important;
+  box-shadow: 0 5px 20px rgba(112, 112, 112, 0.3);
+  width: 100% !important;
+}
+
+.nav-link {
+  color: #666;
+  font-size: 1rem;
+}
+
+.MuiButtonBase-root.Mui-selected a {
+  color: #651fff !important;
+}
+
+.MuiTabs-flexContainer {
+  justify-content: space-between !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #651fff !important;
+}
+
+.DatePicker {
+  display: block !important;
+}
+
+/* loader */
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #ccc;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+.rmdp-container {
+  width: 100%;
+}
+
+.dp__input {
+  padding: 0 8px;
+  height: 56px;
+  font-size: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  width: 100%;
+  border-radius: 5px;
+  color: #666;
+  outline: none;
+  display: block;
+  background-color: transparent;
+  direction: rtl !important;
+  font-family: "iranyekanFn";
+}
+
+.register-date .dp__input {
+  height: 40px;
+}
+
+.nYegl {
+  position: relative;
+}
+
+.nYegl label {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  background-color: #fff;
+  color: #666;
+  padding-left: 25px;
+}
+.register-date .nYegl label {
+  top: 10px;
+}
+
+.quiz-start-time .dp__input {
+  padding-right: 7rem;
+}
+
+.MuiChip-label {
+  font-family: "iranyekanFn" !important;
+}

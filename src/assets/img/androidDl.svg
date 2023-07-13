@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="135.869" height="31.066" viewBox="0 0 135.869 31.066">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#99d700"/>
+      <stop offset="1" stop-color="#5abf1d"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_14231" data-name="Group 14231" transform="translate(-888.16 -2244.5)">
+    <text id="دانلود_مستقیم" data-name="دانلود مستقیم" transform="translate(1024.029 2264.918)" font-size="14" font-family="IRANYekan-ExtraBold, IRANYekan" font-weight="800"><tspan x="-86.571" y="0">دانلود مستقیم</tspan></text>
+    <g id="android_black_24dp" transform="translate(888.16 2244.5)">
+      <g id="Group_9554" data-name="Group 9554">
+        <path id="Path_20166" data-name="Path 20166" d="M0,0H31.066V31.066H0Z" fill="none"/>
+      </g>
+      <g id="Group_9556" data-name="Group 9556" transform="translate(1.294 6.96)">
+        <g id="Group_9555" data-name="Group 9555">
+          <path id="Path_20167" data-name="Path 20167" d="M22.487,10.688l2.382-4.116a.815.815,0,0,0-1.411-.815L21.025,9.95a14.837,14.837,0,0,0-11.572,0L7.019,5.756a.815.815,0,0,0-1.411.815L7.99,10.688A13.955,13.955,0,0,0,1,21.716H29.477A13.955,13.955,0,0,0,22.487,10.688ZM8.767,18.157a1.618,1.618,0,1,1,1.618-1.618A1.619,1.619,0,0,1,8.767,18.157Zm12.944,0a1.618,1.618,0,1,1,1.618-1.618A1.619,1.619,0,0,1,21.711,18.157Z" transform="translate(-1 -5.377)" fill="url(#linear-gradient)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
