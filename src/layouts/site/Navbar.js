@@ -98,7 +98,7 @@ const Navbar = () => {
               }}
             >
               <InputBase
-                placeholder="جستجوی دوره ها"
+                placeholder="جستجوی دوره‌ها"
                 sx={{ width: "90%" }}
                 value={search}
                 onChange={changeSearch}
