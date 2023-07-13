@@ -11,9 +11,9 @@ import {
 } from "@mui/material";
 
 const Sidebar = ({ sidebar, setSidebar }) => {
-  const [selectedIndex, setSelectedIndex] = useState(localStorage.getItem("tab")
-  ? JSON.parse(localStorage.getItem("tab"))
-  : 0);
+  const [selectedIndex, setSelectedIndex] = useState(
+    localStorage.getItem("tab") ? JSON.parse(localStorage.getItem("tab")) : 0
+  );
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
     localStorage.setItem("tab", JSON.stringify(index));
@@ -66,7 +66,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link to="/packages" onClick={() => setSidebar(false)}>
+          {/* <Link to="/packages" onClick={() => setSidebar(false)}>
             <ListItem>
               <ListItemButton
                 selected={selectedIndex === 2}
@@ -110,7 +110,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                 />
               </ListItemButton>
             </ListItem>
-          </Link>
+          </Link> */}
           <Link to="/FAQ" onClick={() => setSidebar(false)}>
             <ListItem>
               <ListItemButton

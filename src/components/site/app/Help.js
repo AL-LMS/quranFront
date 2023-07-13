@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, CardMedia, Grid, Typography } from "@mui/material";
 
-import Android from "../../../assets/videos/Android.mp4";
-import Apple from "../../../assets/videos/IOS.mp4";
-import Windows from "../../../assets/videos/Windows.mp4";
+// import Android from "../../../assets/videos/Android.mp4";
+// import Apple from "../../../assets/videos/IOS.mp4";
+// import Windows from "../../../assets/videos/Windows.mp4";
 
 const Help = () => {
   return (
@@ -29,7 +29,7 @@ const Help = () => {
         >
           <CardMedia
             component="video"
-            src={Android}
+            // src={Android}
             controls
             sx={{ height: "300px", borderRadius: "20px" }}
           />
@@ -48,7 +48,7 @@ const Help = () => {
         >
           <CardMedia
             component="video"
-            src={Apple}
+            // src={Apple}
             controls
             sx={{ height: "300px", borderRadius: "20px" }}
           />
@@ -67,7 +67,7 @@ const Help = () => {
         >
           <CardMedia
             component="video"
-            src={Windows}
+            // src={Windows}
             controls
             sx={{ height: "300px", borderRadius: "20px" }}
           />

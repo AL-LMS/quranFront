@@ -189,7 +189,7 @@ const Navbar = () => {
                 </Link>
               }
             />
-            <Tab
+            {/* <Tab
               value="three"
               label={
                 <Link className="nav-link" to="/packages">
@@ -212,7 +212,7 @@ const Navbar = () => {
                   اپلیکیشن ها
                 </Link>
               }
-            />
+            /> */}
             <Tab
               value="six"
               label={
