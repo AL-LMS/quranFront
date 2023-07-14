@@ -38,7 +38,7 @@ const Register = () => {
   const [register, setRegister] = useState({
     first_name: "",
     last_name: "",
-    phone: user.phone,
+    phone: user?.phone,
     password: "",
     repete_password: "",
     national_code: "",
@@ -228,7 +228,7 @@ const Register = () => {
                   helperText={errors.national_code && errors.national_code}
                 />
               </Grid>
-              <Grid
+              {/* <Grid
                 item
                 xs={12}
                 md={6}
@@ -240,7 +240,7 @@ const Register = () => {
                   onChange={(value) => setBirthday(value)}
                   shouldHighlightWeekends
                   locale="fa"
-                  renderInput={studentBirth}
+                  // renderInput={studentBirth}
                   inputClassName="my-date-picker"
                   colorPrimary="#651fff"
                   calendarPopperPosition="bottom"
@@ -249,7 +249,7 @@ const Register = () => {
                 {errors.birth && (
                   <span className="MuiFormHelperText-root">{errors.birth}</span>
                 )}
-              </Grid>
+              </Grid> */}
               <Grid item xs={12} md={6}>
                 <FormControl fullWidth size="small">
                   <InputLabel id="departement">رشته تحصیلی</InputLabel>

@@ -7,6 +7,8 @@ import {
   InputBase,
   Stack,
   Button,
+  Tabs,
+  Tab,
 } from "@mui/material";
 import { Container } from "@mui/system";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,13 +22,21 @@ const ConfirmPhone = () => {
   const navigate = useNavigate();
   const [sendCode, setSendCode] = useState(false);
   const [time, setTime] = useState(0);
+  const [kind, setKind] = useState("student");
   const [confirm, setConfirm] = useState({
     phone: "",
-    code: "",
-    request_id: "",
-    type: "student",
+    username: "",
+    password: "",
+    repassword: "",
+    type: kind,
   });
-
+  const handleChange = () => {
+    if (kind === "student") {
+      setKind("teacher");
+    } else {
+      setKind("student");
+    }
+  };
   const sendCodeHandler = async () => {
     try {
       const response = await axios.get(
@@ -96,93 +106,104 @@ const ConfirmPhone = () => {
               boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
               borderRadius: "20px",
               padding: 2,
+              marginBottom: "40px",
             }}
           >
+            <Tabs
+              value={kind}
+              onChange={handleChange}
+              textColor="secondary"
+              indicatorColor="secondary"
+              aria-label="secondary tabs example"
+              style={{ marginBottom: "20px" }}
+            >
+              <Tab value="student" label="دانش‌آموز" />
+              <Tab value="teacher" label="معلم" />
+            </Tabs>
             <Typography mb={3} color="mainText" textAlign="center">
-              تایید شماره همراه
+              فرم اولیه ثبت‌نام
             </Typography>
-
-            {!sendCode ? (
-              <Box
-                sx={{
-                  backgroundColor: "#e8e8e8",
-                  borderRadius: "10px",
-                  padding: "4px 15px",
-                  marginBottom: "2rem",
-                }}
-              >
-                <InputBase
-                  placeholder="شماره همراه:09121234567"
-                  value={confirm.phone}
-                  fullWidth
-                  onChange={(e) =>
-                    setConfirm({ ...confirm, phone: e.target.value })
-                  }
-                />
-              </Box>
-            ) : (
-              <>
-                <Box
-                  sx={{
-                    backgroundColor: "#e8e8e8",
-                    borderRadius: "10px",
-                    padding: "4px 15px",
-                    marginBottom: "2rem",
-                  }}
-                >
-                  <InputBase
-                    placeholder="کد تایید "
-                    value={confirm.code}
-                    fullWidth
-                    onChange={(e) =>
-                      setConfirm({ ...confirm, code: e.target.value })
-                    }
-                  />
-                </Box>
-                <Button
-                  sx={{ margin: "10px 0" }}
-                  fullWidth
-                  onClick={sendCodeHandler}
-                  disabled={time > 0 ? true : false}
-                >
-                  {time > 0 && `${time}ثانیه تا`} ارسال مجدد
-                </Button>
-              </>
-            )}
-            <Stack direction="column" spacing={2}>
-              {!sendCode ? (
-                <Button
-                  variant="contained"
-                  fullWidth
-                  onClick={sendCodeHandler}
-                  sx={{
-                    borderRadius: "10px",
-                    padding: "6px 30px",
-                    boxShadow: "none",
-                  }}
-                >
-                  ارسال کد تایید
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  fullWidth
-                  onClick={confirmPhoneHandler}
-                  sx={{
-                    borderRadius: "10px",
-                    padding: "6px 30px",
-                    boxShadow: "none",
-                  }}
-                >
-                  تایید کد
-                </Button>
-              )}
-              {!sendCode && (
-                <Link to="/panel/dashboard">
-                  <Button fullWidth>ورود</Button>
-                </Link>
-              )}
-            </Stack>
+            <Box
+              sx={{
+                backgroundColor: "#e8e8e8",
+                borderRadius: "10px",
+                padding: "4px 15px",
+                marginBottom: "2rem",
+              }}
+            >
+              <InputBase
+                placeholder="شماره تلفن"
+                value={confirm.phone}
+                fullWidth
+                onChange={(e) =>
+                  setConfirm({ ...confirm, phone: e.target.value })
+                }
+              />
+            </Box>
+            <Box
+              sx={{
+                backgroundColor: "#e8e8e8",
+                borderRadius: "10px",
+                padding: "4px 15px",
+                marginBottom: "2rem",
+              }}
+            >
+              <InputBase
+                placeholder="نام کاربری"
+                value={confirm.username}
+                fullWidth
+                onChange={(e) =>
+                  setConfirm({ ...confirm, username: e.target.value })
+                }
+              />
+            </Box>
+            <Box
+              sx={{
+                backgroundColor: "#e8e8e8",
+                borderRadius: "10px",
+                padding: "4px 15px",
+                marginBottom: "2rem",
+              }}
+            >
+              <InputBase
+                placeholder="رمز عبور"
+                value={confirm.password}
+                fullWidth
+                onChange={(e) =>
+                  setConfirm({ ...confirm, password: e.target.value })
+                }
+              />
+            </Box>
+            <Box
+              sx={{
+                backgroundColor: "#e8e8e8",
+                borderRadius: "10px",
+                padding: "4px 15px",
+                marginBottom: "2rem",
+              }}
+            >
+              <InputBase
+                placeholder="تکرار رمز عبور"
+                value={confirm.repassword}
+                fullWidth
+                onChange={(e) =>
+                  setConfirm({ ...confirm, repassword: e.target.value })
+                }
+              />
+            </Box>
+            <Button
+              variant="contained"
+              fullWidth
+              onClick={sendCodeHandler}
+              sx={{
+                borderRadius: "10px",
+                padding: "6px 30px",
+                boxShadow: "none",
+                marginBottom: "20px",
+              }}
+            >
+              ثبت نام
+            </Button>
           </Card>
         </Grid>
       </Grid>

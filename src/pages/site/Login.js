@@ -7,6 +7,8 @@ import {
   InputBase,
   Stack,
   Button,
+  Tabs,
+  Tab,
 } from "@mui/material";
 import { Container } from "@mui/system";
 import { Link } from "react-router-dom";
@@ -20,13 +22,20 @@ const Login = () => {
 
   const [sendCode, setSendCode] = useState(false);
   const [time, setTime] = useState(0);
+  const [kind, setKind] = useState("student");
   const [login, setLogin] = useState({
     phone: "",
     code: "",
     request_id: "",
     type: "student",
   });
-
+  const handleChange = () => {
+    if (kind === "student") {
+      setKind("teacher");
+    } else {
+      setKind("student");
+    }
+  };
   const sendCodeHandler = async (e) => {
     e.preventDefault();
     try {
@@ -108,92 +117,79 @@ const Login = () => {
               padding: 2,
             }}
           >
+            <Tabs
+              value={kind}
+              onChange={handleChange}
+              textColor="secondary"
+              indicatorColor="secondary"
+              aria-label="secondary tabs example"
+              style={{ marginBottom: "20px" }}
+            >
+              <Tab value="student" label="دانش‌آموز" />
+              <Tab value="teacher" label="معلم" />
+            </Tabs>
             <Typography mb={3} color="mainText" textAlign="center">
               ورود به حساب کاربری
             </Typography>
             <form onSubmit={!sendCode ? sendCodeHandler : loginHandler}>
-              {!sendCode ? (
-                <Box
-                  sx={{
-                    backgroundColor: "#e8e8e8",
-                    borderRadius: "10px",
-                    padding: "4px 15px",
-                    marginBottom: "2rem",
-                  }}
-                >
-                  <InputBase
-                    placeholder="شماره همراه:09121234567"
-                    value={login.phone}
-                    fullWidth
-                    sx={{ fontFamily: "iranyekanFn" }}
-                    onChange={(e) =>
-                      setLogin({ ...login, phone: e.target.value })
-                    }
-                  />
-                </Box>
-              ) : (
-                <>
-                  <Box
-                    sx={{
-                      backgroundColor: "#e8e8e8",
-                      borderRadius: "10px",
-                      padding: "4px 15px",
-                      marginBottom: "2rem",
-                    }}
-                  >
-                    <InputBase
-                      placeholder="کد تایید "
-                      value={login.code}
-                      sx={{ fontFamily: "iranyekanFn" }}
-                      fullWidth
-                      onChange={(e) =>
-                        setLogin({ ...login, code: e.target.value })
-                      }
-                    />
-                  </Box>
-                  <Button
-                    sx={{ margin: "10px 0", fontFamily: "iranyekanFn" }}
-                    fullWidth
-                    onClick={sendCodeHandler}
-                    disabled={time > 0 ? true : false}
-                  >
-                    {time > 0 && `${time}ثانیه تا`} ارسال مجدد
-                  </Button>
-                </>
-              )}
-              <Stack direction="column" spacing={2}>
-                {!sendCode ? (
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    type="submit"
-                    sx={{
-                      borderRadius: "10px",
-                      padding: "6px 30px",
-                      boxShadow: "none",
-                    }}
-                  >
-                    ارسال کد تایید
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    type="submit"
-                    sx={{
-                      borderRadius: "10px",
-                      padding: "6px 30px",
-                      boxShadow: "none",
-                    }}
-                  >
-                    ورود
-                  </Button>
-                )}
-                <Link to="/confirm-phone">
-                  <Button fullWidth>ثبت نام</Button>
-                </Link>
-              </Stack>
+              <Box
+                sx={{
+                  backgroundColor: "#e8e8e8",
+                  borderRadius: "10px",
+                  padding: "4px 15px",
+                  marginBottom: "2rem",
+                }}
+              >
+                <InputBase
+                  placeholder="شماره همراه"
+                  value={login.phone}
+                  fullWidth
+                  onChange={(e) =>
+                    setLogin({ ...login, phone: e.target.value })
+                  }
+                />
+              </Box>
+              <Box
+                sx={{
+                  backgroundColor: "#e8e8e8",
+                  borderRadius: "10px",
+                  padding: "4px 15px",
+                  marginBottom: "2rem",
+                }}
+              >
+                <InputBase
+                  placeholder="رمز عبور"
+                  value={login.password}
+                  fullWidth
+                  onChange={(e) =>
+                    setLogin({ ...login, password: e.target.value })
+                  }
+                />
+              </Box>
+              <Button
+                variant="contained"
+                fullWidth
+                onClick={sendCodeHandler}
+                sx={{
+                  borderRadius: "10px",
+                  padding: "6px 30px",
+                  boxShadow: "none",
+                  marginBottom: "20px",
+                }}
+              >
+                ورود
+              </Button>
             </form>
+            <Link to="/confirm-phone">
+              <Button
+                fullWidth
+                sx={{
+                  marginBottom: "20px",
+                }}
+              >
+                ثبت نام
+              </Button>
+            </Link>
           </Card>
         </Grid>
       </Grid>
