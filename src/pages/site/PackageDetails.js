@@ -7,10 +7,11 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import Loader from "../../components/site/shared/Loader";
 import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
+import { classData } from "./courseData";
 
 const PackageDetails = () => {
   const { id } = useParams();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(classData);
   const [loading, setLoading] = useState(false);
   const { auth, user } = useAuth();
   const navigate = useNavigate();

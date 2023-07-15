@@ -9,19 +9,20 @@ import RelatedCourse from "../../components/site/course/RelatedCourse";
 import { Container } from "@mui/system";
 import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { classData } from "./courseData";
 
 const CourseDetails = () => {
   const { id } = useParams();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(classData[id - 1]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(`course/course/?id=${id}`);
-      const data = await response.data;
-      setData(data);
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await axios.get(`course/course/?id=${id}`);
+  //     const data = await response.data;
+  //     setData(data);
+  //   };
+  //   fetchData();
+  // }, []);
   console.log(data);
 
   return (

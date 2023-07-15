@@ -58,7 +58,8 @@ const CourseInfo = ({ data }) => {
           <img
             src={
               data.picture1
-                ? `https://api.srvschool.ir${data.picture1}`
+                ? // ? `https://api.srvschool.ir${data.picture1}`
+                  data.picture1
                 : NoImage
             }
             alt="course"

@@ -7,9 +7,9 @@ import { Container } from "@mui/system";
 import Loader from "../../components/site/shared/Loader";
 import { useSearchParams, useLocation } from "react-router-dom";
 import NotFound from "../../components/site/shared/NotFound";
-
+import { classData } from "./courseData";
 const Course = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(classData);
   const [params, setParams] = useSearchParams();
   const [notFound, setNotFound] = useState(false);
   const [count, setCount] = useState(0);

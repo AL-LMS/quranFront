@@ -28,7 +28,8 @@ const CourseCard = ({ data }) => {
           sx={{ width: "100%", borderRadius: "20px", height: "200px" }}
           alt="course"
           src={
-            data.picture1 ? `https://api.srvschool.ir${data.picture1}` : NoImage
+            // data.picture1 ? `https://api.srvschool.ir${data.picture1}` : NoImage
+            data.picture1 ? data.picture1 : NoImage
           }
         />
         <CardContent>
