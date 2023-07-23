@@ -17,7 +17,7 @@ const MyCourse = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.get(
         `course/specificstudentCourse/?id=${user.pk}`,
         {

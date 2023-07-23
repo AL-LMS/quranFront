@@ -18,7 +18,7 @@ const Payments = () => {
   const ITEMS_PER_PAGE = 5;
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.get(`zarinpal/report/?s_id=${user.phone}`, {
         headers: { Authorization: `Bearer ${auth}` },
       });

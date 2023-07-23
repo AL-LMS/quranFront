@@ -33,10 +33,10 @@ const Package = () => {
   const { auth, user } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const {reload} = useContext(DefiContext)
+  const { reload } = useContext(DefiContext);
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.get(
         `package/studentPackage?s_id=${user.pk}`,
         {
@@ -48,7 +48,6 @@ const Package = () => {
     };
     fetchData();
   }, [reload]);
-
 
   if (loading)
     return (

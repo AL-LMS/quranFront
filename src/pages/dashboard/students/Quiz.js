@@ -18,7 +18,7 @@ const Quiz = () => {
 
   useEffect(() => {
     const fetchCourse = async () => {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.get(
         `course/specificstudentCourse/?id=${user.pk}`,
         {

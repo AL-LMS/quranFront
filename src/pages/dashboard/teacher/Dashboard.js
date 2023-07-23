@@ -16,7 +16,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.all([
         axios.get(`course/teacherScount/?id=${user.pk}`, {
           headers: { Authorization: `Bearer ${auth}` },

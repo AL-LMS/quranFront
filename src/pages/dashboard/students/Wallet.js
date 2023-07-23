@@ -13,7 +13,7 @@ const Wallet = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.get("dashboard/wallet", {
         headers: { Authorization: `Bearer ${auth}` },
       });

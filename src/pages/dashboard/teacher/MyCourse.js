@@ -15,7 +15,7 @@ const MyCourse = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.get(`course/teacherCourse/?id=${user.pk}`, {
         headers: { Authorization: `Bearer ${auth}` },
       });

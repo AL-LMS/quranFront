@@ -34,7 +34,7 @@ const ForumList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.get(`forum/forumHeader/?c_id=${id}`, {
         headers: { Authorization: `Bearer ${auth}` },
       });

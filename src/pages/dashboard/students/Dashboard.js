@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.get(
         `notification/student/?s_id=${user.pk}`,
         {

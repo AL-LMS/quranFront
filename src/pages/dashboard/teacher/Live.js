@@ -16,7 +16,7 @@ const Live = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.get("live/getmeetings", {
         headers: { Authorization: `Bearer ${auth}` },
       });

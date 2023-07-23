@@ -47,7 +47,7 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchStudentData = async () => {
-      setLoading(true);
+      // setLoading(true);
       try {
         const response = await axios.get(
           `authen/users/?type=student&id=${user.pk}`,
@@ -67,7 +67,7 @@ const Profile = () => {
   }, [reaload]);
 
   const submitData = async () => {
-    setLoading(true);
+    // setLoading(true);
     const formData = new FormData();
     formData.append("phone", form.phone);
     formData.append("grade", form.grade);

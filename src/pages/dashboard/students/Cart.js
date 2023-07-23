@@ -18,11 +18,11 @@ const Cart = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [wallet, setWallet] = useState("");
-  const {reload} = useContext(DefiContext)
+  const { reload } = useContext(DefiContext);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.get("dashboard/basket", {
         headers: { Authorization: `Bearer ${auth}` },
       });
@@ -30,7 +30,7 @@ const Cart = () => {
       setLoading(false);
     };
     const fetchWallet = async () => {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.get("dashboard/wallet", {
         headers: { Authorization: `Bearer ${auth}` },
       });
@@ -61,7 +61,7 @@ const Cart = () => {
       </Container>
     );
 
-    console.log(data);
+  console.log(data);
 
   return (
     <Container maxWidth="lg">
