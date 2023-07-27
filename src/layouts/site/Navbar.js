@@ -173,14 +173,14 @@ const Navbar = () => {
               display: { xs: "none", md: "flex" },
             }}
           >
-            <Tab
+            {/* <Tab
               value="one"
               label={
                 <Link className="nav-link" to="/">
                   خانه
                 </Link>
               }
-            />
+            /> */}
             <Tab
               value="two"
               label={

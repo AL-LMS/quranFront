@@ -36,7 +36,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
     >
       <Toolbar>
         <List sx={{ overflow: "auto", maxHeight: "100vh" }}>
-          <Link to="/" onClick={() => setSidebar(false)}>
+          {/* <Link to="/" onClick={() => setSidebar(false)}>
             <ListItem>
               <ListItemButton
                 selected={selectedIndex === 0}
@@ -50,7 +50,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                 />
               </ListItemButton>
             </ListItem>
-          </Link>
+          </Link> */}
           <Link to="/course" onClick={() => setSidebar(false)}>
             <ListItem>
               <ListItemButton
