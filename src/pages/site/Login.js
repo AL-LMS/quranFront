@@ -117,7 +117,7 @@ const Login = () => {
               padding: 2,
             }}
           >
-            <Tabs
+            {/* <Tabs
               value={kind}
               onChange={handleChange}
               textColor="secondary"
@@ -127,7 +127,7 @@ const Login = () => {
             >
               <Tab value="student" label="دانش‌آموز" />
               <Tab value="teacher" label="معلم" />
-            </Tabs>
+            </Tabs> */}
             <Typography mb={3} color="mainText" textAlign="center">
               ورود به حساب کاربری
             </Typography>
