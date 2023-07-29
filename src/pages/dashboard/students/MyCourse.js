@@ -13,7 +13,7 @@ import Loader from "../../../components/site/shared/Loader";
 const MyCourse = () => {
   const { auth, user } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([{ accepted: true, course_name: "حفظ" }]);
 
   useEffect(() => {
     const fetchData = async () => {

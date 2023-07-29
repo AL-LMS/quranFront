@@ -22,6 +22,7 @@ const CourseList = ({ data }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
+    console.log(event.currentTarget);
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -53,14 +54,14 @@ const CourseList = ({ data }) => {
             color="text.secondary"
             fontFamily="iranyekanFn"
           >
-            قیمت خریداری شده : {data?.price?.toLocaleString()} تومان
+            توضیحات :
           </Typography>
         </Stack>
         {!data?.accepted && (
           <Chip
             label="دوره آزمون ورودی دارد"
             color="secondary"
-            sx={{ color: "#fff",marginTop:2 }}
+            sx={{ color: "#fff", marginTop: 2 }}
           />
         )}
       </CardContent>
@@ -74,7 +75,7 @@ const CourseList = ({ data }) => {
           aria-expanded={open ? "true" : undefined}
           disableElevation
           onClick={handleClick}
-          disabled={!data?.enable || !data?.accepted}
+          // disabled={!data?.enable || !data?.accepted}
         >
           <MoreVertIcon />
         </Button>
@@ -99,10 +100,10 @@ const CourseList = ({ data }) => {
         >
           <MenuItem onClick={handleClose}>
             <Link to={`/panel/my-course/forumlist/${data?.courseID}`}>
-              <Button>فروم</Button>
+              <Button>صفحه کلاس</Button>
             </Link>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          {/* <MenuItem onClick={handleClose}>
             <Link to={`/panel/my-course/exercise/${data?.courseID}`}>
               <Button>تکالیف</Button>
             </Link>
@@ -119,7 +120,7 @@ const CourseList = ({ data }) => {
             <Link to={`/panel/my-course/report/${data?.courseID}`}>
               <Button>مشاهده نتایج آزمون ها</Button>
             </Link>
-          </MenuItem>
+          </MenuItem> */}
         </Menu>
       </CardActions>
     </Card>
