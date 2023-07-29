@@ -16,13 +16,12 @@ import {
 } from "@mui/material";
 import { useEffect } from "react";
 
-const Filter = ({ setParams,query,setQuery }) => {
+const Filter = ({ setParams, query, setQuery }) => {
   const [filter, setFilter] = useState({
     dep: "",
     grade: "",
     year: "",
     course_type: "",
-    lesson: "",
     teacher: "",
   });
   const { departmentID, courseTypeID, lessonID, gradeID, yearID } =
@@ -42,9 +41,8 @@ const Filter = ({ setParams,query,setQuery }) => {
       grade: "",
       year: "",
       course_type: "",
-      lesson: "",
     });
-    setQuery({page:1});
+    setQuery({ page: 1 });
   };
   return (
     <Card
@@ -72,13 +70,13 @@ const Filter = ({ setParams,query,setQuery }) => {
               size="small"
               sx={{ boxShadow: "0 5px 15px rgba(112,112,112,0.2)" }}
             >
-              <InputLabel id="dep">رشته تحصیلی</InputLabel>
+              <InputLabel id="dep">عنوان</InputLabel>
               <Select
                 name="dep"
                 value={filter.dep}
                 id="dep"
                 onChange={changeHandler}
-                label="رشته تحصیلی"
+                label="عنوان"
               >
                 {departmentID.map((item) => (
                   <MenuItem key={item.id} value={item.id}>
@@ -94,13 +92,13 @@ const Filter = ({ setParams,query,setQuery }) => {
               size="small"
               sx={{ boxShadow: "0 5px 15px rgba(112,112,112,0.2)" }}
             >
-              <InputLabel id="grade">مقطع تحصیلی</InputLabel>
+              <InputLabel id="grade">موضوع</InputLabel>
               <Select
                 name="grade"
                 value={filter.grade}
                 id="grade"
                 onChange={changeHandler}
-                label="مقطع تحصیلی"
+                label="موضوع"
               >
                 {gradeID.map((item) => (
                   <MenuItem key={item.id} value={item.id}>
@@ -116,13 +114,13 @@ const Filter = ({ setParams,query,setQuery }) => {
               size="small"
               sx={{ boxShadow: "0 5px 15px rgba(112,112,112,0.2)" }}
             >
-              <InputLabel id="year">سال تحصیلی</InputLabel>
+              <InputLabel id="year">مدرس</InputLabel>
               <Select
                 name="year"
                 value={filter.year}
                 id="year"
                 onChange={changeHandler}
-                label="سال تحصیلی"
+                label="مدرس"
               >
                 {yearID.map((item) => (
                   <MenuItem key={item.id} value={item.id}>
@@ -147,28 +145,6 @@ const Filter = ({ setParams,query,setQuery }) => {
                 label="نوع دوره"
               >
                 {courseTypeID.map((item) => (
-                  <MenuItem key={item.id} value={item.id}>
-                    {item.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl
-              fullWidth
-              size="small"
-              sx={{ boxShadow: "0 5px 15px rgba(112,112,112,0.2)" }}
-            >
-              <InputLabel id="lesson">درس</InputLabel>
-              <Select
-                name="lesson"
-                value={filter.lesson}
-                id="lesson"
-                onChange={changeHandler}
-                label="درس"
-              >
-                {lessonID.map((item) => (
                   <MenuItem key={item.id} value={item.id}>
                     {item.name}
                   </MenuItem>

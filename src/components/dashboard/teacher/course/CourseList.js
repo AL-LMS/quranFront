@@ -30,6 +30,10 @@ const statusTable = (item) => {
 };
 
 const CourseList = ({ data }) => {
+  data = [{
+    name: "حفظ",
+    
+  }]
   return (
     <Card
       sx={{

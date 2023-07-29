@@ -28,7 +28,7 @@ const Documnets = ({
             color="mainText"
             textAlign="center"
           >
-            مدارک دانش آموز
+            مدارک قرآن آموز
           </Typography>
         </Grid>
         <Grid item xs={12} md={6} sx={{ margin: "0 auto" }}>

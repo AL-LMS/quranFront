@@ -18,24 +18,12 @@ const Profile = () => {
   const { auth, user } = useAuth();
   const { reaload, setReload } = useContext(DefiContext);
   const [form, setForm] = useState({
-    birth: "",
-    department: "",
-    disipcline: "",
-    first_name: "",
-    gpaverage: "",
-    grade: "",
-    last_name: "",
-    national_code: "",
-    parentName: "",
-    parentNationalCode: "",
-    pbirthday: "",
-    peducation: "",
-    phone: "",
+    first_name: "محمدرضا",
+    last_name: "قادری",
+    national_code: "0480959838",
+    phone: "09216272502",
     picture: "",
-    pjob: "",
     role: "Student",
-    school: "",
-    password: "",
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -123,9 +111,9 @@ const Profile = () => {
         <Grid item xs={12}>
           <StudentInfo form={form} setForm={setForm} errors={errors} />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <ParentsInfo form={form} setForm={setForm} />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <Documnets
             form={form}

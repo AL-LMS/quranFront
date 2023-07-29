@@ -92,7 +92,8 @@ function App() {
         />
         {user?.role?.toLowerCase() === "student" ? (
           <Route element={<PrivateRoutes />}>
-            <Route path="/panel/dashboard" element={<Dashboard />} />
+            <Route path="/panel/dashboard" element={<Course />} />
+            {/* <Route path="/panel/dashboard" element={<Dashboard />} /> */}
             <Route path="/panel/wallet" element={<Wallet />} />
             <Route path="/panel/profile" element={<Profile />} />
             <Route path="/panel/cart" element={<Cart />} />

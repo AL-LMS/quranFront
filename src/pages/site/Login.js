@@ -117,17 +117,6 @@ const Login = () => {
               padding: 2,
             }}
           >
-            {/* <Tabs
-              value={kind}
-              onChange={handleChange}
-              textColor="secondary"
-              indicatorColor="secondary"
-              aria-label="secondary tabs example"
-              style={{ marginBottom: "20px" }}
-            >
-              <Tab value="student" label="دانش‌آموز" />
-              <Tab value="teacher" label="معلم" />
-            </Tabs> */}
             <Typography mb={3} color="mainText" textAlign="center">
               ورود به حساب کاربری
             </Typography>

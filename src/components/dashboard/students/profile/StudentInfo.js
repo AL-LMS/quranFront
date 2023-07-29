@@ -18,42 +18,42 @@ import { miladi_be_shamsi, mildai_be_shamsi } from "../../../../helper/shamsi";
 import { Box } from "@mui/system";
 
 const StudentInfo = ({ form, setForm, errors }) => {
-  const [birthday, setBirthday] = useState("");
-  const { departmentID, gradeID } = useContext(DefiContext);
+  // const [birthday, setBirthday] = useState("");
+  // const { departmentID, gradeID } = useContext(DefiContext);
 
-  useEffect(() => {
-    if (birthday.year) {
-      setForm({
-        ...form,
-        birth: shamsi_be_miladi(birthday.year, birthday.month, birthday.day),
-      });
-    }
-  }, [birthday]);
+  // useEffect(() => {
+  //   if (birthday.year) {
+  //     setForm({
+  //       ...form,
+  //       birth: shamsi_be_miladi(birthday.year, birthday.month, birthday.day),
+  //     });
+  //   }
+  // }, [birthday]);
 
   //Custom DatePicker
-  const studentBirth = ({ ref }) => (
-    <input
-      readOnly
-      ref={ref} // necessary
-      placeholder="تاریخ تولد"
-      value={
-        birthday ? `${birthday.year}/${birthday.month}/${birthday.day}` : ""
-      }
-      style={{
-        padding: "0 8px",
-        height: "56px",
-        fontSize: "1rem",
-        border: "1px solid rgba(0, 0, 0, 0.23)",
-        width: "100%",
-        borderRadius: "5px",
-        color: "#666",
-        outline: "none",
-        display: "block",
-        backgroundColor: "transparent",
-        fontFamily: "iranyekanFn",
-      }}
-    />
-  );
+  // const studentBirth = ({ ref }) => (
+  //   <input
+  //     readOnly
+  //     ref={ref} // necessary
+  //     placeholder="تاریخ تولد"
+  //     value={
+  //       birthday ? `${birthday.year}/${birthday.month}/${birthday.day}` : ""
+  //     }
+  //     style={{
+  //       padding: "0 8px",
+  //       height: "56px",
+  //       fontSize: "1rem",
+  //       border: "1px solid rgba(0, 0, 0, 0.23)",
+  //       width: "100%",
+  //       borderRadius: "5px",
+  //       color: "#666",
+  //       outline: "none",
+  //       display: "block",
+  //       backgroundColor: "transparent",
+  //       fontFamily: "iranyekanFn",
+  //     }}
+  //   />
+  // );
 
   const gpaverageChange = (e) => {
     if (e.target.value > 20) {
@@ -81,7 +81,7 @@ const StudentInfo = ({ form, setForm, errors }) => {
             color="mainText"
             textAlign="center"
           >
-            مشخصات دانش آموز
+            مشخصات قرآن آموز
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -90,7 +90,6 @@ const StudentInfo = ({ form, setForm, errors }) => {
             value={form.first_name}
             onChange={(e) => setForm({ ...form, first_name: e.target.value })}
             fullWidth
-            disabled
             InputLabelProps={{
               shrink: true,
             }}
@@ -102,7 +101,6 @@ const StudentInfo = ({ form, setForm, errors }) => {
             value={form.last_name}
             onChange={(e) => setForm({ ...form, last_name: e.target.value })}
             fullWidth
-            disabled
             InputLabelProps={{
               shrink: true,
             }}
@@ -132,7 +130,7 @@ const StudentInfo = ({ form, setForm, errors }) => {
             onWheel={(e) => e.target.blur()}
           />
         </Grid>
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <TextField
             label="نام مدرسه"
             value={form.school}
@@ -192,8 +190,8 @@ const StudentInfo = ({ form, setForm, errors }) => {
               <FormHelperText>{errors.department}</FormHelperText>
             )}
           </FormControl>
-        </Grid>
-        <Grid
+        </Grid> */}
+        {/* <Grid
           item
           xs={12}
           sx={{
@@ -216,7 +214,7 @@ const StudentInfo = ({ form, setForm, errors }) => {
           <Box component="div" sx={{ fontFamily: "iranyekanFn" }}>
             {form.birth && miladi_be_shamsi(form.birth)}
           </Box>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Card>
   );
