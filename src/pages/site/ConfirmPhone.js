@@ -16,6 +16,9 @@ import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
 
 const ConfirmPhone = () => {
   const { setAuth, setUser } = useAuth();
@@ -25,7 +28,7 @@ const ConfirmPhone = () => {
   const [kind, setKind] = useState("student");
   const [confirm, setConfirm] = useState({
     phone: "",
-    username: "",
+    national_id: "",
     password: "",
     repassword: "",
     type: kind,
@@ -97,6 +100,11 @@ const ConfirmPhone = () => {
       console.log(err);
     }
   };
+  const [isTeacher, setIsTeacher] = useState(false);
+
+  const handleCheckboxChange = (event) => {
+    setIsTeacher(event.target.checked);
+  };
   return (
     <Container maxWidth="lg">
       <Grid container mt={8} sx={{ height: "70vh" }}>
@@ -109,7 +117,7 @@ const ConfirmPhone = () => {
               marginBottom: "40px",
             }}
           >
-            <Tabs
+            {/* <Tabs
               value={kind}
               onChange={handleChange}
               textColor="secondary"
@@ -119,7 +127,7 @@ const ConfirmPhone = () => {
             >
               <Tab value="student" label="دانش‌آموز" />
               <Tab value="teacher" label="معلم" />
-            </Tabs>
+            </Tabs> */}
             <Typography mb={3} color="mainText" textAlign="center">
               فرم اولیه ثبت‌نام
             </Typography>
@@ -149,11 +157,11 @@ const ConfirmPhone = () => {
               }}
             >
               <InputBase
-                placeholder="نام کاربری"
-                value={confirm.username}
+                placeholder="کد ملی"
+                value={confirm.national_id}
                 fullWidth
                 onChange={(e) =>
-                  setConfirm({ ...confirm, username: e.target.value })
+                  setConfirm({ ...confirm, national_id: e.target.value })
                 }
               />
             </Box>
@@ -191,6 +199,23 @@ const ConfirmPhone = () => {
                 }
               />
             </Box>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isTeacher}
+                    onChange={handleCheckboxChange}
+                    name="isTeacher"
+                    color="primary"
+                  />
+                }
+                label="من قرآن آموز هستم"
+                sx={{
+                  padding: "4px 15px",
+                  marginBottom: "2rem",
+                }}
+              />
+            </FormGroup>
             <Button
               variant="contained"
               fullWidth
