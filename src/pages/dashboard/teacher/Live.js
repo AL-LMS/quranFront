@@ -83,7 +83,7 @@ const Live = () => {
             color="mainText"
             fontWeight={500}
           >
-            پخش زنده
+            دوره‌های من
           </Typography>
           <CreateLive />
         </Grid>
@@ -112,7 +112,7 @@ const Live = () => {
             </Card>
           ) : (
             <Typography variant="h5" color="#999" textAlign="center" mt={8}>
-              کلاس آنلاینی ایجاد نکرده اید
+              دوره‌ای ایجاد نکرده اید
             </Typography>
           )}
         </Grid>

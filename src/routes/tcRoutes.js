@@ -1,6 +1,6 @@
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
-import LiveTvIcon from '@mui/icons-material/LiveTv';
+import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 
 export const tcRoutes = [
   {
@@ -10,15 +10,15 @@ export const tcRoutes = [
     icon: <DashboardOutlinedIcon />,
   },
   {
+    id: 2,
+    name: "پروفایل",
+    route: "profile",
+    icon: <AccountBoxOutlinedIcon />,
+  },
+  {
     id: 1,
     name: "دوره های من",
     route: "my-coures",
     icon: <LibraryBooksOutlinedIcon />,
-  },
-  {
-    id: 2,
-    name: "پخش زنده",
-    route: "live",
-    icon: <LiveTvIcon />,
   },
 ];

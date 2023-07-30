@@ -181,14 +181,14 @@ const Navbar = () => {
                 </Link>
               }
             /> */}
-            <Tab
+            {/* <Tab
               value="two"
               label={
                 <Link className="nav-link" to="/course">
                   دوره ها
                 </Link>
               }
-            />
+            /> */}
             {/* <Tab
               value="three"
               label={
@@ -213,14 +213,14 @@ const Navbar = () => {
                 </Link>
               }
             /> */}
-            <Tab
+            {/* <Tab
               value="six"
               label={
                 <Link className="nav-link" to="/FAQ">
                   سوالات پرتکرار
                 </Link>
               }
-            />
+            /> */}
           </Tabs>
         </Container>
       </AppBar>

@@ -8,10 +8,24 @@ import {
   DialogTitle,
   Divider,
   Grid,
+  Input,
   TextField,
 } from "@mui/material";
 import { toastify } from "../../../helper/toast";
 import { DefiContext } from "../../../context/DefiContext";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from "react-leaflet";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 const CreateLive = () => {
   const { auth, user } = useAuth();
@@ -33,6 +47,11 @@ const CreateLive = () => {
     fetchCoursID();
   }, []);
 
+  const [isOline, setIsOnline] = useState(false);
+
+  const handleCheckboxChange = (event) => {
+    setIsOnline(event.target.checked);
+  };
   const submitHandler = async () => {
     if (form.course) {
       try {
@@ -59,6 +78,12 @@ const CreateLive = () => {
       toastify("warning");
     }
   };
+  const [position, setPosition] = useState([51.505, -0.09]);
+
+  const handleMapClick = (e) => {
+    setPosition([e.latlng.lat, e.latlng.lng]);
+  };
+  const [startDate, setStartDate] = useState(new Date());
 
   return (
     <div>
@@ -67,7 +92,7 @@ const CreateLive = () => {
         sx={{ boxShadow: "none" }}
         onClick={() => setOpen(true)}
       >
-        ایجاد کلاس جدید
+        ایجاد دوره جدید
       </Button>
       <Dialog
         open={open}
@@ -75,9 +100,7 @@ const CreateLive = () => {
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle sx={{ textAlign: "center" }}>
-          ایجاد کلاس آنلاین
-        </DialogTitle>
+        <DialogTitle sx={{ textAlign: "center" }}>ایجاد دوره</DialogTitle>
         <Grid container spacing={3} padding={2}>
           <Grid item xs={12}>
             <Autocomplete
@@ -90,8 +113,64 @@ const CreateLive = () => {
               options={courseID}
               getOptionLabel={(option) => option.name || ""}
               renderInput={(params) => (
-                <TextField {...params} label="دوره مورد نظر" />
+                <TextField {...params} label="دسته بندی موضوعی" />
               )}
+            />
+            <TextField
+              fullWidth
+              label="نام دوره"
+              name="name"
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              value={form.name}
+              sx={{ marginTop: 1 }}
+            />
+
+            <TextField
+              fullWidth
+              label="توضیحات"
+              name="name"
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              value={form.name}
+              sx={{ marginTop: 1 }}
+            />
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isOline}
+                    onChange={handleCheckboxChange}
+                    name="isOnline"
+                    color="primary"
+                  />
+                }
+                label="کلاس به صورت حضوری است."
+                sx={{
+                  padding: "4px 15px",
+                  marginBottom: "2rem",
+                }}
+              />
+            </FormGroup>
+            {isOline && (
+              <div style={{ height: "400px", width: "100px" }}>
+                <MapContainer
+                  center={position}
+                  zoom={13}
+                  style={{ height: "400px", width: "100%" }}
+                  onclick={handleMapClick}
+                >
+                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                  <Marker position={position}>
+                    <Popup>Your selected location</Popup>
+                  </Marker>
+                </MapContainer>
+              </div>
+            )}
+            <DatePicker
+              showIcon
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              isClearable
+              placeholderText="I have been cleared!"
             />
           </Grid>
           <Grid item xs={12}>

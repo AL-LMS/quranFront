@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 import { Container } from "@mui/system";
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 
 import Loader from "../../../components/site/shared/Loader";
 
 import CourseList from "../../../components/dashboard/teacher/course/CourseList";
+import CreateLive from "../../../components/dashboard/teacher/createLive";
 
 const MyCourse = () => {
   const { auth, user } = useAuth();
@@ -48,8 +49,16 @@ const MyCourse = () => {
 
   return (
     <Container maxWidth="lg">
-      <Grid container spacing={3} mt={3}>
-        <Grid item xs={12}>
+      <Grid container mt={3}>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <Typography
             component="h4"
             variant="h6"
@@ -58,6 +67,7 @@ const MyCourse = () => {
           >
             دوره های من
           </Typography>
+          <CreateLive />
         </Grid>
         <Grid item xs={12}>
           <CourseList data={data} />

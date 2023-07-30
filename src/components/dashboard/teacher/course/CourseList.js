@@ -30,16 +30,20 @@ const statusTable = (item) => {
 };
 
 const CourseList = ({ data }) => {
-  data = [{
-    name: "حفظ",
-    
-  }]
+  data = [
+    {
+      name: "حفظ",
+      startTime: "2023-04-01",
+      code: 18,
+    },
+  ];
   return (
     <Card
       sx={{
         padding: 2,
         boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
         borderRadius: "30px",
+        marginTop: "1rem",
       }}
     >
       <TableContainer sx={{ padding: 2 }}>
@@ -54,17 +58,12 @@ const CourseList = ({ data }) => {
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
-                قیمت
-              </TableCell>
-              <TableCell
-                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
-              >
-                کددوره
-              </TableCell>
-              <TableCell
-                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
-              >
                 تاریخ شروع
+              </TableCell>
+              <TableCell
+                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
+              >
+                تعداد ثبت نامی
               </TableCell>
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
@@ -105,10 +104,7 @@ const CourseList = ({ data }) => {
                     textAlign: "center",
                   }}
                 >
-                  {item.price2
-                    ? item.price2?.toLocaleString()
-                    : item.price1?.toLocaleString()}
-                  تومان
+                  {item?.startTime && miladi_be_shamsi(item?.startTime)}
                 </TableCell>
                 <TableCell
                   sx={{
@@ -120,16 +116,6 @@ const CourseList = ({ data }) => {
                 >
                   {item.code}
                 </TableCell>
-                <TableCell
-                  sx={{
-                    border: "none",
-                    fontFamily: "iranyekanFn",
-                    fontWeight: 500,
-                    textAlign: "center",
-                  }}
-                >
-                  {item?.startTime && miladi_be_shamsi(item?.startTime)}
-                </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
                   <Chip
                     label={statusTable(item.active)}
@@ -140,33 +126,19 @@ const CourseList = ({ data }) => {
                 </TableCell>
                 <TableCell sx={{ border: "none" }}>
                   <Stack direction="row" justifyContent="center">
-                    <Tooltip title="تکالیف">
-                      <Link to={`/panel/course/course-homework/${item.id}`}>
-                        <Button>
-                          <MenuBookOutlinedIcon />
-                        </Button>
-                      </Link>
-                    </Tooltip>
-                    <Tooltip title="آزمون">
-                      <Link to={`/panel/course/quiz/${item.id}`}>
-                        <Button>
-                          <LibraryBooksOutlinedIcon />
-                        </Button>
-                      </Link>
-                    </Tooltip>
-                    <Tooltip title="فروم">
-                      <Link to={`/panel/course/forum/${item.id}`}>
-                        <Button>
-                          <SmsOutlinedIcon />
-                        </Button>
-                      </Link>
+                    <Tooltip title="دوره">
+                      {/* <Link to={`/panel/course/course-homework/${item.id}`}> */}
+                      <Button>
+                        <MenuBookOutlinedIcon />
+                      </Button>
+                      {/* </Link> */}
                     </Tooltip>
                     <Tooltip title="دانش آموزان">
-                      <Link to={`/panel/course/students/${item.id}`}>
-                        <Button>
-                          <GroupsOutlinedIcon />
-                        </Button>
-                      </Link>
+                      {/* <Link to={`/panel/course/students/${item.id}`}> */}
+                      <Button>
+                        <GroupsOutlinedIcon />
+                      </Button>
+                      {/* </Link> */}
                     </Tooltip>
                   </Stack>
                 </TableCell>
