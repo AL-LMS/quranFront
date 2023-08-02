@@ -4,12 +4,14 @@ import { Avatar, Button, Card, Grid, Typography } from "@mui/material";
 const Documnets = ({
   form,
   setForm,
-  showBirthCertificate,
-  setShowBirthCertificate,
+  showLastCertificate,
+  setShowLastCertificate,
+  nameOfSection,
+  nameOfButtonField,
 }) => {
   const birthCertificateHandler = (e) => {
     setForm({ ...form, picture: e.target.files[0] });
-    setShowBirthCertificate(URL.createObjectURL(e.target.files[0]));
+    setShowLastCertificate(URL.createObjectURL(e.target.files[0]));
   };
   return (
     <Card
@@ -28,7 +30,7 @@ const Documnets = ({
             color="mainText"
             textAlign="center"
           >
-            مدارک مربی
+            {nameOfSection}
           </Typography>
         </Grid>
         <Grid item xs={12} md={6} sx={{ margin: "0 auto" }}>
@@ -36,21 +38,20 @@ const Documnets = ({
             type="file"
             accept="image/*"
             style={{ display: "none" }}
-            id="BirthCertificate"
+            id="LastCertificate"
             multiple
             onChange={birthCertificateHandler}
           />
-          <label htmlFor="BirthCertificate">
+          <label htmlFor="LastCertificate">
             <Button variant="outlined" fullWidth component="span">
-              آپلود تصویر شناسنامه یا کارت ملی
+              {nameOfButtonField}
             </Button>
           </label>
           {form.picture ? (
             <Avatar
-              alt="BirthCertificate"
+              alt="LastCertificate"
               src={
-                showBirthCertificate ||
-                `https://api.srvschool.ir${form.picture}`
+                showLastCertificate || `https://api.srvschool.ir${form.picture}`
               }
               sx={{
                 width: 140,
@@ -60,10 +61,10 @@ const Documnets = ({
                 borderRadius: 2,
               }}
             />
-          ) : showBirthCertificate ? (
+          ) : showLastCertificate ? (
             <Avatar
-              alt="BirthCertificate"
-              src={showBirthCertificate}
+              alt="LastCertificate"
+              src={showLastCertificate}
               sx={{
                 width: 140,
                 height: 140,

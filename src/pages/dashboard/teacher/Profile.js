@@ -14,6 +14,7 @@ import { useContext } from "react";
 import { DefiContext } from "../../../context/DefiContext";
 import Documnets from "./Documnets";
 import TeacherInfo from "../../../components/dashboard/students/profile/TeacherInfo";
+import MultiDocumnets from "./MultiDocumnets";
 
 const Profile = () => {
   const { auth, user } = useAuth();
@@ -24,87 +25,89 @@ const Profile = () => {
     national_code: "0480959838",
     phone: "09216272502",
     picture: "",
-    role: "Student",
+    certificates: [],
+    role: "teacher",
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const [showBirthCertificate, setShowBirthCertificate] = useState("");
+  const [showLastCertificate, setShowLastCertificate] = useState("");
+  const [showCertificate, setShowCertificate] = useState([]);
 
   useEffect(() => {
     setErrors(profileAuth(form));
   }, [form]);
-
+  console.log("form", form);
   useEffect(() => {
     const fetchStudentData = async () => {
       // setLoading(true);
-      try {
-        const response = await axios.get(
-          `authen/users/?type=student&id=${user.pk}`,
-          {
-            headers: { Authorization: `Bearer ${auth}` },
-          }
-        );
-        const data = await response.data;
-        setLoading(false);
-        setForm(data[0]);
-      } catch (err) {
-        console.log(err);
-        setLoading(false);
-      }
+      // try {
+      //   const response = await axios.get(
+      //     `authen/users/?type=student&id=${user.pk}`,
+      //     {
+      //       headers: { Authorization: `Bearer ${auth}` },
+      //     }
+      //   );
+      //   const data = await response.data;
+      //   setLoading(false);
+      //   setForm(data[0]);
+      // } catch (err) {
+      //   console.log(err);
+      //   setLoading(false);
+      // }
     };
     fetchStudentData();
   }, [reaload]);
 
-  const submitData = async () => {
-    // setLoading(true);
-    const formData = new FormData();
-    formData.append("phone", form.phone);
-    formData.append("grade", form.grade);
-    formData.append("department", form.department);
-    form.birth && formData.append("birth", form.birth);
-    formData.append("national_code", form.national_code);
-    formData.append("role", "student");
-    formData.append("first_name", form.first_name);
-    formData.append("last_name", form.last_name);
-    formData.append("pk", user.pk);
-    form.gpaverage && formData.append("gpaverage", form.gpaverage);
-    form.disipcline && formData.append("disipcline", form.disipcline);
-    form.school && formData.append("school", form.school);
-    form.parentName && formData.append("parentName", form.parentName);
-    form.parentNationalCode &&
-      formData.append("parentNationalCode", form.parentNationalCode);
-    form.pbirthday && formData.append("pbirthday", form.pbirthday);
-    form.peducation && formData.append("peducation", form.peducation);
-    form.pjob && formData.append("pjob", form.pjob);
-    form.address && formData.append("address", form.address);
-    showBirthCertificate && formData.append("picture", form.picture);
-    formData.append("type", "student");
-    if (!Object.keys(errors).length) {
-      try {
-        const response = await axios.put("authen/update_profile/", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${auth}`,
-          },
-        });
-        toastify("success", "اطلاعات با موفقیت ثبت شد");
-        setLoading(false);
-        setReload((prevState) => !prevState);
-      } catch (err) {
-        setLoading(false);
-        if (err.response.status === 400) {
-          toastify("error-login", "اطلاعات ناقص است");
-        } else {
-          toastify("error", "خطا در برقراری ارتباط با سرور");
-        }
-        console.log(err);
-      }
-    } else {
-      setLoading(false);
-      toastify("warning", "لطفا فیلد هارا با دقت پر کنید");
-      console.log(form);
-    }
-  };
+  // const submitData = async () => {
+  //   // setLoading(true);
+  //   const formData = new FormData();
+  //   formData.append("phone", form.phone);
+  //   formData.append("grade", form.grade);
+  //   formData.append("department", form.department);
+  //   form.birth && formData.append("birth", form.birth);
+  //   formData.append("national_code", form.national_code);
+  //   formData.append("role", "student");
+  //   formData.append("first_name", form.first_name);
+  //   formData.append("last_name", form.last_name);
+  //   formData.append("pk", user.pk);
+  //   form.gpaverage && formData.append("gpaverage", form.gpaverage);
+  //   form.disipcline && formData.append("disipcline", form.disipcline);
+  //   form.school && formData.append("school", form.school);
+  //   form.parentName && formData.append("parentName", form.parentName);
+  //   form.parentNationalCode &&
+  //     formData.append("parentNationalCode", form.parentNationalCode);
+  //   form.pbirthday && formData.append("pbirthday", form.pbirthday);
+  //   form.peducation && formData.append("peducation", form.peducation);
+  //   form.pjob && formData.append("pjob", form.pjob);
+  //   form.address && formData.append("address", form.address);
+  //   showBirthCertificate && formData.append("picture", form.picture);
+  //   formData.append("type", "student");
+  //   // if (!Object.keys(errors).length) {
+  //   //   try {
+  //   //     const response = await axios.put("authen/update_profile/", formData, {
+  //   //       headers: {
+  //   //         "Content-Type": "multipart/form-data",
+  //   //         Authorization: `Bearer ${auth}`,
+  //   //       },
+  //   //     });
+  //   //     toastify("success", "اطلاعات با موفقیت ثبت شد");
+  //   //     setLoading(false);
+  //   //     setReload((prevState) => !prevState);
+  //   //   } catch (err) {
+  //   //     setLoading(false);
+  //   //     if (err.response.status === 400) {
+  //   //       toastify("error-login", "اطلاعات ناقص است");
+  //   //     } else {
+  //   //       toastify("error", "خطا در برقراری ارتباط با سرور");
+  //   //     }
+  //   //     console.log(err);
+  //   //   }
+  //   // } else {
+  //   //   setLoading(false);
+  //   //   toastify("warning", "لطفا فیلد هارا با دقت پر کنید");
+  //   //   console.log(form);
+  //   // }
+  // };
 
   return (
     <Container maxWidth="lg">
@@ -112,21 +115,30 @@ const Profile = () => {
         <Grid item xs={12}>
           <TeacherInfo form={form} setForm={setForm} errors={errors} />
         </Grid>
-        {/* <Grid item xs={12}>
-          <ParentsInfo form={form} setForm={setForm} />
-        </Grid> */}
         <Grid item xs={12}>
           <Documnets
             form={form}
             setForm={setForm}
-            showBirthCertificate={showBirthCertificate}
-            setShowBirthCertificate={setShowBirthCertificate}
+            showLastCertificate={showLastCertificate}
+            setShowLastCertificate={setShowLastCertificate}
+            nameOfSection={"مدارک مربی"}
+            nameOfButtonField={"آپلود تصویر آخرین مدرک تحصیلی"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <MultiDocumnets
+            form={form}
+            setForm={setForm}
+            showCertificate={showCertificate}
+            setShowCertificate={setShowCertificate}
+            nameOfSection={"گواهی مربی"}
+            nameOfButtonField={"آپلود تصویر گواهی"}
           />
         </Grid>
         <Button
           variant="contained"
           endIcon={<SaveOutlinedIcon />}
-          onClick={submitData}
+          // onClick={submitData}
           sx={{
             boxShadow: "none",
             position: "fixed",
