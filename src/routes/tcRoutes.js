@@ -21,13 +21,13 @@ export const tcRoutes = [
   {
     id: 2,
     name: "دوره‌های ارائه شده",
-    route: "my-course",
+    route: "my-coures",
     icon: <LibraryBooksOutlinedIcon />,
   },
   {
     id: 3,
     name: "دوره‌های ثبت نام شده",
-    route: "my-coures",
+    route: "coures",
     icon: <LocalMallOutlinedIcon />,
   },
   {

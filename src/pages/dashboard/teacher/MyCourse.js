@@ -65,7 +65,7 @@ const MyCourse = () => {
             color="mainText"
             fontWeight={500}
           >
-            دوره های من
+            دوره‌های ارائه شده
           </Typography>
           <CreateLive />
         </Grid>

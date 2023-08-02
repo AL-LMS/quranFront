@@ -34,7 +34,7 @@ const Courses = () => {
       }}
     >
       <Typography variant="h6" color="mainText" fontWeight={500}>
-        دوره های من
+        دوره‌های ارائه شده
       </Typography>
       <Grid container spacing={4}>
         {data.length > 0 ? (
@@ -59,13 +59,13 @@ const Courses = () => {
         ) : (
           <Grid item xs={12}>
             <Typography variant="h5" color="#888" textAlign="center">
-              درحال حاضر دوره ای برای شما ثبت نشده
+              درحال حاضر دوره‌ای برای شما ثبت نشده
             </Typography>
           </Grid>
         )}
         <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Link to="/panel/my-coures">
-            <Button>مشاهده همه دوره ها</Button>
+            <Button>مشاهده همه دوره‌ها</Button>
           </Link>
         </Grid>
       </Grid>
