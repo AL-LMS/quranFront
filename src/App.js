@@ -73,23 +73,23 @@ function App() {
     <CacheProvider value={cacheRtl}>
       {!location.pathname.includes("panel") && <Navbar />}
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        {/* <Route path="/" element={<HomePage />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/confirm-phone" element={<ConfirmPhone />} />
-        <Route path="/course" element={<Course />} />
+        {/* <Route path="/course" element={<Course />} />
         <Route path="/course/details/:id" element={<CourseDetails />} />
         <Route path="/packages" element={<Packages />} />
         <Route path="/packages/details/:id" element={<PackageDetails />} />
-        <Route path="/applications" element={<Applications />} />
+        <Route path="/applications" element={<Applications />} /> */}
         <Route path="/FAQ" element={<FAQ />} />
-        <Route path="/search/*" element={<Search />} />
-        <Route path="/auth/:token" element={<Auth />} />
-        <Route path="/timing-package" element={<TimingPackage />} />
-        <Route
+        {/* <Route path="/search/*" element={<Search />} /> */}
+        {/* <Route path="/auth/:token" element={<Auth />} /> */}
+        {/* <Route path="/timing-package" element={<TimingPackage />} /> */}
+        {/* <Route
           path="/timing-package/details/:id"
           element={<TimingPackageDetails />}
-        />
+        /> */}
         {user?.role?.toLowerCase() === "student" ? (
           <Route element={<PrivateRoutes />}>
             <Route path="/panel/dashboard" element={<Course />} />

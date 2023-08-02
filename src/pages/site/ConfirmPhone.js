@@ -28,7 +28,8 @@ const ConfirmPhone = () => {
   const [kind, setKind] = useState("student");
   const [confirm, setConfirm] = useState({
     phone: "",
-    national_id: "",
+    first_name: "",
+    last_name: "",
     password: "",
     repassword: "",
     type: kind,
@@ -100,14 +101,13 @@ const ConfirmPhone = () => {
       console.log(err);
     }
   };
-  const [isTeacher, setIsTeacher] = useState(false);
 
   const handleCheckboxChange = (event) => {
-    setIsTeacher(event.target.checked);
+    setKind(event.target.name);
   };
   return (
     <Container maxWidth="lg">
-      <Grid container mt={8} sx={{ height: "70vh" }}>
+      <Grid container mt={8} sx={{ height: "100vh" }}>
         <Grid item xs={12} md={4} sx={{ margin: "0 auto" }}>
           <Card
             sx={{
@@ -117,20 +117,43 @@ const ConfirmPhone = () => {
               marginBottom: "40px",
             }}
           >
-            {/* <Tabs
-              value={kind}
-              onChange={handleChange}
-              textColor="secondary"
-              indicatorColor="secondary"
-              aria-label="secondary tabs example"
-              style={{ marginBottom: "20px" }}
-            >
-              <Tab value="student" label="دانش‌آموز" />
-              <Tab value="teacher" label="معلم" />
-            </Tabs> */}
             <Typography mb={3} color="mainText" textAlign="center">
               فرم اولیه ثبت‌نام
             </Typography>
+            <Box
+              sx={{
+                backgroundColor: "#e8e8e8",
+                borderRadius: "10px",
+                padding: "4px 15px",
+                marginBottom: "2rem",
+              }}
+            >
+              <InputBase
+                placeholder="نام"
+                value={confirm.first_name}
+                fullWidth
+                onChange={(e) =>
+                  setConfirm({ ...confirm, first_name: e.target.value })
+                }
+              />
+            </Box>
+            <Box
+              sx={{
+                backgroundColor: "#e8e8e8",
+                borderRadius: "10px",
+                padding: "4px 15px",
+                marginBottom: "2rem",
+              }}
+            >
+              <InputBase
+                placeholder="نام خانوادگی"
+                value={confirm.last_name}
+                fullWidth
+                onChange={(e) =>
+                  setConfirm({ ...confirm, last_name: e.target.value })
+                }
+              />
+            </Box>
             <Box
               sx={{
                 backgroundColor: "#e8e8e8",
@@ -145,23 +168,6 @@ const ConfirmPhone = () => {
                 fullWidth
                 onChange={(e) =>
                   setConfirm({ ...confirm, phone: e.target.value })
-                }
-              />
-            </Box>
-            <Box
-              sx={{
-                backgroundColor: "#e8e8e8",
-                borderRadius: "10px",
-                padding: "4px 15px",
-                marginBottom: "2rem",
-              }}
-            >
-              <InputBase
-                placeholder="کد ملی"
-                value={confirm.national_id}
-                fullWidth
-                onChange={(e) =>
-                  setConfirm({ ...confirm, national_id: e.target.value })
                 }
               />
             </Box>
@@ -203,15 +209,27 @@ const ConfirmPhone = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={isTeacher}
+                    checked={kind == "student" ? true : false}
                     onChange={handleCheckboxChange}
-                    name="isTeacher"
+                    name="student"
                     color="primary"
                   />
                 }
                 label="من قرآن آموز هستم"
+              />
+            </FormGroup>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={kind == "teacher" ? true : false}
+                    onChange={handleCheckboxChange}
+                    name="teacher"
+                    color="primary"
+                  />
+                }
+                label="من مربی هستم"
                 sx={{
-                  padding: "4px 15px",
                   marginBottom: "2rem",
                 }}
               />
