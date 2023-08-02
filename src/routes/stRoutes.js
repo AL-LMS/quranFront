@@ -33,8 +33,8 @@ export const stRoutes = [
   },
   // {
   //   id: 4,
-  //   name: "سبد خرید",
-  //   route: "cart",
+  //   name: "دوره‌های ارائه شده",
+  //   route: "my-course",
   //   icon: <LocalMallOutlinedIcon />,
   // },
   {

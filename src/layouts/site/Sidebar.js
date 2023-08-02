@@ -51,7 +51,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
               </ListItemButton>
             </ListItem>
           </Link> */}
-          <Link to="/course" onClick={() => setSidebar(false)}>
+          {/* <Link to="/course" onClick={() => setSidebar(false)}>
             <ListItem>
               <ListItemButton
                 selected={selectedIndex === 1}
@@ -65,7 +65,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                 />
               </ListItemButton>
             </ListItem>
-          </Link>
+          </Link> */}
           {/* <Link to="/packages" onClick={() => setSidebar(false)}>
             <ListItem>
               <ListItemButton
@@ -111,7 +111,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
               </ListItemButton>
             </ListItem>
           </Link> */}
-          <Link to="/FAQ" onClick={() => setSidebar(false)}>
+          {/* <Link to="/FAQ" onClick={() => setSidebar(false)}>
             <ListItem>
               <ListItemButton
                 selected={selectedIndex === 5}
@@ -125,7 +125,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                 />
               </ListItemButton>
             </ListItem>
-          </Link>
+          </Link> */}
         </List>
       </Toolbar>
     </Drawer>
