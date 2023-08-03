@@ -23,8 +23,7 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
-import DatePicker from "react-datepicker";
-
+import { DatePicker, TimePicker } from "zaman";
 import "react-datepicker/dist/react-datepicker.css";
 
 const CreateLive = () => {
@@ -37,53 +36,53 @@ const CreateLive = () => {
     course: "",
   });
   useEffect(() => {
-    const fetchCoursID = async () => {
-      const response = await axios.get(`course/teacherCourse/?id=${user.pk}`, {
-        headers: { Authorization: `Bearer ${auth}` },
-      });
-      const data = await response.data;
-      setCourseID(data);
-    };
-    fetchCoursID();
+    // const fetchCoursID = async () => {
+    //   const response = await axios.get(`course/teacherCourse/?id=${user.pk}`, {
+    //     headers: { Authorization: `Bearer ${auth}` },
+    //   });
+    //   const data = await response.data;
+    //   setCourseID(data);
+    // };
+    // fetchCoursID();
   }, []);
 
-  const [isOline, setIsOnline] = useState(false);
+  const [isOnline, setIsOnline] = useState(false);
 
   const handleCheckboxChange = (event) => {
     setIsOnline(event.target.checked);
   };
   const submitHandler = async () => {
-    if (form.course) {
-      try {
-        const response = await axios.post(
-          "live/create/",
-          {
-            id: form.course.id,
-            name: form.course.name,
-          },
-          {
-            headers: { Authorization: `Bearer ${auth}` },
-          }
-        );
-        toastify("success");
-        setLoading(false);
-        setOpen(false);
-        setReload((prevState) => !prevState);
-      } catch (err) {
-        console.log(err);
-        toastify("error");
-        setLoading(false);
-      }
-    } else {
-      toastify("warning");
-    }
+    // if (form.course) {
+    //   try {
+    //     const response = await axios.post(
+    //       "live/create/",
+    //       {
+    //         id: form.course.id,
+    //         name: form.course.name,
+    //       },
+    //       {
+    //         headers: { Authorization: `Bearer ${auth}` },
+    //       }
+    //     );
+    //     toastify("success");
+    //     setLoading(false);
+    //     setOpen(false);
+    //     setReload((prevState) => !prevState);
+    //   } catch (err) {
+    //     console.log(err);
+    //     toastify("error");
+    //     setLoading(false);
+    //   }
+    // } else {
+    //   toastify("warning");
+    // }
   };
   const [position, setPosition] = useState([51.505, -0.09]);
 
   const handleMapClick = (e) => {
     setPosition([e.latlng.lat, e.latlng.lng]);
   };
-  const [startDate, setStartDate] = useState(new Date());
+  const [calendarValue, setCalendarValue] = useState(new Date());
 
   return (
     <div>
@@ -94,101 +93,109 @@ const CreateLive = () => {
       >
         ایجاد دوره جدید
       </Button>
-      <Dialog
+      {/* <Dialog
         open={open}
         onClose={() => setOpen(false)}
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle sx={{ textAlign: "center" }}>ایجاد دوره</DialogTitle>
-        <Grid container spacing={3} padding={2}>
-          <Grid item xs={12}>
-            <Autocomplete
-              fullWidth
-              value={form.course}
-              onChange={(event, newValue) => {
-                setForm({ ...form, course: newValue });
-              }}
-              id="controllable-states-demo"
-              options={courseID}
-              getOptionLabel={(option) => option.name || ""}
-              renderInput={(params) => (
-                <TextField {...params} label="دسته بندی موضوعی" />
-              )}
-            />
-            <TextField
-              fullWidth
-              label="نام دوره"
-              name="name"
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              value={form.name}
-              sx={{ marginTop: 1 }}
-            />
-
-            <TextField
-              fullWidth
-              label="توضیحات"
-              name="name"
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              value={form.name}
-              sx={{ marginTop: 1 }}
-            />
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={isOline}
-                    onChange={handleCheckboxChange}
-                    name="isOnline"
-                    color="primary"
-                  />
-                }
-                label="کلاس به صورت حضوری است."
-                sx={{
-                  padding: "4px 15px",
-                  marginBottom: "2rem",
-                }}
-              />
-            </FormGroup>
-            {isOline && (
-              <div style={{ height: "400px", width: "100px" }}>
-                <MapContainer
-                  center={position}
-                  zoom={13}
-                  style={{ height: "400px", width: "100%" }}
-                  onclick={handleMapClick}
-                >
-                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <Marker position={position}>
-                    <Popup>Your selected location</Popup>
-                  </Marker>
-                </MapContainer>
-              </div>
+        <DialogTitle sx={{ textAlign: "center" }}>ایجاد دوره</DialogTitle> */}
+      <Grid container spacing={3} padding={2}>
+        <Grid item xs={12}>
+          <Autocomplete
+            fullWidth
+            value={form.course}
+            onChange={(event, newValue) => {
+              setForm({ ...form, course: newValue });
+            }}
+            id="controllable-states-demo"
+            options={courseID}
+            getOptionLabel={(option) => option.name || ""}
+            renderInput={(params) => (
+              <TextField {...params} label="دسته بندی موضوعی" />
             )}
-            <DatePicker
-              showIcon
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              isClearable
-              placeholderText="I have been cleared!"
+          />
+          <TextField
+            fullWidth
+            label="نام دوره"
+            name="name"
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            value={form.name}
+            sx={{ marginTop: 1 }}
+          />
+          <TextField
+            fullWidth
+            label="توضیحات"
+            name="name"
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            value={form.name}
+            sx={{ marginTop: 1 }}
+          />
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={isOnline}
+                  onChange={handleCheckboxChange}
+                  name="isOnline"
+                  color="primary"
+                />
+              }
+              label="کلاس به صورت حضوری است."
+              sx={{
+                padding: "4px 15px",
+                marginBottom: "2rem",
+              }}
             />
-          </Grid>
-          <Grid item xs={12}>
-            <Divider />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              onClick={submitHandler}
-              fullWidth
-              disabled={loading}
-              sx={{ boxShadow: "none", padding: "12px 0" }}
-            >
-              ثبت اطلاعات
-            </Button>
-          </Grid>
+          </FormGroup>
+          {isOnline && (
+            <div>
+              <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Marker position={position}>
+                  <Popup>
+                    A pretty CSS3 popup. <br /> Easily customizable.
+                  </Popup>
+                </Marker>
+              </MapContainer>
+            </div>
+          )}
         </Grid>
-      </Dialog>
+        <Grid item xs={12}>
+          <Divider />
+        </Grid>
+        <section className="wrapper">
+          <div className="libWrapper">
+            <DatePicker
+              round="x2"
+              accentColor="#6374ae"
+              inputAttributes={{
+                placeholder: "start date -- end date",
+              }}
+              onChange={(e) => console.log(e)}
+              range
+            />
+            <TimePicker
+              onChange={(e) => console.log(e.hour, e.minute, e.timeConvention)}
+            />
+          </div>
+        </section>
+        <Grid item xs={12}>
+          <Button
+            variant="contained"
+            onClick={submitHandler}
+            fullWidth
+            disabled={loading}
+            sx={{ boxShadow: "none", padding: "12px 0" }}
+          >
+            ثبت اطلاعات
+          </Button>
+        </Grid>
+      </Grid>
+      {/* </Dialog> */}
     </div>
   );
 };

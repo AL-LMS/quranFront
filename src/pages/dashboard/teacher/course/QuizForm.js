@@ -16,9 +16,7 @@ import {
 import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { toastify } from "../../../../helper/toast";
-
-import { DatePicker } from "jalali-react-datepicker";
-
+import { DatePicker } from "zaman";
 import "react-toastify/dist/ReactToastify.css";
 const TeacherNewExam = () => {
   const { auth } = useAuth();

@@ -15,8 +15,7 @@ import { useParams } from "react-router-dom";
 
 import { toastify } from "../../../../helper/toast";
 import { miladi_be_shamsi } from "../../../../helper/shamsi";
-import { DatePicker } from "jalali-react-datepicker";
-
+import { DatePicker } from "zaman";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { DefiContext } from "../../../../context/DefiContext";
 

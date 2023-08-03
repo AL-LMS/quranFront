@@ -15,16 +15,16 @@ const MyCourse = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      // setLoading(true);
-      const response = await axios.get(`course/teacherCourse/?id=${user.pk}`, {
-        headers: { Authorization: `Bearer ${auth}` },
-      });
-      setData(response.data.filter((item) => item.showforTeacher === true));
-      setLoading(false);
-      console.log(response.data);
-    };
-    fetchData();
+    // const fetchData = async () => {
+    //   // setLoading(true);
+    //   const response = await axios.get(`course/teacherCourse/?id=${user.pk}`, {
+    //     headers: { Authorization: `Bearer ${auth}` },
+    //   });
+    //   setData(response.data.filter((item) => item.showforTeacher === true));
+    //   setLoading(false);
+    //   console.log(response.data);
+    // };
+    // fetchData();
   }, []);
 
   if (loading)

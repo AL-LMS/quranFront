@@ -38,6 +38,7 @@ import useAuth from "./hooks/useAuth";
 import TeacherDash from "./pages/dashboard/teacher/Dashboard";
 import TeacherCourse from "./pages/dashboard/teacher/MyCourse";
 import TeacherBuyCourse from "./pages/dashboard/teacher/Course";
+import TeacherNewCourse from "./pages/dashboard/teacher/createNewCourse";
 import CourseHomework from "./pages/dashboard/teacher/course/CourseHomework";
 import TeacherQuiz from "./pages/dashboard/teacher/course/Quiz";
 import QuizForm from "./pages/dashboard/teacher/course/QuizForm";
@@ -148,6 +149,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path="/panel/dashboard" element={<TeacherDash />} />
             <Route path="/panel/my-coures" element={<TeacherCourse />} />
+            <Route path="/panel/new-coures" element={<TeacherNewCourse />} />
             <Route path="/panel/coures" element={<TeacherBuyCourse />} />
             <Route path="/panel/live" element={<Live />} />
             <Route path="/panel/profile" element={<ProfileTeacher />} />

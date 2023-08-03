@@ -12,21 +12,21 @@ const DefiProvider = ({ children }) => {
   const [course, setCourse] = useState([]);
   const [reload, setReload] = useState(false);
   useEffect(() => {
-    const fetchData = async () => {
-      const gradeResponse = await axios.get("courseDEP/grade/");
-      const departmentResponse = await axios.get("courseDEP/department/");
-      const yearResponse = await axios.get("courseDEP/year/");
-      const lessonResponse = await axios.get("courseDEP/lesson/");
-      const courseResponse = await axios.get("courseDEP/course/");
-      const courses = await axios.get("course/course/");
-      setDepartmentID(departmentResponse.data);
-      setCourseTypeID(courseResponse.data);
-      setLessonID(lessonResponse.data);
-      setGradeID(gradeResponse.data);
-      setyearID(yearResponse.data);
-      setCourse(courses.data);
-    };
-    fetchData();
+    // const fetchData = async () => {
+    //   const gradeResponse = await axios.get("courseDEP/grade/");
+    //   const departmentResponse = await axios.get("courseDEP/department/");
+    //   const yearResponse = await axios.get("courseDEP/year/");
+    //   const lessonResponse = await axios.get("courseDEP/lesson/");
+    //   const courseResponse = await axios.get("courseDEP/course/");
+    //   const courses = await axios.get("course/course/");
+    //   setDepartmentID(departmentResponse.data);
+    //   setCourseTypeID(courseResponse.data);
+    //   setLessonID(lessonResponse.data);
+    //   setGradeID(gradeResponse.data);
+    //   setyearID(yearResponse.data);
+    //   setCourse(courses.data);
+    // };
+    // fetchData();
   }, []);
   return (
     <DefiContext.Provider

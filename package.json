@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.10.0",
-    "@emotion/styled": "^11.10.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@hassanmojab/react-modern-calendar-datepicker": "^3.1.7",
     "@mui/icons-material": "^5.10.2",
     "@mui/joy": "^5.0.0-alpha.42",
     "@mui/lab": "^5.0.0-alpha.96",
-    "@mui/material": "^5.10.2",
+    "@mui/material": "^5.14.3",
     "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
@@ -18,8 +18,7 @@
     "apexcharts": "^3.35.5",
     "axios": "^0.27.2",
     "date-fns": "^2.30.0",
-    "dayjs": "^1.11.5",
-    "jalali-react-datepicker": "^1.2.1",
+    "jalali-react-datepicker": "^1.2.3",
     "jwt-decode": "^3.1.2",
     "leaflet": "^1.9.4",
     "node-polyfill-webpack-plugin": "^2.0.1",
@@ -36,10 +35,13 @@
     "react-toastify": "^9.0.8",
     "sanitize-html": "^2.7.1",
     "stream": "^0.0.2",
+    "styled-components": "^6.0.6",
     "stylis": "^4.1.1",
     "stylis-plugin-rtl": "^2.1.1",
     "swiper": "^8.3.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zaman": "2.0.7",
+    "dayjs": "^1.11.7"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -52,6 +54,9 @@
       "react-app",
       "react-app/jest"
     ]
+  },
+  "peerDependencies": {
+    "dayjs": "^1.11.7"
   },
   "browserslist": {
     "production": [

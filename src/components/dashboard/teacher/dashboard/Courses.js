@@ -12,15 +12,15 @@ const Courses = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      // setLoading(true);
-      const response = await axios.get(`course/teacherCourse/?id=${user.pk}`, {
-        headers: { Authorization: `Bearer ${auth}` },
-      });
-      setData(response.data.slice(0, 3));
-      setLoading(false);
-    };
-    fetchData();
+    // const fetchData = async () => {
+    //   // setLoading(true);
+    //   const response = await axios.get(`course/teacherCourse/?id=${user.pk}`, {
+    //     headers: { Authorization: `Bearer ${auth}` },
+    //   });
+    //   setData(response.data.slice(0, 3));
+    //   setLoading(false);
+    // };
+    // fetchData();
   }, []);
 
   if (loading) return <Typography>درحال بارگزاری...</Typography>;
