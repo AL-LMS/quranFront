@@ -18,6 +18,7 @@
     "apexcharts": "^3.35.5",
     "axios": "^0.27.2",
     "date-fns": "^2.30.0",
+    "dayjs": "^1.11.7",
     "jalali-react-datepicker": "^1.2.3",
     "jwt-decode": "^3.1.2",
     "leaflet": "^1.9.4",
@@ -26,6 +27,7 @@
     "react-apexcharts": "^1.4.0",
     "react-datepicker": "^4.16.0",
     "react-dom": "^18.2.0",
+    "react-ios-time-picker": "^0.2.2",
     "react-leaflet": "^4.2.1",
     "react-multi-date-picker": "^3.3.0",
     "react-query": "^3.39.2",
@@ -40,8 +42,7 @@
     "stylis-plugin-rtl": "^2.1.1",
     "swiper": "^8.3.2",
     "web-vitals": "^2.1.4",
-    "zaman": "2.0.7",
-    "dayjs": "^1.11.7"
+    "zaman": "2.0.7"
   },
   "scripts": {
     "start": "react-scripts start",

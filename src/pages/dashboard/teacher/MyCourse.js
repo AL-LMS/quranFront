@@ -7,12 +7,13 @@ import { Button, Grid, Typography } from "@mui/material";
 import Loader from "../../../components/site/shared/Loader";
 
 import CourseList from "../../../components/dashboard/teacher/course/CourseList";
-import CreateLive from "../../../components/dashboard/teacher/createLive";
+import { useNavigate } from "react-router-dom";
 
 const MyCourse = () => {
   const { auth, user } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // const fetchData = async () => {
@@ -67,7 +68,13 @@ const MyCourse = () => {
           >
             دوره‌های ارائه شده
           </Typography>
-          <CreateLive />
+          <Button
+            variant="contained"
+            sx={{ boxShadow: "none" }}
+            onClick={() => navigate("/panel/new-coures")}
+          >
+            ایجاد دوره جدید
+          </Button>
         </Grid>
         <Grid item xs={12}>
           <CourseList data={data} />

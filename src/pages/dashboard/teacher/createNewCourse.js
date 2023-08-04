@@ -4,11 +4,9 @@ import useAuth from "../../../hooks/useAuth";
 import {
   Autocomplete,
   Button,
-  Dialog,
-  DialogTitle,
   Divider,
   Grid,
-  Input,
+  MenuItem,
   TextField,
 } from "@mui/material";
 import { toastify } from "../../../helper/toast";
@@ -16,36 +14,51 @@ import { DefiContext } from "../../../context/DefiContext";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-} from "react-leaflet";
-import { DatePicker, TimePicker } from "zaman";
+import { DatePicker } from "zaman";
 import "./style.css";
-import "react-datepicker/dist/react-datepicker.css";
+import { convertToPersianDate } from "../converter/dateConverter";
+import { Days, ages, courseType, degree, sex } from "./CourseData";
+import Documnets from "./Documnets";
+import CheckIcon from "@mui/icons-material/Check";
+import { TimePicker } from "react-ios-time-picker";
+import { styled } from "styled-components";
+
+// import "react-datepicker/dist/react-datepicker.css";
 
 const CreateCourse = () => {
   const { auth, user } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [courseID, setCourseID] = useState([]);
   const [open, setOpen] = useState(false);
   const { setReload } = useContext(DefiContext);
-  const [form, setForm] = useState({
-    course: "",
-  });
-  const [position, setPosition] = useState([51.505, -0.09]);
-  const [isOnline, setIsOnline] = useState(false);
   const [calendarValue, setCalendarValue] = useState(new Date());
+  const [showLastCertificate, setShowLastCertificate] = useState("");
+  const [prerequisite, setPrerequisite] = useState([]);
+  const [days, setDays] = useState([]);
+  const [isOnline, setIsOnline] = useState(false);
+  const [value, setValue] = useState(null);
 
+  const [form, setForm] = useState({
+    type: "",
+    name: "",
+    explain: "",
+    isOnline: isOnline,
+    start: "",
+    end: "",
+    time: "",
+    days: [],
+    max: "",
+    min: "",
+    prerequisite: [],
+    sex: "",
+    ages: "",
+    degree: "",
+    picture: "",
+  });
   const handleCheckboxChange = (event) => {
     setIsOnline(event.target.checked);
+    setForm({ ...form, isOnline: event.target.checked });
   };
-  const handleMapClick = (e) => {
-    setPosition([e.latlng.lat, e.latlng.lng]);
-  };
+
   useEffect(() => {
     // const fetchCoursID = async () => {
     //   const response = await axios.get(`course/teacherCourse/?id=${user.pk}`, {
@@ -82,105 +95,276 @@ const CreateCourse = () => {
     //   toastify("warning");
     // }
   };
+
+  const handleDatePicker = (e) => {
+    let persianStart = "";
+    let persianEnd = "";
+    persianStart = convertToPersianDate(e.from);
+    persianEnd = convertToPersianDate(e.to);
+    setForm({ ...form, start: persianStart, end: persianEnd });
+  };
+  const onChange = (timeValue) => {
+    setForm({ ...form, time: timeValue });
+    setValue(timeValue);
+  };
+  useEffect(() => {
+    setForm({ ...form, days: days });
+  }, [days]);
+
+  useEffect(() => {
+    setForm({ ...form, prerequisite: prerequisite });
+  }, [prerequisite]);
+  console.log("form", form);
   return (
-    <div>
-      <Grid container spacing={3} padding={2}>
-        <Grid item xs={12}>
-          <Autocomplete
-            fullWidth
-            value={form.course}
-            onChange={(event, newValue) => {
-              setForm({ ...form, course: newValue });
-            }}
-            id="controllable-states-demo"
-            options={courseID}
-            getOptionLabel={(option) => option.name || ""}
-            renderInput={(params) => (
-              <TextField {...params} label="دسته بندی موضوعی" />
-            )}
-          />
-          <TextField
-            fullWidth
-            label="نام دوره"
-            name="name"
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-            value={form.name}
-            sx={{ marginTop: 1 }}
-          />
-          <TextField
-            fullWidth
-            label="توضیحات"
-            name="name"
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-            value={form.name}
-            sx={{ marginTop: 1 }}
-          />
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={isOnline}
-                  onChange={handleCheckboxChange}
-                  name="isOnline"
-                  color="primary"
-                />
-              }
-              label="کلاس به صورت حضوری است."
-              sx={{
-                padding: "4px 15px",
-                marginBottom: "2rem",
+    <Container>
+      <Structure> 
+        <Grid container spacing={3} padding={2}>
+          <Grid item md={4} xs={12}>
+            <Autocomplete
+              fullWidth
+              value={form.type}
+              onChange={(event, newValue) => {
+                setForm({ ...form, type: newValue });
               }}
+              id="controllable-states-demo"
+              options={courseType}
+              getOptionLabel={(option) => option || ""}
+              renderInput={(params) => (
+                <TextField {...params} label="دسته بندی موضوعی" />
+              )}
             />
-          </FormGroup>
-          {isOnline && (
-            <div>
-              <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            <TextField
+              fullWidth
+              label="نام دوره"
+              name="name"
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              value={form.name}
+              sx={{ marginTop: 1 }}
+            />
+            <TextField
+              fullWidth
+              label="توضیحات"
+              name="explain"
+              onChange={(e) => setForm({ ...form, explain: e.target.value })}
+              value={form.explain}
+              sx={{ marginTop: 1 }}
+            />
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isOnline}
+                    onChange={handleCheckboxChange}
+                    name="isOnline"
+                    color="primary"
+                  />
+                }
+                label="کلاس به صورت حضوری است."
+                sx={{
+                  padding: "4px 15px",
+                  marginBottom: "2rem",
+                }}
+              />
+            </FormGroup>
+          </Grid>
+          <Grid item md={4} xs={12}>
+            <section className="wrapper">
+              <div className="libWrapper">
+                <DatePicker
+                  zindex={1000}
+                  round="x1"
+                  accentColor="#6374ae"
+                  defaultValue={calendarValue}
+                  inputAttributes={{
+                    placeholder: "تاریخ شروع - پایان",
+                  }}
+                  onChange={(e) => handleDatePicker(e)}
+                  range
                 />
-                <Marker position={position}>
-                  <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                  </Popup>
-                </Marker>
-              </MapContainer>
-            </div>
-          )}
-        </Grid>
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
-        <section className="wrapper">
-          <div className="libWrapper">
-            <DatePicker
-              round="x2"
-              accentColor="#6374ae"
-              inputAttributes={{
-                placeholder: "start date -- end date",
+                <TimePicker
+                  onChange={onChange}
+                  value={value}
+                  placeHolder="زمان برگزاری کلاس"
+                  cancelButtonText="انصراف"
+                  saveButtonText="ذخیره "
+                />
+              </div>
+            </section>
+
+            <Autocomplete
+              fullWidth
+              multiple
+              limitTags={1}
+              id="multiple-limit-tags"
+              getOptionLabel={(option) => option}
+              disableCloseOnSelect
+              value={days}
+              options={Days}
+              onChange={(event, newValue) => {
+                setDays([...newValue.filter((option) => option)]);
               }}
-              onChange={(e) => console.log(e)}
-              range
+              renderInput={(params) => (
+                <TextField {...params} label="روز‌های برگزاری" placeholder="" />
+              )}
+              renderOption={(props, option, { selected }) => (
+                <MenuItem
+                  {...props}
+                  key={option}
+                  value={option}
+                  sx={{ justifyContent: "space-between" }}
+                >
+                  {option}
+                  {selected ? <CheckIcon color="info" /> : null}
+                </MenuItem>
+              )}
+              style={{ marginBottom: "2px" }}
             />
-            <TimePicker
-              onChange={(e) => console.log(e.hour, e.minute, e.timeConvention)}
+          </Grid>
+          <Grid item md={4} xs={12}>
+            <Grid style={{ display: "flex", marginBottom: "5px" }}>
+              <TextField
+                fullWidth
+                label="حدنصاب کلاس"
+                name="min"
+                type="number"
+                onChange={(e) => setForm({ ...form, min: e.target.value })}
+                value={form.min}
+                sx={{ marginTop: 1 }}
+              />
+              <TextField
+                fullWidth
+                label="حداکثر کلاس"
+                name="max"
+                type="number"
+                onChange={(e) => setForm({ ...form, max: e.target.value })}
+                value={form.max}
+                sx={{ marginTop: 1 }}
+              />
+            </Grid>
+            <Autocomplete
+              fullWidth
+              multiple
+              limitTags={1}
+              id="multiple-limit-tags"
+              getOptionLabel={(option) => option}
+              disableCloseOnSelect
+              value={prerequisite}
+              options={courseType}
+              onChange={(event, newValue) => {
+                setPrerequisite([...newValue.filter((option) => option)]);
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="پیشنیاز‌ها" placeholder="" />
+              )}
+              renderOption={(props, option, { selected }) => (
+                <MenuItem
+                  {...props}
+                  key={option}
+                  value={option}
+                  sx={{ justifyContent: "space-between" }}
+                >
+                  {option}
+                  {selected ? <CheckIcon color="info" /> : null}
+                </MenuItem>
+              )}
+              style={{ marginBottom: "5px" }}
             />
-          </div>
-        </section>
-        <Grid item xs={12}>
-          <Button
-            variant="contained"
-            onClick={submitHandler}
-            fullWidth
-            disabled={loading}
-            sx={{ boxShadow: "none", padding: "12px 0" }}
-          >
-            ثبت اطلاعات
-          </Button>
+            <Grid style={{ display: "flex" }}>
+              <Autocomplete
+                fullWidth
+                value={sex[form.sex]}
+                onChange={(event, newValue) => {
+                  setForm({ ...form, sex: newValue.id });
+                }}
+                id="controllable-states-demo"
+                options={sex}
+                getOptionLabel={(option) => option.name || ""}
+                renderInput={(params) => (
+                  <TextField {...params} label="جنسیت" />
+                )}
+              />
+              <Autocomplete
+                fullWidth
+                value={ages[form.ages]}
+                onChange={(event, newValue) => {
+                  setForm({ ...form, ages: newValue.id });
+                }}
+                id="controllable-states-demo"
+                options={ages}
+                getOptionLabel={(option) => option.name || ""}
+                renderInput={(params) => (
+                  <TextField {...params} label="رده سنی" />
+                )}
+              />
+              <Autocomplete
+                fullWidth
+                value={degree[form.degree]}
+                onChange={(event, newValue) => {
+                  setForm({ ...form, degree: newValue.id });
+                }}
+                id="controllable-states-demo"
+                options={degree}
+                getOptionLabel={(option) => option.name || ""}
+                renderInput={(params) => (
+                  <TextField {...params} label="تحصیلات" />
+                )}
+              />
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Documnets
+              form={form}
+              setForm={setForm}
+              showLastCertificate={showLastCertificate}
+              setShowLastCertificate={setShowLastCertificate}
+              nameOfSection={"تصویر دوره"}
+              nameOfButtonField={"آپلود تصویر تصویر دوره"}
+            />
+            <Divider />
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              onClick={submitHandler}
+              fullWidth
+              disabled={loading}
+              sx={{ boxShadow: "none", padding: "12px 0" }}
+            >
+              ثبت اطلاعات
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+        {/* {isOnline && (
+        <MapContainer
+          center={position}
+          zoom={13}
+          style={{ width: "50px", height: "500px" }}
+          onClick={handleMapClick}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <Marker position={position}>
+            <Popup>Your selected location</Popup>
+          </Marker>
+        </MapContainer>
+      )} */}
+      </Structure>
+    </Container>
   );
 };
 
 export default CreateCourse;
+
+export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const Structure = styled.div`
+  width: 75vw;
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+  }
+  @media screen and (max-width: 480px) {
+    width: 100vw;
+  }
+`;
