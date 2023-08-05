@@ -15,7 +15,7 @@ import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 
 const CourseCard = ({ data }) => {
   return (
-    <Link to={`/course/details/${data.id}`}>
+    <Link to={`/panel/course/details/${data.id}`}>
       <Card
         sx={{
           boxShadow: "0 5px 20px rgba(112,112,112,0.3)",

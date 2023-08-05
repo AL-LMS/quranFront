@@ -18,31 +18,31 @@ const Course = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (!location.search) {
-      setParams({ page: 1 });
-    }
-    const fetchCount = async () => {
-      const response = await axios.get("dashboard/");
-      setCount(response.data.t_count);
-    };
-    fetchCount();
+    // if (!location.search) {
+    //   setParams({ page: 1 });
+    // }
+    // const fetchCount = async () => {
+    //   const response = await axios.get("dashboard/");
+    //   setCount(response.data.t_count);
+    // };
+    // fetchCount();
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`course/course/?${params}`);
-        const data = await response.data;
-        setData(data);
-        if (response.data === 404) {
-          setNotFound(true);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  }, [params]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(`course/course/?${params}`);
+  //       const data = await response.data;
+  //       setData(data);
+  //       if (response.data === 404) {
+  //         setNotFound(true);
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [params]);
 
   console.log(data);
   return (

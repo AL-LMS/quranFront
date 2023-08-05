@@ -95,6 +95,10 @@ function App() {
         {user?.role?.toLowerCase() === "student" ? (
           <Route element={<PrivateRoutes />}>
             <Route path="/panel/dashboard" element={<Course />} />
+            <Route
+              path="/panel/course/details/:id"
+              element={<CourseDetails />}
+            />
             {/* <Route path="/panel/dashboard" element={<Dashboard />} /> */}
             <Route path="/panel/wallet" element={<Wallet />} />
             <Route path="/panel/profile" element={<Profile />} />
@@ -149,6 +153,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path="/panel/dashboard" element={<TeacherDash />} />
             <Route path="/panel/my-coures" element={<TeacherCourse />} />
+            <Route path="/course/details/:id" element={<CourseDetails />} />
             <Route path="/panel/new-coures" element={<TeacherNewCourse />} />
             <Route path="/panel/coures" element={<TeacherBuyCourse />} />
             <Route path="/panel/live" element={<Live />} />

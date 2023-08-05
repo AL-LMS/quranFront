@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 export const toastify = (type, text) => {
   if (type === "success") {
-    toast.success("اطلاعات با موفقیت ثبت شد", {
+    toast.success(text, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,

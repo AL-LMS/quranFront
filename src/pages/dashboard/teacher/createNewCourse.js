@@ -36,7 +36,9 @@ const CreateCourse = () => {
   const [days, setDays] = useState([]);
   const [isOnline, setIsOnline] = useState(false);
   const [value, setValue] = useState(null);
-
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
   const [form, setForm] = useState({
     type: "",
     name: "",
@@ -53,10 +55,56 @@ const CreateCourse = () => {
     ages: "",
     degree: "",
     picture: "",
+    price: "",
   });
   const handleCheckboxChange = (event) => {
     setIsOnline(event.target.checked);
     setForm({ ...form, isOnline: event.target.checked });
+  };
+  const add_course = async () => {
+    let config = {
+      url: "insert_request",
+    };
+    let data = {
+      table: "courses",
+      method_type: "",
+      data: {
+        type: form.type,
+        name: form.name,
+        explain: form.explain,
+        is_online: form.isOnline,
+        start_date: form.start,
+        end_date: form.end,
+        time: form.time,
+        days: form.days,
+        max_people: form.max,
+        min_people: form.min,
+        prerequisite: form.prerequisite,
+        sex: form.sex,
+        ages: form.ages,
+        price: form.price,
+        teacher_name: userInfo.first_name + " " + userInfo.last_name,
+      },
+    };
+    let response = await axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        ...data,
+      },
+
+      baseURL: "http://127.0.0.1:5000/add_course/",
+    });
+    if (response?.data?.tracking_code !== null) {
+      // setLocalStorageLogin("persist:root", data, () => {});
+      toastify("success", "ثبت نام شما با موفقیت انجام شد");
+      // navigate("/signin");
+    } else {
+      toastify("error-login", response?.data?.error);
+    }
   };
 
   useEffect(() => {
@@ -117,7 +165,7 @@ const CreateCourse = () => {
   console.log("form", form);
   return (
     <Container>
-      <Structure> 
+      <Structure>
         <Grid container spacing={3} padding={2}>
           <Grid item md={4} xs={12}>
             <Autocomplete
@@ -296,6 +344,9 @@ const CreateCourse = () => {
                   <TextField {...params} label="رده سنی" />
                 )}
               />
+            </Grid>
+
+            <Grid style={{ display: "flex" }}>
               <Autocomplete
                 fullWidth
                 value={degree[form.degree]}
@@ -308,6 +359,14 @@ const CreateCourse = () => {
                 renderInput={(params) => (
                   <TextField {...params} label="تحصیلات" />
                 )}
+              />
+              <TextField
+                fullWidth
+                label="قیمت"
+                name="price"
+                type="number"
+                onChange={(e) => setForm({ ...form, price: e.target.value })}
+                value={form.price}
               />
             </Grid>
           </Grid>
@@ -325,7 +384,7 @@ const CreateCourse = () => {
           <Grid item xs={12}>
             <Button
               variant="contained"
-              onClick={submitHandler}
+              onClick={() => add_course()}
               fullWidth
               disabled={loading}
               sx={{ boxShadow: "none", padding: "12px 0" }}

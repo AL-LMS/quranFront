@@ -32,7 +32,7 @@ const ConfirmPhone = () => {
     last_name: "",
     password: "",
     repassword: "",
-    type: kind,
+    type: "",
   });
   const handleChange = () => {
     if (kind === "student") {
@@ -41,24 +41,24 @@ const ConfirmPhone = () => {
       setKind("student");
     }
   };
-  const sendCodeHandler = async () => {
-    try {
-      const response = await axios.get(
-        `authen/sms/register?receiver=${confirm.phone}`
-      );
-      setConfirm({ ...confirm, request_id: response.data.request_id });
-      setSendCode(true);
-      setTime(60);
-      toastify(
-        "success-login",
-        `کد تایید برای شماره ${confirm.phone} ارسال شد`
-      );
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-      toastify("error");
-    }
-  };
+  // const sendCodeHandler = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `authen/sms/register?receiver=${confirm.phone}`
+  //     );
+  //     setConfirm({ ...confirm, request_id: response.data.request_id });
+  //     setSendCode(true);
+  //     setTime(60);
+  //     toastify(
+  //       "success-login",
+  //       `کد تایید برای شماره ${confirm.phone} ارسال شد`
+  //     );
+  //     console.log(response);
+  //   } catch (err) {
+  //     console.log(err);
+  //     toastify("error");
+  //   }
+  // };
   let timer;
   useEffect(() => {
     timer = setInterval(() => {
@@ -70,40 +70,46 @@ const ConfirmPhone = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const confirmPhoneHandler = async () => {
-    try {
-      const response = await axios.post(
-        `authen/sms/register?receiver=${confirm.phone}`,
-        {
-          request_id: confirm.request_id,
-          type: confirm.type,
-          receiver: confirm.phone,
-          password: confirm.code,
-        }
-      );
-      const userInfo = await axios.get("/authen/user", {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${response.data.access}`,
-        },
-      });
-      setAuth(response.data.access);
-      setUser(userInfo.data);
-      localStorage.setItem("token", JSON.stringify(response.data.access));
-      localStorage.setItem("user", JSON.stringify(userInfo.data));
-      navigate("/register");
-    } catch (err) {
-      if (err.response.status === 401) {
-        toastify("error-login", "کد تایید اشتباه است یا منقضی شده است");
-      } else {
-        toastify("error-login", "شما قبلا ثبت نام کرده اید");
-      }
-      console.log(err);
+  const signup = async () => {
+    let config = {
+      url: "signup",
+    };
+    let data = {
+      table: "users",
+      method_type: "",
+      data: {
+        first_name: confirm.first_name,
+        last_name: confirm.last_name,
+        phone: confirm.phone,
+        role: confirm.type,
+        password: confirm.password,
+        re_password: confirm.repassword,
+      },
+    };
+    let response = await axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        ...data,
+      },
+
+      baseURL: "http://127.0.0.1:5000/register/",
+    });
+    if (response?.data?.tracking_code !== null) {
+      // setLocalStorageLogin("persist:root", data, () => {});
+      toastify("success", "ثبت نام شما با موفقیت انجام شد");
+      navigate("/signin");
+    } else {
+      toastify("error-login", response?.data?.error);
     }
   };
 
   const handleCheckboxChange = (event) => {
     setKind(event.target.name);
+    setConfirm({ ...confirm, type: event.target.name });
   };
   return (
     <Container maxWidth="lg">
@@ -183,6 +189,7 @@ const ConfirmPhone = () => {
                 placeholder="رمز عبور"
                 value={confirm.password}
                 fullWidth
+                type="password"
                 onChange={(e) =>
                   setConfirm({ ...confirm, password: e.target.value })
                 }
@@ -200,6 +207,7 @@ const ConfirmPhone = () => {
                 placeholder="تکرار رمز عبور"
                 value={confirm.repassword}
                 fullWidth
+                type="password"
                 onChange={(e) =>
                   setConfirm({ ...confirm, repassword: e.target.value })
                 }
@@ -237,7 +245,7 @@ const ConfirmPhone = () => {
             <Button
               variant="contained"
               fullWidth
-              onClick={sendCodeHandler}
+              onClick={() => signup().then(() => {})}
               sx={{
                 borderRadius: "10px",
                 padding: "6px 30px",

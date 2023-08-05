@@ -11,93 +11,56 @@ import {
   Tab,
 } from "@mui/material";
 import { Container } from "@mui/system";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
+import { setLocalStorageLogin } from "../localStorage";
 
 const Login = () => {
   const { setAuth, setUser, user } = useAuth();
-
-  const [sendCode, setSendCode] = useState(false);
+  const navigate = useNavigate();
   const [time, setTime] = useState(0);
-  const [kind, setKind] = useState("student");
   const [login, setLogin] = useState({
     phone: "",
-    code: "",
-    request_id: "",
-    type: "student",
+    password: "",
   });
-  const handleChange = () => {
-    if (kind === "student") {
-      setKind("teacher");
-    } else {
-      setKind("student");
-    }
-  };
-  const sendCodeHandler = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.get(
-        `authen/sms/login/?receiver=${login.phone}`
-      );
-      setLogin({ ...login, request_id: response.data.request_id });
-      setSendCode(true);
-      setTime(60);
-      toastify("success-login", `کد تایید برای شماره ${login.phone} ارسال شد`);
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-      if (err.response.status === 404) {
-        toastify("error-login", "شما هنوز ثبت نام نکرده اید");
-      } else {
-        toastify("error");
-      }
-    }
-  };
-  let timer;
-  useEffect(() => {
-    timer = setInterval(() => {
-      setTime((prevTime) => prevTime - 1);
-      if (time === 1) {
-        clearInterval(timer);
-      }
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+  const signin = async () => {
+    let config = {
+      url: "login",
+    };
+    let data = {
+      table: "users",
+      method_type: "",
+      data: {
+        phone: login.phone,
+        password: login.password,
+      },
+    };
+    let response = await axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        ...data,
+      },
 
-  const loginHandler = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        `authen/sms/login/?receiver=${login.phone}`,
-        {
-          request_id: login.request_id,
-          type: login.type,
-          receiver: login.phone,
-          password: login.code,
-        }
-      );
-      const userInfo = await axios.get("/authen/user", {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${response.data.access}`,
-        },
-      });
-      setAuth(response.data.access);
-      setUser(userInfo.data);
-      localStorage.setItem("token", JSON.stringify(response.data.access));
-      localStorage.setItem("user", JSON.stringify(userInfo.data));
-    } catch (err) {
-      if (err.response.status === 401) {
-        toastify("error-login", "کد تایید اشتباه است یا منقضی شده است");
-      } else {
-        toastify("error");
-      }
-      console.log(err);
+      baseURL: "http://127.0.0.1:5000/token/",
+    });
+    if (response?.data?.tracking_code !== null) {
+      toastify("success", "ورود شما با موفقیت انجام شد");
+      setLocalStorageLogin("user", response?.data?.response, () => {});
+      setLocalStorageLogin("token", response?.data?.response?.token, () => {});
+
+      navigate("/panel/dashboard");
+    } else {
+      toastify("error-login", response?.data?.error);
     }
   };
+
   return (
     <Container maxWidth="lg">
       <Grid
@@ -120,7 +83,7 @@ const Login = () => {
             <Typography mb={3} color="mainText" textAlign="center">
               ورود به حساب کاربری
             </Typography>
-            <form onSubmit={!sendCode ? sendCodeHandler : loginHandler}>
+            <form onSubmit={signin}>
               <Box
                 sx={{
                   backgroundColor: "#e8e8e8",
@@ -150,6 +113,7 @@ const Login = () => {
                   placeholder="رمز عبور"
                   value={login.password}
                   fullWidth
+                  type="password"
                   onChange={(e) =>
                     setLogin({ ...login, password: e.target.value })
                   }
@@ -158,7 +122,7 @@ const Login = () => {
               <Button
                 variant="contained"
                 fullWidth
-                onClick={sendCodeHandler}
+                onClick={() => signin().then(() => {})}
                 sx={{
                   borderRadius: "10px",
                   padding: "6px 30px",
