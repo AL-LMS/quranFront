@@ -10,6 +10,7 @@ import {
   TextField,
 } from "@mui/material";
 import { toastify } from "../../../helper/toast";
+import { ToastContainer } from "react-toastify";
 import { DefiContext } from "../../../context/DefiContext";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -77,13 +78,16 @@ const CreateCourse = () => {
         end_date: form.end,
         time: form.time,
         days: form.days,
-        max_people: form.max,
-        min_people: form.min,
+        max: form.max,
+        min: form.min,
         prerequisite: form.prerequisite,
         sex: form.sex,
         ages: form.ages,
+        degree: form.degree,
+        picture: form.picture,
         price: form.price,
-        teacher_name: userInfo.first_name + " " + userInfo.last_name,
+        t_name: userInfo.first_name + " " + userInfo.last_name,
+        teacher_user_id: userInfo.user_id,
       },
     };
     let response = await axios({
@@ -100,7 +104,7 @@ const CreateCourse = () => {
     });
     if (response?.data?.tracking_code !== null) {
       // setLocalStorageLogin("persist:root", data, () => {});
-      toastify("success", "ثبت نام شما با موفقیت انجام شد");
+      toastify("success", response?.data?.response);
       // navigate("/signin");
     } else {
       toastify("error-login", response?.data?.error);
@@ -407,6 +411,7 @@ const CreateCourse = () => {
         </MapContainer>
       )} */}
       </Structure>
+      <ToastContainer rtl={true} />
     </Container>
   );
 };

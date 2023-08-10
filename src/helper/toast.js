@@ -13,8 +13,8 @@ export const toastify = (type, text) => {
       theme: "colored",
     });
   } else if (type === "warning") {
-    toast.warn("لطفا موارد خواسته شده را وارد کنید", {
-      position: "top-right",
+    toast.warn(text, {
+      position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,

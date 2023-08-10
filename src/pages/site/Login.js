@@ -19,7 +19,7 @@ import useAuth from "../../hooks/useAuth";
 import { setLocalStorageLogin } from "../localStorage";
 
 const Login = () => {
-  const { setAuth, setUser, user } = useAuth();
+  const { setAuth, setUser, user, setRole } = useAuth();
   const navigate = useNavigate();
   const [time, setTime] = useState(0);
   const [login, setLogin] = useState({
@@ -52,9 +52,16 @@ const Login = () => {
     });
     if (response?.data?.tracking_code !== null) {
       toastify("success", "ورود شما با موفقیت انجام شد");
-      setLocalStorageLogin("user", response?.data?.response, () => {});
       setLocalStorageLogin("token", response?.data?.response?.token, () => {});
-
+      setLocalStorageLogin("user", response?.data?.response, () => {});
+      setLocalStorageLogin(
+        "role",
+        response?.data?.response?.role_data,
+        () => {}
+      );
+      setAuth(response?.data?.response?.token);
+      setUser(response?.data?.response);
+      setRole(response?.data?.response?.role_data);
       navigate("/panel/dashboard");
     } else {
       toastify("error-login", response?.data?.error);

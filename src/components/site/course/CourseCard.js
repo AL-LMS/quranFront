@@ -15,7 +15,7 @@ import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 
 const CourseCard = ({ data }) => {
   return (
-    <Link to={`/panel/course/details/${data.id}`}>
+    <Link to={`/panel/course/details/${data[0]}`}>
       <Card
         sx={{
           boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
@@ -40,7 +40,7 @@ const CourseCard = ({ data }) => {
             color="text"
             mb={1}
           >
-            {data.name}
+            {data[6]}
           </Typography>
           <Stack
             direction="row"
@@ -58,7 +58,7 @@ const CourseCard = ({ data }) => {
                 color: data.price2 ? "#ccc" : "#666",
               }}
             >
-              {data.price1?.toLocaleString()} تومان
+              {data[15]?.toLocaleString()} تومان
             </Typography>
             {data.price2 && (
               <Typography
@@ -98,7 +98,7 @@ const CourseCard = ({ data }) => {
                   fontFamily="iranyekanFn"
                   fontWight={400}
                 >
-                  {data.students}
+                  {data[14]}
                 </Typography>
                 <PeopleOutlineIcon fontSize="small" />
               </Stack>

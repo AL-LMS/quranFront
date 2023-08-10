@@ -10,6 +10,11 @@ import { toastify } from "../../../helper/toast";
 
 import NoImage from "../../../assets/img/no-img.png";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+import {
+  convert_ages,
+  convert_degree,
+  convert_sex,
+} from "../../../helper/converter";
 
 const CourseInfo = ({ data }) => {
   const { departmentID, gradeID, courseTypeID, lessonID, yearID } =
@@ -75,7 +80,7 @@ const CourseInfo = ({ data }) => {
                 color="mainText"
                 fontWeight={500}
               >
-                {data.name}
+                {data[12]}
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -94,24 +99,24 @@ const CourseInfo = ({ data }) => {
               >
                 <Stack spacing={2} direction="column">
                   <Typography color="mainText">
-                    رشته تحصیلی:
-                    {data.department_name}
+                    موضوع دوره:
+                    {data[11]}
                   </Typography>
                   <Typography color="mainText">
-                    مقطع تحصیلی:
-                    {data.grade_name}
+                    مقطع سنی:
+                    {convert_ages(data[8])}
                   </Typography>
                   <Typography color="mainText">
-                    سال تحصیلی:
-                    {data.year_name}
+                    حداقل مدرک تحصیلی:
+                    {convert_degree(data[9])}
                   </Typography>
                   <Typography color="mainText">
-                    درس:
-                    {data.lesson_name}
+                    پیشنیازها:
+                    {data[16]}
                   </Typography>
                   <Typography color="mainText">
-                    نوع دوره:
-                    {data.course_type_name}
+                    جنسیت:
+                    {convert_sex(data[10])}
                   </Typography>
                 </Stack>
                 <Stack spacing={2} sx={{ marginTop: { xs: 2, md: 0 } }}>
@@ -128,7 +133,7 @@ const CourseInfo = ({ data }) => {
                         color: data.price2 ? "#ccc" : "#666",
                       }}
                     >
-                      {data.price1?.toLocaleString()} تومان
+                      {data[15]?.toLocaleString()} تومان
                     </Typography>
                   </Stack>
                   {data.price2 && (
@@ -143,7 +148,7 @@ const CourseInfo = ({ data }) => {
                       </Typography>
                     </Stack>
                   )}
-                  <Stack direction="row" spacing={5}>
+                  {/* <Stack direction="row" spacing={5}>
                     <Typography color="mainText">وضعیت دوره:</Typography>
                     <Typography
                       fontWeight={400}
@@ -152,7 +157,8 @@ const CourseInfo = ({ data }) => {
                     >
                       {data.active ? "فعال" : " غیرفعال"}
                     </Typography>
-                  </Stack>
+                  </Stack> */}
+
                   <Divider />
                   <Button
                     sx={{

@@ -4,7 +4,11 @@ import axios from "axios";
 export const DefiContext = createContext({});
 
 const DefiProvider = ({ children }) => {
-  const [departmentID, setDepartmentID] = useState([]);
+  const [departmentID, setDepartmentID] = useState([
+    { id: 0, name: "حفظ" },
+    { id: 1, name: "ترتیل" },
+    { id: 2, name: "قرائت" },
+  ]);
   const [courseTypeID, setCourseTypeID] = useState([]);
   const [lessonID, setLessonID] = useState([]);
   const [gradeID, setGradeID] = useState([]);

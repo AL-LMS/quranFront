@@ -8,8 +8,10 @@ import Loader from "../../components/site/shared/Loader";
 import { useSearchParams, useLocation } from "react-router-dom";
 import NotFound from "../../components/site/shared/NotFound";
 import { classData } from "./courseData";
+import { toastify } from "../../helper/toast";
+import { ToastContainer } from "react-toastify";
 const Course = () => {
-  const [data, setData] = useState(classData);
+  const [data, setData] = useState([]);
   const [params, setParams] = useSearchParams();
   const [notFound, setNotFound] = useState(false);
   const [count, setCount] = useState(0);
@@ -26,6 +28,7 @@ const Course = () => {
     //   setCount(response.data.t_count);
     // };
     // fetchCount();
+    get_courses().then(() => {});
   }, []);
 
   // useEffect(() => {
@@ -43,6 +46,34 @@ const Course = () => {
   //   };
   //   fetchData();
   // }, [params]);
+  const get_courses = async () => {
+    let config = {
+      url: "select_request",
+    };
+    let data = {
+      table: "courses",
+      method_type: "",
+    };
+    let response = await axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        ...data,
+      },
+
+      baseURL: "http://127.0.0.1:5000/get_courses/",
+    });
+    if (response?.data?.tracking_code !== null) {
+      // setLocalStorageLogin("persist:root", data, () => {});
+      // toastify("success", response?.data?.response);
+      setData(response?.data?.response);
+    } else {
+      toastify("error-login", response?.data?.error);
+    }
+  };
 
   console.log(data);
   return (
@@ -94,6 +125,7 @@ const Course = () => {
           </Grid>
         )}
       </Grid>
+      <ToastContainer rtl={true} />
     </Container>
   );
 };

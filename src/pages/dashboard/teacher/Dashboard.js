@@ -7,30 +7,15 @@ import { Container } from "@mui/system";
 import OverView from "../../../components/dashboard/teacher/dashboard/OverView";
 import Loader from "../../../components/site/shared/Loader";
 import Courses from "../../../components/dashboard/teacher/dashboard/Courses";
+import toastify from "../../../helper/toast";
+import { ToastContainer } from "react-toastify";
 
 const Dashboard = () => {
-  const { auth, user } = useAuth();
+  const { auth, user, role } = useAuth();
   const [loading, setLoading] = useState(false);
   const [stCount, setStCount] = useState("");
   const [cCount, setCCount] = useState("");
 
-  useEffect(() => {
-    // const fetchData = async () => {
-    //   // setLoading(true);
-    //   const response = await axios.all([
-    //     axios.get(`course/teacherScount/?id=${user.pk}`, {
-    //       headers: { Authorization: `Bearer ${auth}` },
-    //     }),
-    //     axios.get(`course/teachercCount/?id=${user.pk}`, {
-    //       headers: { Authorization: `Bearer ${auth}` },
-    //     }),
-    //   ]);
-    //   setLoading(false);
-    //   setStCount(response[0].data);
-    //   setCCount(response[1].data);
-    // };
-    // fetchData();
-  }, []);
   if (loading)
     return (
       <Container maxWidth="lg">
@@ -64,6 +49,7 @@ const Dashboard = () => {
           <Courses />
         </Grid>
       </Grid>
+      <ToastContainer rtl={true} />
     </Container>
   );
 };

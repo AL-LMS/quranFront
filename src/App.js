@@ -7,6 +7,7 @@ import rtlPlugin from "stylis-plugin-rtl";
 import Navbar from "./layouts/site/Navbar";
 import HomePage from "./pages/site/HomePage";
 import Footer from "./layouts/site/Footer";
+import { ToastContainer } from "react-toastify";
 
 import Course from "./pages/site/Course";
 import CourseDetails from "./pages/site/CourseDetails";
@@ -182,6 +183,8 @@ function App() {
         )}
         <Route path="/*" element={<Navigate to="/" />} />
       </Routes>
+      <ToastContainer rtl={true} />
+
       {!location.pathname.includes("panel") && <Footer />}
     </CacheProvider>
   );

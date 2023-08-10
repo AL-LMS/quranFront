@@ -8,21 +8,46 @@ import CourseTitle from "../../components/site/course/CourseTitle";
 import RelatedCourse from "../../components/site/course/RelatedCourse";
 import { Container } from "@mui/system";
 import { useParams } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import { classData } from "./courseData";
-
+import { toastify } from "../../helper/toast";
+import { ToastContainer } from "react-toastify";
 const CourseDetails = () => {
   const { id } = useParams();
-  const [data, setData] = useState(classData[id - 1]);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    get_course().then(() => {});
+  }, []);
+  const get_course = async () => {
+    let config = {
+      url: "select_request",
+    };
+    let data = {
+      table: "courses",
+      method_type: "",
+      data: {
+        id: id,
+      },
+    };
+    let response = await axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        ...data,
+      },
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await axios.get(`course/course/?id=${id}`);
-  //     const data = await response.data;
-  //     setData(data);
-  //   };
-  //   fetchData();
-  // }, []);
+      baseURL: "http://127.0.0.1:5000/get_course/",
+    });
+    if (response?.data?.tracking_code !== null) {
+      // setLocalStorageLogin("persist:root", data, () => {});
+      // toastify("success", response?.data?.response);
+      setData(response?.data?.response);
+    } else {
+      toastify("error-login", response?.data?.error);
+    }
+  };
   console.log(data);
 
   return (

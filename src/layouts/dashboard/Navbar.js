@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import {
   AppBar,
@@ -30,6 +30,7 @@ const Navbar = ({ setSidebar }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { setAuth, setUser, user } = useAuth();
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
   const openHandler = (e) => {
     setAnchorEl(e.currentTarget);
   };
@@ -42,6 +43,7 @@ const Navbar = ({ setSidebar }) => {
     setUser("");
     localStorage.clear("token");
     localStorage.clear("user");
+    navigate("/login");
   };
   return (
     <AppBar

@@ -13,9 +13,16 @@ export const AuthProvider = ({ children }) => {
       ? JSON.parse(localStorage.getItem("user"))
       : null
   );
+  const [role, setRole] = useState(() =>
+    localStorage.getItem("role")
+      ? JSON.parse(localStorage.getItem("role"))
+      : null
+  );
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, user, setUser }}>
+    <AuthContext.Provider
+      value={{ auth, setAuth, user, setUser, role, setRole }}
+    >
       {children}
     </AuthContext.Provider>
   );

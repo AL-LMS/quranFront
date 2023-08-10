@@ -17,13 +17,13 @@ import TeacherInfo from "../../../components/dashboard/students/profile/TeacherI
 import MultiDocumnets from "./MultiDocumnets";
 
 const Profile = () => {
-  const { auth, user } = useAuth();
+  const { auth, user, role } = useAuth();
   const { reaload, setReload } = useContext(DefiContext);
   const [form, setForm] = useState({
-    first_name: "محمدرضا",
-    last_name: "قادری",
-    national_code: "0480959838",
-    phone: "09216272502",
+    first_name: user?.first_name,
+    last_name: user?.last_name,
+    national_code: role?.national_id,
+    phone: user?.phone,
     picture: "",
     certificates: [],
     role: "teacher",
@@ -33,6 +33,11 @@ const Profile = () => {
   const [showLastCertificate, setShowLastCertificate] = useState("");
   const [showCertificate, setShowCertificate] = useState([]);
 
+  useEffect(() => {
+    if (role?.confirm !== 1) {
+      toastify("warning", "اکانت شما هنوز توسط ادمین فعال نشده است.");
+    }
+  }, [role]);
   useEffect(() => {
     setErrors(profileAuth(form));
   }, [form]);
