@@ -15,7 +15,6 @@ import {
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import { miladi_be_shamsi } from "../../../../helper/shamsi";
 
 const statusTable = (item) => {
   if (item) {
@@ -118,7 +117,7 @@ const CourseList = ({ data }) => {
                     textAlign: "center",
                   }}
                 >
-                  {item.code}
+                  {item.student_count}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
                   <Chip

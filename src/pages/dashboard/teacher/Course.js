@@ -5,25 +5,50 @@ import { Container } from "@mui/system";
 import { Grid, Typography } from "@mui/material";
 import Loader from "../../../components/site/shared/Loader";
 import CourseList from "../../../components/dashboard/teacher/course/CourseList";
+import toastify from "../../../helper/toast";
 
 const Course = () => {
   const { auth, user } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
+  const get_register_course = async () => {
+    setLoading(true);
+    let config = {
+      url: "select_request",
+    };
+    let data = {
+      table: "courses",
+      method_type: "get_register_course",
+      data: {
+        user_id: userInfo.user_id,
+      },
+    };
+    let response = await axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        ...data,
+      },
 
+      baseURL: "http://127.0.0.1:5000/get_register_course/",
+    });
+    if (response?.data?.tracking_code !== null) {
+      setData(response?.data?.response);
+    } else {
+      toastify("error-login", response?.detail);
+    }
+  };
   useEffect(() => {
-    // const fetchData = async () => {
-    //   // setLoading(true);
-    //   const response = await axios.get(`course/teacherCourse/?id=${user.pk}`, {
-    //     headers: { Authorization: `Bearer ${auth}` },
-    //   });
-    //   setData(response.data.filter((item) => item.showforTeacher === true));
-    //   setLoading(false);
-    //   console.log(response.data);
-    // };
-    // fetchData();
-  }, []);
-
+    get_register_course().then(() => {
+      setLoading(false);
+    });
+  }, [userInfo]);
   if (loading)
     return (
       <Container maxWidth="lg">
