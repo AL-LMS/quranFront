@@ -12,12 +12,8 @@ import {
   TableRow,
   Tooltip,
 } from "@mui/material";
-import { Link } from "react-router-dom";
-
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
-import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
-import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import { miladi_be_shamsi } from "../../../../helper/shamsi";
 
@@ -30,13 +26,13 @@ const statusTable = (item) => {
 };
 
 const CourseList = ({ data }) => {
-  data = [
-    {
-      name: "حفظ",
-      startTime: "2023-04-01",
-      code: 18,
-    },
-  ];
+  // data = [
+  //   {
+  //     name: "حفظ",
+  //     startTime: "2023-04-01",
+  //     code: 18,
+  //   },
+  // ];
   return (
     <Card
       sx={{

@@ -158,6 +158,8 @@ function App() {
             <Route path="/panel/new-coures" element={<TeacherNewCourse />} />
             <Route path="/panel/coures" element={<TeacherBuyCourse />} />
             <Route path="/panel/live" element={<Live />} />
+            <Route path="/panel/wallet" element={<Wallet />} />
+            <Route path="/panel/payments" element={<Payments />} />
             <Route path="/panel/profile" element={<ProfileTeacher />} />
             <Route
               path="/panel/course/course-homework/:id"

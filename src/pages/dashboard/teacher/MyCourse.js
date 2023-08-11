@@ -8,25 +8,51 @@ import Loader from "../../../components/site/shared/Loader";
 
 import CourseList from "../../../components/dashboard/teacher/course/CourseList";
 import { useNavigate } from "react-router-dom";
+import toastify from "../../../helper/toast";
 
 const MyCourse = () => {
   const { auth, user } = useAuth();
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
+  const get_course = async () => {
+    let config = {
+      url: "select_request",
+    };
+    let data = {
+      table: "courses",
+      method_type: "get_teacher_course",
+      data: {
+        user_id: userInfo.user_id,
+      },
+    };
+    let response = await axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        ...data,
+      },
+
+      baseURL: "http://127.0.0.1:5000/get_teacher_course/",
+    });
+    if (response?.data?.tracking_code !== null) {
+      setData(response?.data?.response);
+    } else {
+      toastify("error-login", response?.data?.error);
+    }
+  };
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   // setLoading(true);
-    //   const response = await axios.get(`course/teacherCourse/?id=${user.pk}`, {
-    //     headers: { Authorization: `Bearer ${auth}` },
-    //   });
-    //   setData(response.data.filter((item) => item.showforTeacher === true));
-    //   setLoading(false);
-    //   console.log(response.data);
-    // };
-    // fetchData();
-  }, []);
+    get_course().then(() => {
+      setLoading(false);
+    });
+  }, [userInfo]);
 
   if (loading)
     return (
