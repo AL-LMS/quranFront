@@ -5,98 +5,111 @@ import { Backdrop, Button, Grid } from "@mui/material";
 import { Container } from "@mui/system";
 import { toastify } from "../../../helper/toast";
 import StudentInfo from "../../../components/dashboard/students/profile/StudentInfo";
-import ParentsInfo from "../../../components/dashboard/students/profile/ParentsInfo";
 import Documnets from "../../../components/dashboard/students/profile/Documnets";
 
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { ToastContainer } from "react-toastify";
-import { profileAuth } from "../../../auth/profile";
+import { profileAuthStudent } from "../../../auth/profile";
 import { useContext } from "react";
 import { DefiContext } from "../../../context/DefiContext";
+import { setLocalStorageLogin } from "../../localStorage";
 
 const Profile = () => {
-  const { auth, user } = useAuth();
+  const { auth, user, role, setAuth, setUser, setRole } = useAuth();
   const { reaload, setReload } = useContext(DefiContext);
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
   const [form, setForm] = useState({
-    first_name: "محمدرضا",
-    last_name: "قادری",
-    national_code: "0480959838",
-    phone: "09216272502",
+    first_name: user?.first_name,
+    last_name: user?.last_name,
+    national_id: role?.national_id,
+    phone: user?.phone,
+    sex: role?.sex,
+    ages: role?.ages,
+    degree: role?.degree,
     picture: "",
-    role: "Student",
+    role: user?.role,
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [showBirthCertificate, setShowBirthCertificate] = useState("");
 
   useEffect(() => {
-    setErrors(profileAuth(form));
+    setErrors(profileAuthStudent(form));
   }, [form]);
 
   useEffect(() => {
-    const fetchStudentData = async () => {
-      // setLoading(true);
-      try {
-        const response = await axios.get(
-          `authen/users/?type=student&id=${user.pk}`,
-          {
-            headers: { Authorization: `Bearer ${auth}` },
-          }
-        );
-        const data = await response.data;
-        setLoading(false);
-        setForm(data[0]);
-      } catch (err) {
-        console.log(err);
-        setLoading(false);
-      }
-    };
+    const fetchStudentData = async () => {};
     fetchStudentData();
   }, [reaload]);
 
   const submitData = async () => {
-    // setLoading(true);
+    setLoading(true);
     const formData = new FormData();
     formData.append("phone", form.phone);
-    formData.append("grade", form.grade);
-    formData.append("department", form.department);
-    form.birth && formData.append("birth", form.birth);
-    formData.append("national_code", form.national_code);
+    formData.append("national_id", form.national_id);
     formData.append("role", "student");
     formData.append("first_name", form.first_name);
     formData.append("last_name", form.last_name);
-    formData.append("pk", user.pk);
-    form.gpaverage && formData.append("gpaverage", form.gpaverage);
-    form.disipcline && formData.append("disipcline", form.disipcline);
-    form.school && formData.append("school", form.school);
-    form.parentName && formData.append("parentName", form.parentName);
-    form.parentNationalCode &&
-      formData.append("parentNationalCode", form.parentNationalCode);
-    form.pbirthday && formData.append("pbirthday", form.pbirthday);
-    form.peducation && formData.append("peducation", form.peducation);
-    form.pjob && formData.append("pjob", form.pjob);
-    form.address && formData.append("address", form.address);
-    showBirthCertificate && formData.append("picture", form.picture);
     formData.append("type", "student");
+    formData.append("sex", form.sex);
+    formData.append("ages", form.ages);
+    formData.append("degree", form.degree);
     if (!Object.keys(errors).length) {
-      try {
-        const response = await axios.put("authen/update_profile/", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${auth}`,
-          },
-        });
-        toastify("success", "اطلاعات با موفقیت ثبت شد");
+      let config = {
+        url: "update_request",
+      };
+      let data = {
+        table: "teachers",
+        method_type: "edit_user",
+        data: {
+          user_id: userInfo?.user_id,
+          phone: form.phone,
+          national_id: form.national_id,
+          first_name: form.first_name,
+          last_name: form.last_name,
+          sex: form.sex,
+          ages: form.ages,
+          degree: form.degree,
+          role: form.role,
+        },
+      };
+      let response = await axios({
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        data: {
+          ...data,
+        },
+
+        baseURL: "http://127.0.0.1:5000/edit_user/",
+      });
+      if (response?.data?.tracking_code !== null) {
+        localStorage.clear("role");
+        localStorage.clear("user");
+        localStorage.clear("token");
+        setLocalStorageLogin(
+          "token",
+          response?.data?.response?.token,
+          () => {}
+        );
+        setLocalStorageLogin("user", response?.data?.response, () => {});
+        setLocalStorageLogin(
+          "role",
+          response?.data?.response?.role_data,
+          () => {}
+        );
+        setAuth(response?.data?.response?.token);
+        setUser(response?.data?.response);
+        setRole(response?.data?.response?.role_data);
+        toastify("success", "اطلاعات شما با موفقیت تغییر کرد.");
+        window.location.reload();
         setLoading(false);
-        setReload((prevState) => !prevState);
-      } catch (err) {
-        setLoading(false);
-        if (err.response.status === 400) {
-          toastify("error-login", "اطلاعات ناقص است");
-        } else {
-          toastify("error", "خطا در برقراری ارتباط با سرور");
-        }
-        console.log(err);
+      } else {
+        toastify("error-login", response?.data?.error);
       }
     } else {
       setLoading(false);
@@ -111,9 +124,6 @@ const Profile = () => {
         <Grid item xs={12}>
           <StudentInfo form={form} setForm={setForm} errors={errors} />
         </Grid>
-        {/* <Grid item xs={12}>
-          <ParentsInfo form={form} setForm={setForm} />
-        </Grid> */}
         <Grid item xs={12}>
           <Documnets
             form={form}

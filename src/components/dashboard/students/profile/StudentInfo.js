@@ -1,69 +1,13 @@
-import React, { useEffect, useContext, useState } from "react";
-import { DefiContext } from "../../../../context/DefiContext";
-import {
-  Card,
-  TextField,
-  Grid,
-  Typography,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormHelperText,
-} from "@mui/material";
-import DatePicker from "@hassanmojab/react-modern-calendar-datepicker";
+import React from "react";
+import { Card, TextField, Grid, Typography, Autocomplete } from "@mui/material";
 import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
-import { shamsi_be_miladi } from "../../../../helper/miladi";
-import { miladi_be_shamsi, mildai_be_shamsi } from "../../../../helper/shamsi";
-import { Box } from "@mui/system";
+import {
+  ages,
+  degree,
+  sex,
+} from "../../../../pages/dashboard/teacher/CourseData";
 
 const StudentInfo = ({ form, setForm, errors }) => {
-  // const [birthday, setBirthday] = useState("");
-  // const { departmentID, gradeID } = useContext(DefiContext);
-
-  // useEffect(() => {
-  //   if (birthday.year) {
-  //     setForm({
-  //       ...form,
-  //       birth: shamsi_be_miladi(birthday.year, birthday.month, birthday.day),
-  //     });
-  //   }
-  // }, [birthday]);
-
-  //Custom DatePicker
-  // const studentBirth = ({ ref }) => (
-  //   <input
-  //     readOnly
-  //     ref={ref} // necessary
-  //     placeholder="تاریخ تولد"
-  //     value={
-  //       birthday ? `${birthday.year}/${birthday.month}/${birthday.day}` : ""
-  //     }
-  //     style={{
-  //       padding: "0 8px",
-  //       height: "56px",
-  //       fontSize: "1rem",
-  //       border: "1px solid rgba(0, 0, 0, 0.23)",
-  //       width: "100%",
-  //       borderRadius: "5px",
-  //       color: "#666",
-  //       outline: "none",
-  //       display: "block",
-  //       backgroundColor: "transparent",
-  //       fontFamily: "iranyekanFn",
-  //     }}
-  //   />
-  // );
-
-  const gpaverageChange = (e) => {
-    if (e.target.value > 20) {
-      setForm({ ...form, gpaverage: 20 });
-    } else if (e.target.value < 0) {
-      setForm({ ...form, gpaverage: 0 });
-    } else {
-      setForm(e.target.value);
-    }
-  };
   return (
     <Card
       sx={{
@@ -90,6 +34,7 @@ const StudentInfo = ({ form, setForm, errors }) => {
             value={form.first_name}
             onChange={(e) => setForm({ ...form, first_name: e.target.value })}
             fullWidth
+            disabled
             InputLabelProps={{
               shrink: true,
             }}
@@ -101,6 +46,7 @@ const StudentInfo = ({ form, setForm, errors }) => {
             value={form.last_name}
             onChange={(e) => setForm({ ...form, last_name: e.target.value })}
             fullWidth
+            disabled
             InputLabelProps={{
               shrink: true,
             }}
@@ -121,13 +67,51 @@ const StudentInfo = ({ form, setForm, errors }) => {
         <Grid item xs={12} md={6}>
           <TextField
             label="کد ملی"
-            value={form.national_code}
-            onChange={(e) =>
-              setForm({ ...form, national_code: e.target.value })
-            }
+            value={form.national_id}
+            onChange={(e) => setForm({ ...form, national_id: e.target.value })}
             fullWidth
-            helperText={errors.national_code && errors.national_code}
+            helperText={errors.national_id && errors.national_id}
             onWheel={(e) => e.target.blur()}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Autocomplete
+            fullWidth
+            value={sex[form.sex]}
+            onChange={(event, newValue) => {
+              setForm({ ...form, sex: newValue.id });
+            }}
+            id="controllable-states-demo"
+            options={sex}
+            getOptionLabel={(option) => option.name || ""}
+            renderInput={(params) => <TextField {...params} label="جنسیت" />}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Autocomplete
+            fullWidth
+            value={ages[form.ages]}
+            onChange={(event, newValue) => {
+              setForm({ ...form, ages: newValue.id });
+            }}
+            id="controllable-states-demo"
+            options={ages}
+            getOptionLabel={(option) => option.name || ""}
+            renderInput={(params) => <TextField {...params} label="رده سنی" />}
+          />
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <Autocomplete
+            fullWidth
+            value={degree[form.degree]}
+            onChange={(event, newValue) => {
+              setForm({ ...form, degree: newValue.id });
+            }}
+            id="controllable-states-demo"
+            options={degree}
+            getOptionLabel={(option) => option.name || ""}
+            renderInput={(params) => <TextField {...params} label="تحصیلات" />}
           />
         </Grid>
         {/* <Grid item xs={12} md={6}>

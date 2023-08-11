@@ -153,6 +153,7 @@ function App() {
         ) : (
           <Route element={<PrivateRoutes />}>
             <Route path="/panel/dashboard" element={<TeacherDash />} />
+            <Route path="/panel/profile" element={<ProfileTeacher />} />
             <Route path="/panel/my-coures" element={<TeacherCourse />} />
             <Route path="/course/details/:id" element={<CourseDetails />} />
             <Route path="/panel/new-coures" element={<TeacherNewCourse />} />
@@ -160,7 +161,6 @@ function App() {
             <Route path="/panel/live" element={<Live />} />
             <Route path="/panel/wallet" element={<Wallet />} />
             <Route path="/panel/payments" element={<Payments />} />
-            <Route path="/panel/profile" element={<ProfileTeacher />} />
             <Route
               path="/panel/course/course-homework/:id"
               element={<CourseHomework />}

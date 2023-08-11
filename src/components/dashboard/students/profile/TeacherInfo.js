@@ -95,7 +95,7 @@ const TeacherInfo = ({ form, setForm, errors }) => {
             options={ages}
             getOptionLabel={(option) => option.name || ""}
             renderInput={(params) => <TextField {...params} label="رده سنی" />}
-          />{" "}
+          />
         </Grid>
       </Grid>
     </Card>

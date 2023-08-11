@@ -32,7 +32,7 @@ const ConfirmPhone = () => {
     last_name: "",
     password: "",
     repassword: "",
-    type: "",
+    type: "student",
   });
   const handleChange = () => {
     if (kind === "student") {
@@ -41,24 +41,7 @@ const ConfirmPhone = () => {
       setKind("student");
     }
   };
-  // const sendCodeHandler = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `authen/sms/register?receiver=${confirm.phone}`
-  //     );
-  //     setConfirm({ ...confirm, request_id: response.data.request_id });
-  //     setSendCode(true);
-  //     setTime(60);
-  //     toastify(
-  //       "success-login",
-  //       `کد تایید برای شماره ${confirm.phone} ارسال شد`
-  //     );
-  //     console.log(response);
-  //   } catch (err) {
-  //     console.log(err);
-  //     toastify("error");
-  //   }
-  // };
+
   let timer;
   useEffect(() => {
     timer = setInterval(() => {
@@ -99,7 +82,6 @@ const ConfirmPhone = () => {
       baseURL: "http://127.0.0.1:5000/register/",
     });
     if (response?.data?.tracking_code !== null) {
-      // setLocalStorageLogin("persist:root", data, () => {});
       toastify("success", "ثبت نام شما با موفقیت انجام شد");
       navigate("/signin");
     } else {

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
-import { Backdrop, Button, Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Container } from "@mui/system";
 import { toastify } from "../../../helper/toast";
-import StudentInfo from "../../../components/dashboard/students/profile/StudentInfo";
-import ParentsInfo from "../../../components/dashboard/students/profile/ParentsInfo";
 
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { ToastContainer } from "react-toastify";
@@ -48,8 +46,7 @@ const Profile = () => {
     setErrors(profileAuth(form));
   }, [form]);
   useEffect(() => {
-    const fetchStudentData = async () => {
-    };
+    const fetchStudentData = async () => {};
     fetchStudentData();
   }, [reaload]);
 

@@ -16,7 +16,14 @@ import FormGroup from "@mui/material/FormGroup";
 import { DatePicker } from "zaman";
 import "./style.css";
 import { convertToPersianDate } from "../converter/dateConverter";
-import { Days, ages, courseType, degree, sex } from "./CourseData";
+import {
+  Days,
+  ages,
+  courseType,
+  degree,
+  sex,
+  sex_for_class,
+} from "./CourseData";
 import Documnets from "./Documnets";
 import CheckIcon from "@mui/icons-material/Check";
 import { TimePicker } from "react-ios-time-picker";
@@ -282,12 +289,12 @@ const CreateCourse = () => {
             <Grid style={{ display: "flex" }}>
               <Autocomplete
                 fullWidth
-                value={sex[form.sex]}
+                value={sex_for_class[form.sex]}
                 onChange={(event, newValue) => {
                   setForm({ ...form, sex: newValue.id });
                 }}
                 id="controllable-states-demo"
-                options={sex}
+                options={sex_for_class}
                 getOptionLabel={(option) => option.name || ""}
                 renderInput={(params) => (
                   <TextField {...params} label="جنسیت" />
@@ -326,7 +333,7 @@ const CreateCourse = () => {
               />
               <TextField
                 fullWidth
-                label="قیمت"
+                label="هزینه ثبت نام"
                 name="price"
                 type="number"
                 onChange={(e) => setForm({ ...form, price: e.target.value })}
