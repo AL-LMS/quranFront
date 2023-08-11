@@ -29,7 +29,7 @@ const Profile = () => {
     ages: role?.ages,
     degree: role?.degree,
     picture: "",
-    role: user?.role,
+    role: "student",
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
