@@ -15,16 +15,22 @@ import { DefiContext } from "../../../context/DefiContext";
 import Documnets from "./Documnets";
 import TeacherInfo from "../../../components/dashboard/students/profile/TeacherInfo";
 import MultiDocumnets from "./MultiDocumnets";
+import { setLocalStorageLogin } from "../../localStorage";
 
 const Profile = () => {
-  const { auth, user, role } = useAuth();
+  const { auth, user, role, setRole, setAuth, setUser } = useAuth();
   const { reaload, setReload } = useContext(DefiContext);
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
   const [form, setForm] = useState({
     first_name: user?.first_name,
     last_name: user?.last_name,
-    national_code: role?.national_id,
+    national_id: role?.national_id,
     phone: user?.phone,
     picture: "",
+    sex: role?.sex,
+    ages: role?.ages,
     certificates: [],
     role: "teacher",
   });
@@ -41,78 +47,80 @@ const Profile = () => {
   useEffect(() => {
     setErrors(profileAuth(form));
   }, [form]);
-  console.log("form", form);
   useEffect(() => {
     const fetchStudentData = async () => {
-      // setLoading(true);
-      // try {
-      //   const response = await axios.get(
-      //     `authen/users/?type=student&id=${user.pk}`,
-      //     {
-      //       headers: { Authorization: `Bearer ${auth}` },
-      //     }
-      //   );
-      //   const data = await response.data;
-      //   setLoading(false);
-      //   setForm(data[0]);
-      // } catch (err) {
-      //   console.log(err);
-      //   setLoading(false);
-      // }
     };
     fetchStudentData();
   }, [reaload]);
 
-  // const submitData = async () => {
-  //   // setLoading(true);
-  //   const formData = new FormData();
-  //   formData.append("phone", form.phone);
-  //   formData.append("grade", form.grade);
-  //   formData.append("department", form.department);
-  //   form.birth && formData.append("birth", form.birth);
-  //   formData.append("national_code", form.national_code);
-  //   formData.append("role", "student");
-  //   formData.append("first_name", form.first_name);
-  //   formData.append("last_name", form.last_name);
-  //   formData.append("pk", user.pk);
-  //   form.gpaverage && formData.append("gpaverage", form.gpaverage);
-  //   form.disipcline && formData.append("disipcline", form.disipcline);
-  //   form.school && formData.append("school", form.school);
-  //   form.parentName && formData.append("parentName", form.parentName);
-  //   form.parentNationalCode &&
-  //     formData.append("parentNationalCode", form.parentNationalCode);
-  //   form.pbirthday && formData.append("pbirthday", form.pbirthday);
-  //   form.peducation && formData.append("peducation", form.peducation);
-  //   form.pjob && formData.append("pjob", form.pjob);
-  //   form.address && formData.append("address", form.address);
-  //   showBirthCertificate && formData.append("picture", form.picture);
-  //   formData.append("type", "student");
-  //   // if (!Object.keys(errors).length) {
-  //   //   try {
-  //   //     const response = await axios.put("authen/update_profile/", formData, {
-  //   //       headers: {
-  //   //         "Content-Type": "multipart/form-data",
-  //   //         Authorization: `Bearer ${auth}`,
-  //   //       },
-  //   //     });
-  //   //     toastify("success", "اطلاعات با موفقیت ثبت شد");
-  //   //     setLoading(false);
-  //   //     setReload((prevState) => !prevState);
-  //   //   } catch (err) {
-  //   //     setLoading(false);
-  //   //     if (err.response.status === 400) {
-  //   //       toastify("error-login", "اطلاعات ناقص است");
-  //   //     } else {
-  //   //       toastify("error", "خطا در برقراری ارتباط با سرور");
-  //   //     }
-  //   //     console.log(err);
-  //   //   }
-  //   // } else {
-  //   //   setLoading(false);
-  //   //   toastify("warning", "لطفا فیلد هارا با دقت پر کنید");
-  //   //   console.log(form);
-  //   // }
-  // };
+  const submitData = async () => {
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("phone", form.phone);
+    formData.append("national_id", form.national_id);
+    formData.append("role", "teacher");
+    formData.append("first_name", form.first_name);
+    formData.append("sex", form.sex);
+    formData.append("ages", form.ages);
+    formData.append("last_name", form.last_name);
+    if (!Object.keys(errors).length) {
+      let config = {
+        url: "update_request",
+      };
+      let data = {
+        table: "teachers",
+        method_type: "edit_user",
+        data: {
+          user_id: userInfo?.user_id,
+          phone: form.phone,
+          national_id: form.national_id,
+          first_name: form.first_name,
+          last_name: form.last_name,
+          sex: form.sex,
+          ages: form.ages,
+          role: form.role,
+        },
+      };
+      let response = await axios({
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        data: {
+          ...data,
+        },
+
+        baseURL: "http://127.0.0.1:5000/edit_user/",
+      });
+      if (response?.data?.tracking_code !== null) {
+        localStorage.clear("role");
+        localStorage.clear("user");
+        localStorage.clear("token");
+        setLocalStorageLogin(
+          "token",
+          response?.data?.response?.token,
+          () => {}
+        );
+        setLocalStorageLogin("user", response?.data?.response, () => {});
+        setLocalStorageLogin(
+          "role",
+          response?.data?.response?.role_data,
+          () => {}
+        );
+        setAuth(response?.data?.response?.token);
+        setUser(response?.data?.response);
+        setRole(response?.data?.response?.role_data);
+        toastify("success", "اطلاعات شما با موفقیت تغییر کرد.");
+        window.location.reload();
+      } else {
+        toastify("error-login", response?.data?.error);
+      }
+    } else {
+      setLoading(false);
+      toastify("warning", "لطفا فیلد هارا با دقت پر کنید");
+    }
+  };
 
   return (
     <Container maxWidth="lg">
@@ -143,7 +151,7 @@ const Profile = () => {
         <Button
           variant="contained"
           endIcon={<SaveOutlinedIcon />}
-          // onClick={submitData}
+          onClick={submitData}
           sx={{
             boxShadow: "none",
             position: "fixed",
@@ -155,7 +163,7 @@ const Profile = () => {
           ذخیره
         </Button>
       </Grid>
-      <Backdrop open={loading} />
+      {/* <Backdrop open={loading} /> */}
       <ToastContainer rtl={true} />
     </Container>
   );

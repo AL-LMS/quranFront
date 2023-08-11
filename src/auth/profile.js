@@ -1,22 +1,22 @@
 export const profileAuth = (data) => {
   const errors = {};
-  if (!data.national_code) {
-    errors.national_code = "کدملی ضروری است";
-  } else if (!/^([0-9]){10}$/.test(data.national_code)) {
-    errors.national_code = "کد ملی وارد شده صحیح نیست";
+  if (!data.national_id) {
+    errors.national_id = "کدملی ضروری است";
+  } else if (!/^([0-9]){10}$/.test(data.national_id)) {
+    errors.id = "کد ملی وارد شده صحیح نیست";
   } else {
-    delete errors.national_code;
+    delete errors.national_id;
   }
-  if (!data.department) {
-    errors.department = "رشته تحصیلی ضروری است";
+  if (data.sex === "") {
+    errors.sex = "جنسیت خود را انتخاب کنید";
   } else {
-    delete errors.department;
+    delete errors.sex;
   }
-  if (!data.grade) {
-    errors.grade = "مقطع تحصیلی ضروری است";
+  if (data.ages === "") {
+    errors.ages = "رده سنی خود را انتخاب کنید";
   } else {
-    delete errors.grade;
+    delete errors.ages;
   }
-
+  console.log("errors", errors);
   return errors;
 };
