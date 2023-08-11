@@ -49,6 +49,11 @@ const CourseList = ({ data }) => {
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
+                ردیف
+              </TableCell>
+              <TableCell
+                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
+              >
                 عنوان
               </TableCell>
               <TableCell
@@ -78,7 +83,7 @@ const CourseList = ({ data }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((item) => (
+            {data.map((item, index) => (
               <TableRow
                 key={item.id}
                 sx={{
@@ -90,6 +95,9 @@ const CourseList = ({ data }) => {
                 }}
               >
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
+                  {index + 1}
+                </TableCell>
+                <TableCell sx={{ border: "none", textAlign: "center" }}>
                   {item.name}
                 </TableCell>
                 <TableCell
@@ -100,7 +108,7 @@ const CourseList = ({ data }) => {
                     textAlign: "center",
                   }}
                 >
-                  {item?.startTime && miladi_be_shamsi(item?.startTime)}
+                  {item?.start_date && item?.start_date.slice(0, 10)}
                 </TableCell>
                 <TableCell
                   sx={{

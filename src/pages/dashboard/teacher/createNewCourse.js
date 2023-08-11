@@ -24,13 +24,8 @@ import CheckIcon from "@mui/icons-material/Check";
 import { TimePicker } from "react-ios-time-picker";
 import { styled } from "styled-components";
 
-// import "react-datepicker/dist/react-datepicker.css";
-
 const CreateCourse = () => {
-  const { auth, user } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
-  const { setReload } = useContext(DefiContext);
   const [calendarValue, setCalendarValue] = useState(new Date());
   const [showLastCertificate, setShowLastCertificate] = useState("");
   const [prerequisite, setPrerequisite] = useState([]);
@@ -103,49 +98,10 @@ const CreateCourse = () => {
       baseURL: "http://127.0.0.1:5000/add_course/",
     });
     if (response?.data?.tracking_code !== null) {
-      // setLocalStorageLogin("persist:root", data, () => {});
       toastify("success", response?.data?.response);
-      // navigate("/signin");
     } else {
       toastify("error-login", response?.data?.error);
     }
-  };
-
-  useEffect(() => {
-    // const fetchCoursID = async () => {
-    //   const response = await axios.get(`course/teacherCourse/?id=${user.pk}`, {
-    //     headers: { Authorization: `Bearer ${auth}` },
-    //   });
-    //   const data = await response.data;
-    //   setCourseID(data);
-    // };
-    // fetchCoursID();
-  }, []);
-  const submitHandler = async () => {
-    // if (form.course) {
-    //   try {
-    //     const response = await axios.post(
-    //       "live/create/",
-    //       {
-    //         id: form.course.id,
-    //         name: form.course.name,
-    //       },
-    //       {
-    //         headers: { Authorization: `Bearer ${auth}` },
-    //       }
-    //     );
-    //     toastify("success");
-    //     setLoading(false);
-    //     setOpen(false);
-    //     setReload((prevState) => !prevState);
-    //   } catch (err) {
-    //     console.log(err);
-    //     toastify("error");
-    //     setLoading(false);
-    //   }
-    // } else {
-    //   toastify("warning");
-    // }
   };
 
   const handleDatePicker = (e) => {
@@ -166,12 +122,11 @@ const CreateCourse = () => {
   useEffect(() => {
     setForm({ ...form, prerequisite: prerequisite });
   }, [prerequisite]);
-  console.log("form", form);
   return (
     <Container>
       <Structure>
         <Grid container spacing={3} padding={2}>
-          <Grid item md={4} xs={12}>
+          <Grid item md={6} xs={12}>
             <Autocomplete
               fullWidth
               value={form.type}
@@ -219,7 +174,7 @@ const CreateCourse = () => {
               />
             </FormGroup>
           </Grid>
-          <Grid item md={4} xs={12}>
+          <Grid item md={6} xs={12}>
             <section className="wrapper">
               <div className="libWrapper">
                 <DatePicker
@@ -272,8 +227,11 @@ const CreateCourse = () => {
               style={{ marginBottom: "2px" }}
             />
           </Grid>
-          <Grid item md={4} xs={12}>
-            <Grid style={{ display: "flex", marginBottom: "5px" }}>
+        </Grid>
+        <Divider />
+        <Grid container spacing={3} padding={2}>
+          <Grid item md={6} xs={12}>
+            <Grid style={{ display: "flex" }}>
               <TextField
                 fullWidth
                 label="حدنصاب کلاس"
@@ -281,7 +239,7 @@ const CreateCourse = () => {
                 type="number"
                 onChange={(e) => setForm({ ...form, min: e.target.value })}
                 value={form.min}
-                sx={{ marginTop: 1 }}
+                style={{ marginLeft: "5px" }}
               />
               <TextField
                 fullWidth
@@ -290,7 +248,7 @@ const CreateCourse = () => {
                 type="number"
                 onChange={(e) => setForm({ ...form, max: e.target.value })}
                 value={form.max}
-                sx={{ marginTop: 1 }}
+                style={{ marginRight: "5px" }}
               />
             </Grid>
             <Autocomplete
@@ -319,8 +277,10 @@ const CreateCourse = () => {
                   {selected ? <CheckIcon color="info" /> : null}
                 </MenuItem>
               )}
-              style={{ marginBottom: "5px" }}
+              style={{ marginBottom: "5px", marginTop: "5px" }}
             />
+          </Grid>
+          <Grid item md={6} xs={12}>
             <Grid style={{ display: "flex" }}>
               <Autocomplete
                 fullWidth
@@ -334,6 +294,7 @@ const CreateCourse = () => {
                 renderInput={(params) => (
                   <TextField {...params} label="جنسیت" />
                 )}
+                style={{ marginLeft: "5px" }}
               />
               <Autocomplete
                 fullWidth
@@ -347,10 +308,10 @@ const CreateCourse = () => {
                 renderInput={(params) => (
                   <TextField {...params} label="رده سنی" />
                 )}
+                style={{ marginRight: "5px" }}
               />
             </Grid>
-
-            <Grid style={{ display: "flex" }}>
+            <Grid style={{ display: "flex", marginTop: "5px" }}>
               <Autocomplete
                 fullWidth
                 value={degree[form.degree]}
@@ -363,6 +324,7 @@ const CreateCourse = () => {
                 renderInput={(params) => (
                   <TextField {...params} label="تحصیلات" />
                 )}
+                style={{ marginLeft: "5px" }}
               />
               <TextField
                 fullWidth
@@ -371,6 +333,7 @@ const CreateCourse = () => {
                 type="number"
                 onChange={(e) => setForm({ ...form, price: e.target.value })}
                 value={form.price}
+                style={{ marginRight: "5px" }}
               />
             </Grid>
           </Grid>
