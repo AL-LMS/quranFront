@@ -41,8 +41,6 @@ const CourseDetails = () => {
       baseURL: "http://127.0.0.1:5000/get_course/",
     });
     if (response?.data?.tracking_code !== null) {
-      // setLocalStorageLogin("persist:root", data, () => {});
-      // toastify("success", response?.data?.response);
       setData(response?.data?.response);
     } else {
       toastify("error-login", response?.data?.error);

@@ -1,4 +1,4 @@
-import { ages } from "../pages/dashboard/teacher/CourseData";
+import { ages, sex_for_class } from "../pages/dashboard/teacher/CourseData";
 import { sex } from "../pages/dashboard/teacher/CourseData";
 import { degree } from "../pages/dashboard/teacher/CourseData";
 export function convert_ages(age) {
@@ -14,13 +14,13 @@ export function convert_ages(age) {
 }
 export function convert_sex(gender) {
   if (gender === 0) {
-    return sex[0]["name"];
+    return sex_for_class[0]["name"];
   }
   if (gender === 1) {
-    return sex[1]["name"];
+    return sex_for_class[1]["name"];
   }
   if (gender === 2) {
-    return sex[2]["name"];
+    return sex_for_class[2]["name"];
   }
 }
 export function convert_degree(level) {

@@ -8,7 +8,7 @@ import { Stack } from "@mui/system";
 
 import { toastify } from "../../../helper/toast";
 
-import NoImage from "../../../assets/img/no-img.png";
+import NoImage from "../../../assets/img/class1.jpeg";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import {
   convert_ages,
@@ -24,29 +24,7 @@ const CourseInfo = ({ data }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const addToCart = () => {
-    if (user?.pk) {
-      try {
-        setLoading(true);
-        const response = axios.post(
-          "dashboard/basket",
-          [{ buyID: +id, type: "course" }],
-          {
-            headers: { Authorization: `Bearer ${auth}` },
-          }
-        );
-        toastify("success-login", "دوره به سبد خرید شما اضافه شد");
-        console.log(response);
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-        setLoading(false);
-      }
-    } else {
-      setLoading(false);
-      navigate("/panle/profile");
-    }
-  };
+  const addToCart = () => {};
 
   console.log(data);
 
@@ -76,11 +54,11 @@ const CourseInfo = ({ data }) => {
             <Grid item xs={12}>
               <Typography
                 component="h2"
-                variant="h6"
-                color="mainText"
-                fontWeight={500}
+                variant="h4"
+                color="#000"
+                fontWeight={800}
               >
-                {data[12]}
+                {data["name"]}
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -100,23 +78,31 @@ const CourseInfo = ({ data }) => {
                 <Stack spacing={2} direction="column">
                   <Typography color="mainText">
                     موضوع دوره:
-                    {data[11]}
+                    <span style={{ color: "black" }}>{" " + data["type"]}</span>
                   </Typography>
                   <Typography color="mainText">
                     مقطع سنی:
-                    {convert_ages(data[8])}
+                    <span style={{ color: "black" }}>
+                      {" " + convert_ages(data["ages"])}
+                    </span>
                   </Typography>
                   <Typography color="mainText">
                     حداقل مدرک تحصیلی:
-                    {convert_degree(data[9])}
+                    <span style={{ color: "black" }}>
+                      {" " + convert_degree(data["degree"])}
+                    </span>
                   </Typography>
                   <Typography color="mainText">
                     پیشنیازها:
-                    {data[16]}
+                    <span style={{ color: "black" }}>
+                      {" " + data["prerequisite"]}
+                    </span>
                   </Typography>
                   <Typography color="mainText">
                     جنسیت:
-                    {convert_sex(data[10])}
+                    <span style={{ color: "black" }}>
+                      {" " + convert_sex(data["sex"])}
+                    </span>
                   </Typography>
                 </Stack>
                 <Stack spacing={2} sx={{ marginTop: { xs: 2, md: 0 } }}>
@@ -124,16 +110,16 @@ const CourseInfo = ({ data }) => {
                     <Typography color="mainText">قیمت دوره:</Typography>
                     <Typography
                       fontWeight={400}
-                      color={data.price2 ? "#ccc" : "error"}
+                      color={data["price"] ? "#000" : "error"}
                       fontFamily="iranyekanFn"
                       sx={{
-                        textDecoration: data.price2
+                        textDecoration: !data["price"]
                           ? "line-through"
                           : "initial",
-                        color: data.price2 ? "#ccc" : "#666",
+                        color: data["price"] ? "#000" : "#666",
                       }}
                     >
-                      {data[15]?.toLocaleString()} تومان
+                      {" " + data["price"]?.toLocaleString()} تومان
                     </Typography>
                   </Stack>
                   {data.price2 && (
@@ -170,9 +156,9 @@ const CourseInfo = ({ data }) => {
                     fullWidth
                     fontSize="17px"
                     onClick={addToCart}
-                    disabled={!data.enableforbuy}
+                    disabled={data.enableforbuy}
                   >
-                    افزودن به سبد خرید
+                    خرید دوره
                   </Button>
                 </Stack>
               </Stack>

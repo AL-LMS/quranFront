@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 
-import NoImage from "../../../assets/img/no-img.png";
+import NoImage from "../../../assets/img/class1.jpeg";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 
 const CourseCard = ({ data }) => {

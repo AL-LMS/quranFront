@@ -16,7 +16,7 @@ const CourseDescrption = ({ data }) => {
       </Typography>
       <div
         dangerouslySetInnerHTML={{
-          __html: sanitizeHtml(data[6]),
+          __html: sanitizeHtml(data["explain"]),
         }}
       ></div>
     </Card>
