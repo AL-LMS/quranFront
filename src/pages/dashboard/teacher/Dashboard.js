@@ -15,7 +15,45 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [stCount, setStCount] = useState("");
   const [cCount, setCCount] = useState("");
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
+  const get_teacher_info = async () => {
+    setLoading(true);
+    let config = {
+      url: "select_request",
+    };
+    let data = {
+      table: "courses",
+      method_type: "get_teacher_info",
+      data: {
+        user_id: userInfo.user_id,
+      },
+    };
+    let response = await axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        ...data,
+      },
 
+      baseURL: "http://127.0.0.1:5000/get_teacher_info/",
+    });
+    if (response?.data?.tracking_code !== null) {
+      setStCount(response?.data?.response?.sCount);
+      setCCount(response?.data?.response?.cCount);
+    } else {
+      toastify("error-login", response?.data?.error);
+    }
+  };
+  useEffect(() => {
+    get_teacher_info().then(() => {
+      setLoading(false);
+    });
+  }, [userInfo]);
   if (loading)
     return (
       <Container maxWidth="lg">
