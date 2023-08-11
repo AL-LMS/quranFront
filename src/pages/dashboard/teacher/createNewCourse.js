@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import useAuth from "../../../hooks/useAuth";
 import {
   Autocomplete,
   Button,
@@ -11,7 +10,6 @@ import {
 } from "@mui/material";
 import { toastify } from "../../../helper/toast";
 import { ToastContainer } from "react-toastify";
-import { DefiContext } from "../../../context/DefiContext";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
