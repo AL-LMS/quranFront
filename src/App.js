@@ -9,7 +9,6 @@ import HomePage from "./pages/site/HomePage";
 import Footer from "./layouts/site/Footer";
 import { ToastContainer } from "react-toastify";
 
-import Course from "./pages/site/Course";
 import CourseDetails from "./pages/site/CourseDetails";
 import Packages from "./pages/site/Packages";
 import Applications from "./pages/site/Applications";
@@ -17,6 +16,7 @@ import FAQ from "./pages/site/FAQ";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import Login from "./pages/site/Login";
 //Students dahboard
+import StudentDash from "./pages/site/Course";
 import Dashboard from "./pages/dashboard/students/Dashboard";
 import Wallet from "./pages/dashboard/students/Wallet";
 import Profile from "./pages/dashboard/students/Profile";
@@ -95,7 +95,7 @@ function App() {
         /> */}
         {user?.role?.toLowerCase() === "student" ? (
           <Route element={<PrivateRoutes />}>
-            <Route path="/panel/dashboard" element={<Course />} />
+            <Route path="/panel/dashboard" element={<StudentDash />} />
             <Route
               path="/panel/course/details/:id"
               element={<CourseDetails />}

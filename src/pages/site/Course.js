@@ -17,35 +17,15 @@ const Course = () => {
   const [count, setCount] = useState(0);
   const [query, setQuery] = useState({});
   const [filtered, setFiltred] = useState(false);
-  const location = useLocation();
-
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem("role"))
+  );
   useEffect(() => {
-    // if (!location.search) {
-    //   setParams({ page: 1 });
-    // }
-    // const fetchCount = async () => {
-    //   const response = await axios.get("dashboard/");
-    //   setCount(response.data.t_count);
-    // };
-    // fetchCount();
+    if (userInfo?.national_id === undefined) {
+      toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
+    }
     get_courses().then(() => {});
-  }, []);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`course/course/?${params}`);
-  //       const data = await response.data;
-  //       setData(data);
-  //       if (response.data === 404) {
-  //         setNotFound(true);
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [params]);
+  }, [userInfo]);
   const get_courses = async () => {
     let config = {
       url: "select_request",
@@ -67,15 +47,11 @@ const Course = () => {
       baseURL: "http://127.0.0.1:5000/get_courses/",
     });
     if (response?.data?.tracking_code !== null) {
-      // setLocalStorageLogin("persist:root", data, () => {});
-      // toastify("success", response?.data?.response);
       setData(response?.data?.response);
     } else {
       toastify("error-login", response?.data?.error);
     }
   };
-
-  console.log(data);
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={1} mb={12}>

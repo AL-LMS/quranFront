@@ -18,6 +18,10 @@ const Dashboard = () => {
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
+  const [userRole, setUserRole] = useState(
+    JSON.parse(localStorage.getItem("role"))
+  );
+
   const get_teacher_info = async () => {
     setLoading(true);
     let config = {
@@ -50,6 +54,9 @@ const Dashboard = () => {
     }
   };
   useEffect(() => {
+    if (userRole?.national_id === null) {
+      toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
+    }
     get_teacher_info().then(() => {
       setLoading(false);
     });
