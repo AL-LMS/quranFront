@@ -18,15 +18,13 @@ import { useEffect } from "react";
 
 const Filter = ({ setParams, query, setQuery }) => {
   const [filter, setFilter] = useState({
-    dep: "",
-    grade: "",
-    year: "",
+    course_name: "",
     course_type: "",
     teacher: "",
+    topic: "",
   });
-  const { departmentID, courseTypeID, lessonID, gradeID, yearID } =
+  const { courseTypeID, teacherID, topicID, courseName } =
     useContext(DefiContext);
-
   useEffect(() => {
     setParams(query);
   }, [query]);
@@ -44,6 +42,7 @@ const Filter = ({ setParams, query, setQuery }) => {
     });
     setQuery({ page: 1 });
   };
+  console.log(filter);
   return (
     <Card
       sx={{
@@ -70,15 +69,15 @@ const Filter = ({ setParams, query, setQuery }) => {
               size="small"
               sx={{ boxShadow: "0 5px 15px rgba(112,112,112,0.2)" }}
             >
-              <InputLabel id="dep">عنوان</InputLabel>
+              <InputLabel id="course_name">عنوان</InputLabel>
               <Select
-                name="dep"
-                value={filter.dep}
-                id="dep"
+                name="course_name"
+                value={filter.course_name}
+                id="course_name"
                 onChange={changeHandler}
                 label="عنوان"
               >
-                {departmentID.map((item) => (
+                {courseName.map((item) => (
                   <MenuItem key={item.id} value={item.id}>
                     {item.name}
                   </MenuItem>
@@ -92,16 +91,16 @@ const Filter = ({ setParams, query, setQuery }) => {
               size="small"
               sx={{ boxShadow: "0 5px 15px rgba(112,112,112,0.2)" }}
             >
-              <InputLabel id="grade">موضوع</InputLabel>
+              <InputLabel id="topic">موضوع</InputLabel>
               <Select
-                name="grade"
-                value={filter.grade}
-                id="grade"
+                name="topic"
+                value={filter.topic}
+                id="topic"
                 onChange={changeHandler}
                 label="موضوع"
               >
-                {gradeID.map((item) => (
-                  <MenuItem key={item.id} value={item.id}>
+                {topicID.map((item) => (
+                  <MenuItem key={item.id} value={item.name}>
                     {item.name}
                   </MenuItem>
                 ))}
@@ -114,15 +113,15 @@ const Filter = ({ setParams, query, setQuery }) => {
               size="small"
               sx={{ boxShadow: "0 5px 15px rgba(112,112,112,0.2)" }}
             >
-              <InputLabel id="year">مدرس</InputLabel>
+              <InputLabel id="teacher">مدرس</InputLabel>
               <Select
-                name="year"
-                value={filter.year}
-                id="year"
+                name="teacher"
+                value={filter.teacher}
+                id="teacher"
                 onChange={changeHandler}
                 label="مدرس"
               >
-                {yearID.map((item) => (
+                {teacherID.map((item) => (
                   <MenuItem key={item.id} value={item.id}>
                     {item.name}
                   </MenuItem>
