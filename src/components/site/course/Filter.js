@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { DefiContext } from "../../../context/DefiContext";
-import { useSearchParams } from "react-router-dom";
 import {
   Button,
   Card,
@@ -9,7 +8,6 @@ import {
   Chip,
   FormControl,
   Grid,
-  InputBase,
   InputLabel,
   MenuItem,
   Select,
