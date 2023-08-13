@@ -15,6 +15,8 @@ import { Link } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import CourseImage from "../../../../assets/img/online-education.png";
+import NoImage from "../../../../assets/img/class1.jpeg";
+
 import { Stack } from "@mui/system";
 import JoinMeeting from "./JoinMeeting";
 
@@ -46,7 +48,7 @@ const CourseList = ({ data }) => {
         {!data?.enable ||
           (!data?.accepted && <Chip color="error" label="غیرفعال" />)}
         <Typography component="h6" variant="body1" color="mainText">
-          نام دوره:{data?.course_name}
+          نام دوره:{data?.name}
         </Typography>
         <Stack direction="row" spacing={2} mt={2}>
           <Typography
@@ -54,16 +56,16 @@ const CourseList = ({ data }) => {
             color="text.secondary"
             fontFamily="iranyekanFn"
           >
-            توضیحات :
+            توضیحات : {data?.explain}
           </Typography>
         </Stack>
-        {!data?.accepted && (
+        {/* {!data?.accepted && (
           <Chip
             label="دوره آزمون ورودی دارد"
             color="secondary"
             sx={{ color: "#fff", marginTop: 2 }}
           />
-        )}
+        )} */}
       </CardContent>
       <CardActions sx={{ marginLeft: "auto", alignSelf: "flex-start" }}>
         <Button

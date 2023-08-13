@@ -21,7 +21,7 @@ const Course = () => {
     JSON.parse(localStorage.getItem("role"))
   );
   useEffect(() => {
-    if (userInfo?.national_id === undefined) {
+    if (userInfo?.national_id === null) {
       toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
     }
     get_courses().then(() => {});
