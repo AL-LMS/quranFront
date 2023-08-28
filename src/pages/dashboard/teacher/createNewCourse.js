@@ -393,6 +393,7 @@ export const Container = styled.div`
 
 export const Structure = styled.div`
   width: 75vw;
+  background: #fff;
   @media screen and (max-width: 768px) {
     width: 100vw;
   }

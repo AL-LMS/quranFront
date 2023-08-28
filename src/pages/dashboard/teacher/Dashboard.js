@@ -11,7 +11,7 @@ import toastify from "../../../helper/toast";
 import { ToastContainer } from "react-toastify";
 
 const Dashboard = () => {
-  const { auth, user, role } = useAuth();
+  // const { auth, user, role } = useAuth();
   const [loading, setLoading] = useState(false);
   const [stCount, setStCount] = useState("");
   const [cCount, setCCount] = useState("");
