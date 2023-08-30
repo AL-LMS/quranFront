@@ -14,6 +14,7 @@ import Documnets from "./Documnets";
 import TeacherInfo from "../../../components/dashboard/students/profile/TeacherInfo";
 import MultiDocumnets from "./MultiDocumnets";
 import { setLocalStorageLogin } from "../../localStorage";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { auth, user, role, setRole, setAuth, setUser } = useAuth();
@@ -45,10 +46,7 @@ const Profile = () => {
   useEffect(() => {
     setErrors(profileAuth(form));
   }, [form]);
-  useEffect(() => {
-    const fetchStudentData = async () => {};
-    fetchStudentData();
-  }, [reaload]);
+  const navigate = useNavigate();
 
   const submitData = async () => {
     setLoading(true);
@@ -109,7 +107,7 @@ const Profile = () => {
         setUser(response?.data?.response);
         setRole(response?.data?.response?.role_data);
         toastify("success", "اطلاعات شما با موفقیت تغییر کرد.");
-        window.location.reload();
+        navigate("/panel/dashboard");
       } else {
         toastify("error-login", response?.data?.error);
       }

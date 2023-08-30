@@ -27,7 +27,7 @@ const DefiProvider = ({ children }) => {
       setTopicID(get_course_type.data);
       setCourseName(get_course_name.data);
     };
-    fetchData();
+    // fetchData();
   }, []);
   return (
     <DefiContext.Provider

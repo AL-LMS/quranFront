@@ -28,6 +28,7 @@ import Documnets from "./Documnets";
 import CheckIcon from "@mui/icons-material/Check";
 import { TimePicker } from "react-ios-time-picker";
 import { styled } from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const CreateCourse = () => {
   const [loading, setLoading] = useState(false);
@@ -62,6 +63,7 @@ const CreateCourse = () => {
     setIsOnline(event.target.checked);
     setForm({ ...form, isOnline: event.target.checked });
   };
+  const navigate = useNavigate();
   const add_course = async () => {
     let config = {
       url: "insert_request",
@@ -104,6 +106,7 @@ const CreateCourse = () => {
     });
     if (response?.data?.tracking_code !== null) {
       toastify("success", response?.data?.response);
+      navigate("/panel/dashboard");
     } else {
       toastify("error-login", response?.data?.error);
     }
