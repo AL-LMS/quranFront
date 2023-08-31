@@ -107,7 +107,7 @@ const CourseInfo = ({ data }) => {
                 </Stack>
                 <Stack spacing={2} sx={{ marginTop: { xs: 2, md: 0 } }}>
                   <Stack direction="row" spacing={5}>
-                    <Typography color="mainText">قیمت دوره:</Typography>
+                    <Typography color="mainText">هزینه آموزش دوره:</Typography>
                     <Typography
                       fontWeight={400}
                       color={data["price"] ? "#000" : "error"}
@@ -158,7 +158,7 @@ const CourseInfo = ({ data }) => {
                     onClick={addToCart}
                     disabled={data.enableforbuy}
                   >
-                    خرید دوره
+                    ثبت نام دوره
                   </Button>
                 </Stack>
               </Stack>

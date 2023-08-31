@@ -36,7 +36,7 @@ const CreateCourse = () => {
   const [showLastCertificate, setShowLastCertificate] = useState("");
   const [prerequisite, setPrerequisite] = useState([]);
   const [days, setDays] = useState([]);
-  const [isOnline, setIsOnline] = useState(false);
+  const [isOnline, setIsOnline] = useState(true);
   const [value, setValue] = useState(null);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
@@ -59,9 +59,14 @@ const CreateCourse = () => {
     picture: "",
     price: "",
   });
-  const handleCheckboxChange = (event) => {
-    setIsOnline(event.target.checked);
-    setForm({ ...form, isOnline: event.target.checked });
+  const handleCheckboxChange = () => {
+    if (isOnline) {
+      setIsOnline(false);
+      setForm({ ...form, isOnline: false });
+    } else {
+      setIsOnline(true);
+      setForm({ ...form, isOnline: true });
+    }
   };
   const navigate = useNavigate();
   const add_course = async () => {
@@ -174,7 +179,21 @@ const CreateCourse = () => {
                     color="primary"
                   />
                 }
-                label="کلاس به صورت حضوری است."
+                label="کلاس به صورت مجازی برگزار می‌شود."
+                sx={{
+                  padding: "4px 15px",
+                }}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={!isOnline}
+                    onChange={handleCheckboxChange}
+                    name="isOffline"
+                    color="primary"
+                  />
+                }
+                label="کلاس به صورت حضوری برگزار می‌شود."
                 sx={{
                   padding: "4px 15px",
                   marginBottom: "2rem",

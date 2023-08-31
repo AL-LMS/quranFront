@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   Card,
@@ -19,39 +19,8 @@ const CourseCard = ({ data }) => {
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
-  console.log(data);
-  const register_course = async () => {
-    let config = {
-      url: "insert_request",
-    };
-    let data1 = {
-      table: "courses",
-      method_type: "",
-      data: {
-        student_id: userInfo?.user_id,
-        course_id: data?.course_id,
-        teacher_id: data?.teacher_user_id,
-        student_name: userInfo?.first_name + " " + userInfo?.last_name,
-      },
-    };
-    let response = await axios({
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      data: {
-        ...data1,
-      },
+  const navigate = useNavigate();
 
-      baseURL: "http://127.0.0.1:5000/register_course/",
-    });
-    if (response?.data?.tracking_code !== null) {
-      toastify("success", "be kelas ezafeh shodin");
-    } else {
-      toastify("error-login", response?.data?.error);
-    }
-  };
   return (
     <Card
       sx={{
@@ -60,7 +29,7 @@ const CourseCard = ({ data }) => {
         padding: 1,
       }}
     >
-      <Link to={`/panel/course/details/${data?.id}`}>
+      <Link to={`/panel/course/details/${data?.course_id}`}>
         <CardMedia
           component="img"
           sx={{ width: "100%", borderRadius: "20px", height: "200px" }}
@@ -120,9 +89,9 @@ const CourseCard = ({ data }) => {
             borderRadius: "30px",
             padding: "4px 20px",
           }}
-          onClick={() => register_course().then(() => {})}
+          onClick={() => navigate("/panel/course/details/" + data.course_id)}
         >
-          خرید دوره
+          توضیحات دوره
         </Button>
         <Chip
           label={
