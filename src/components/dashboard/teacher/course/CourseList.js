@@ -15,6 +15,7 @@ import {
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import { Link } from "react-router-dom";
 
 const statusTable = (item) => {
   if (item) {
@@ -25,13 +26,6 @@ const statusTable = (item) => {
 };
 
 const CourseList = ({ data }) => {
-  // data = [
-  //   {
-  //     name: "حفظ",
-  //     startTime: "2023-04-01",
-  //     code: 18,
-  //   },
-  // ];
   return (
     <Card
       sx={{
@@ -137,11 +131,11 @@ const CourseList = ({ data }) => {
                       {/* </Link> */}
                     </Tooltip>
                     <Tooltip title="دانش آموزان">
-                      {/* <Link to={`/panel/course/students/${item.id}`}> */}
-                      <Button>
-                        <GroupsOutlinedIcon />
-                      </Button>
-                      {/* </Link> */}
+                      <Link to={`/panel/course/students/${item.course_id}`}>
+                        <Button>
+                          <GroupsOutlinedIcon />
+                        </Button>
+                      </Link>
                     </Tooltip>
                   </Stack>
                 </TableCell>

@@ -7,7 +7,6 @@ import { Container } from "@mui/system";
 import Loader from "../../components/site/shared/Loader";
 import { useSearchParams, useLocation } from "react-router-dom";
 import NotFound from "../../components/site/shared/NotFound";
-import { classData } from "./courseData";
 import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
 const Course = () => {

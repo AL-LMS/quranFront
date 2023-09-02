@@ -64,6 +64,7 @@ import Auth from "./pages/site/Auth";
 import MyExercise from "./pages/dashboard/students/myCourse/MyExercise";
 import QuizScore from "./pages/dashboard/students/quiz/QuizScore";
 import ProfileTeacher from "./pages/dashboard/teacher/Profile";
+import StudentList from "./pages/dashboard/teacher/StudentList";
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -156,6 +157,10 @@ function App() {
             <Route path="/panel/profile" element={<ProfileTeacher />} />
             <Route path="/panel/my-coures" element={<TeacherCourse />} />
             <Route path="/course/details/:id" element={<CourseDetails />} />
+            <Route
+              path="/panel/course/students/:id"
+              element={<StudentList />}
+            />
             <Route path="/panel/new-coures" element={<TeacherNewCourse />} />
             <Route path="/panel/coures" element={<TeacherBuyCourse />} />
             <Route path="/panel/live" element={<Live />} />

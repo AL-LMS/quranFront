@@ -14,9 +14,6 @@ import { ToastContainer } from "react-toastify";
 const CourseDetails = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
-  useEffect(() => {
-    get_course().then(() => {});
-  }, []);
   const get_course = async () => {
     let config = {
       url: "select_request",
@@ -46,11 +43,14 @@ const CourseDetails = () => {
       toastify("error-login", response?.data?.error);
     }
   };
+  useEffect(() => {
+    get_course().then(() => {});
+  }, [id]);
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={1}>
         <Grid item xs={12}>
-          <CourseInfo data={data} />
+          <CourseInfo data_course={data} />
         </Grid>
         <Grid item xs={12}>
           <CourseDescrption data={data} />

@@ -13,6 +13,7 @@ import { profileAuthStudent } from "../../../auth/profile";
 import { useContext } from "react";
 import { DefiContext } from "../../../context/DefiContext";
 import { setLocalStorageLogin } from "../../localStorage";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { auth, user, role, setAuth, setUser, setRole } = useAuth();
@@ -34,6 +35,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [showBirthCertificate, setShowBirthCertificate] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     setErrors(profileAuthStudent(form));
@@ -106,8 +108,8 @@ const Profile = () => {
         setUser(response?.data?.response);
         setRole(response?.data?.response?.role_data);
         toastify("success", "اطلاعات شما با موفقیت تغییر کرد.");
-        window.location.reload();
         setLoading(false);
+        navigate("/panel/dashboard");
       } else {
         toastify("error-login", response?.data?.error);
       }
