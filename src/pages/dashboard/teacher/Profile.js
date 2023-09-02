@@ -36,7 +36,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [showLastCertificate, setShowLastCertificate] = useState("");
-  const [showCertificate, setShowCertificate] = useState([]);
+  const [showCertificate, setShowCertificate] = useState("");
 
   useEffect(() => {
     if (role?.confirm !== 1) {
@@ -47,7 +47,9 @@ const Profile = () => {
     setErrors(profileAuth(form));
   }, [form]);
   const navigate = useNavigate();
-
+  console.log("====================================");
+  console.log(form);
+  console.log("====================================");
   const submitData = async () => {
     setLoading(true);
     const formData = new FormData();

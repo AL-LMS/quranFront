@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Avatar, Button, Card, Grid, Typography } from "@mui/material";
 
 const Documnets = ({
@@ -7,9 +7,27 @@ const Documnets = ({
   showBirthCertificate,
   setShowBirthCertificate,
 }) => {
-  const birthCertificateHandler = (e) => {
-    setForm({ ...form, picture: e.target.files[0] });
-    setShowBirthCertificate(URL.createObjectURL(e.target.files[0]));
+  let myRef = useRef();
+  const openFile = (file) => {
+    const input = file.target;
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      const dataURL = reader.result;
+      let image = input.files[0].type;
+
+      let data = {
+        file: dataURL,
+        file_type: image.split("/")[1],
+        file_name: input.files[0].name,
+        file_size: input.files[0].size,
+      };
+
+      form.picture = data.file;
+      setShowBirthCertificate(URL.createObjectURL(input.files[0]));
+    };
+
+    reader.readAsDataURL(input.files[0]);
   };
   return (
     <Card
@@ -38,7 +56,7 @@ const Documnets = ({
             style={{ display: "none" }}
             id="BirthCertificate"
             multiple
-            onChange={birthCertificateHandler}
+            onChange={(event) => openFile(event)}
           />
           <label htmlFor="BirthCertificate">
             <Button variant="outlined" fullWidth component="span">

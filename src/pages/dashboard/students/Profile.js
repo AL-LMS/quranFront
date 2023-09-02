@@ -45,7 +45,6 @@ const Profile = () => {
     const fetchStudentData = async () => {};
     fetchStudentData();
   }, [reaload]);
-
   const submitData = async () => {
     setLoading(true);
     const formData = new FormData();

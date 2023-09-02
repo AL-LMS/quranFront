@@ -1,18 +1,36 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Avatar, Button, Card, Grid, Typography } from "@mui/material";
 
 const MultiDocumnets = ({
   form,
   setForm,
-  showCertificate,
-  setshowCertificate,
   nameOfSection,
   nameOfButtonField,
 }) => {
-  const birthCertificateHandler = (e) => {
-    setForm({ ...form, certificates: e.target.files });
-    setshowCertificate(URL.createObjectURL(e.target.files));
+  let myRef = useRef();
+  const openFile = (file) => {
+    const input = file.target;
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      const dataURL = reader.result;
+      let image = input.files[0].type;
+
+      let data = {
+        file: dataURL,
+        file_type: image.split("/")[1],
+        file_name: input.files[0].name,
+        file_size: input.files[0].size,
+      };
+
+      form.certificates.push(data.file);
+      setForm({ ...form });
+      // setshowCertificate(URL.createObjectURL(input.files[0]));
+    };
+
+    reader.readAsDataURL(input.files[0]);
   };
+  console.log("log", form?.certificates.length);
   return (
     <Card
       sx={{
@@ -40,20 +58,17 @@ const MultiDocumnets = ({
             style={{ display: "none" }}
             id="Certificate"
             multiple
-            onChange={birthCertificateHandler}
+            onChange={(event) => openFile(event)}
           />
           <label htmlFor="Certificate">
             <Button variant="outlined" fullWidth component="span">
               {nameOfButtonField}
             </Button>
           </label>
-          {form.certificates.lenght > 0 ? (
+          {form?.certificates.length > 0 ? (
             <Avatar
               alt="Certificate"
-              src={
-                showCertificate ||
-                `https://api.srvschool.ir${form.certificates}`
-              }
+              src={form.certificates.slice(-1)}
               sx={{
                 width: 140,
                 height: 140,
@@ -62,10 +77,10 @@ const MultiDocumnets = ({
                 borderRadius: 2,
               }}
             />
-          ) : showCertificate.lenght > 0 ? (
+          ) : form?.certificates.lenght > 0 ? (
             <Avatar
               alt="Certificate"
-              src={showCertificate}
+              src={form.certificates.slice(-1)}
               sx={{
                 width: 140,
                 height: 140,

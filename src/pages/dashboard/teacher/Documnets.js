@@ -31,25 +31,6 @@ const Documnets = ({
 
     reader.readAsDataURL(input.files[0]);
   };
-  const birthCertificateHandler = (e) => {
-    const input = e.target;
-    const reader = new FileReader();
-    if (e.target.value !== "") {
-      reader.onload = function () {
-        const dataURL = reader.result;
-        let image = input.files[0].type;
-        let data = {
-          file: dataURL,
-          file_type: image.split("/")[1],
-          file_name: input.files[0].name,
-          file_size: input.files[0].size,
-        };
-        // setValues(data);
-      };
-    }
-    setForm({ ...form, picture: e.target.files[0] });
-    setShowLastCertificate(URL.createObjectURL(e.target.files[0]));
-  };
   return (
     <Card
       sx={{
