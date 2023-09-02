@@ -56,13 +56,8 @@ const Filter = ({ setParams, query, setQuery }) => {
   };
 
   const resetFilter = () => {
-    setFilter({
-      dep: "",
-      grade: "",
-      year: "",
-      course_type: "",
-    });
-    setQuery({ page: 1 });
+    setFilter({});
+    setQuery({});
   };
   return (
     <Card
@@ -143,7 +138,7 @@ const Filter = ({ setParams, query, setQuery }) => {
                 label="مدرس"
               >
                 {teacherID.map((item) => (
-                  <MenuItem key={item.id} value={item.id}>
+                  <MenuItem key={item.id} value={item.name}>
                     {item.name}
                   </MenuItem>
                 ))}
