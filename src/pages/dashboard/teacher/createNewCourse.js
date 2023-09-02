@@ -68,9 +68,6 @@ const CreateCourse = () => {
       setForm({ ...form, isOnline: true });
     }
   };
-  console.log("====================================");
-  console.log(form);
-  console.log("====================================");
   const navigate = useNavigate();
   const add_course = async () => {
     let config = {

@@ -20,7 +20,6 @@ const CourseCard = ({ data }) => {
     JSON.parse(localStorage.getItem("user"))
   );
   const navigate = useNavigate();
-
   return (
     <Card
       sx={{
@@ -36,7 +35,7 @@ const CourseCard = ({ data }) => {
           alt="course"
           src={
             // data.picture1 ? `https://api.srvschool.ir${data.picture1}` : NoImage
-            data.picture1 ? data.picture1 : NoImage
+            data.picture ? data.picture : NoImage
           }
         />
         <CardContent>
