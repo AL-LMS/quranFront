@@ -29,7 +29,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import { TimePicker } from "react-ios-time-picker";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
-
+import Images from "./../../../helper/base64Images/index";
 const CreateCourse = () => {
   const [loading, setLoading] = useState(false);
   const [calendarValue, setCalendarValue] = useState(new Date());
@@ -68,6 +68,9 @@ const CreateCourse = () => {
       setForm({ ...form, isOnline: true });
     }
   };
+  console.log("====================================");
+  console.log(form);
+  console.log("====================================");
   const navigate = useNavigate();
   const add_course = async () => {
     let config = {

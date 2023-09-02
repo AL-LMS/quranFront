@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Avatar, Button, Card, Grid, Typography } from "@mui/material";
 
 const Documnets = ({
@@ -9,6 +9,28 @@ const Documnets = ({
   nameOfSection,
   nameOfButtonField,
 }) => {
+  let myRef = useRef();
+  const openFile = (file) => {
+    const input = file.target;
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      const dataURL = reader.result;
+      let image = input.files[0].type;
+
+      let data = {
+        file: dataURL,
+        file_type: image.split("/")[1],
+        file_name: input.files[0].name,
+        file_size: input.files[0].size,
+      };
+
+      form.picture = data.file;
+      setShowLastCertificate(URL.createObjectURL(input.files[0]));
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  };
   const birthCertificateHandler = (e) => {
     const input = e.target;
     const reader = new FileReader();
@@ -54,7 +76,9 @@ const Documnets = ({
             accept="image/*"
             style={{ display: "none" }}
             id="LastCertificate"
-            onChange={birthCertificateHandler}
+            // onChange={birthCertificateHandler}
+            // onChange={(data) => handelUploadFile(data)}
+            onChange={(event) => openFile(event)}
           />
           <label htmlFor="LastCertificate">
             <Button variant="outlined" fullWidth component="span">
