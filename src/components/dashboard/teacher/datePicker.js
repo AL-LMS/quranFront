@@ -13,7 +13,6 @@ const DatePickerDialog = ({ open, onClose }) => {
 
   const handleSave = () => {
     // You can perform any action with the selectedDate here
-    console.log(selectedDate);
     onClose();
   };
 

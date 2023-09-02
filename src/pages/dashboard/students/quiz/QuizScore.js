@@ -23,7 +23,6 @@ const QuizScore = () => {
         }
       );
       setData(response.data);
-      console.log(response);
       setLoading(false);
     };
     fetchData();

@@ -43,7 +43,6 @@ const NewPackage = ({ type, data }) => {
       } catch (err) {
         setLoading(false);
         toastify("error");
-        console.log(err);
       }
     } else {
       setLoading(false);
@@ -71,7 +70,6 @@ const NewPackage = ({ type, data }) => {
       } catch (err) {
         setLoading(false);
         toastify("error", "خطا دربرقراری ارتباط با سرور");
-        console.log(err);
       }
     } else {
       setLoading(false);

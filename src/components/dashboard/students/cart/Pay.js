@@ -33,7 +33,6 @@ const Pay = ({ wallet, data }) => {
         }
       );
       setNewPrice(response.data.amount);
-      console.log(response);
       toastify("success-login", "کد تخفیف اعمال شد");
     } catch (err) {
       if (err.response.status === 404) {
@@ -54,7 +53,6 @@ const Pay = ({ wallet, data }) => {
         }
       );
       setNewPrice(response.data.amount);
-      console.log(response);
       toastify("success-login", "کد معرف اعمال شد");
     } catch (err) {
       if (err.response.status === 404) {
@@ -96,10 +94,8 @@ const Pay = ({ wallet, data }) => {
           headers: { Authorization: `Bearer ${auth}` },
         }
       );
-      console.log(response);
       window.location.replace(response.data);
     } catch (err) {
-      console.log(err);
     }
   };
 

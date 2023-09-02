@@ -92,14 +92,12 @@ const NewQuestionExam = ({ header }) => {
       } catch (err) {
         toastify("error", "خطا در برقراری ارتباط با سرور");
         setLoading(false);
-        console.log(err);
       }
     } else {
       toastify("warning", "شما سوالی ایجاد نکرده اید");
     }
   };
 
-  console.log(header);
   return (
     <div>
       <Button

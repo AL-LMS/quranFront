@@ -46,7 +46,6 @@ const QuizQuestion = () => {
         if (err.response.status === 404) {
           setLoading(false);
         }
-        console.log(err);
       }
     };
     fetchData();

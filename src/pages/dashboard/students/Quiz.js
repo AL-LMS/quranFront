@@ -28,7 +28,6 @@ const Quiz = () => {
       const data = await response.data;
       setCourse(data);
       setLoading(false);
-      console.log(response);
       data.map((item) =>
         setCourseID((prevState) => [...prevState, item.courseID])
       );

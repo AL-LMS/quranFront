@@ -27,11 +27,8 @@ const IncreaseWallet = () => {
           headers: { Authorization: `Bearer ${auth}` },
         }
       );
-      console.log(response);
       window.location.replace(response.data);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   return (

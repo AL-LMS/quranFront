@@ -23,14 +23,14 @@ import { ToastContainer } from "react-toastify";
 
 import NoDataImage from "../../../../assets/img/no-data.png";
 import { miladi_be_shamsi } from "../../../../helper/shamsi";
-import {DefiContext} from "../../../../context/DefiContext"
+import { DefiContext } from "../../../../context/DefiContext";
 
 const CourseHomework = () => {
   const { auth } = useAuth();
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const {reload} = useContext(DefiContext)
+  const { reload } = useContext(DefiContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +40,6 @@ const CourseHomework = () => {
       const data = await response.data;
       setData(data);
       setLoading(false);
-      console.log(response.data);
     };
     fetchData();
   }, [reload]);

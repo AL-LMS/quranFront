@@ -73,8 +73,6 @@ const Dashboard = () => {
       </Container>
     );
 
-  console.log(device);
-
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={3}>

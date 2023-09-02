@@ -40,9 +40,7 @@ const Live = () => {
         }
       );
       window.location.replace(response.data);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   if (loading)

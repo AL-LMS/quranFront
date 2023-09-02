@@ -36,7 +36,6 @@ const SingleAnswer = () => {
         if (err.response.status === 404) {
           setLoading(false);
         }
-        console.log(err);
       }
     };
 
@@ -63,9 +62,7 @@ const SingleAnswer = () => {
         },
       });
       navigate(`/panel/quiz/end/${id}`);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
   useEffect(() => {
     const interval = setInterval(() => {

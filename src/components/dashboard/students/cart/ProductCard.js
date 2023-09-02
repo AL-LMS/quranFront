@@ -12,7 +12,6 @@ import DeletePackage from "../package/DeletePackage";
 import { Stack } from "@mui/system";
 
 const ProductCard = ({ data }) => {
-  console.log(data);
   const { course } = useContext(DefiContext);
   return (
     <ListItem

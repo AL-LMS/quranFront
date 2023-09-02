@@ -153,8 +153,6 @@ const Register = () => {
         } else {
           toastify("error-login", "خطا در برقراری ارتباط با سرور");
         }
-        console.log(register);
-        console.log(err);
         setLoading(false);
       }
     } else {

@@ -114,7 +114,6 @@ const Profile = () => {
     } else {
       setLoading(false);
       toastify("warning", "لطفا فیلد هارا با دقت پر کنید");
-      console.log(form);
     }
   };
 

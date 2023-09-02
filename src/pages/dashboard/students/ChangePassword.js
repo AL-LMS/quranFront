@@ -5,7 +5,7 @@ import { Container } from "@mui/system";
 import { authPass } from "../../../auth/changePassword";
 
 import { toastify } from "../../../helper/toast";
-import {ToastContainer} from "react-toastify"
+import { ToastContainer } from "react-toastify";
 import useAuth from "../../../hooks/useAuth";
 
 const ChangePassword = () => {
@@ -33,7 +33,6 @@ const ChangePassword = () => {
         );
         toastify("success-login", "رمز عبور تغییر کرد");
       } catch (err) {
-        console.log(err);
         if (err.response.status === 400) {
           toastify("error-login", "رمز عبور قبلی صحیح نیست");
         } else {

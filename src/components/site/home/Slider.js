@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import { Pagination,Navigation } from "swiper";
+import { Pagination, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -25,12 +25,11 @@ const Slider = () => {
   }, []);
 
   if (loading) return null;
-  console.log(data);
 
   return (
     <Swiper
       className="slider"
-      modules={[Pagination,Navigation]}
+      modules={[Pagination, Navigation]}
       spaceBetween={0}
       slidesPerView={1}
       pagination={{ clickable: true }}

@@ -20,10 +20,8 @@ const AddToCartPackage = ({ id }) => {
         }
       );
       toastify("success-login", "پکیج به سبد خرید شما اضافه شد");
-      console.log(response);
       setLoading(false);
     } catch (err) {
-      console.log(err);
       setLoading(false);
     }
   };

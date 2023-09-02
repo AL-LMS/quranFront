@@ -27,7 +27,6 @@ const JoinMeeting = ({ id }) => {
         );
       }
     } catch (err) {
-      console.log(err);
     }
   };
   return <Button onClick={joinToMeeting}>کلاس آنلاین</Button>;

@@ -47,8 +47,6 @@ const NewPackageCourse = ({ data, type }) => {
       } catch (err) {
         setLoading(false);
         toastify("error", "خطا دربرقراری ارتباط با سرور");
-        console.log(err);
-        console.log({ courseID, packageID });
       }
     } else {
       setLoading(false);

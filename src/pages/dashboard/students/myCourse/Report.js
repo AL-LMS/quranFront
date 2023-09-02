@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import useAuth from "../../../../hooks/useAuth";
 import { Container } from "@mui/system";
-import {
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import ReportList from "../../../../components/dashboard/students/myCourse/ReportList";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
-import Loader from "../../../../components/site/shared/Loader"
+import Loader from "../../../../components/site/shared/Loader";
 
 const Report = () => {
   const { id } = useParams();
@@ -27,19 +24,27 @@ const Report = () => {
       setLoading(false);
     };
     fetchHeader();
-  },[]);
+  }, []);
 
-  if (loading) return (
-    <Container maxWidth="lg">
-      <Grid container>
-        <Grid item xs={12} sx={{display:"flex", alignItems:"center",justifyContent:"center",height:"100vh"}}>
-          <Loader />
+  if (loading)
+    return (
+      <Container maxWidth="lg">
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100vh",
+            }}
+          >
+            <Loader />
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
-  )
-
-  console.log(header);
+      </Container>
+    );
 
   return (
     <Container maxWidth="lg">

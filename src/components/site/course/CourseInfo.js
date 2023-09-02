@@ -26,8 +26,6 @@ const CourseInfo = ({ data }) => {
 
   const addToCart = () => {};
 
-  console.log(data);
-
   return (
     <Card
       sx={{

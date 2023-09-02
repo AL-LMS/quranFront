@@ -40,14 +40,12 @@ const Packages = () => {
       </Container>
     );
 
-  console.log(data);
-
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={1}>
         {data.map((item) => (
           <Grid item xs={12} md={3} key={item.id}>
-            <PackageCard data={item}/>
+            <PackageCard data={item} />
           </Grid>
         ))}
       </Grid>

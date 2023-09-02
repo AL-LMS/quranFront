@@ -22,7 +22,6 @@ const PayTable = ({
   ITEMS_PER_PAGE,
   currentPage,
 }) => {
-  console.log(data);
   return (
     <Card
       sx={{

@@ -14,7 +14,6 @@ import { miladi_be_shamsi } from "../../../helper/shamsi";
 import CourseImage from "../../../assets/img/package.png";
 
 const TimingCard = ({ data }) => {
-  console.log(data);
   return (
     <Link to={`/timing-package/details/${data?.id}`}>
       <Card

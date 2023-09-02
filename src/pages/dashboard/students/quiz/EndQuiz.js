@@ -22,7 +22,6 @@ const EndQuiz = () => {
         }
       );
       setData(response.data);
-      console.log(response);
       setLoading(false);
     };
     fetchData();
@@ -72,13 +71,13 @@ const EndQuiz = () => {
                 <Divider />
               </Grid>
               {data.length > 0 &&
-                data.map((item,i) => (
+                data.map((item, i) => (
                   <Grid item xs={12} key={item.id}>
                     <Stack
                       direction="row"
                       sx={{ justifyContent: "space-between" }}
                     >
-                      <Typography>سوال:{i+1}</Typography>
+                      <Typography>سوال:{i + 1}</Typography>
                       <Typography>جواب شما:{item.result}</Typography>
                     </Stack>
                   </Grid>

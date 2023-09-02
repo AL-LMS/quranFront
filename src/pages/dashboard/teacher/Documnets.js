@@ -10,14 +10,11 @@ const Documnets = ({
   nameOfButtonField,
 }) => {
   const birthCertificateHandler = (e) => {
-    console.log("file", e);
     const input = e.target;
-    console.log("e.target.value", e.target.value);
     const reader = new FileReader();
     if (e.target.value !== "") {
       reader.onload = function () {
         const dataURL = reader.result;
-        console.log(reader);
         let image = input.files[0].type;
         let data = {
           file: dataURL,
@@ -25,7 +22,6 @@ const Documnets = ({
           file_name: input.files[0].name,
           file_size: input.files[0].size,
         };
-        console.log("data", data);
         // setValues(data);
       };
     }

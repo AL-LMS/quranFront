@@ -17,13 +17,11 @@ export const profileAuth = (data) => {
   } else {
     delete errors.ages;
   }
-  console.log("errors", errors);
   return errors;
 };
 
 export const profileAuthStudent = (data) => {
   const errors = {};
-  console.log("data", data);
   if (!data.national_id) {
     errors.national_id = "کدملی ضروری است";
   } else if (!/^([0-9]){10}$/.test(data.national_id)) {
@@ -46,6 +44,5 @@ export const profileAuthStudent = (data) => {
   } else {
     delete errors.degree;
   }
-  console.log("errors", errors);
   return errors;
 };

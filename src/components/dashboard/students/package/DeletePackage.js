@@ -43,7 +43,6 @@ const DeletePackage = React.forwardRef((props, ref) => {
       setOpen(false);
       setReload((prevState) => !prevState);
     } catch (err) {
-      console.log(err);
     }
   };
 

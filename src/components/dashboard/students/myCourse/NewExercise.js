@@ -43,7 +43,6 @@ const NewExercise = ({ type, hid, id }) => {
         setOpen(false);
       } catch (err) {
         toastify("error", "خطا در برقراری ارتباط با سرور");
-        console.log(err);
       }
     } else {
       toastify("warning", "شما فایلی وارد نکرده اید");
@@ -69,7 +68,6 @@ const NewExercise = ({ type, hid, id }) => {
         setOpen(false);
       } catch (err) {
         toastify("error", "خطا در برقراری ارتباط با سرور");
-        console.log(err);
       }
     } else {
       toastify("warning", "شما فایلی وارد نکرده اید");

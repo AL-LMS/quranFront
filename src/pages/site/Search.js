@@ -10,7 +10,7 @@ import NotFound from "../../components/site/shared/NotFound";
 const searchType = {
   normal: "packages",
   course: "course",
-  timing:"timing-package"
+  timing: "timing-package",
 };
 
 const Search = () => {
@@ -27,8 +27,6 @@ const Search = () => {
     };
     fetchData();
   }, [location.search]);
-
-  console.log(data);
 
   if (loading)
     return (

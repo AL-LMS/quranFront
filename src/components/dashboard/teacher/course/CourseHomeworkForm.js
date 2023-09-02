@@ -62,7 +62,6 @@ const TeacherExercisesForm = ({ type, data }) => {
         setOpen(false);
         setReload((prevState) => !prevState);
       } catch (err) {
-        console.log(err);
         setLoading(false);
         toastify("error", "خطا دربرقراری ارتباط با سرور");
       }
@@ -96,7 +95,6 @@ const TeacherExercisesForm = ({ type, data }) => {
         setOpen(false);
         setReload((prevState) => !prevState);
       } catch (err) {
-        console.log(err);
         setLoading(false);
         toastify("error", "خطا دربرقراری ارتباط با سرور");
       }

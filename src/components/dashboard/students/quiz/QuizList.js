@@ -26,7 +26,6 @@ const QuizList = () => {
         headers: { Authorization: `Bearer ${auth}` },
       });
       setData(response.data);
-      console.log(response.data);
     };
     fetchData();
   }, []);

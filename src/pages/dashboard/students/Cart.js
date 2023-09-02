@@ -61,8 +61,6 @@ const Cart = () => {
       </Container>
     );
 
-  console.log(data);
-
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={3}>

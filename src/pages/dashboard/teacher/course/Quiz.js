@@ -34,7 +34,7 @@ const Quiz = () => {
   const { auth } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const {reload} = useContext(DefiContext)
+  const { reload } = useContext(DefiContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,12 +50,11 @@ const Quiz = () => {
         if (err.response.status === 404) {
           setLoading(false);
         }
-        console.log(err);
       }
     };
     fetchData();
   }, [reload]);
-  
+
   if (loading)
     return (
       <Container maxWidth="lg">

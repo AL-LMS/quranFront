@@ -46,8 +46,6 @@ const CourseDetails = () => {
       toastify("error-login", response?.data?.error);
     }
   };
-  console.log(data);
-
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={1}>

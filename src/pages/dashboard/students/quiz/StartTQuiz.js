@@ -31,7 +31,6 @@ const StartTQuiz = () => {
         if (err.response.status === 404) {
           setLoading(false);
         }
-        console.log(err);
       }
     };
     const fetchHeader = async () => {
@@ -55,10 +54,7 @@ const StartTQuiz = () => {
         },
       });
       navigate(`/panel/quiz/end-t-quiz/${id}`);
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
   useEffect(() => {
     const interval = setInterval(() => {
@@ -94,7 +90,6 @@ const StartTQuiz = () => {
         </Grid>
       </Container>
     );
-  console.log(data);
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={3}>

@@ -11,8 +11,6 @@ const MultiDocumnets = ({
 }) => {
   const birthCertificateHandler = (e) => {
     setForm({ ...form, certificates: e.target.files });
-    console.log(form);
-    console.log(e.target.files);
     setshowCertificate(URL.createObjectURL(e.target.files));
   };
   return (

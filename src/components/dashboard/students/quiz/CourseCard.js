@@ -12,7 +12,6 @@ import CourseImage from "../../../../assets/img/online-education.png";
 import { Stack } from "@mui/system";
 
 const CourseCard = ({ data }) => {
-  console.log(data);
   return (
     <Card
       sx={{
@@ -29,9 +28,7 @@ const CourseCard = ({ data }) => {
           variant="subtitle2"
           color="text.secondary"
           sx={{ marginTop: 1, fontFamily: "iranyekanFn", marginBottom: 2 }}
-        >
-          
-        </Typography>
+        ></Typography>
         <Stack direction="row" justifyContent="space-between">
           <Link
             to={`/panel/quiz/quiz-details/${data.courseID}`}

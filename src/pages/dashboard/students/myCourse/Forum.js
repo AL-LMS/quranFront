@@ -75,7 +75,6 @@ const Forum = () => {
     };
     fetchData();
   }, [reload]);
-  console.log({ myMessage, otherMessage });
   const sendHandler = async (e) => {
     e.preventDefault();
     if (message.description) {
@@ -99,7 +98,6 @@ const Forum = () => {
         setReload((prevState) => !prevState);
       } catch (err) {
         setLoading(false);
-        console.log(err);
       }
     }
   };

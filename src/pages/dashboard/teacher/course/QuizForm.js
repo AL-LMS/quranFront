@@ -84,11 +84,8 @@ const TeacherNewExam = () => {
             Authorization: `Bearer ${auth}`,
           },
         });
-        console.log(response);
         toastify("success-login", "اطلاعات با موفقیت ثبت شد");
       } catch (err) {
-        console.log(err);
-        console.log(quizHeader);
         toastify("error-login", "خطا در برقراری ارتباط با سرور");
         setLoading(false);
       }
@@ -129,11 +126,8 @@ const TeacherNewExam = () => {
             },
           }
         );
-        console.log(response);
         toastify("success-login", "اطلاعات با موفقیت ثبت شد");
       } catch (err) {
-        console.log(err);
-        console.log(quizHeader);
         toastify("error-login", "خطا در برقراری ارتباط با سرور");
         setLoading(false);
       }

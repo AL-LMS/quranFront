@@ -32,7 +32,6 @@ const StartQuiz = () => {
         if (err.response.status === 404) {
           setLoading(false);
         }
-        console.log(err);
       }
     };
     const fetchHeader = async () => {
@@ -56,10 +55,7 @@ const StartQuiz = () => {
         },
       });
       navigate(`/panel/quiz/end/${id}`);
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
   useEffect(() => {
     const interval = setInterval(() => {

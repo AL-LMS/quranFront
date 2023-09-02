@@ -70,7 +70,6 @@
 //     //     setOpen(false);
 //     //     setReload((prevState) => !prevState);
 //     //   } catch (err) {
-//     //     console.log(err);
 //     //     toastify("error");
 //     //     setLoading(false);
 //     //   }
@@ -176,7 +175,6 @@
 //             inputAttributes={{
 //               placeholder: "start date -- end date",
 //             }}
-//             onChange={(e) => console.log(e)}
 //             range
 //           />
 //           /

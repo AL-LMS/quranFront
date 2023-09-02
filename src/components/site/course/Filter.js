@@ -64,7 +64,6 @@ const Filter = ({ setParams, query, setQuery }) => {
     });
     setQuery({ page: 1 });
   };
-  console.log(filter);
   return (
     <Card
       sx={{
