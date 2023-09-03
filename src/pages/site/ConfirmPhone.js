@@ -82,7 +82,10 @@ const ConfirmPhone = () => {
       baseURL: "http://127.0.0.1:5000/register/",
     });
     if (response?.data?.tracking_code !== null) {
-      toastify("success", "ثبت نام شما با موفقیت انجام شد");
+      toastify(
+        "success",
+        "ثبت‌نام اولیه شما در سامانه انجام شد.برای تکمیل ثبت‌نام وارد سامانه شوید."
+      );
       navigate("/signin");
     } else {
       toastify("error-login", response?.data?.error);
