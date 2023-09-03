@@ -141,7 +141,7 @@ const Footer = () => {
                       style={{ maxWidth: "100%" }}
                     />
                     <Typography variant="body1" fontWeight={400} color="#fff">
-                      تلگرام کلاس قرآنی
+                      تلگرام دارالقرآن
                     </Typography>
                   </Stack>
                 </Box>
@@ -175,7 +175,7 @@ const Footer = () => {
                       style={{ maxWidth: "100%" }}
                     />
                     <Typography variant="body1" fontWeight={400} color="#fff">
-                      اینستاگرام کلاس قرآنی
+                      اینستاگرام دارالقرآن
                     </Typography>
                   </Stack>
                 </Box>
@@ -210,7 +210,7 @@ const Footer = () => {
                       style={{ maxWidth: "100%", width: "28px" }}
                     />
                     <Typography variant="body1" fontWeight={400} color="#fff">
-                      آپارات کلاس قرآنی
+                      آپارات دارالقرآن
                     </Typography>
                   </Stack>
                 </Box>
@@ -243,7 +243,7 @@ const Footer = () => {
                       style={{ maxWidth: "100%" }}
                     />
                     <Typography variant="body1" fontWeight={400} color="#fff">
-                      واتساپ کلاس قرآنی
+                      واتساپ دارالقرآن
                     </Typography>
                   </Stack>
                 </Box>
@@ -270,7 +270,7 @@ const Footer = () => {
                 color="primary"
                 sx={{ marginBottom: { md: 0, xs: 2 } }}
               >
-                اپلیکیشن کلاس قرآنی
+                اپلیکیشن دارالقرآن
               </Typography>
               <Stack
                 spacing={1}

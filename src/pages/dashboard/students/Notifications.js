@@ -39,7 +39,7 @@ const Notifications = () => {
                   label={<MailOutlineRoundedIcon />}
                 />
                 <Typography color="mainText" ml={1}>
-                  کلاس قرآنی
+                  دارالقرآن
                 </Typography>
               </Box>
               <Typography color="text.secondary" fontFamily="iranyekanFn">
@@ -75,7 +75,7 @@ const Notifications = () => {
                   label={<MailOutlineRoundedIcon />}
                 />
                 <Typography color="mainText" ml={1}>
-                  کلاس قرآنی
+                  دارالقرآن
                 </Typography>
               </Box>
               <Typography color="text.secondary" fontFamily="iranyekanFn">

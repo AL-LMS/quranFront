@@ -69,7 +69,7 @@ const Navbar = ({ setSidebar }) => {
                 fontWeight={500}
                 sx={{ textAlign: "center" }}
               >
-                کلاس قرآنی
+                دارالقرآن
               </Typography>
             </Link>
           </Box>
