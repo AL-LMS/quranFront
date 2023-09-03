@@ -70,6 +70,7 @@ const StudentInfo = ({ form, setForm, errors }) => {
             value={form.national_id}
             onChange={(e) => setForm({ ...form, national_id: e.target.value })}
             fullWidth
+            required
             helperText={errors.national_id && errors.national_id}
             onWheel={(e) => e.target.blur()}
           />
@@ -84,7 +85,9 @@ const StudentInfo = ({ form, setForm, errors }) => {
             id="controllable-states-demo"
             options={sex}
             getOptionLabel={(option) => option.name || ""}
-            renderInput={(params) => <TextField {...params} label="جنسیت" />}
+            renderInput={(params) => (
+              <TextField {...params} label="جنسیت" required />
+            )}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -97,7 +100,9 @@ const StudentInfo = ({ form, setForm, errors }) => {
             id="controllable-states-demo"
             options={ages}
             getOptionLabel={(option) => option.name || ""}
-            renderInput={(params) => <TextField {...params} label="رده سنی" />}
+            renderInput={(params) => (
+              <TextField {...params} label="رده سنی" required />
+            )}
           />
         </Grid>
 
@@ -111,7 +116,9 @@ const StudentInfo = ({ form, setForm, errors }) => {
             id="controllable-states-demo"
             options={degree}
             getOptionLabel={(option) => option.name || ""}
-            renderInput={(params) => <TextField {...params} label="تحصیلات" />}
+            renderInput={(params) => (
+              <TextField {...params} label="تحصیلات" required />
+            )}
           />
         </Grid>
         {/* <Grid item xs={12} md={6}>
