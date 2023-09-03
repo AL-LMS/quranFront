@@ -40,16 +40,16 @@ const Profile = () => {
 
   useEffect(() => {
     if (role?.confirm !== 1) {
-      toastify("warning", "اکانت شما هنوز توسط ادمین فعال نشده است.");
+      toastify(
+        "warning",
+        "مربی گرامی، برای فعال سازی امکانات سامانه لطفا اطلاعات خود را در بخش پروفایل ثبت نمایید."
+      );
     }
   }, [role]);
   useEffect(() => {
     setErrors(profileAuth(form));
   }, [form]);
   const navigate = useNavigate();
-  console.log("====================================");
-  console.log(form);
-  console.log("====================================");
   const submitData = async () => {
     setLoading(true);
     const formData = new FormData();
@@ -108,7 +108,10 @@ const Profile = () => {
         setAuth(response?.data?.response?.token);
         setUser(response?.data?.response);
         setRole(response?.data?.response?.role_data);
-        toastify("success", "اطلاعات شما با موفقیت تغییر کرد.");
+        toastify(
+          "success",
+          "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
+        );
         navigate("/panel/dashboard");
       } else {
         toastify("error-login", response?.data?.error);

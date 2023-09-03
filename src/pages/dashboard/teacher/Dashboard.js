@@ -55,7 +55,10 @@ const Dashboard = () => {
   };
   useEffect(() => {
     if (userRole?.national_id === null) {
-      toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
+      toastify(
+        "warning",
+        "مربی گرامی، برای فعال سازی امکانات سامانه لطفا اطلاعات خود را در بخش پروفایل ثبت نمایید."
+      );
     }
     get_teacher_info().then(() => {
       setLoading(false);

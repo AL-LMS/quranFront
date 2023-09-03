@@ -106,7 +106,7 @@ const Profile = () => {
         setAuth(response?.data?.response?.token);
         setUser(response?.data?.response);
         setRole(response?.data?.response?.role_data);
-        toastify("success", "اطلاعات شما با موفقیت تغییر کرد.");
+        toastify("success", "ثبت‌نام شما در سامانه با موفقیت انجام شد.");
         setLoading(false);
         navigate("/panel/dashboard");
       } else {
