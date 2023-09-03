@@ -59,9 +59,6 @@ const Course = () => {
       toastify("error-login", response?.data?.error);
     }
   };
-  console.log("====================================");
-  console.log(query);
-  console.log("====================================");
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={1} mb={12}>

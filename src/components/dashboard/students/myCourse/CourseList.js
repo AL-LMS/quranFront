@@ -40,7 +40,7 @@ const CourseList = ({ data }) => {
     >
       <CardMedia
         component="img"
-        src={CourseImage}
+        src={data.picture}
         sx={{ maxWidth: "100%", width: { xs: "80px", md: "160px" } }}
       />
       <CardContent>

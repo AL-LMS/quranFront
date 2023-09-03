@@ -68,9 +68,9 @@ const CourseInfo = ({ data_course }) => {
         <Grid item xs={12} md={4}>
           <img
             src={
-              data_course?.picture1
+              data_course?.picture
                 ? // ? `https://api.srvschool.ir${data_course.picture1}`
-                  data_course?.picture1
+                  data_course?.picture
                 : NoImage
             }
             alt="course"

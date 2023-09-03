@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -12,13 +12,8 @@ import { Stack } from "@mui/system";
 
 import NoImage from "../../../assets/img/class1.jpeg";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
-import toastify from "../../../helper/toast";
-import axios from "axios";
 
 const CourseCard = ({ data }) => {
-  const [userInfo, setUserInfo] = useState(
-    JSON.parse(localStorage.getItem("user"))
-  );
   const navigate = useNavigate();
   return (
     <Card
@@ -58,13 +53,13 @@ const CourseCard = ({ data }) => {
               color={data.price ? "text.secondary" : "text"}
               fontFamily="iranyekanFn"
               fontWeight={500}
-              fontSize="14px"
+              fontSize="10px"
               sx={{
                 textDecoration: !data.price ? "line-through" : "initial",
                 color: data.price ? "#000" : "#666",
               }}
             >
-              {data.price?.toLocaleString()} تومان
+              {data.explain}
             </Typography>
             {data.price2 && (
               <Typography
