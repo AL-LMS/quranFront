@@ -134,7 +134,7 @@ const Profile = () => {
             setForm={setForm}
             showLastCertificate={showLastCertificate}
             setShowLastCertificate={setShowLastCertificate}
-            nameOfSection={"مدارک مربی"}
+            nameOfSection={"آخرین مدرک مربی"}
             nameOfButtonField={"آپلود تصویر آخرین مدرک تحصیلی"}
           />
         </Grid>
@@ -144,8 +144,8 @@ const Profile = () => {
             setForm={setForm}
             showCertificate={showCertificate}
             setShowCertificate={setShowCertificate}
-            nameOfSection={"گواهی مربی"}
-            nameOfButtonField={"آپلود تصویر گواهی"}
+            nameOfSection={"گواهی‌های مربی"}
+            nameOfButtonField={"آپلود تصاویر گواهی"}
           />
         </Grid>
         <Button
