@@ -88,7 +88,7 @@ const Profile = () => {
           ...data,
         },
 
-        baseURL: "http://127.0.0.1:5000/edit_user/",
+        baseURL: "http://127.0.0.1:5000/update_request/",
       });
       if (response?.data?.tracking_code !== null) {
         localStorage.clear("role");

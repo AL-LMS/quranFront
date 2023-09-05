@@ -75,7 +75,7 @@ const CreateCourse = () => {
     };
     let data = {
       table: "courses",
-      method_type: "",
+      method_type: "add_course",
       data: {
         type: form.type,
         name: form.name,
@@ -107,7 +107,7 @@ const CreateCourse = () => {
         ...data,
       },
 
-      baseURL: "http://127.0.0.1:5000/add_course/",
+      baseURL: "http://127.0.0.1:5000/insert_request/",
     });
     if (response?.data?.tracking_code !== null) {
       toastify("success", response?.data?.response);

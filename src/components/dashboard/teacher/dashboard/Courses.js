@@ -36,7 +36,7 @@ const Courses = () => {
         ...data,
       },
 
-      baseURL: "http://127.0.0.1:5000/get_teacher_course/",
+      baseURL: "http://127.0.0.1:5000/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
       setData(response?.data?.response);

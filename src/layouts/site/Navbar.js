@@ -88,7 +88,7 @@ const Navbar = () => {
                 </Typography>
               </Link>
             </Box>
-            <Box
+            {/* <Box
               sx={{
                 display: { xs: "none", md: "flex" },
                 width: "40%",
@@ -113,7 +113,7 @@ const Navbar = () => {
               >
                 <SearchRoundedIcon />
               </IconButton>
-            </Box>
+            </Box> */}
             <NavbarButton>
               {user?.role === "student" && (
                 <Link to="/panel/cart">
