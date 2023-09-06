@@ -38,7 +38,7 @@ const TeacherExercisesForm = ({ type, data }) => {
     setForm({ ...form, File: e.target.files[0] });
     setShowFile(URL.createObjectURL(e.target.files[0]));
   };
-
+  console.log(form);
   const createHandler = async () => {
     setLoading(true);
     const formData = new FormData();

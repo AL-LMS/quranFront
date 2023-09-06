@@ -106,6 +106,7 @@ function App() {
             <Route path="/panel/profile" element={<Profile />} />
             <Route path="/panel/cart" element={<Cart />} />
             <Route path="/panel/my-course" element={<MyCourse />} />
+            <Route path="/panel/course-page/:id" element={<TeacherCourse />} />
             <Route
               path="/panel/my-course/forumlist/:id"
               element={<ForumList />}
@@ -163,6 +164,7 @@ function App() {
             />
             <Route path="/panel/new-coures" element={<TeacherNewCourse />} />
             <Route path="/panel/coures" element={<TeacherBuyCourse />} />
+            <Route path="/panel/course-page/:id" element={<TeacherCourse />} />
             <Route path="/panel/live" element={<Live />} />
             <Route path="/panel/wallet" element={<Wallet />} />
             <Route path="/panel/payments" element={<Payments />} />
