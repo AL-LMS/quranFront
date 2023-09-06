@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 export const toastify = (type, text) => {
   if (type === "success") {
     toast.success(text, {
-      position: "top-right",
+      position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -25,7 +25,7 @@ export const toastify = (type, text) => {
     });
   } else if (type === "error-login") {
     toast.error(text, {
-      position: "top-right",
+      position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -36,7 +36,7 @@ export const toastify = (type, text) => {
     });
   } else if (type === "success-login") {
     toast.success(text, {
-      position: "top-right",
+      position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -47,7 +47,7 @@ export const toastify = (type, text) => {
     });
   } else {
     toast.error("خطایی رخ داد لطفا دوباره تلاش کنید", {
-      position: "top-right",
+      position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
