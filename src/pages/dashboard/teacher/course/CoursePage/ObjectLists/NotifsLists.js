@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Card,
-  Chip,
   Table,
   TableBody,
   TableCell,
@@ -9,14 +8,6 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-
-const statusTable = (item) => {
-  if (item) {
-    return "فعال";
-  } else {
-    return "غیرفعال";
-  }
-};
 
 const NotifsLists = ({ data }) => {
   return (
@@ -45,7 +36,7 @@ const NotifsLists = ({ data }) => {
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
-                وضعیت
+                توضیحات
               </TableCell>
             </TableRow>
           </TableHead>
@@ -68,12 +59,7 @@ const NotifsLists = ({ data }) => {
                   {item.name}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  <Chip
-                    label={statusTable(item.active)}
-                    color={item.active ? "success" : "error"}
-                    variant="outlined"
-                    sx={{ width: "82px" }}
-                  />
+                  {item.explain}
                 </TableCell>
               </TableRow>
             ))}
