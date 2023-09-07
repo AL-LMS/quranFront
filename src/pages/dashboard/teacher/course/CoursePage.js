@@ -3,6 +3,10 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import CoursePageInfo from "./CoursePage/CoursePageInfo";
 import CoursePageNotifs from "./CoursePage/CoursePageNotifs";
+import CourseHomework from "./CourseHomework";
+import CoursePageQuizes from "./CoursePage/CoursePageQuizes";
+import CoursePageHomeWorks from "./CoursePage/CoursePageHomeWorks";
+import CoursePageResources from "./CoursePage/CoursePageResources";
 
 const CoursePage = () => {
   const { id } = useParams();
@@ -18,15 +22,15 @@ const CoursePage = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <>homeworks</>
+          <CoursePageHomeWorks data_course={data} />
         </Grid>
 
         <Grid item xs={12}>
-          <>quiz</>
+          <CoursePageQuizes data_course={data} />
         </Grid>
 
         <Grid item xs={12}>
-          <>resources</>
+          <CoursePageResources data_course={data} />
         </Grid>
       </Grid>
     </Container>
