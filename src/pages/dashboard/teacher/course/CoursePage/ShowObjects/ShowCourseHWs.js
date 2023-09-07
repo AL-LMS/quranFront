@@ -3,7 +3,7 @@ import { Button, Card, Grid, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import CircleIcon from "../../../../../../assets/img/circle-small.svg";
 
-const ShowCourseHWs = ({ data }) => {
+const ShowCourseHWs = ({ data, id }) => {
   return (
     <Grid container spacing={4} style={{ marginRight: 0 }}>
       {data.length > 0 ? (
@@ -27,7 +27,7 @@ const ShowCourseHWs = ({ data }) => {
         </Grid>
       )}
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Link to="/panel/my-coures">
+        <Link to={"/panel/course/home-works/" + id}>
           <Button>مشاهده همه تمرین‌ها</Button>
         </Link>
       </Grid>

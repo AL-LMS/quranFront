@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import useAuth from "../../../hooks/useAuth";
+import useAuth from "../../../../../../hooks/useAuth";
 import { Container } from "@mui/system";
 import { Button, Grid, Typography } from "@mui/material";
 
-import Loader from "../../../components/site/shared/Loader";
+import Loader from "../../../../../../components/site/shared/Loader";
 
-import CourseList from "../../../components/dashboard/teacher/course/CourseList";
-import { useNavigate } from "react-router-dom";
-import toastify from "../../../helper/toast";
+import CourseList from "../../../../../../components/dashboard/teacher/course/CourseList";
+import { useNavigate, useParams } from "react-router-dom";
+import toastify from "../../../../../../helper/toast";
 
-const CourseHomeWorks = () => {
+const CourseResources = () => {
+  const { id } = useParams();
   const { auth, user } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -92,14 +93,14 @@ const CourseHomeWorks = () => {
             color="mainText"
             fontWeight={500}
           >
-            دوره‌های ارائه شده
+            منابع دوره
           </Typography>
           <Button
             variant="contained"
             sx={{ boxShadow: "none" }}
             onClick={() => navigate("/panel/new-coures")}
           >
-            ایجاد دوره جدید
+            افزودن منبع جدید
           </Button>
         </Grid>
         <Grid item xs={12}>
@@ -110,4 +111,4 @@ const CourseHomeWorks = () => {
   );
 };
 
-export default CourseHomeWorks;
+export default CourseResources;

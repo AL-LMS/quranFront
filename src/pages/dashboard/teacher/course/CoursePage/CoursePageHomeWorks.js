@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Divider, Grid, Typography } from "@mui/material";
 import ShowCourseHWs from "./ShowObjects/ShowCourseHWs";
 
-const CoursePageHomeWorks = ({ data_course }) => {
+const CoursePageHomeWorks = ({ data_course, id }) => {
   return (
     <Card
       sx={{
