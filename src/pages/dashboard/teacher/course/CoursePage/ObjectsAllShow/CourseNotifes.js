@@ -6,6 +6,7 @@ import { Button, Grid, Typography } from "@mui/material";
 
 import Loader from "../../../../../../components/site/shared/Loader";
 
+import CourseNotifsForm from "../../../../../../components/dashboard/teacher/course/CourseNotifsForm";
 import CourseList from "../../../../../../components/dashboard/teacher/course/CourseList";
 import { useNavigate, useParams } from "react-router-dom";
 import toastify from "../../../../../../helper/toast";
@@ -95,13 +96,7 @@ const CourseNotifes = () => {
           >
             اطلاعیه‌های دوره
           </Typography>
-          <Button
-            variant="contained"
-            sx={{ boxShadow: "none" }}
-            onClick={() => navigate("/panel/new-coures")}
-          >
-            افزودن اطلاعیه جدید
-          </Button>
+          <CourseNotifsForm type="create" />
         </Grid>
         <Grid item xs={12}>
           <CourseList data={data} />
