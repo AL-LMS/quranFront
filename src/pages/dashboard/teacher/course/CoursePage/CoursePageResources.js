@@ -28,7 +28,7 @@ const CoursePageResources = ({ data_course, id }) => {
             </Grid>
             <Divider />
             <Grid container spacing={3}>
-              <ShowCourseResouces data={data_course} />
+              <ShowCourseResouces data={data_course} id={id} />
             </Grid>
           </Grid>
         </Grid>
