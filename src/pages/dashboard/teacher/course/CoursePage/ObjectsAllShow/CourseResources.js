@@ -10,11 +10,8 @@ import ResourcesLists from "../ObjectLists/ResourcesLists";
 import CourseResourceForm from "../../../../../../components/dashboard/teacher/course/CourseResourceForm";
 
 const CourseResources = () => {
-  const { id } = useParams();
-  const { auth, user } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
