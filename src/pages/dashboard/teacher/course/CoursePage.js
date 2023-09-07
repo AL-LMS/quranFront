@@ -18,11 +18,11 @@ const CoursePage = () => {
           <CoursePageInfo data_course={data} />
         </Grid>
         <Grid item xs={12}>
-          <CoursePageNotifs data_course={data} />
+          <CoursePageNotifs data_course={[]} />
         </Grid>
 
         <Grid item xs={12}>
-          <CoursePageHomeWorks data_course={data} />
+          <CoursePageHomeWorks data_course={[]} />
         </Grid>
 
         <Grid item xs={12}>

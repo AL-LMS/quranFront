@@ -22,7 +22,7 @@ const ShowCourseNotif = ({ data }) => {
       ) : (
         <Grid item xs={12}>
           <Typography variant="h5" color="#888" textAlign="center">
-            درحال حاضر دوره‌ای برای شما ثبت نشده
+            درحال حاضر اطلاعیه‌ای برای دوره ثبت نشده
           </Typography>
         </Grid>
       )}
