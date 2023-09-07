@@ -35,6 +35,11 @@ import PrivacyPolicy from "./pages/dashboard/students/PrivacyPolicy";
 import Notifications from "./pages/dashboard/students/Notifications";
 import Register from "./pages/site/Register";
 import useAuth from "./hooks/useAuth";
+import StudentCoursePage from "./pages/dashboard/students/myCourse/CoursePage";
+import SCourseHomeWorks from "./pages/dashboard/students/myCourse/CoursePage/ObjectsAllShow/CourseHomeWorks";
+import SCourseResources from "./pages/dashboard/students/myCourse/CoursePage/ObjectsAllShow/CourseResources";
+import SCourseQuize from "./pages/dashboard/students/myCourse/CoursePage/ObjectsAllShow/CourseQuize";
+import SCourseNotifes from "./pages/dashboard/students/myCourse/CoursePage/ObjectsAllShow/CourseNotifes";
 //Teacher dashboard
 import TeacherDash from "./pages/dashboard/teacher/Dashboard";
 import TeacherCourse from "./pages/dashboard/teacher/MyCourse";
@@ -111,7 +116,20 @@ function App() {
             <Route path="/panel/profile" element={<Profile />} />
             <Route path="/panel/cart" element={<Cart />} />
             <Route path="/panel/my-course" element={<MyCourse />} />
-            <Route path="/panel/course-page/:id" element={<TeacherCourse />} />
+            <Route path="/panel/course-page/:id" element={<StudentCoursePage />} />
+            <Route
+              path="/panel/course/home-works/:id"
+              element={<SCourseHomeWorks />}
+            />
+            <Route
+              path="/panel/course/resources/:id"
+              element={<SCourseResources />}
+            />
+            <Route path="/panel/course/quizes/:id" element={<SCourseQuize />} />
+            <Route
+              path="/panel/course/notifs/:id"
+              element={<SCourseNotifes />}
+            />
             <Route
               path="/panel/my-course/forumlist/:id"
               element={<ForumList />}
