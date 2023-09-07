@@ -26,11 +26,11 @@ const CoursePage = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <CoursePageQuizes data_course={data} />
+          <CoursePageQuizes data_course={[]} />
         </Grid>
 
         <Grid item xs={12}>
-          <CoursePageResources data_course={data} />
+          <CoursePageResources data_course={[]} />
         </Grid>
       </Grid>
     </Container>
