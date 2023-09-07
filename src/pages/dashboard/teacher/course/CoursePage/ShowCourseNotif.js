@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Grid, Stack, Typography } from "@mui/material";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import CircleIcon from "../../../../../assets/img/circle-small.svg";
 
