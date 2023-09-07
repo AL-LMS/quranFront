@@ -2,6 +2,7 @@ import { Container, Grid } from "@mui/material";
 import React from "react";
 import { useParams } from "react-router-dom";
 import CoursePageInfo from "./CoursePage/CoursePageInfo";
+import CoursePageNotifs from "./CoursePage/CoursePageNotifs";
 
 const CoursePage = () => {
   const { id } = useParams();
@@ -13,7 +14,7 @@ const CoursePage = () => {
           <CoursePageInfo data_course={data} />
         </Grid>
         <Grid item xs={12}>
-          <>notifications</>
+          <CoursePageNotifs data_course={data} />
         </Grid>
 
         <Grid item xs={12}>
