@@ -1,22 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import useAuth from "../../../../../../hooks/useAuth";
 import { Container } from "@mui/system";
 import { Grid, Typography } from "@mui/material";
-
 import Loader from "../../../../../../components/site/shared/Loader";
 import CourseHomeworkForm from "../../../../../../components/dashboard/teacher/course/CourseHomeworkForm";
-
-import { useNavigate, useParams } from "react-router-dom";
 import toastify from "../../../../../../helper/toast";
 import HomeWorksLists from "../ObjectLists/HomeWorksLists";
 
 const CourseHomeWorks = () => {
-  const { id } = useParams();
-  const { auth, user } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );

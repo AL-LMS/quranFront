@@ -12,7 +12,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
-
 import { toastify } from "../../../../helper/toast";
 import { miladi_be_shamsi } from "../../../../helper/shamsi";
 import { DatePicker } from "zaman";
@@ -212,7 +211,7 @@ const TeacherExercisesForm = ({ type, data }) => {
                 fullWidth
                 disabled={loading}
               >
-                ثبت اطلاعات
+                ثبت تکلیف
               </Button>
             ) : (
               <Button
