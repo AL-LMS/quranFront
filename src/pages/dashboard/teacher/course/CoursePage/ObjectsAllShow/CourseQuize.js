@@ -93,14 +93,14 @@ const CourseQuize = () => {
             color="mainText"
             fontWeight={500}
           >
-            منابع دوره
+            کوییزهای دوره
           </Typography>
           <Button
             variant="contained"
             sx={{ boxShadow: "none" }}
             onClick={() => navigate("/panel/new-coures")}
           >
-            افزودن منبع جدید
+            افزودن کوییز جدید
           </Button>
         </Grid>
         <Grid item xs={12}>

@@ -93,14 +93,14 @@ const CourseNotifes = () => {
             color="mainText"
             fontWeight={500}
           >
-            منابع دوره
+            اطلاعیه‌های دوره
           </Typography>
           <Button
             variant="contained"
             sx={{ boxShadow: "none" }}
             onClick={() => navigate("/panel/new-coures")}
           >
-            افزودن منبع جدید
+            افزودن اطلاعیه جدید
           </Button>
         </Grid>
         <Grid item xs={12}>

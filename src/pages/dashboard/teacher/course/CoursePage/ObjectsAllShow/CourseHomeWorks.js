@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAuth from "../../../../../../hooks/useAuth";
 import { Container } from "@mui/system";
-import { Button, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 import Loader from "../../../../../../components/site/shared/Loader";
+import CourseHomeworkForm from "../../../../../../components/dashboard/teacher/course/CourseHomeworkForm";
 
-import CourseList from "../../../../../../components/dashboard/teacher/course/CourseList";
 import { useNavigate, useParams } from "react-router-dom";
 import toastify from "../../../../../../helper/toast";
+import HomeWorksLists from "../ObjectLists/HomeWorksLists";
 
 const CourseHomeWorks = () => {
   const { id } = useParams();
@@ -95,16 +96,10 @@ const CourseHomeWorks = () => {
           >
             تمرین‌های دوره
           </Typography>
-          <Button
-            variant="contained"
-            sx={{ boxShadow: "none" }}
-            onClick={() => navigate("/panel/new-coures")}
-          >
-            افزودن تمرین جدید
-          </Button>
+          <CourseHomeworkForm type="create" />
         </Grid>
         <Grid item xs={12}>
-          <CourseList data={data} />
+          <HomeWorksLists data={data} />
         </Grid>
       </Grid>
     </Container>
