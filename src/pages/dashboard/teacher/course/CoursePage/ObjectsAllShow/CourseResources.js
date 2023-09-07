@@ -3,12 +3,11 @@ import axios from "axios";
 import useAuth from "../../../../../../hooks/useAuth";
 import { Container } from "@mui/system";
 import { Button, Grid, Typography } from "@mui/material";
-
 import Loader from "../../../../../../components/site/shared/Loader";
-
-import CourseList from "../../../../../../components/dashboard/teacher/course/CourseList";
 import { useNavigate, useParams } from "react-router-dom";
 import toastify from "../../../../../../helper/toast";
+import ResourcesLists from "../ObjectLists/ResourcesLists";
+import CourseResourceForm from "../../../../../../components/dashboard/teacher/course/CourseResourceForm";
 
 const CourseResources = () => {
   const { id } = useParams();
@@ -95,16 +94,10 @@ const CourseResources = () => {
           >
             منابع دوره
           </Typography>
-          <Button
-            variant="contained"
-            sx={{ boxShadow: "none" }}
-            onClick={() => navigate("/panel/new-coures")}
-          >
-            افزودن منبع جدید
-          </Button>
+          <CourseResourceForm type="create" />
         </Grid>
         <Grid item xs={12}>
-          <CourseList data={data} />
+          <ResourcesLists data={data} />
         </Grid>
       </Grid>
     </Container>
