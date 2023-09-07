@@ -8,7 +8,6 @@ import { Stack } from "@mui/system";
 import { toastify } from "../../../../../helper/toast";
 
 import NoImage from "../../../../../assets/img/class1.jpeg";
-import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import {
   convert_ages,
   convert_degree,

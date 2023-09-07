@@ -124,11 +124,11 @@ const CourseList = ({ data }) => {
                 <TableCell sx={{ border: "none" }}>
                   <Stack direction="row" justifyContent="center">
                     <Tooltip title="دوره">
-                      {/* <Link to={`/panel/course/course-homework/${item.id}`}> */}
-                      <Button>
-                        <MenuBookOutlinedIcon />
-                      </Button>
-                      {/* </Link> */}
+                      <Link to={`/panel/course-page/${item.course_id}`}>
+                        <Button>
+                          <MenuBookOutlinedIcon />
+                        </Button>
+                      </Link>
                     </Tooltip>
                     <Tooltip title="دانش آموزان">
                       <Link to={`/panel/course/students/${item.course_id}`}>
