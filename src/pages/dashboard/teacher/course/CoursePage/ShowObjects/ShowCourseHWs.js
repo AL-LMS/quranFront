@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import { Button, Card, Grid, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import CircleIcon from "../../../../../assets/img/circle-small.svg";
+import CircleIcon from "../../../../../../assets/img/circle-small.svg";
 
-const ShowCourseResouces = ({ data }) => {
+const ShowCourseHWs = ({ data }) => {
   return (
     <Grid container spacing={4} style={{ marginRight: 0 }}>
       {data.length > 0 ? (
@@ -22,17 +22,17 @@ const ShowCourseResouces = ({ data }) => {
       ) : (
         <Grid item xs={12}>
           <Typography variant="h5" color="#888" textAlign="center">
-            درحال حاضر منبعی برای دوره ثبت نشده
+            درحال حاضر تمرینی برای دوره ثبت نشده
           </Typography>
         </Grid>
       )}
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Link to="/panel/my-coures">
-          <Button>مشاهده همه منابع</Button>
+          <Button>مشاهده همه تمرین‌ها</Button>
         </Link>
       </Grid>
     </Grid>
   );
 };
 
-export default ShowCourseResouces;
+export default ShowCourseHWs;

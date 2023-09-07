@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Divider, Grid, Typography } from "@mui/material";
-import ShowCourseHWs from "./ShowCourseHWs";
+import ShowCourseHWs from "./ShowObjects/ShowCourseHWs";
 
 const CoursePageHomeWorks = ({ data_course }) => {
   return (

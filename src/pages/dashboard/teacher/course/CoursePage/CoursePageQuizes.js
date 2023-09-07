@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Divider, Grid, Typography } from "@mui/material";
-import ShowCourseQuizs from "./ShowCourseQuizs";
+import ShowCourseQuizs from "./ShowObjects/ShowCourseQuizs";
 
 const CoursePageQuizes = ({ data_course }) => {
   return (
