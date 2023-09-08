@@ -13,7 +13,6 @@ import Loader from "../../../../components/site/shared/Loader";
 const CoursePage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const { id } = useParams();
   const get_course = async () => {
     let config = {

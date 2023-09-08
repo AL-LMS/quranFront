@@ -8,9 +8,11 @@ import CoursePageHomeWorks from "./CoursePage/CoursePageHomeWorks";
 import CoursePageResources from "./CoursePage/CoursePageResources";
 import axios from "axios";
 import toastify from "../../../../helper/toast";
+import Loader from "../../../../components/site/shared/Loader";
 
 const CoursePage = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const get_course = async () => {
     let config = {
@@ -42,8 +44,30 @@ const CoursePage = () => {
     }
   };
   useEffect(() => {
-    get_course().then(() => {});
+    get_course().then(() => {
+      setLoading(false);
+    });
   }, [id]);
+  if (loading)
+    return (
+      <Container maxWidth="lg">
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              height: "100vh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Loader />
+          </Grid>
+        </Grid>
+      </Container>
+    );
+
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={3}>
