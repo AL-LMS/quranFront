@@ -3,7 +3,6 @@ import axios from "axios";
 import { Container } from "@mui/system";
 import { Grid, Typography } from "@mui/material";
 import Loader from "../../../../../../components/site/shared/Loader";
-import CourseNotifsForm from "../../../../../../components/dashboard/teacher/course/CourseNotifsForm";
 import toastify from "../../../../../../helper/toast";
 import NotifsLists from "../ObjectLists/NotifsLists";
 
@@ -89,7 +88,6 @@ const CourseNotifes = () => {
           >
             اطلاعیه‌های دوره
           </Typography>
-          <CourseNotifsForm type="create" />
         </Grid>
         <Grid item xs={12}>
           <NotifsLists data={data} />

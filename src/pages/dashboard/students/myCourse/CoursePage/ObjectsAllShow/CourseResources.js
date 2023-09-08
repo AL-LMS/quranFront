@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import useAuth from "../../../../../../hooks/useAuth";
 import { Container } from "@mui/system";
-import { Button, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import Loader from "../../../../../../components/site/shared/Loader";
-import { useNavigate, useParams } from "react-router-dom";
 import toastify from "../../../../../../helper/toast";
 import ResourcesLists from "../ObjectLists/ResourcesLists";
-import CourseResourceForm from "../../../../../../components/dashboard/teacher/course/CourseResourceForm";
 
 const CourseResources = () => {
   const [data, setData] = useState([]);
@@ -91,7 +88,6 @@ const CourseResources = () => {
           >
             منابع دوره
           </Typography>
-          <CourseResourceForm type="create" />
         </Grid>
         <Grid item xs={12}>
           <ResourcesLists data={data} />

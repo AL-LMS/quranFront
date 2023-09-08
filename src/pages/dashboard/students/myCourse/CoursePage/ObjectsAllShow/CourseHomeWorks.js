@@ -3,7 +3,6 @@ import axios from "axios";
 import { Container } from "@mui/system";
 import { Grid, Typography } from "@mui/material";
 import Loader from "../../../../../../components/site/shared/Loader";
-import CourseHomeworkForm from "../../../../../../components/dashboard/teacher/course/CourseHomeworkForm";
 import toastify from "../../../../../../helper/toast";
 import HomeWorksLists from "../ObjectLists/HomeWorksLists";
 
@@ -89,7 +88,6 @@ const CourseHomeWorks = () => {
           >
             تمرین‌های دوره
           </Typography>
-          <CourseHomeworkForm type="create" />
         </Grid>
         <Grid item xs={12}>
           <HomeWorksLists data={data} />
