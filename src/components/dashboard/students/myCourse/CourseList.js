@@ -104,24 +104,6 @@ const CourseList = ({ data }) => {
               <Button>صفحه دوره</Button>
             </Link>
           </MenuItem>
-          {/* <MenuItem onClick={handleClose}>
-            <Link to={`/panel/my-course/exercise/${data?.courseID}`}>
-              <Button>تکالیف</Button>
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <Link to={`/panel/my-course/tags/${data?.courseID}`}>
-              <Button>فایل و جزوات</Button>
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <JoinMeeting id={data?.courseID} />
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <Link to={`/panel/my-course/report/${data?.courseID}`}>
-              <Button>مشاهده نتایج آزمون ها</Button>
-            </Link>
-          </MenuItem> */}
         </Menu>
       </CardActions>
     </Card>

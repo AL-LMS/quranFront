@@ -5,7 +5,7 @@ import Sidebar from "../layouts/dashboard/Sidebar";
 
 import useAuth from "../hooks/useAuth";
 import Login from "../pages/site/Login";
-import Back from "../components/dashboard/Back"
+import Back from "../components/dashboard/Back";
 
 const PrivateRoutes = () => {
   const [sidebar, setSidebar] = useState(false);
