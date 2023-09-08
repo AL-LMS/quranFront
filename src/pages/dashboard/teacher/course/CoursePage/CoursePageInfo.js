@@ -105,7 +105,7 @@ const CoursePageInfo = ({ data_course }) => {
                   <Typography color="mainText">
                     روزهای برگزاری:
                     <span style={{ color: "black" }}>
-                      {" " + data_course["days"]}
+                      {data_course["days"]}
                     </span>
                   </Typography>
                   <Typography color="mainText">
@@ -118,55 +118,17 @@ const CoursePageInfo = ({ data_course }) => {
                   </Typography>
                   <Typography color="mainText">
                     ساعت برگزاری:
-                    <span style={{ color: "black" }}>{data_course[""]}</span>
+                    <span style={{ color: "black" }}>
+                      {data_course["time"]}
+                    </span>
                   </Typography>
                 </Stack>
                 <Stack spacing={2} sx={{ marginTop: { xs: 2, md: 0 } }}>
-                  <Stack direction="row" spacing={5}>
-                    <Typography color="mainText">هزینه آموزش دوره:</Typography>
-                    <Typography
-                      fontWeight={400}
-                      color={data_course["price"] ? "#000" : "error"}
-                      fontFamily="iranyekanFn"
-                      sx={{
-                        textDecoration: !data_course["price"]
-                          ? "line-through"
-                          : "initial",
-                        color: data_course["price"] ? "#000" : "#666",
-                      }}
-                    >
-                      {" " + data_course["price"]?.toLocaleString()} تومان
-                    </Typography>
-                  </Stack>
-                  {data_course.price2 && (
-                    <Stack direction="row" spacing={5}>
-                      <Typography color="mainText">قیمت با تخفیف:</Typography>
-                      <Typography
-                        fontWeight={400}
-                        color="error"
-                        fontFamily="iranyekanFn"
-                      >
-                        {data_course.price2?.toLocaleString()} تومان
-                      </Typography>
-                    </Stack>
-                  )}
-                  {/* <Stack direction="row" spacing={5}>
-                    <Typography color="mainText">وضعیت دوره:</Typography>
-                    <Typography
-                      fontWeight={400}
-                      color={data_course.active ? "success.main" : " error"}
-                      fontFamily="iranyekanFn"
-                    >
-                      {data_course.active ? "فعال" : " غیرفعال"}
-                    </Typography>
-                  </Stack> */}
-
-                  <Divider />
                   <Button
                     sx={{
                       boxShadow: "none",
                       borderRadius: "12px",
-                      padding: "10px 0",
+                      padding: "10px 10px",
                     }}
                     variant="contained"
                     fullWidth
