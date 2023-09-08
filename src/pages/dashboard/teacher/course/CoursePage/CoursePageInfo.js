@@ -103,34 +103,22 @@ const CoursePageInfo = ({ data_course }) => {
               >
                 <Stack spacing={2} direction="column">
                   <Typography color="mainText">
-                    موضوع دوره:
+                    روزهای برگزاری:
                     <span style={{ color: "black" }}>
-                      {" " + data_course["type"]}
+                      {" " + data_course["days"]}
                     </span>
                   </Typography>
                   <Typography color="mainText">
-                    مقطع سنی:
+                    مدت دوره:
                     <span style={{ color: "black" }}>
-                      {" " + convert_ages(data_course["ages"])}
+                      {data_course["start_date"] +
+                        "-" +
+                        data_course["end_date"]}
                     </span>
                   </Typography>
                   <Typography color="mainText">
-                    حداقل مدرک تحصیلی:
-                    <span style={{ color: "black" }}>
-                      {" " + convert_degree(data_course["degree"])}
-                    </span>
-                  </Typography>
-                  <Typography color="mainText">
-                    پیشنیازها:
-                    <span style={{ color: "black" }}>
-                      {" " + data_course["prerequisite"]}
-                    </span>
-                  </Typography>
-                  <Typography color="mainText">
-                    جنسیت:
-                    <span style={{ color: "black" }}>
-                      {" " + convert_sex(data_course["sex"])}
-                    </span>
+                    ساعت برگزاری:
+                    <span style={{ color: "black" }}>{data_course[""]}</span>
                   </Typography>
                 </Stack>
                 <Stack spacing={2} sx={{ marginTop: { xs: 2, md: 0 } }}>

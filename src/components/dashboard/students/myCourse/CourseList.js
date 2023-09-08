@@ -100,8 +100,8 @@ const CourseList = ({ data }) => {
           }}
         >
           <MenuItem onClick={handleClose}>
-            <Link to={`/panel/my-course/forumlist/${data?.courseID}`}>
-              <Button>صفحه کلاس</Button>
+            <Link to={`/panel/course-page/${data?.course_id}`}>
+              <Button>صفحه دوره</Button>
             </Link>
           </MenuItem>
           {/* <MenuItem onClick={handleClose}>
