@@ -38,6 +38,11 @@ const NotifsLists = ({ data }) => {
               >
                 توضیحات
               </TableCell>
+              <TableCell
+                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
+              >
+                نویسنده
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -56,10 +61,13 @@ const NotifsLists = ({ data }) => {
                   {index + 1}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  {item.name}
+                  {item.title}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  {item.explain}
+                  {item.description}
+                </TableCell>
+                <TableCell sx={{ border: "none", textAlign: "center" }}>
+                  {item.sender_name}
                 </TableCell>
               </TableRow>
             ))}

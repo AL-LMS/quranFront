@@ -5,22 +5,24 @@ import { Grid, Typography } from "@mui/material";
 import Loader from "../../../../../../components/site/shared/Loader";
 import toastify from "../../../../../../helper/toast";
 import NotifsLists from "../ObjectLists/NotifsLists";
+import { useParams } from "react-router-dom";
 
 const CourseNotifes = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { id } = useParams();
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
-  const get_course = async () => {
+  const get_notifs = async () => {
     let config = {
       url: "select_request",
     };
     let data = {
       table: "courses",
-      method_type: "get_teacher_course",
+      method_type: "get_notifs",
       data: {
-        user_id: userInfo.user_id,
+        course_id: id,
       },
     };
     let response = await axios({
@@ -43,7 +45,7 @@ const CourseNotifes = () => {
   };
 
   useEffect(() => {
-    get_course().then(() => {
+    get_notifs().then(() => {
       setLoading(false);
     });
   }, [userInfo]);

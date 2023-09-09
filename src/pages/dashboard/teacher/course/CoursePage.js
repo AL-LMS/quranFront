@@ -67,7 +67,7 @@ const CoursePage = () => {
         </Grid>
       </Container>
     );
-
+  console.log(data);
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={3}>
@@ -75,7 +75,7 @@ const CoursePage = () => {
           <CoursePageInfo data_course={data} />
         </Grid>
         <Grid item xs={12}>
-          <CoursePageNotifs data_course={[]} id={id} />
+          <CoursePageNotifs data_course={data?.notifications} id={id} />
         </Grid>
         <Grid item xs={12}>
           <CoursePageHomeWorks data_course={[]} id={id} />

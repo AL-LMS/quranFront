@@ -22,73 +22,116 @@ const TeacherNotifsForm = ({ type, data }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    Title: data ? data.title : "",
-    Description: data ? data.description : "",
+    title: data ? data.title : "",
+    description: data ? data.description : "",
     active: data ? data.active : false,
-    teacher_id: user?.user_id,
-    sender_name: user?.first_name + " " + user?.last_name,
   });
-  const { setReload } = useContext(DefiContext);
-  const createHandler = async () => {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("title", form.Title);
-    formData.append("description", form.Description);
-    formData.append("active", form.active);
-    formData.append("course_id", id);
-    if (form.Title) {
-      try {
-        const response = await axios.post(`course/courseHomeWork/`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${auth}`,
-          },
-        });
+  // const { setReload } = useContext(DefiContext);
+  // const createHandler = async () => {
+  //   setLoading(true);
+  //   const formData = new FormData();
+  //   formData.append("title", form.title);
+  //   formData.append("description", form.description);
+  //   formData.append("active", form.active);
+  //   formData.append("course_id", id);
+  //   if (form.title) {
+  //     try {
+  //       const response = await axios.post(`course/courseHomeWork/`, formData, {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           Authorization: `Bearer ${auth}`,
+  //         },
+  //       });
 
-        toastify("success", "اطلاعات با موفقیت ارسال شد");
+  //       toastify("success", "اطلاعات با موفقیت ارسال شد");
+  //       setLoading(false);
+  //       setOpen(false);
+  //       setReload((prevState) => !prevState);
+  //     } catch (err) {
+  //       setLoading(false);
+  //       toastify("error", "خطا دربرقراری ارتباط با سرور");
+  //     }
+  //   } else {
+  //     setLoading(false);
+  //     toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
+  //   }
+  // };
+
+  const add_notifs = async () => {
+    setLoading(true);
+    if (form.title) {
+      let config = {
+        url: "insert_request",
+      };
+      let data = {
+        table: "courses",
+        method_type: "add_notifs",
+        data: {
+          title: form.title,
+          description: form.description,
+          active: form.active,
+          teacher_id: user?.user_id,
+          sender_name: user?.first_name + " " + user?.last_name,
+          course_id: id,
+        },
+      };
+      let response = await axios({
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        data: {
+          ...data,
+        },
+
+        baseURL: "http://127.0.0.1:5000/insert_request/",
+      });
+      if (response?.data?.tracking_code !== null) {
+        toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
-        setReload((prevState) => !prevState);
-      } catch (err) {
+        // navigate("/panel/course-page/" + id);
+      } else {
+        toastify("error-login", response?.data?.error);
         setLoading(false);
-        toastify("error", "خطا دربرقراری ارتباط با سرور");
+        setOpen(false);
       }
     } else {
       setLoading(false);
       toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
     }
   };
+  // const editHandler = async () => {
+  //   setLoading(true);
+  //   const formData = new FormData();
+  //   formData.append("title", form.title);
+  //   form.description && formData.append("description", form.description);
+  //   formData.append("active", form.active);
+  //   formData.append("course_id", id);
+  //   formData.append("id", data.id);
+  //   if (form.title) {
+  //     try {
+  //       const response = await axios.put(`course/courseHomeWork/`, formData, {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           Authorization: `Bearer ${auth}`,
+  //         },
+  //       });
 
-  const editHandler = async () => {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("title", form.Title);
-    form.Description && formData.append("description", form.Description);
-    formData.append("active", form.active);
-    formData.append("course_id", id);
-    formData.append("id", data.id);
-    if (form.Title) {
-      try {
-        const response = await axios.put(`course/courseHomeWork/`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${auth}`,
-          },
-        });
-
-        toastify("success", "اطلاعات با موفقیت ارسال شد");
-        setLoading(false);
-        setOpen(false);
-        setReload((prevState) => !prevState);
-      } catch (err) {
-        setLoading(false);
-        toastify("error", "خطا دربرقراری ارتباط با سرور");
-      }
-    } else {
-      setLoading(false);
-      toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
-    }
-  };
+  //       toastify("success", "اطلاعات با موفقیت ارسال شد");
+  //       setLoading(false);
+  //       setOpen(false);
+  //       setReload((prevState) => !prevState);
+  //     } catch (err) {
+  //       setLoading(false);
+  //       toastify("error", "خطا دربرقراری ارتباط با سرور");
+  //     }
+  //   } else {
+  //     setLoading(false);
+  //     toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
+  //   }
+  // };
   return (
     <div>
       {type === "create" ? (
@@ -119,17 +162,17 @@ const TeacherNotifsForm = ({ type, data }) => {
           <Grid item xs={12}>
             <TextField
               label="عنوان"
-              value={form.Title}
-              onChange={(e) => setForm({ ...form, Title: e.target.value })}
+              value={form.title}
+              onChange={(e) => setForm({ ...form, title: e.target.value })}
               fullWidth
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
               label="توضیحات"
-              value={form.Description}
+              value={form.description}
               onChange={(e) =>
-                setForm({ ...form, Description: e.target.value })
+                setForm({ ...form, description: e.target.value })
               }
               fullWidth
             />
@@ -150,7 +193,7 @@ const TeacherNotifsForm = ({ type, data }) => {
               <Button
                 variant="contained"
                 sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
-                onClick={createHandler}
+                onClick={() => add_notifs().then(() => {})}
                 fullWidth
                 disabled={loading}
               >
@@ -160,7 +203,7 @@ const TeacherNotifsForm = ({ type, data }) => {
               <Button
                 variant="contained"
                 sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
-                onClick={editHandler}
+                onClick={() => add_notifs().then(() => {})}
                 fullWidth
                 disabled={loading}
               >

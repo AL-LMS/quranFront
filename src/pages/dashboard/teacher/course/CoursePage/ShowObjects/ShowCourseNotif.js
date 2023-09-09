@@ -13,7 +13,7 @@ const ShowCourseNotif = ({ data, id }) => {
               <Stack direction="row" spacing={1}>
                 <img src={CircleIcon} alt="circle" />
                 <Typography color="mainText" fontWeight={400}>
-                  {item.name}
+                  {item.title}
                 </Typography>
               </Stack>
             </Stack>

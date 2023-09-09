@@ -20,7 +20,7 @@ const CoursePage = () => {
     };
     let data = {
       table: "courses",
-      method_type: "get_course",
+      method_type: "get_course_page",
       data: {
         id: id,
       },
@@ -75,7 +75,7 @@ const CoursePage = () => {
           <CoursePageInfo data_course={data} />
         </Grid>
         <Grid item xs={12}>
-          <CoursePageNotifs data_course={[]} id={id} />
+          <CoursePageNotifs data_course={data?.notifications} id={id} />
         </Grid>
         <Grid item xs={12}>
           <CoursePageHomeWorks data_course={[]} id={id} />
