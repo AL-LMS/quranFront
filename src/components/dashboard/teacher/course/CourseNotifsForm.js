@@ -18,13 +18,15 @@ import { DefiContext } from "../../../../context/DefiContext";
 
 const TeacherNotifsForm = ({ type, data }) => {
   const { id } = useParams();
-  const { auth } = useAuth();
+  const { auth, user } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     Title: data ? data.title : "",
     Description: data ? data.description : "",
     active: data ? data.active : false,
+    teacher_id: user?.user_id,
+    sender_name: user?.first_name + " " + user?.last_name,
   });
   const { setReload } = useContext(DefiContext);
   const createHandler = async () => {
@@ -33,7 +35,7 @@ const TeacherNotifsForm = ({ type, data }) => {
     formData.append("title", form.Title);
     formData.append("description", form.Description);
     formData.append("active", form.active);
-    formData.append("courseID", id);
+    formData.append("course_id", id);
     if (form.Title) {
       try {
         const response = await axios.post(`course/courseHomeWork/`, formData, {
@@ -63,7 +65,7 @@ const TeacherNotifsForm = ({ type, data }) => {
     formData.append("title", form.Title);
     form.Description && formData.append("description", form.Description);
     formData.append("active", form.active);
-    formData.append("courseID", id);
+    formData.append("course_id", id);
     formData.append("id", data.id);
     if (form.Title) {
       try {

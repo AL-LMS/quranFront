@@ -20,7 +20,7 @@ const CoursePage = () => {
     };
     let data = {
       table: "courses",
-      method_type: "get_course",
+      method_type: "get_course_page",
       data: {
         id: id,
       },

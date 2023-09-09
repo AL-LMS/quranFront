@@ -30,7 +30,6 @@ const MultiDocumnets = ({
 
     reader.readAsDataURL(input.files[0]);
   };
-  console.log("log", form?.certificates.length);
   return (
     <Card
       sx={{
