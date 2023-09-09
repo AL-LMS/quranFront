@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import {
@@ -13,98 +13,158 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { toastify } from "../../../../helper/toast";
-import { miladi_be_shamsi } from "../../../../helper/shamsi";
-import { DatePicker } from "zaman";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { DefiContext } from "../../../../context/DefiContext";
-
+import { DatePicker } from "zaman";
+import "./style.css";
+import { convertToPersianDate } from "../../../../pages/dashboard/converter/dateConverter";
 const TeacherExercisesForm = ({ type, data }) => {
   const { id } = useParams();
-  const { auth } = useAuth();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    File: data ? data.fileCourse : "",
-    Title: data ? data.title : "",
-    Time: data ? data.endDateTime : null,
-    Description: data ? data.description : "",
-    active: data ? data.active : false,
+    file: data ? data.fileCourse : "",
+    title: data ? data.title : "",
+    deadline: data ? data.endDateTime : null,
+    description: data ? data.description : "",
+    type: data ? data.type : "",
   });
-  const [showFile, setShowFile] = useState("");
-  const { setReload } = useContext(DefiContext);
-
-  const fileHandler = (e) => {
-    setForm({ ...form, File: e.target.files[0] });
-    setShowFile(URL.createObjectURL(e.target.files[0]));
+  const handleDatePicker = (e) => {
+    let deadline = "";
+    deadline = convertToPersianDate(e.value);
+    setForm({ ...form, deadline: deadline });
   };
-  const createHandler = async () => {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("title", form.Title);
-    formData.append("description", form.Description);
-    formData.append("fileCourse", form.File);
-    formData.append("endDateTime", form.Time);
-    formData.append("active", form.active);
-    formData.append("courseID", id);
-    if (form.File && form.Title && form.Time) {
-      try {
-        const response = await axios.post(`course/courseHomeWork/`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${auth}`,
-          },
-        });
+  let myRef = useRef();
+  const openFile = (file) => {
+    const input = file.target;
+    const reader = new FileReader();
 
-        toastify("success", "اطلاعات با موفقیت ارسال شد");
+    reader.onload = function () {
+      const dataURL = reader.result;
+      let image = input.files[0].type;
+
+      let data = {
+        file: dataURL,
+        file_type: image.split("/")[1],
+        file_name: input.files[0].name,
+        file_size: input.files[0].size,
+      };
+      form.type = data.file_type;
+      form.file = data.file;
+      // setShowLastCertificate(URL.createObjectURL(input.files[0]));
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  };
+  // const createHandler = async () => {
+  //   setLoading(true);
+  //   const formData = new FormData();
+  //   formData.append("title", form.title);
+  //   formData.append("description", form.description);
+  //   formData.append("fileCourse", form.file);
+  //   formData.append("endDateTime", form.deadline);
+  //   formData.append("active", form.active);
+  //   formData.append("courseID", id);
+  //   if (form.file && form.title && form.deadline) {
+  //     try {
+  //       const response = await axios.post(`course/courseHomeWork/`, formData, {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           Authorization: `Bearer ${auth}`,
+  //         },
+  //       });
+
+  //       toastify("success", "اطلاعات با موفقیت ارسال شد");
+  //       setLoading(false);
+  //       setOpen(false);
+  //       setReload((prevState) => !prevState);
+  //     } catch (err) {
+  //       setLoading(false);
+  //       toastify("error", "خطا دربرقراری ارتباط با سرور");
+  //     }
+  //   } else {
+  //     setLoading(false);
+  //     toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
+  //   }
+  // };
+  const add_homework = async () => {
+    setLoading(true);
+    if (form.file && form.title && form.deadline) {
+      let config = {
+        url: "insert_request",
+      };
+      let data = {
+        table: "courses",
+        method_type: "add_homework",
+        data: {
+          file: form?.file,
+          title: form?.title,
+          deadline: form?.deadline,
+          description: form?.description,
+          type: form?.type,
+          teacher_id: user?.user_id,
+          course_id: id,
+        },
+      };
+      let response = await axios({
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        data: {
+          ...data,
+        },
+
+        baseURL: "http://127.0.0.1:5000/insert_request/",
+      });
+      if (response?.data?.tracking_code !== null) {
+        toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
-        setReload((prevState) => !prevState);
-      } catch (err) {
+        // navigate("/panel/course-page/" + id);
+      } else {
+        toastify("error-login", response?.data?.error);
         setLoading(false);
-        toastify("error", "خطا دربرقراری ارتباط با سرور");
+        setOpen(false);
       }
     } else {
       setLoading(false);
       toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
     }
   };
+  // const editHandler = async () => {
+  //   setLoading(true);
+  //   const formData = new FormData();
+  //   formData.append("title", form.title);
+  //   form.description && formData.append("description", form.description);
+  //   showFile && formData.append("fileCourse", form.file);
+  //   formData.append("endDateTime", form.deadline);
+  //   formData.append("active", form.active);
+  //   formData.append("courseID", id);
+  //   formData.append("id", data.id);
+  //   if (form.file && form.title && form.deadline) {
+  //     try {
+  //       const response = await axios.put(`course/courseHomeWork/`, formData, {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           Authorization: `Bearer ${auth}`,
+  //         },
+  //       });
 
-  const editHandler = async () => {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("title", form.Title);
-    form.Description && formData.append("description", form.Description);
-    showFile && formData.append("fileCourse", form.File);
-    formData.append("endDateTime", form.Time);
-    formData.append("active", form.active);
-    formData.append("courseID", id);
-    formData.append("id", data.id);
-    if (form.File && form.Title && form.Time) {
-      try {
-        const response = await axios.put(`course/courseHomeWork/`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${auth}`,
-          },
-        });
-
-        toastify("success", "اطلاعات با موفقیت ارسال شد");
-        setLoading(false);
-        setOpen(false);
-        setReload((prevState) => !prevState);
-      } catch (err) {
-        setLoading(false);
-        toastify("error", "خطا دربرقراری ارتباط با سرور");
-      }
-    } else {
-      setLoading(false);
-      toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
-    }
-  };
-
-  function changeDate({ value }) {
-    setForm({ ...form, Time: value._i.slice(0, 10) });
-  }
+  //       toastify("success", "اطلاعات با موفقیت ارسال شد");
+  //       setLoading(false);
+  //       setOpen(false);
+  //       setReload((prevState) => !prevState);
+  //     } catch (err) {
+  //       setLoading(false);
+  //       toastify("error", "خطا دربرقراری ارتباط با سرور");
+  //     }
+  //   } else {
+  //     setLoading(false);
+  //     toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
+  //   }
+  // };
 
   return (
     <div>
@@ -139,7 +199,7 @@ const TeacherExercisesForm = ({ type, data }) => {
               id="raised-button-file"
               multiple
               type="file"
-              onChange={fileHandler}
+              onChange={(event) => openFile(event)}
             />
             <label htmlFor="raised-button-file">
               <Button
@@ -155,47 +215,34 @@ const TeacherExercisesForm = ({ type, data }) => {
           <Grid item xs={12}>
             <TextField
               label="عنوان"
-              value={form.Title}
-              onChange={(e) => setForm({ ...form, Title: e.target.value })}
+              value={form.title}
+              onChange={(e) => setForm({ ...form, title: e.target.value })}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} sx={{ position: "relative" }}>
-            <DatePicker
-              onClickSubmitButton={changeDate}
-              timePicker={false}
-              label="مهلت انجام"
-            />
-            {form.Time && (
-              <span
-                className="date-value"
-                style={{
-                  color: "#666",
-                  position: "absolute",
-                  top: "40px",
-                  left: "10px",
-                }}
-              >
-                {miladi_be_shamsi(form.Time)}
-              </span>
-            )}
+            <section className="wrapper">
+              <div className="libWrapper">
+                <DatePicker
+                  zindex={10000000}
+                  round="x1"
+                  accentColor="#6374ae"
+                  inputAttributes={{
+                    placeholder: "مهلت انجام",
+                  }}
+                  onChange={(e) => handleDatePicker(e)}
+                />
+              </div>
+            </section>
           </Grid>
           <Grid item xs={12}>
             <TextField
               label="توضیحات"
-              value={form.Description}
+              value={form.description}
               onChange={(e) =>
-                setForm({ ...form, Description: e.target.value })
+                setForm({ ...form, description: e.target.value })
               }
               fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Chip
-              color={form.active ? "error" : "success"}
-              sx={{ color: "#fff", padding: "8px 20px" }}
-              label={form.active ? "غیرفعال کردن" : "فعال کردن"}
-              onClick={() => setForm({ ...form, active: !form.active })}
             />
           </Grid>
           <Grid item xs={12}>
@@ -206,7 +253,7 @@ const TeacherExercisesForm = ({ type, data }) => {
               <Button
                 variant="contained"
                 sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
-                onClick={createHandler}
+                onClick={() => add_homework().then(() => {})}
                 fullWidth
                 disabled={loading}
               >
@@ -216,7 +263,7 @@ const TeacherExercisesForm = ({ type, data }) => {
               <Button
                 variant="contained"
                 sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
-                onClick={editHandler}
+                onClick={() => add_homework().then(() => {})}
                 fullWidth
                 disabled={loading}
               >

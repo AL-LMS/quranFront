@@ -6,8 +6,10 @@ import Loader from "../../../../../../components/site/shared/Loader";
 import CourseHomeworkForm from "../../../../../../components/dashboard/teacher/course/CourseHomeworkForm";
 import toastify from "../../../../../../helper/toast";
 import HomeWorksLists from "../ObjectLists/HomeWorksLists";
+import { useParams } from "react-router-dom";
 
 const CourseHomeWorks = () => {
+  const { id } = useParams();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(
@@ -19,9 +21,9 @@ const CourseHomeWorks = () => {
     };
     let data = {
       table: "courses",
-      method_type: "get_teacher_course",
+      method_type: "get_homeworks",
       data: {
-        user_id: userInfo.user_id,
+        course_id: id,
       },
     };
     let response = await axios({

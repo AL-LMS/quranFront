@@ -21,7 +21,6 @@ import {
   ages,
   courseType,
   degree,
-  sex,
   sex_for_class,
 } from "./CourseData";
 import Documnets from "./Documnets";
@@ -29,7 +28,6 @@ import CheckIcon from "@mui/icons-material/Check";
 import { TimePicker } from "react-ios-time-picker";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Images from "./../../../helper/base64Images/index";
 const CreateCourse = () => {
   const [loading, setLoading] = useState(false);
   const [calendarValue, setCalendarValue] = useState(new Date());

@@ -3,7 +3,6 @@ import { Card, Divider, Grid, Typography } from "@mui/material";
 import ShowCourseNotif from "./ShowObjects/ShowCourseNotif";
 
 const CoursePageNotifs = ({ data_course, id }) => {
-  console.log(data_course);
   return (
     <Card
       sx={{

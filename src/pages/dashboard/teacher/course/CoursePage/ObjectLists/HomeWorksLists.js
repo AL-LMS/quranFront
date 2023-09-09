@@ -9,14 +9,8 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-
-const statusTable = (item) => {
-  if (item) {
-    return "فعال";
-  } else {
-    return "غیرفعال";
-  }
-};
+import Image from "../../../../../../assets/img/image.png";
+import PDF from "../../../../../../assets/img/pdf.png";
 
 const HomeWorksLists = ({ data }) => {
   return (
@@ -75,7 +69,7 @@ const HomeWorksLists = ({ data }) => {
                   {index + 1}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  {item.name}
+                  {item.title}
                 </TableCell>
                 <TableCell
                   sx={{
@@ -85,7 +79,7 @@ const HomeWorksLists = ({ data }) => {
                     textAlign: "center",
                   }}
                 >
-                  {item?.start_date && item?.start_date.slice(0, 10)}
+                  {item?.deadline && item?.deadline.slice(0, 10)}
                 </TableCell>
                 <TableCell
                   sx={{
@@ -95,12 +89,14 @@ const HomeWorksLists = ({ data }) => {
                     textAlign: "center",
                   }}
                 >
-                  {item.student_count}
+                  <a download={item?.title} href={item?.file}>
+                    <img src={item?.type === "pdf" ? PDF : Image} />
+                  </a>
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
                   <Chip
-                    label={statusTable(item.active)}
-                    color={item.active ? "success" : "error"}
+                    label={item.type}
+                    color={item.type ? "success" : "error"}
                     variant="outlined"
                     sx={{ width: "82px" }}
                   />
