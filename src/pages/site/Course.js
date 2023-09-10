@@ -5,7 +5,7 @@ import Filter from "../../components/site/course/Filter";
 import CourseCard from "../../components/site/course/CourseCard";
 import { Container } from "@mui/system";
 import Loader from "../../components/site/shared/Loader";
-import { useSearchParams, useLocation } from "react-router-dom";
+import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import NotFound from "../../components/site/shared/NotFound";
 import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
@@ -19,9 +19,11 @@ const Course = () => {
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("role"))
   );
+  const navigate = useNavigate();
   useEffect(() => {
     if (userInfo?.national_id === null) {
       toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
+      navigate("/panel/profile");
     }
     get_courses().then(() => {});
   }, [userInfo]);
