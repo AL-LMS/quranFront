@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import Image from "../../../../../../assets/img/image.png";
 import PDF from "../../../../../../assets/img/pdf.png";
+import Video from "../../../../../../assets/img/video.png";
 
 const HomeWorksLists = ({ data }) => {
   return (
@@ -90,7 +91,15 @@ const HomeWorksLists = ({ data }) => {
                   }}
                 >
                   <a download={item?.title} href={item?.file}>
-                    <img src={item?.type === "pdf" ? PDF : Image} />
+                    <img
+                      src={
+                        item?.type === "pdf"
+                          ? PDF
+                          : item?.type === "img"
+                          ? Image
+                          : Video
+                      }
+                    />
                   </a>
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
