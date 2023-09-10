@@ -9,12 +9,15 @@ import Loader from "../../../components/site/shared/Loader";
 import Courses from "../../../components/dashboard/teacher/dashboard/Courses";
 import toastify from "../../../helper/toast";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const { auth, user, role } = useAuth();
   const [loading, setLoading] = useState(false);
   const [stCount, setStCount] = useState("");
   const [cCount, setCCount] = useState("");
+  const navigate = useNavigate();
+
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
@@ -55,10 +58,11 @@ const Dashboard = () => {
   };
   useEffect(() => {
     if (userRole?.national_id === null) {
-      toastify(
-        "warning",
-        "مربی گرامی، برای فعال سازی امکانات سامانه لطفا اطلاعات خود را در بخش پروفایل ثبت نمایید."
-      );
+      // toastify(
+      //   "warning",
+      //   "مربی گرامی، برای فعال سازی امکانات سامانه لطفا اطلاعات خود را در بخش پروفایل ثبت نمایید."
+      // );
+      navigate("/panel/profile");
     }
     get_teacher_info().then(() => {
       setLoading(false);
