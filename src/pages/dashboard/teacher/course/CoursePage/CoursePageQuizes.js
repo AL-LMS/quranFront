@@ -23,7 +23,7 @@ const CoursePageQuizes = ({ data_course, id }) => {
                 marginBottom={5}
                 textAlign={"center"}
               >
-                کوییزها
+                آزمونها
               </Typography>
             </Grid>
             <Divider />

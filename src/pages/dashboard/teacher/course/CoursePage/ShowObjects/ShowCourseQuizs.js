@@ -22,13 +22,13 @@ const ShowCourseQuizs = ({ data, id }) => {
       ) : (
         <Grid item xs={12}>
           <Typography variant="h5" color="#888" textAlign="center">
-            درحال حاضر کوییزی برای دوره ثبت نشده
+            درحال حاضر آزمونی برای دوره ثبت نشده
           </Typography>
         </Grid>
       )}
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Link to={"/panel/course/quizes/" + id}>
-          <Button>مشاهده همه کوییزها</Button>
+          <Button>مشاهده همه آزمونها</Button>
         </Link>
       </Grid>
     </Grid>

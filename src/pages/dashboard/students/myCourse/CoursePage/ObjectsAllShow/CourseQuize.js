@@ -86,7 +86,7 @@ const CourseQuize = () => {
             color="mainText"
             fontWeight={500}
           >
-            کوییزهای دوره
+            آزمونهای دوره
           </Typography>
         </Grid>
         <Grid item xs={12}>

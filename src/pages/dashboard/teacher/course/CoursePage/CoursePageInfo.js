@@ -171,7 +171,7 @@ const CoursePageInfo = ({ data_course }) => {
                     }
                     disabled={data_course.enableforbuy}
                   >
-                    ایجاد دوره
+                    ایجاد کلاس
                   </Button>
                 </Stack>
               </Stack>
