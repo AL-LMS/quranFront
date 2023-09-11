@@ -11,6 +11,7 @@ import CourseResourceForm from "../../../../../../components/dashboard/teacher/c
 
 const CourseResources = () => {
   const [data, setData] = useState([]);
+  const {id} = useParams()
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
@@ -21,9 +22,9 @@ const CourseResources = () => {
     };
     let data = {
       table: "courses",
-      method_type: "get_teacher_course",
+      method_type: "get_resources",
       data: {
-        user_id: userInfo.user_id,
+        course_id: id,
       },
     };
     let response = await axios({
