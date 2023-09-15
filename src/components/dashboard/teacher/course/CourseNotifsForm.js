@@ -15,6 +15,7 @@ import { useParams } from "react-router-dom";
 import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { DefiContext } from "../../../../context/DefiContext";
+import MUIRichTextEditor from "mui-rte";
 
 const TeacherNotifsForm = ({ type, data }) => {
   const { id } = useParams();
@@ -176,6 +177,7 @@ const TeacherNotifsForm = ({ type, data }) => {
               }
               fullWidth
             />
+            <MUIRichTextEditor label="Start typing..." />
           </Grid>
           <Grid item xs={12}>
             <Chip
