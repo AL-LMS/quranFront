@@ -75,6 +75,7 @@ import CourseHomeWorks from "./pages/dashboard/teacher/course/CoursePage/Objects
 import CourseResources from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseResources";
 import CourseQuize from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseQuize";
 import CourseNotifes from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseNotifes";
+import Meet from "./pages/site/Meet";
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -91,6 +92,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/confirm-phone" element={<ConfirmPhone />} />
+        <Route path="/meet" element={<Meet />} />
         {/* <Route path="/course" element={<Course />} />
         <Route path="/course/details/:id" element={<CourseDetails />} />
         <Route path="/packages" element={<Packages />} />
@@ -116,7 +118,10 @@ function App() {
             <Route path="/panel/profile" element={<Profile />} />
             <Route path="/panel/cart" element={<Cart />} />
             <Route path="/panel/my-course" element={<MyCourse />} />
-            <Route path="/panel/course-page/:id" element={<StudentCoursePage />} />
+            <Route
+              path="/panel/course-page/:id"
+              element={<StudentCoursePage />}
+            />
             <Route
               path="/panel/course/home-works/:id"
               element={<SCourseHomeWorks />}
