@@ -2,15 +2,6 @@ import { JaaSMeeting, JitsiMeeting } from "@jitsi/react-sdk";
 import React, { useRef, useState } from "react";
 
 const Meet = () => {
-  //   return (
-  // <>
-  //   <div style={{ width: "100%", height: "100%", margin: "100px 0px" }}>
-  //     <JitsiMeeting
-  //       roomName={"meeeeting"}
-  //       getIFrameRef={(node) => (node.style.height = "800px")}
-  //     />
-  //   </div>
-  // </>
   const apiRef = useRef();
   const [logItems, updateLog] = useState([]);
   const [showNew, toggleShowNew] = useState(false);
@@ -233,15 +224,6 @@ const Meet = () => {
         JitsiMeeting Demo App
       </h1>
       <JitsiMeeting
-        // roomName={generateRoomName()}
-        // spinner={renderSpinner}
-        // configOverwrite={{
-        //   subject: "lalalala",
-        //   hideConferenceSubject: false,
-        // }}
-        // onApiReady={(externalApi) => handleApiReady(externalApi)}
-        // onReadyToClose={handleReadyToClose}
-        // getIFrameRef={handleJitsiIFrameRef1}
         roomName="PleaseUseAGoodRoomName"
         configOverwrite={{
           startWithAudioMuted: true,
@@ -255,31 +237,16 @@ const Meet = () => {
         userInfo={{
           displayName: "YOUR_USERNAME",
         }}
-        onApiReady={(externalApi) => {
-          // here you can attach custom event listeners to the Jitsi Meet External API
-          // you can also store it locally to execute commands
-        }}
+        onApiReady={(externalApi) => {}}
         getIFrameRef={(iframeRef) => {
           iframeRef.style.height = "400px";
         }}
       />
-      {/* <JaaSMeeting
-        roomName={generateRoomName()}
-        // Update this with the `8x8.vc` or `stage.8x8.vc` version of interest
-        // and avoid mixing up different domains and release versions
-        // on the same page at the same time, as only the first
-        // external api script will be loaded.
-        // release = 'release-1234'
-
-        useStaging={true}
-        getIFrameRef={handleJaaSIFrameRef}
-      /> */}
       {renderButtons()}
       {renderNewInstance()}
       {renderLog()}
     </>
   );
-  //   );
 };
 
 export default Meet;
