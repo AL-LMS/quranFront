@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import {
@@ -17,82 +17,84 @@ import { DefiContext } from "../../../../context/DefiContext";
 
 const TeacherResourceForm = ({ type, data }) => {
   const { id } = useParams();
-  const { auth } = useAuth();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    File: data ? data.fileCourse : "",
-    Title: data ? data.title : "",
+    file: data ? data.fileCourse : "",
+    title: data ? data.title : "",
     Description: data ? data.description : "",
   });
   const [showFile, setShowFile] = useState("");
   const { setReload } = useContext(DefiContext);
+  let myRef = useRef();
+  const openFile = (file) => {
+    const input = file.target;
+    const reader = new FileReader();
 
-  const fileHandler = (e) => {
-    setForm({ ...form, File: e.target.files[0] });
-    setShowFile(URL.createObjectURL(e.target.files[0]));
+    reader.onload = function () {
+      const dataURL = reader.result;
+      let image = input.files[0].type;
+
+      let data = {
+        file: dataURL,
+        file_type: image.split("/")[1],
+        file_name: input.files[0].name,
+        file_size: input.files[0].size,
+      };
+      form.type = data.file_type;
+      form.file = data.file;
+      // setShowLastCertificate(URL.createObjectURL(input.files[0]));
+    };
+
+    reader.readAsDataURL(input.files[0]);
   };
-  const createHandler = async () => {
+  const add_resource = async () => {
     setLoading(true);
-    const formData = new FormData();
-    formData.append("title", form.Title);
-    formData.append("description", form.Description);
-    formData.append("fileCourse", form.File);
-    formData.append("courseID", id);
-    if (form.File && form.Title) {
-      try {
-        const response = await axios.post(`course/courseHomeWork/`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${auth}`,
-          },
-        });
+    if (form.file && form.title && form.deadline) {
+      let config = {
+        url: "insert_request",
+      };
+      let data = {
+        table: "courses",
+        method_type: "add_resource",
+        data: {
+          file: form?.file,
+          title: form?.title,
+          deadline: form?.deadline,
+          description: form?.description,
+          type: form?.type,
+          teacher_id: user?.user_id,
+          course_id: id,
+        },
+      };
+      let response = await axios({
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        data: {
+          ...data,
+        },
 
-        toastify("success", "اطلاعات با موفقیت ارسال شد");
+        baseURL: "http://127.0.0.1:5000/insert_request/",
+      });
+      if (response?.data?.tracking_code !== null) {
+        toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
-        setReload((prevState) => !prevState);
-      } catch (err) {
+        // navigate("/panel/course-page/" + id);
+      } else {
+        toastify("error-login", response?.data?.error);
         setLoading(false);
-        toastify("error", "خطا دربرقراری ارتباط با سرور");
+        setOpen(false);
       }
     } else {
       setLoading(false);
       toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
     }
   };
-
-  const editHandler = async () => {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("title", form.Title);
-    form.Description && formData.append("description", form.Description);
-    showFile && formData.append("fileCourse", form.File);
-    formData.append("courseID", id);
-    formData.append("id", data.id);
-    if (form.File && form.Title) {
-      try {
-        const response = await axios.put(`course/courseHomeWork/`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${auth}`,
-          },
-        });
-
-        toastify("success", "اطلاعات با موفقیت ارسال شد");
-        setLoading(false);
-        setOpen(false);
-        setReload((prevState) => !prevState);
-      } catch (err) {
-        setLoading(false);
-        toastify("error", "خطا دربرقراری ارتباط با سرور");
-      }
-    } else {
-      setLoading(false);
-      toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
-    }
-  };
-
   return (
     <div>
       {type === "create" ? (
@@ -126,7 +128,7 @@ const TeacherResourceForm = ({ type, data }) => {
               id="raised-button-file"
               multiple
               type="file"
-              onChange={fileHandler}
+              onChange={(event) => openFile(event)}
             />
             <label htmlFor="raised-button-file">
               <Button
@@ -166,7 +168,7 @@ const TeacherResourceForm = ({ type, data }) => {
               <Button
                 variant="contained"
                 sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
-                onClick={createHandler}
+                onClick={() => add_resource().then(() => {})}
                 fullWidth
                 disabled={loading}
               >
@@ -176,7 +178,7 @@ const TeacherResourceForm = ({ type, data }) => {
               <Button
                 variant="contained"
                 sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
-                onClick={editHandler}
+                onClick={() => add_resource().then(() => {})}
                 fullWidth
                 disabled={loading}
               >

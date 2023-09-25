@@ -1,0 +1,20 @@
+@font-face {
+  src: url("./assets/fonts/IRANSansWeb/IRANSansWeb.eot");
+  src: url("./assets/fonts/IRANSansWeb/IRANSansWeb.ttf");
+  src: url("./assets/fonts/IRANSansWeb/IRANSansWeb.woff");
+  src: url("./assets/fonts/IRANSansWeb/IRANSansWeb.woff2");
+  font-family: "iransans";
+}
+
+@font-face {
+  font-family: "IRANSansWeb_Farsi";
+  src: url("./assets/fonts/iransans_fanum/IRANSansWeb\(FaNum\).woff")
+    format("woff");
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "IRANSansWeb_Farsi" !important;
+}

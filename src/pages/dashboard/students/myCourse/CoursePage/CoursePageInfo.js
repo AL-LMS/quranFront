@@ -171,7 +171,7 @@ const CoursePageInfo = ({ data_course }) => {
                     }
                     disabled={data_course.enableforbuy}
                   >
-                    ورود به دوره
+                    ورود به کلاس
                   </Button>
                 </Stack>
               </Stack>
