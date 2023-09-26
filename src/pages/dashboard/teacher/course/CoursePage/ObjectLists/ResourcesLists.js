@@ -56,10 +56,10 @@ const ResourcesLists = ({ data }) => {
                   {index + 1}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  {item.name}
+                  {item.title}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  {item.name}
+                  {item.file}
                 </TableCell>
               </TableRow>
             ))}
