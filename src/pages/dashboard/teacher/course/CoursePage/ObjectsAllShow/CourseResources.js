@@ -11,12 +11,12 @@ import CourseResourceForm from "../../../../../../components/dashboard/teacher/c
 
 const CourseResources = () => {
   const [data, setData] = useState([]);
-  const {id} = useParams()
+  const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
-  const get_course = async () => {
+  const get_resource = async () => {
     let config = {
       url: "select_request",
     };
@@ -47,7 +47,7 @@ const CourseResources = () => {
   };
 
   useEffect(() => {
-    get_course().then(() => {
+    get_resource().then(() => {
       setLoading(false);
     });
   }, [userInfo]);

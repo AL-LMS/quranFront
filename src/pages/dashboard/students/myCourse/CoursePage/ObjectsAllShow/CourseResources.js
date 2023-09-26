@@ -5,22 +5,24 @@ import { Grid, Typography } from "@mui/material";
 import Loader from "../../../../../../components/site/shared/Loader";
 import toastify from "../../../../../../helper/toast";
 import ResourcesLists from "../ObjectLists/ResourcesLists";
+import { useParams } from "react-router-dom";
 
 const CourseResources = () => {
   const [data, setData] = useState([]);
+  const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
-  const get_course = async () => {
+  const get_resource = async () => {
     let config = {
       url: "select_request",
     };
     let data = {
       table: "courses",
-      method_type: "get_teacher_course",
+      method_type: "get_resources",
       data: {
-        user_id: userInfo.user_id,
+        course_id: id,
       },
     };
     let response = await axios({
@@ -43,11 +45,10 @@ const CourseResources = () => {
   };
 
   useEffect(() => {
-    get_course().then(() => {
+    get_resource().then(() => {
       setLoading(false);
     });
   }, [userInfo]);
-
   if (loading)
     return (
       <Container maxWidth="lg">
