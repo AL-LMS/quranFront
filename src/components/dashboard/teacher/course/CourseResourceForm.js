@@ -46,7 +46,7 @@ const TeacherResourceForm = ({ type, data }) => {
   };
   const add_resource = async () => {
     setLoading(true);
-    if (form.file && form.title && form.deadline) {
+    if (form.file && form.title) {
       let config = {
         url: "insert_request",
       };
@@ -138,7 +138,7 @@ const TeacherResourceForm = ({ type, data }) => {
             <TextField
               label="عنوان"
               value={form.title}
-              onChange={(e) => setForm({ ...form, ti: e.target.value })}
+              onChange={(e) => setForm({ ...form, title: e.target.value })}
               fullWidth
             />
           </Grid>
