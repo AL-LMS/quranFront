@@ -14,7 +14,7 @@ import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import "./style.css";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-const UploadExercisesForm = ({ type, data }) => {
+const UploadExercisesForm = ({ type, data, homeworkId }) => {
   const { id } = useParams();
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
@@ -46,7 +46,7 @@ const UploadExercisesForm = ({ type, data }) => {
   };
   const upload_homework = async () => {
     setLoading(true);
-    if (form.title && form.deadline) {
+    if (form.file) {
       let config = {
         url: "insert_request",
       };
@@ -54,9 +54,11 @@ const UploadExercisesForm = ({ type, data }) => {
         table: "courses",
         method_type: "upload_homework",
         data: {
-          user_id: user?.id,
+          user_id: user?.user_id,
           file: form?.file,
+          type: form?.type,
           course_id: id,
+          homework_id: homeworkId,
         },
       };
       let response = await axios({

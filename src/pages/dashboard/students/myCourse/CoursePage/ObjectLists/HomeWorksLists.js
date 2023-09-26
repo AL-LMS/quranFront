@@ -121,7 +121,7 @@ const HomeWorksLists = ({ data }) => {
                 <TableCell sx={{ border: "none" }}>
                   <Stack direction="row" justifyContent="center">
                     <Tooltip title="دوره">
-                      <UploadExercisesForm type="create" />
+                      <UploadExercisesForm type="create" homeworkId={item.id} />
                     </Tooltip>
                   </Stack>
                 </TableCell>
