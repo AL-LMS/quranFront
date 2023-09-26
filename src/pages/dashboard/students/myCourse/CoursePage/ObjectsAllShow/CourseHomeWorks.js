@@ -23,6 +23,7 @@ const CourseHomeWorks = () => {
       method_type: "get_homeworks_user",
       data: {
         course_id: id,
+        user_id: userInfo?.user_id,
       },
     };
     let response = await axios({
