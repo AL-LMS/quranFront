@@ -3,7 +3,6 @@ import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import {
   Button,
-  Chip,
   Dialog,
   DialogTitle,
   Divider,
@@ -51,45 +50,13 @@ const TeacherExercisesForm = ({ type, data }) => {
       };
       form.type = data.file_type;
       form.file = data.file;
-      // setShowLastCertificate(URL.createObjectURL(input.files[0]));
     };
 
     reader.readAsDataURL(input.files[0]);
   };
-  // const createHandler = async () => {
-  //   setLoading(true);
-  //   const formData = new FormData();
-  //   formData.append("title", form.title);
-  //   formData.append("description", form.description);
-  //   formData.append("fileCourse", form.file);
-  //   formData.append("endDateTime", form.deadline);
-  //   formData.append("active", form.active);
-  //   formData.append("courseID", id);
-  //   if (form.file && form.title && form.deadline) {
-  //     try {
-  //       const response = await axios.post(`course/courseHomeWork/`, formData, {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //           Authorization: `Bearer ${auth}`,
-  //         },
-  //       });
-
-  //       toastify("success", "اطلاعات با موفقیت ارسال شد");
-  //       setLoading(false);
-  //       setOpen(false);
-  //       setReload((prevState) => !prevState);
-  //     } catch (err) {
-  //       setLoading(false);
-  //       toastify("error", "خطا دربرقراری ارتباط با سرور");
-  //     }
-  //   } else {
-  //     setLoading(false);
-  //     toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
-  //   }
-  // };
   const add_homework = async () => {
     setLoading(true);
-    if (form.file && form.title && form.deadline) {
+    if (form.title && form.deadline) {
       let config = {
         url: "insert_request",
       };
@@ -122,7 +89,6 @@ const TeacherExercisesForm = ({ type, data }) => {
         toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
-        // navigate("/panel/course-page/" + id);
       } else {
         toastify("error-login", response?.data?.error);
         setLoading(false);
@@ -133,38 +99,6 @@ const TeacherExercisesForm = ({ type, data }) => {
       toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
     }
   };
-  // const editHandler = async () => {
-  //   setLoading(true);
-  //   const formData = new FormData();
-  //   formData.append("title", form.title);
-  //   form.description && formData.append("description", form.description);
-  //   showFile && formData.append("fileCourse", form.file);
-  //   formData.append("endDateTime", form.deadline);
-  //   formData.append("active", form.active);
-  //   formData.append("courseID", id);
-  //   formData.append("id", data.id);
-  //   if (form.file && form.title && form.deadline) {
-  //     try {
-  //       const response = await axios.put(`course/courseHomeWork/`, formData, {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //           Authorization: `Bearer ${auth}`,
-  //         },
-  //       });
-
-  //       toastify("success", "اطلاعات با موفقیت ارسال شد");
-  //       setLoading(false);
-  //       setOpen(false);
-  //       setReload((prevState) => !prevState);
-  //     } catch (err) {
-  //       setLoading(false);
-  //       toastify("error", "خطا دربرقراری ارتباط با سرور");
-  //     }
-  //   } else {
-  //     setLoading(false);
-  //     toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
-  //   }
-  // };
 
   return (
     <div>

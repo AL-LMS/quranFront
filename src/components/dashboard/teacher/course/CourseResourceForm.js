@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import {
@@ -13,7 +13,6 @@ import {
 import { useParams } from "react-router-dom";
 import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { DefiContext } from "../../../../context/DefiContext";
 
 const TeacherResourceForm = ({ type, data }) => {
   const { id } = useParams();
@@ -23,10 +22,7 @@ const TeacherResourceForm = ({ type, data }) => {
   const [form, setForm] = useState({
     file: data ? data.fileCourse : "",
     title: data ? data.title : "",
-    Description: data ? data.description : "",
   });
-  const [showFile, setShowFile] = useState("");
-  const { setReload } = useContext(DefiContext);
   let myRef = useRef();
   const openFile = (file) => {
     const input = file.target;
@@ -44,7 +40,6 @@ const TeacherResourceForm = ({ type, data }) => {
       };
       form.type = data.file_type;
       form.file = data.file;
-      // setShowLastCertificate(URL.createObjectURL(input.files[0]));
     };
 
     reader.readAsDataURL(input.files[0]);
@@ -61,8 +56,6 @@ const TeacherResourceForm = ({ type, data }) => {
         data: {
           file: form?.file,
           title: form?.title,
-          deadline: form?.deadline,
-          description: form?.description,
           type: form?.type,
           teacher_id: user?.user_id,
           course_id: id,
@@ -84,7 +77,6 @@ const TeacherResourceForm = ({ type, data }) => {
         toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
-        // navigate("/panel/course-page/" + id);
       } else {
         toastify("error-login", response?.data?.error);
         setLoading(false);
@@ -145,18 +137,8 @@ const TeacherResourceForm = ({ type, data }) => {
           <Grid item xs={12}>
             <TextField
               label="عنوان"
-              value={form.Title}
-              onChange={(e) => setForm({ ...form, Title: e.target.value })}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="توضیحات"
-              value={form.Description}
-              onChange={(e) =>
-                setForm({ ...form, Description: e.target.value })
-              }
+              value={form.title}
+              onChange={(e) => setForm({ ...form, ti: e.target.value })}
               fullWidth
             />
           </Grid>
