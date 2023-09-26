@@ -2,17 +2,19 @@ import React from "react";
 import {
   Card,
   Chip,
+  Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
 } from "@mui/material";
-
 import Image from "../../../../../../assets/img/image.png";
 import PDF from "../../../../../../assets/img/pdf.png";
 import Video from "../../../../../../assets/img/video.png";
+import UploadExercisesForm from "../../../../../../components/dashboard/students/course/CourseHomeworkForm";
 
 const HomeWorksLists = ({ data }) => {
   return (
@@ -52,6 +54,11 @@ const HomeWorksLists = ({ data }) => {
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
                 وضعیت
+              </TableCell>
+              <TableCell
+                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
+              >
+                آپلود
               </TableCell>
             </TableRow>
           </TableHead>
@@ -110,6 +117,13 @@ const HomeWorksLists = ({ data }) => {
                     variant="outlined"
                     sx={{ width: "82px" }}
                   />
+                </TableCell>
+                <TableCell sx={{ border: "none" }}>
+                  <Stack direction="row" justifyContent="center">
+                    <Tooltip title="دوره">
+                      <UploadExercisesForm type="create" />
+                    </Tooltip>
+                  </Stack>
                 </TableCell>
               </TableRow>
             ))}
