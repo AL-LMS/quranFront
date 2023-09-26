@@ -20,7 +20,7 @@ const CourseHomeWorks = () => {
     };
     let data = {
       table: "courses",
-      method_type: "get_homeworks",
+      method_type: "get_homeworks_user",
       data: {
         course_id: id,
       },

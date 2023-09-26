@@ -78,13 +78,13 @@ const CoursePage = () => {
           <CoursePageNotifs data_course={data?.notifications} id={id} />
         </Grid>
         <Grid item xs={12}>
-          <CoursePageHomeWorks data_course={[]} id={id} />
+          <CoursePageHomeWorks data_course={data?.homeworks} id={id} />
         </Grid>
         <Grid item xs={12}>
-          <CoursePageQuizes data_course={[]} id={id} />
+          <CoursePageQuizes data_course={data?.quiz} id={id} />
         </Grid>
         <Grid item xs={12}>
-          <CoursePageResources data_course={[]} id={id} />
+          <CoursePageResources data_course={data?.resources} id={id} />
         </Grid>
       </Grid>
     </Container>
