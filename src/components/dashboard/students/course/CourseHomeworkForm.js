@@ -91,13 +91,11 @@ const UploadExercisesForm = ({ type, data, homeworkId }) => {
   return (
     <div>
       {type === "create" ? (
-        <Button
-          variant="contained"
-          sx={{ boxShadow: "none", borderRadius: 3 }}
-          onClick={() => setOpen(true)}
-        >
-          <FileUploadIcon />
-        </Button>
+        <Tooltip title="ثبت">
+          <Button onClick={() => setOpen(true)}>
+            <FileUploadIcon />
+          </Button>
+        </Tooltip>
       ) : (
         <Tooltip title="ویرایش">
           <Button onClick={() => setOpen(true)}>
@@ -112,7 +110,7 @@ const UploadExercisesForm = ({ type, data, homeworkId }) => {
         maxWidth="sm"
       >
         <DialogTitle sx={{ textAlign: "center" }}>
-          {type === "create" ? "آپلود تکلیف" : "ویرایش تکلیف"}
+          {type === "create" ? "ارسال تکلیف" : "ویرایش تکلیف"}
         </DialogTitle>
         <Grid container spacing={3} padding={2}>
           <Grid item xs={12}>
@@ -130,7 +128,7 @@ const UploadExercisesForm = ({ type, data, homeworkId }) => {
                 sx={{ height: "56px" }}
                 component="span"
               >
-                آپلود تکلیف
+                ارسال تکلیف
               </Button>
             </label>
           </Grid>
@@ -146,10 +144,18 @@ const UploadExercisesForm = ({ type, data, homeworkId }) => {
                 fullWidth
                 disabled={loading}
               >
-                ثبت تکلیف
+                ارسال تکلیف
               </Button>
             ) : (
-              <></>
+              <Button
+                variant="contained"
+                sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
+                onClick={() => upload_homework().then(() => {})}
+                fullWidth
+                disabled={loading}
+              >
+                ارسال تکلیف
+              </Button>
             )}
           </Grid>
         </Grid>

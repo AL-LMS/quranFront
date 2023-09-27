@@ -12,9 +12,6 @@ import {
   TableRow,
   Tooltip,
 } from "@mui/material";
-import Image from "../../../../../../assets/img/image.png";
-import PDF from "../../../../../../assets/img/pdf.png";
-import Video from "../../../../../../assets/img/video.png";
 import UploadExercisesForm from "../../../../../../components/dashboard/students/course/CourseHomeworkForm";
 import DownloadIcon from "@mui/icons-material/Download";
 const HomeWorksLists = ({ data }) => {
@@ -51,11 +48,11 @@ const HomeWorksLists = ({ data }) => {
               >
                 فایل
               </TableCell>
-              {/* <TableCell
+              <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
                 وضعیت
-              </TableCell> */}
+              </TableCell>
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
@@ -101,10 +98,7 @@ const HomeWorksLists = ({ data }) => {
                 >
                   {item?.file !== "" ? (
                     <a download={item?.title} href={item?.file}>
-                      <Button
-                        variant="contained"
-                        sx={{ boxShadow: "none", borderRadius: 3 }}
-                      >
+                      <Button>
                         <DownloadIcon />
                       </Button>
                     </a>
@@ -112,7 +106,7 @@ const HomeWorksLists = ({ data }) => {
                     <>---</>
                   )}
                 </TableCell>
-                {/* <TableCell sx={{ border: "none", textAlign: "center" }}>
+                <TableCell sx={{ border: "none", textAlign: "center" }}>
                   <Chip
                     label={
                       item.is_upload ? "تحویل داده شده" : "تحویل داده نشده"
@@ -121,21 +115,12 @@ const HomeWorksLists = ({ data }) => {
                     variant="outlined"
                     sx={{ width: "auto" }}
                   />
-                </TableCell> */}
+                </TableCell>
                 <TableCell sx={{ border: "none" }}>
                   <Stack direction="row" justifyContent="center">
                     <Tooltip title="دوره">
                       {item.is_upload ? (
-                        <Chip
-                          label={
-                            item.is_upload
-                              ? "تحویل داده شده"
-                              : "تحویل داده نشده"
-                          }
-                          color={item.is_upload ? "success" : "error"}
-                          variant="outlined"
-                          sx={{ width: "auto" }}
-                        />
+                        <UploadExercisesForm type="edit" homeworkId={item.id} />
                       ) : (
                         <UploadExercisesForm
                           type="create"

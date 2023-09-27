@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Button,
   Card,
   Table,
   TableBody,
@@ -8,6 +9,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import DownloadIcon from "@mui/icons-material/Download";
 
 const ResourcesLists = ({ data }) => {
   return (
@@ -58,8 +60,26 @@ const ResourcesLists = ({ data }) => {
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
                   {item.title}
                 </TableCell>
-                <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  {item.file}
+                <TableCell
+                  sx={{
+                    border: "none",
+                    fontFamily: "iranyekanFn",
+                    fontWeight: 500,
+                    textAlign: "center",
+                  }}
+                >
+                  {item?.file !== "" ? (
+                    <a download={item?.title} href={item?.file}>
+                      <Button
+                        variant="contained"
+                        sx={{ boxShadow: "none", borderRadius: 3 }}
+                      >
+                        <DownloadIcon />
+                      </Button>
+                    </a>
+                  ) : (
+                    <>---</>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
