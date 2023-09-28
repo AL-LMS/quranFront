@@ -17,7 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-
+import "./styleNav.css";
 import { useState } from "react";
 import Sidebar from "./Sidebar";
 
@@ -29,6 +29,8 @@ const StyledToolbar = styled(Toolbar)({
 const NavbarButton = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
+  marginLeft: "100px !important",
+  marginRight: "100px",
 }));
 
 const Navbar = () => {
@@ -115,17 +117,25 @@ const Navbar = () => {
               </IconButton>
             </Box> */}
             <NavbarButton>
-              {user?.role === "student" && (
+              {/* {user?.role === "student" && (
                 <Link to="/panel/cart">
                   <IconButton>
                     <LocalMallOutlinedIcon color="primary" />
                   </IconButton>
                 </Link>
-              )}
+              )} */}
               <Link to="/panel/dashboard">
                 <Button
                   variant="contained"
-                  sx={{ borderRadius: "40px", ml: 2, boxShadow: "none" }}
+                  style={{
+                    marginLeft: "100px !important",
+                    marginRight: "100px !important",
+                  }}
+                  sx={{
+                    borderRadius: "40px",
+                    ml: 2,
+                    boxShadow: "none",
+                  }}
                 >
                   {user?.first_name
                     ? `${user.first_name} ${user.last_name}`
