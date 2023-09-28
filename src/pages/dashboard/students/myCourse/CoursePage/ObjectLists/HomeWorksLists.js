@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import UploadExercisesForm from "../../../../../../components/dashboard/students/course/CourseHomeworkForm";
 import DownloadIcon from "@mui/icons-material/Download";
+import { checkHomeWorkDeadLine } from "../../../../../../helper/checkdeadline";
 const HomeWorksLists = ({ data }) => {
   return (
     <Card
@@ -119,12 +120,26 @@ const HomeWorksLists = ({ data }) => {
                 <TableCell sx={{ border: "none" }}>
                   <Stack direction="row" justifyContent="center">
                     <Tooltip title="دوره">
-                      {item.is_upload ? (
-                        <UploadExercisesForm type="edit" homeworkId={item.id} />
+                      {checkHomeWorkDeadLine(item.deadline) ? (
+                        <TableCell sx={{ border: "none", textAlign: "center" }}>
+                          <Chip
+                            label={"اتمام مهلت"}
+                            color={"warning"}
+                            variant="outlined"
+                            sx={{ width: "auto" }}
+                          />
+                        </TableCell>
+                      ) : item.is_upload ? (
+                        <UploadExercisesForm
+                          type="edit"
+                          homeworkId={item.id}
+                          answer_id={item.answer_id}
+                        />
                       ) : (
                         <UploadExercisesForm
                           type="create"
                           homeworkId={item.id}
+                          answer_id={item.answer_id}
                         />
                       )}
                     </Tooltip>

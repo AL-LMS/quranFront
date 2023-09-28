@@ -14,7 +14,7 @@ import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import "./style.css";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-const UploadExercisesForm = ({ type, data, homeworkId }) => {
+const UploadExercisesForm = ({ type, data, homeworkId, answer_id }) => {
   const { id } = useParams();
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
@@ -22,6 +22,7 @@ const UploadExercisesForm = ({ type, data, homeworkId }) => {
   const [form, setForm] = useState({
     file: data ? data.fileCourse : "",
     type: data ? data.type : "",
+    answer_id: answer_id ? answer_id : "",
   });
   let myRef = useRef();
   const openFile = (file) => {
@@ -58,6 +59,53 @@ const UploadExercisesForm = ({ type, data, homeworkId }) => {
           file: form?.file,
           type: form?.type,
           course_id: id,
+          homework_id: homeworkId,
+        },
+      };
+      let response = await axios({
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        data: {
+          ...data,
+        },
+
+        baseURL: "http://127.0.0.1:5000/insert_request/",
+      });
+      if (response?.data?.tracking_code !== null) {
+        toastify("success", response?.data?.response);
+        setLoading(false);
+        setOpen(false);
+      } else {
+        toastify("error-login", response?.data?.error);
+        setLoading(false);
+        setOpen(false);
+      }
+    } else {
+      setLoading(false);
+      toastify("warning", "لطفا فیلدهارا با دقت پر کنید");
+    }
+  };
+
+  const edit_upload_homework = async () => {
+    setLoading(true);
+    if (form.answer_id) {
+      setLoading(false);
+      toastify("warning", "مشکلی پیش آمده لطفا صفحه خود را رفرش کنید");
+    }
+    if (form.file) {
+      let config = {
+        url: "insert_request",
+      };
+      let data = {
+        table: "courses",
+        method_type: "edit_upload_homework",
+        data: {
+          user_id: user?.user_id,
+          file: form?.file,
+          type: form?.type,
           homework_id: homeworkId,
         },
       };
@@ -150,7 +198,7 @@ const UploadExercisesForm = ({ type, data, homeworkId }) => {
               <Button
                 variant="contained"
                 sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
-                onClick={() => upload_homework().then(() => {})}
+                onClick={() => edit_upload_homework().then(() => {})}
                 fullWidth
                 disabled={loading}
               >
