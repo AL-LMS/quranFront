@@ -97,7 +97,7 @@ const UploadExercisesForm = ({ type, data, homeworkId, answer_id }) => {
     }
     if (form.file) {
       let config = {
-        url: "insert_request",
+        url: "update_request",
       };
       let data = {
         table: "courses",
@@ -119,7 +119,7 @@ const UploadExercisesForm = ({ type, data, homeworkId, answer_id }) => {
           ...data,
         },
 
-        baseURL: "http://127.0.0.1:5000/insert_request/",
+        baseURL: "http://127.0.0.1:5000/update_request/",
       });
       if (response?.data?.tracking_code !== null) {
         toastify("success", response?.data?.response);

@@ -59,6 +59,11 @@ const HomeWorksLists = ({ data }) => {
               >
                 آپلود
               </TableCell>
+              <TableCell
+                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
+              >
+                نمره
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -144,6 +149,10 @@ const HomeWorksLists = ({ data }) => {
                       )}
                     </Tooltip>
                   </Stack>
+                </TableCell>
+
+                <TableCell sx={{ border: "none", textAlign: "center" }}>
+                  {item.score ? item.score : "نمره داده نشده"}
                 </TableCell>
               </TableRow>
             ))}
