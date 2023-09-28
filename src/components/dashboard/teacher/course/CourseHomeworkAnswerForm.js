@@ -15,8 +15,6 @@ import { toastify } from "../../../../helper/toast";
 import "./style.css";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
 const CourseHomeworkAnswerForm = ({ type, answer_id }) => {
-  const { id } = useParams();
-  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
@@ -24,15 +22,14 @@ const CourseHomeworkAnswerForm = ({ type, answer_id }) => {
   });
   const set_score_homework = async () => {
     setLoading(true);
-    if (form.file) {
+    if (form.score) {
       let config = {
-        url: "insert_request",
+        url: "update_request",
       };
       let data = {
         table: "courses",
         method_type: "set_score_homework",
         data: {
-          user_id: user?.user_id,
           answer_id: answer_id,
           score: form.score,
         },
@@ -47,7 +44,7 @@ const CourseHomeworkAnswerForm = ({ type, answer_id }) => {
           ...data,
         },
 
-        baseURL: "http://127.0.0.1:5000/insert_request/",
+        baseURL: "http://127.0.0.1:5000/update_request/",
       });
       if (response?.data?.tracking_code !== null) {
         toastify("success", response?.data?.response);
