@@ -195,6 +195,10 @@ function App() {
               element={<CourseHomeWorks />}
             />
             <Route
+              path="/panel/uploaded_homework/:id"
+              element={<CourseHomeWorks />}
+            />
+            <Route
               path="/panel/course/resources/:id"
               element={<CourseResources />}
             />

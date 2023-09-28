@@ -16,7 +16,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { DatePicker } from "zaman";
 import "./style.css";
 import { convertToPersianDate } from "../../../../pages/dashboard/converter/dateConverter";
-const TeacherExercisesForm = ({ type, data }) => {
+const TeacherExercisesForm = ({ type, data, setReload }) => {
   const { id } = useParams();
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
@@ -89,6 +89,7 @@ const TeacherExercisesForm = ({ type, data }) => {
         toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
+        setReload((perv) => !perv);
       } else {
         toastify("error-login", response?.data?.error);
         setLoading(false);

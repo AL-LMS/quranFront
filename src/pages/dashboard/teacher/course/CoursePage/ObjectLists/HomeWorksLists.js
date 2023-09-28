@@ -1,18 +1,20 @@
 import React from "react";
 import {
+  Button,
   Card,
-  Chip,
+  Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
 } from "@mui/material";
-import Image from "../../../../../../assets/img/image.png";
-import PDF from "../../../../../../assets/img/pdf.png";
-import Video from "../../../../../../assets/img/video.png";
-
+import DownloadIcon from "@mui/icons-material/Download";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { Link } from "react-router-dom";
+import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 const HomeWorksLists = ({ data }) => {
   return (
     <Card
@@ -48,9 +50,13 @@ const HomeWorksLists = ({ data }) => {
                 فایل
               </TableCell>
               <TableCell
-                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
+                sx={{
+                  border: "none",
+                  fontSize: "16px",
+                  textAlign: "center",
+                }}
               >
-                وضعیت
+                <MoreHorizIcon color="#eee" />
               </TableCell>
             </TableRow>
           </TableHead>
@@ -90,25 +96,26 @@ const HomeWorksLists = ({ data }) => {
                     textAlign: "center",
                   }}
                 >
-                  <a download={item?.title} href={item?.file}>
-                    <img
-                      src={
-                        item?.type === "pdf"
-                          ? PDF
-                          : item?.type === "img"
-                          ? Image
-                          : Video
-                      }
-                    />
-                  </a>
+                  {item?.file !== "" ? (
+                    <a download={item?.title} href={item?.file}>
+                      <Button>
+                        <DownloadIcon />
+                      </Button>
+                    </a>
+                  ) : (
+                    <>---</>
+                  )}
                 </TableCell>
-                <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  <Chip
-                    label={item.type}
-                    color={item.type ? "success" : "error"}
-                    variant="outlined"
-                    sx={{ width: "82px" }}
-                  />
+                <TableCell sx={{ border: "none" }}>
+                  <Stack direction="row" justifyContent="center">
+                    <Tooltip title="وضعیت ارسال">
+                      <Link to={`/panel/uploaded_homework/${item.id}`}>
+                        <Button>
+                          <DriveFolderUploadIcon />
+                        </Button>
+                      </Link>
+                    </Tooltip>
+                  </Stack>
                 </TableCell>
               </TableRow>
             ))}

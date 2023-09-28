@@ -12,10 +12,11 @@ const CourseHomeWorks = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(true);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
-  const get_course = async () => {
+  const get_homeworks = async () => {
     let config = {
       url: "select_request",
     };
@@ -46,10 +47,10 @@ const CourseHomeWorks = () => {
   };
 
   useEffect(() => {
-    get_course().then(() => {
+    get_homeworks().then(() => {
       setLoading(false);
     });
-  }, [userInfo]);
+  }, [userInfo, reload]);
 
   if (loading)
     return (
@@ -91,7 +92,7 @@ const CourseHomeWorks = () => {
           >
             تمرین‌های دوره
           </Typography>
-          <CourseHomeworkForm type="create" />
+          <CourseHomeworkForm type="create" setReload={setReload} />
         </Grid>
         <Grid item xs={12}>
           <HomeWorksLists data={data} />
