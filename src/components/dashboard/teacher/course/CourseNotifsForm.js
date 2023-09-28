@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import {
@@ -14,12 +14,11 @@ import {
 import { useParams } from "react-router-dom";
 import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { DefiContext } from "../../../../context/DefiContext";
 import MUIRichTextEditor from "mui-rte";
 
-const TeacherNotifsForm = ({ type, data }) => {
+const TeacherNotifsForm = ({ type, data, setReload }) => {
   const { id } = useParams();
-  const { auth, user } = useAuth();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
@@ -61,6 +60,7 @@ const TeacherNotifsForm = ({ type, data }) => {
         toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
+        setReload((perv) => !perv);
       } else {
         toastify("error-login", response?.data?.error);
         setLoading(false);

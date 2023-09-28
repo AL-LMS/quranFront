@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 const CourseNotifes = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(true);
   const { id } = useParams();
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
@@ -49,7 +50,7 @@ const CourseNotifes = () => {
     get_notifs().then(() => {
       setLoading(false);
     });
-  }, [userInfo]);
+  }, [userInfo, reload]);
 
   if (loading)
     return (
@@ -91,7 +92,7 @@ const CourseNotifes = () => {
           >
             اطلاعیه‌های دوره
           </Typography>
-          <CourseNotifsForm type="create" />
+          <CourseNotifsForm type="create" setReload={setReload} />
         </Grid>
         <Grid item xs={12}>
           <NotifsLists data={data} />
