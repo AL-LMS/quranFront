@@ -12,7 +12,9 @@
   justify-content: center;
   gap: 12px;
 }
-
+.react-ios-time-picker-popup {
+  direction: ltr;
+}
 .libWrapper > input {
   text-align: center;
   width: 280px;
@@ -20,10 +22,6 @@
   border-radius: 8px;
   height: 45px;
   border: 1px solid #dedede;
-}
-
-.react-datepicker-popper {
-  z-index: 10000000 !important;
 }
 
 .react-ios-time-picker-main {

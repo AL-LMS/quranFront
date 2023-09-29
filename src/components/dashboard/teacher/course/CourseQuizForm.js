@@ -13,7 +13,9 @@ import {
 import { useParams } from "react-router-dom";
 import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { DatePicker, TimePicker } from "zaman";
+import { DatePicker } from "zaman";
+import { TimePicker } from "react-ios-time-picker";
+
 import "./style.css";
 import { convertToPersianDate } from "../../../../pages/dashboard/converter/dateConverter";
 const CourseQuizForm = ({ type, data, setReload }) => {
@@ -21,6 +23,18 @@ const CourseQuizForm = ({ type, data, setReload }) => {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [startValue, setStartValue] = useState(null);
+  const [endValue, setEndValue] = useState(null);
+
+  const onChangeStartTime = (timeValue) => {
+    setForm({ ...form, start_time: timeValue });
+    setStartValue(timeValue);
+  };
+
+  const onChangeEndTime = (timeValue) => {
+    setForm({ ...form, end_time: timeValue });
+    setEndValue(timeValue);
+  };
   const [form, setForm] = useState({
     file: data ? data.fileCourse : "",
     title: data ? data.title : "",
@@ -155,26 +169,6 @@ const CourseQuizForm = ({ type, data, setReload }) => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={12} sx={{ position: "relative" }}>
-            <section className="wrapper">
-              <div className="libWrapper">
-                <TimePicker
-                  onChange={(e) =>
-                    console.log(e.hour, e.minute, e.timeConvention)
-                  }
-                />
-                <DatePicker
-                  zindex={10000000}
-                  round="x1"
-                  accentColor="#6374ae"
-                  inputAttributes={{
-                    placeholder: "مهلت انجام",
-                  }}
-                  onChange={(e) => handleDatePicker(e)}
-                />
-              </div>
-            </section>
-          </Grid>
           <Grid item xs={12}>
             <TextField
               label="توضیحات"
@@ -184,6 +178,38 @@ const CourseQuizForm = ({ type, data, setReload }) => {
               }
               fullWidth
             />
+          </Grid>
+          <Grid item xs={12} sx={{ position: "relative" }}>
+            <section className="wrapper">
+              <div className="libWrapper">
+                <DatePicker
+                  zindex={1000}
+                  round="x1"
+                  accentColor="#6374ae"
+                  inputAttributes={{
+                    placeholder: "روز آزمون",
+                  }}
+                  onChange={(e) => handleDatePicker(e)}
+                />
+
+                <TimePicker
+                  style={{ direction: "rtl" }}
+                  onChange={onChangeStartTime}
+                  value={startValue}
+                  placeHolder="زمان شروع آزمون"
+                  cancelButtonText="انصراف"
+                  saveButtonText="ذخیره "
+                />
+
+                <TimePicker
+                  onChange={onChangeEndTime}
+                  value={endValue}
+                  placeHolder="زمان پایان آزمون"
+                  cancelButtonText="انصراف"
+                  saveButtonText="ذخیره "
+                />
+              </div>
+            </section>
           </Grid>
           <Grid item xs={12}>
             <Divider />
