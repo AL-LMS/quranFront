@@ -11,7 +11,6 @@ import {
   TableRow,
   Tooltip,
 } from "@mui/material";
-import DownloadIcon from "@mui/icons-material/Download";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Link } from "react-router-dom";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
@@ -42,12 +41,12 @@ const QuizLists = ({ data }) => {
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
-                مهلت ارسال
+                مهلت آزمون
               </TableCell>
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
-                فایل
+                نوع آزمون
               </TableCell>
               <TableCell
                 sx={{
@@ -88,23 +87,8 @@ const QuizLists = ({ data }) => {
                 >
                   {item?.deadline && item?.deadline.slice(0, 10)}
                 </TableCell>
-                <TableCell
-                  sx={{
-                    border: "none",
-                    fontFamily: "iranyekanFn",
-                    fontWeight: 500,
-                    textAlign: "center",
-                  }}
-                >
-                  {item?.file !== "" ? (
-                    <a download={item?.title} href={item?.file}>
-                      <Button>
-                        <DownloadIcon />
-                      </Button>
-                    </a>
-                  ) : (
-                    <>---</>
-                  )}
+                <TableCell sx={{ border: "none", textAlign: "center" }}>
+                  {item.type}
                 </TableCell>
                 <TableCell sx={{ border: "none" }}>
                   <Stack direction="row" justifyContent="center">
