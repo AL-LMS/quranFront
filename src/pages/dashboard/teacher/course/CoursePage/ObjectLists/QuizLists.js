@@ -41,7 +41,12 @@ const QuizLists = ({ data }) => {
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
-                مهلت آزمون
+                روز آزمون
+              </TableCell>
+              <TableCell
+                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
+              >
+                ساعت آزمون
               </TableCell>
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
@@ -85,7 +90,12 @@ const QuizLists = ({ data }) => {
                     textAlign: "center",
                   }}
                 >
-                  {item?.deadline && item?.deadline.slice(0, 10)}
+                  {item?.day && item?.day.slice(0, 10)}
+                </TableCell>
+                <TableCell sx={{ border: "none", textAlign: "center" }}>
+                  {item.start_time.slice(0, 5) +
+                    "-" +
+                    item.end_time.slice(0, 5)}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
                   {item.type}

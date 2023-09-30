@@ -91,7 +91,7 @@ const CourseQuize = () => {
             color="mainText"
             fontWeight={500}
           >
-            آزمونهای دوره
+            آزمون‌های دوره
           </Typography>
           <CourseQuizForm type="create" setReload={setReload} />
         </Grid>

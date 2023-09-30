@@ -88,6 +88,7 @@ const CourseQuizForm = ({ type, data, setReload }) => {
           type: form?.type,
           teacher_id: user?.user_id,
           course_id: id,
+          type: "تستی",
         },
       };
       let response = await axios({
