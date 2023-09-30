@@ -11,6 +11,7 @@ const CourseHomeWorks = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(true);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
@@ -49,7 +50,7 @@ const CourseHomeWorks = () => {
     get_course().then(() => {
       setLoading(false);
     });
-  }, [userInfo]);
+  }, [userInfo, reload]);
 
   if (loading)
     return (
@@ -93,7 +94,7 @@ const CourseHomeWorks = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <HomeWorksLists data={data} />
+          <HomeWorksLists data={data} setReload={setReload} />
         </Grid>
       </Grid>
     </Container>

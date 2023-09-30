@@ -15,7 +15,7 @@ import {
 import UploadExercisesForm from "../../../../../../components/dashboard/students/course/CourseHomeworkForm";
 import DownloadIcon from "@mui/icons-material/Download";
 import { checkHomeWorkDeadLine } from "../../../../../../helper/checkdeadline";
-const HomeWorksLists = ({ data }) => {
+const HomeWorksLists = ({ data, setReload }) => {
   return (
     <Card
       sx={{
@@ -139,12 +139,14 @@ const HomeWorksLists = ({ data }) => {
                           type="edit"
                           homeworkId={item.id}
                           answer_id={item.answer_id}
+                          setReload={setReload}
                         />
                       ) : (
                         <UploadExercisesForm
                           type="create"
                           homeworkId={item.id}
                           answer_id={item.answer_id}
+                          setReload={setReload}
                         />
                       )}
                     </Tooltip>

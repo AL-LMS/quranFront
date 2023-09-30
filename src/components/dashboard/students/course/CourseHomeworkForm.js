@@ -14,7 +14,13 @@ import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import "./style.css";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-const UploadExercisesForm = ({ type, data, homeworkId, answer_id }) => {
+const UploadExercisesForm = ({
+  type,
+  data,
+  homeworkId,
+  answer_id,
+  setReload,
+}) => {
   const { id } = useParams();
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
@@ -78,6 +84,7 @@ const UploadExercisesForm = ({ type, data, homeworkId, answer_id }) => {
         toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
+        setReload((perv) => !perv);
       } else {
         toastify("error-login", response?.data?.error);
         setLoading(false);
@@ -125,6 +132,7 @@ const UploadExercisesForm = ({ type, data, homeworkId, answer_id }) => {
         toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
+        setReload((perv) => !perv);
       } else {
         toastify("error-login", response?.data?.error);
         setLoading(false);
