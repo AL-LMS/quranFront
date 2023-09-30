@@ -16,13 +16,7 @@ import FormGroup from "@mui/material/FormGroup";
 import { DatePicker } from "zaman";
 import "./style.css";
 import { convertToPersianDate } from "../converter/dateConverter";
-import {
-  Days,
-  ages,
-  courseType,
-  degree,
-  sex_for_class,
-} from "./CourseData";
+import { Days, ages, courseType, degree, sex_for_class } from "./CourseData";
 import Documnets from "./Documnets";
 import CheckIcon from "@mui/icons-material/Check";
 import { TimePicker } from "react-ios-time-picker";
@@ -35,7 +29,8 @@ const CreateCourse = () => {
   const [prerequisite, setPrerequisite] = useState([]);
   const [days, setDays] = useState([]);
   const [isOnline, setIsOnline] = useState(true);
-  const [value, setValue] = useState(null);
+  const [startValue, setStartValue] = useState(null);
+  const [endValue, setEndValue] = useState(null);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
@@ -81,7 +76,8 @@ const CreateCourse = () => {
         is_online: form.isOnline,
         start_date: form.start,
         end_date: form.end,
-        time: form.time,
+        start_time: form.start_time,
+        end_time: form.end_time,
         days: form.days,
         max: form.max,
         min: form.min,
@@ -115,16 +111,21 @@ const CreateCourse = () => {
     }
   };
 
+  const onChangeStartTime = (timeValue) => {
+    setForm({ ...form, start_time: timeValue });
+    setStartValue(timeValue);
+  };
+
+  const onChangeEndTime = (timeValue) => {
+    setForm({ ...form, end_time: timeValue });
+    setEndValue(timeValue);
+  };
   const handleDatePicker = (e) => {
     let persianStart = "";
     let persianEnd = "";
     persianStart = convertToPersianDate(e.from);
     persianEnd = convertToPersianDate(e.to);
     setForm({ ...form, start: persianStart, end: persianEnd });
-  };
-  const onChange = (timeValue) => {
-    setForm({ ...form, time: timeValue });
-    setValue(timeValue);
   };
   useEffect(() => {
     setForm({ ...form, days: days });
@@ -199,30 +200,8 @@ const CreateCourse = () => {
               />
             </FormGroup>
           </Grid>
-          <Grid item md={6} xs={12}>
-            <section className="wrapper">
-              <div className="libWrapper">
-                <DatePicker
-                  zindex={1000}
-                  round="x1"
-                  accentColor="#6374ae"
-                  defaultValue={calendarValue}
-                  inputAttributes={{
-                    placeholder: "تاریخ شروع - پایان",
-                  }}
-                  onChange={(e) => handleDatePicker(e)}
-                  range
-                />
-                <TimePicker
-                  onChange={onChange}
-                  value={value}
-                  placeHolder="زمان برگزاری کلاس"
-                  cancelButtonText="انصراف"
-                  saveButtonText="ذخیره "
-                />
-              </div>
-            </section>
 
+          <Grid item md={6} xs={12}>
             <Autocomplete
               fullWidth
               multiple
@@ -251,6 +230,39 @@ const CreateCourse = () => {
               )}
               style={{ marginBottom: "2px" }}
             />
+
+            <section className="wrapper">
+              <div className="libWrapper">
+                <DatePicker
+                  zindex={1000}
+                  round="x1"
+                  accentColor="#6374ae"
+                  defaultValue={calendarValue}
+                  inputAttributes={{
+                    placeholder: "تاریخ شروع - پایان",
+                  }}
+                  onChange={(e) => handleDatePicker(e)}
+                  range
+                />
+
+                <TimePicker
+                  style={{ direction: "rtl" }}
+                  onChange={onChangeStartTime}
+                  value={startValue}
+                  placeHolder="زمان شروع کلاس"
+                  cancelButtonText="انصراف"
+                  saveButtonText="ذخیره "
+                />
+
+                <TimePicker
+                  onChange={onChangeEndTime}
+                  value={endValue}
+                  placeHolder="زمان پایان کلاس"
+                  cancelButtonText="انصراف"
+                  saveButtonText="ذخیره "
+                />
+              </div>
+            </section>
           </Grid>
         </Grid>
         <Divider />

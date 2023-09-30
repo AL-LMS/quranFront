@@ -147,7 +147,9 @@ const CoursePageInfo = ({ data_course }) => {
                   <Typography color="mainText">
                     ساعت برگزاری:
                     <span style={{ color: "black" }}>
-                      {data_course["time"].slice(0, 5)}
+                      {data_course["start_time"].slice(0, 5) +
+                        " تا " +
+                        data_course["end_time"].slice(0, 5)}
                     </span>
                   </Typography>
                 </Stack>

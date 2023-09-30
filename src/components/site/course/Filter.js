@@ -23,8 +23,8 @@ const Filter = ({ setParams, query, setQuery }) => {
     topic: "",
   });
   const [courseTypeID, setCourseTypeID] = useState([
-    { id: 0, name: "مجازی" },
-    { id: 1, name: "حضوری" },
+    { id: true, name: "مجازی" },
+    { id: false, name: "حضوری" },
   ]);
   const [teacherID, setTeacherID] = useState([]);
   const [topicID, setTopicID] = useState([]);

@@ -15,7 +15,6 @@ import {
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import { Link } from "react-router-dom";
 
 const statusTable = (item) => {
   if (item) {
@@ -24,7 +23,6 @@ const statusTable = (item) => {
     return "غیرفعال";
   }
 };
-
 const CourseList = ({ data }) => {
   return (
     <Card
@@ -52,22 +50,26 @@ const CourseList = ({ data }) => {
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
-                توضیحات
-              </TableCell>
-              <TableCell
-                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
-              >
                 تاریخ شروع
               </TableCell>
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
-                زمان آزمون
+                تعداد ثبت نامی
               </TableCell>
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
-                نمره
+                وضعیت
+              </TableCell>
+              <TableCell
+                sx={{
+                  border: "none",
+                  fontSize: "16px",
+                  textAlign: "center",
+                }}
+              >
+                <MoreHorizIcon color="#eee" />
               </TableCell>
             </TableRow>
           </TableHead>
@@ -87,11 +89,7 @@ const CourseList = ({ data }) => {
                   {index + 1}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  {item.title}
-                </TableCell>
-                
-                <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  {item.explain}
+                  {item.name}
                 </TableCell>
                 <TableCell
                   sx={{
@@ -101,7 +99,7 @@ const CourseList = ({ data }) => {
                     textAlign: "center",
                   }}
                 >
-                  {item?.day && item?.day.slice(0, 10)}
+                  {item?.start_date && item?.start_date.slice(0, 10)}
                 </TableCell>
                 <TableCell
                   sx={{
@@ -111,6 +109,7 @@ const CourseList = ({ data }) => {
                     textAlign: "center",
                   }}
                 >
+                  {item.code}
                   {item.student_count}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
@@ -124,18 +123,18 @@ const CourseList = ({ data }) => {
                 <TableCell sx={{ border: "none" }}>
                   <Stack direction="row" justifyContent="center">
                     <Tooltip title="دوره">
-                      <Link to={`/panel/course-page/${item.course_id}`}>
-                        <Button>
-                          <MenuBookOutlinedIcon />
-                        </Button>
-                      </Link>
+                      {/* <Link to={`/panel/course/course-homework/${item.id}`}> */}
+                      <Button>
+                        <MenuBookOutlinedIcon />
+                      </Button>
+                      {/* </Link> */}
                     </Tooltip>
                     <Tooltip title="دانش آموزان">
-                      <Link to={`/panel/course/students/${item.course_id}`}>
-                        <Button>
-                          <GroupsOutlinedIcon />
-                        </Button>
-                      </Link>
+                      {/* <Link to={`/panel/course/students/${item.id}`}> */}
+                      <Button>
+                        <GroupsOutlinedIcon />
+                      </Button>
+                      {/* </Link> */}
                     </Tooltip>
                   </Stack>
                 </TableCell>
@@ -147,5 +146,4 @@ const CourseList = ({ data }) => {
     </Card>
   );
 };
-
 export default CourseList;
