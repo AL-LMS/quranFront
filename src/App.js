@@ -188,7 +188,7 @@ function App() {
             <Route path="/panel/my-coures" element={<TeacherCourse />} />
             <Route path="/course/details/:id" element={<CourseDetails />} />
             <Route
-              path="/panel/course-page/:id"
+              path="/panel/course/course-page/:id"
               element={<TeacherCoursePage />}
             />
             <Route

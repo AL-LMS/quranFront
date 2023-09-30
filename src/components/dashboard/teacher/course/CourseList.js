@@ -15,6 +15,7 @@ import {
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import { Link } from "react-router-dom";
 
 const statusTable = (item) => {
   if (item) {
@@ -123,18 +124,18 @@ const CourseList = ({ data }) => {
                 <TableCell sx={{ border: "none" }}>
                   <Stack direction="row" justifyContent="center">
                     <Tooltip title="دوره">
-                      {/* <Link to={`/panel/course/course-homework/${item.id}`}> */}
-                      <Button>
-                        <MenuBookOutlinedIcon />
-                      </Button>
-                      {/* </Link> */}
+                      <Link to={`/panel/course/course-page/${item.course_id}`}>
+                        <Button>
+                          <MenuBookOutlinedIcon />
+                        </Button>
+                      </Link>
                     </Tooltip>
                     <Tooltip title="دانش آموزان">
-                      {/* <Link to={`/panel/course/students/${item.id}`}> */}
-                      <Button>
-                        <GroupsOutlinedIcon />
-                      </Button>
-                      {/* </Link> */}
+                      <Link to={`/panel/course/students/${item.course_id}`}>
+                        <Button>
+                          <GroupsOutlinedIcon />
+                        </Button>
+                      </Link>
                     </Tooltip>
                   </Stack>
                 </TableCell>
