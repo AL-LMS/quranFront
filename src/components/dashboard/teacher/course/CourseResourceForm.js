@@ -14,7 +14,7 @@ import { useParams } from "react-router-dom";
 import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
-const TeacherResourceForm = ({ type, data }) => {
+const TeacherResourceForm = ({ type, data, setReload }) => {
   const { id } = useParams();
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
@@ -77,6 +77,7 @@ const TeacherResourceForm = ({ type, data }) => {
         toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
+        setReload((perv) => !perv);
       } else {
         toastify("error-login", response?.data?.error);
         setLoading(false);

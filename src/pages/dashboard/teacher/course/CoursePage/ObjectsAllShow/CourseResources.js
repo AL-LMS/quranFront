@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import useAuth from "../../../../../../hooks/useAuth";
 import { Container } from "@mui/system";
-import { Button, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import Loader from "../../../../../../components/site/shared/Loader";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import toastify from "../../../../../../helper/toast";
 import ResourcesLists from "../ObjectLists/ResourcesLists";
 import CourseResourceForm from "../../../../../../components/dashboard/teacher/course/CourseResourceForm";
@@ -13,6 +12,7 @@ const CourseResources = () => {
   const [data, setData] = useState([]);
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(true);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
@@ -50,7 +50,7 @@ const CourseResources = () => {
     get_resource().then(() => {
       setLoading(false);
     });
-  }, [userInfo]);
+  }, [userInfo, reload]);
 
   if (loading)
     return (
@@ -92,7 +92,7 @@ const CourseResources = () => {
           >
             منابع دوره
           </Typography>
-          <CourseResourceForm type="create" />
+          <CourseResourceForm type="create"  setReload={setReload}/>
         </Grid>
         <Grid item xs={12}>
           <ResourcesLists data={data} />
