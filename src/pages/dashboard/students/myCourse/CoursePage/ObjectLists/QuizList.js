@@ -12,10 +12,9 @@ import {
   TableRow,
   Tooltip,
 } from "@mui/material";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
-import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import { Link } from "react-router-dom";
+import DownloadIcon from "@mui/icons-material/Download";
+import UploadQuizzesForm from "../../../../../../components/dashboard/students/course/CourseQuizForm";
+import { checkQuizLine } from "../../../../../../helper/checkdeadline";
 
 const statusTable = (item) => {
   if (item) {
@@ -57,12 +56,27 @@ const QuizList = ({ data }) => {
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
-                تاریخ شروع
+                روز آزمون
               </TableCell>
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
                 زمان آزمون
+              </TableCell>
+              <TableCell
+                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
+              >
+                فایل
+              </TableCell>
+              <TableCell
+                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
+              >
+                وضعیت
+              </TableCell>
+              <TableCell
+                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
+              >
+                آپلود
               </TableCell>
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
@@ -111,33 +125,73 @@ const QuizList = ({ data }) => {
                     textAlign: "center",
                   }}
                 >
-                  {item.student_count}
+                  {item?.start_time.slice(0, 5) +
+                    "-" +
+                    item?.end_time.slice(0, 5)}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    border: "none",
+                    fontFamily: "iranyekanFn",
+                    fontWeight: 500,
+                    textAlign: "center",
+                  }}
+                >
+                  {item?.file !== "" ? (
+                    <a download={item?.title} href={item?.file}>
+                      <Button>
+                        <DownloadIcon />
+                      </Button>
+                    </a>
+                  ) : (
+                    <>---</>
+                  )}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
                   <Chip
-                    label={statusTable(item.active)}
-                    color={item.active ? "success" : "error"}
+                    label={
+                      item.is_upload ? "تحویل داده شده" : "تحویل داده نشده"
+                    }
+                    color={item.is_upload ? "success" : "error"}
                     variant="outlined"
-                    sx={{ width: "82px" }}
+                    sx={{ width: "auto" }}
                   />
                 </TableCell>
                 <TableCell sx={{ border: "none" }}>
                   <Stack direction="row" justifyContent="center">
                     <Tooltip title="دوره">
-                      <Link to={`/panel/course-page/${item.course_id}`}>
-                        <Button>
-                          <MenuBookOutlinedIcon />
-                        </Button>
-                      </Link>
-                    </Tooltip>
-                    <Tooltip title="دانش آموزان">
-                      <Link to={`/panel/course/students/${item.course_id}`}>
-                        <Button>
-                          <GroupsOutlinedIcon />
-                        </Button>
-                      </Link>
+                      {checkQuizLine(
+                        item.day,
+                        item.start_time,
+                        item.end_time
+                      ) ? (
+                        <TableCell sx={{ border: "none", textAlign: "center" }}>
+                          <Chip
+                            label={"اتمام مهلت"}
+                            color={"warning"}
+                            variant="outlined"
+                            sx={{ width: "auto" }}
+                          />
+                        </TableCell>
+                      ) : item.is_upload ? (
+                        <UploadQuizzesForm
+                          type="edit"
+                          quizId={item.id}
+                          answer_id={item.answer_id}
+                        />
+                      ) : (
+                        <UploadQuizzesForm
+                          type="create"
+                          quizId={item.id}
+                          answer_id={item.answer_id}
+                        />
+                      )}
                     </Tooltip>
                   </Stack>
+                </TableCell>
+
+                <TableCell sx={{ border: "none", textAlign: "center" }}>
+                  {item.score ? item.score : "نمره داده نشده"}
                 </TableCell>
               </TableRow>
             ))}

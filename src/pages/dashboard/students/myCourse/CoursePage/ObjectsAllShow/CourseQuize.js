@@ -5,22 +5,27 @@ import { Grid, Typography } from "@mui/material";
 import Loader from "../../../../../../components/site/shared/Loader";
 import CourseList from "../../../../../../components/dashboard/teacher/course/CourseList";
 import toastify from "../../../../../../helper/toast";
+import QuizList from "../ObjectLists/QuizList";
+import { useParams } from "react-router-dom";
 
 const CourseQuize = () => {
+  const { id } = useParams();
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
-  const get_course = async () => {
+  const get_quizzes_user = async () => {
     let config = {
       url: "select_request",
     };
     let data = {
       table: "courses",
-      method_type: "get_teacher_course",
+      method_type: "get_quizzes_user",
       data: {
-        user_id: userInfo.user_id,
+        course_id: id,
+        user_id: userInfo?.user_id,
       },
     };
     let response = await axios({
@@ -43,7 +48,7 @@ const CourseQuize = () => {
   };
 
   useEffect(() => {
-    get_course().then(() => {
+    get_quizzes_user().then(() => {
       setLoading(false);
     });
   }, [userInfo]);
@@ -90,7 +95,7 @@ const CourseQuize = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <CourseList data={data} />
+          <QuizList data={data} />
         </Grid>
       </Grid>
     </Container>
