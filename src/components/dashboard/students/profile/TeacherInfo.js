@@ -2,7 +2,11 @@ import React from "react";
 import { Card, TextField, Grid, Typography, Autocomplete } from "@mui/material";
 
 import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
-import { ages, sex } from "../../../../pages/dashboard/teacher/CourseData";
+import {
+  ages,
+  degree,
+  sex,
+} from "../../../../pages/dashboard/teacher/CourseData";
 
 const TeacherInfo = ({ form, setForm, errors }) => {
   return (
@@ -67,6 +71,7 @@ const TeacherInfo = ({ form, setForm, errors }) => {
             value={form.national_id}
             onChange={(e) => setForm({ ...form, national_id: e.target.value })}
             fullWidth
+            required
             helperText={errors.national_id && errors.national_id}
             onWheel={(e) => e.target.blur()}
           />
@@ -81,7 +86,9 @@ const TeacherInfo = ({ form, setForm, errors }) => {
             id="controllable-states-demo"
             options={sex}
             getOptionLabel={(option) => option.name || ""}
-            renderInput={(params) => <TextField {...params} label="جنسیت" />}
+            renderInput={(params) => (
+              <TextField {...params} label="جنسیت" required />
+            )}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -94,7 +101,25 @@ const TeacherInfo = ({ form, setForm, errors }) => {
             id="controllable-states-demo"
             options={ages}
             getOptionLabel={(option) => option.name || ""}
-            renderInput={(params) => <TextField {...params} label="رده سنی" />}
+            renderInput={(params) => (
+              <TextField {...params} label="رده سنی" required />
+            )}
+          />
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <Autocomplete
+            fullWidth
+            value={degree[form.degree]}
+            onChange={(event, newValue) => {
+              setForm({ ...form, degree: newValue.id });
+            }}
+            id="controllable-states-demo"
+            options={degree}
+            getOptionLabel={(option) => option.name || ""}
+            renderInput={(params) => (
+              <TextField {...params} label="تحصیلات" required />
+            )}
           />
         </Grid>
       </Grid>

@@ -30,6 +30,7 @@ const Profile = () => {
     picture: "",
     sex: role?.sex,
     ages: role?.ages,
+    degree: role?.degree,
     certificates: [],
     role: "teacher",
   });
@@ -60,61 +61,73 @@ const Profile = () => {
     formData.append("sex", form.sex);
     formData.append("ages", form.ages);
     formData.append("last_name", form.last_name);
+    formData.append("degree", form.degree);
     if (!Object.keys(errors).length) {
-      let config = {
-        url: "update_request",
-      };
-      let data = {
-        table: "teachers",
-        method_type: "edit_user",
-        data: {
-          user_id: userInfo?.user_id,
-          phone: form.phone,
-          national_id: form.national_id,
-          first_name: form.first_name,
-          last_name: form.last_name,
-          sex: form.sex,
-          ages: form.ages,
-          role: form.role,
-        },
-      };
-      let response = await axios({
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        data: {
-          ...data,
-        },
+      if (
+        String(form?.national_id) &&
+        String(form?.sex) &&
+        String(form?.ages) &&
+        String(form?.degree)
+      ) {
+        let config = {
+          url: "update_request",
+        };
+        let data = {
+          table: "teachers",
+          method_type: "edit_user",
+          data: {
+            user_id: userInfo?.user_id,
+            phone: form.phone,
+            national_id: form.national_id,
+            first_name: form.first_name,
+            last_name: form.last_name,
+            sex: form.sex,
+            ages: form.ages,
+            degree: form.degree,
+            role: form.role,
+          },
+        };
+        let response = await axios({
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          data: {
+            ...data,
+          },
 
-        baseURL: "http://127.0.0.1:5000/update_request/",
-      });
-      if (response?.data?.tracking_code !== null) {
-        localStorage.clear("role");
-        localStorage.clear("user");
-        localStorage.clear("token");
-        setLocalStorageLogin(
-          "token",
-          response?.data?.response?.token,
-          () => {}
-        );
-        setLocalStorageLogin("user", response?.data?.response, () => {});
-        setLocalStorageLogin(
-          "role",
-          response?.data?.response?.role_data,
-          () => {}
-        );
-        setAuth(response?.data?.response?.token);
-        setUser(response?.data?.response);
-        setRole(response?.data?.response?.role_data);
-        toastify(
-          "success",
-          "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
-        );
-        navigate("/panel/dashboard");
+          baseURL: "http://127.0.0.1:5000/update_request/",
+        });
+        if (response?.data?.tracking_code !== null) {
+          localStorage.clear("role");
+          localStorage.clear("user");
+          localStorage.clear("token");
+          setLocalStorageLogin(
+            "token",
+            response?.data?.response?.token,
+            () => {}
+          );
+          setLocalStorageLogin("user", response?.data?.response, () => {});
+          setLocalStorageLogin(
+            "role",
+            response?.data?.response?.role_data,
+            () => {}
+          );
+          setAuth(response?.data?.response?.token);
+          setUser(response?.data?.response);
+          setRole(response?.data?.response?.role_data);
+          toastify(
+            "success",
+            "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
+          );
+          navigate("/panel/dashboard");
+        } else {
+          toastify("error-login", response?.data?.error);
+        }
       } else {
-        toastify("error-login", response?.data?.error);
+        setLoading(false);
+        toastify("warning", "لطفا فیلد هارا با دقت پر کنید");
       }
     } else {
       setLoading(false);

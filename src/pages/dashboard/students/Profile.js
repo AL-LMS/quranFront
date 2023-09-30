@@ -16,7 +16,7 @@ import { setLocalStorageLogin } from "../../localStorage";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const { auth, user, role, setAuth, setUser, setRole } = useAuth();
+  const { user, role, setAuth, setUser, setRole } = useAuth();
   const { reaload, setReload } = useContext(DefiContext);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
