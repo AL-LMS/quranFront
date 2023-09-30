@@ -14,7 +14,7 @@ import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import "./style.css";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-const UploadQuizzesForm = ({ type, data, quizId, answer_id }) => {
+const UploadQuizzesForm = ({ type, data, quizId, answer_id, setReload }) => {
   const { id } = useParams();
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
@@ -78,6 +78,7 @@ const UploadQuizzesForm = ({ type, data, quizId, answer_id }) => {
         toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
+        setReload((perv) => !perv);
       } else {
         toastify("error-login", response?.data?.error);
         setLoading(false);
@@ -91,11 +92,7 @@ const UploadQuizzesForm = ({ type, data, quizId, answer_id }) => {
 
   const edit_upload_quiz = async () => {
     setLoading(true);
-    if (form.answer_id) {
-      setLoading(false);
-      toastify("warning", "مشکلی پیش آمده لطفا صفحه خود را رفرش کنید");
-    }
-    if (form.file) {
+    if (form.file && form.answer_id) {
       let config = {
         url: "update_request",
       };
@@ -107,6 +104,7 @@ const UploadQuizzesForm = ({ type, data, quizId, answer_id }) => {
           file: form?.file,
           type: form?.type,
           quiz_id: quizId,
+          answer_id: form?.answer_id,
         },
       };
       let response = await axios({
@@ -125,6 +123,7 @@ const UploadQuizzesForm = ({ type, data, quizId, answer_id }) => {
         toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
+        setReload((perv) => !perv);
       } else {
         toastify("error-login", response?.data?.error);
         setLoading(false);

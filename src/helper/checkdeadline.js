@@ -16,12 +16,22 @@ export function checkQuizLine(date, start_time, end_time) {
   var getYear = date1.toLocaleString("fa-IR-u-nu-latn", { year: "numeric" });
   var getMonth = date1.toLocaleString("fa-IR-u-nu-latn", { month: "2-digit" });
   var getDay = date1.toLocaleString("fa-IR-u-nu-latn", { day: "2-digit" });
+  var getHour = date1.toLocaleString("fa-IR-u-nu-latn", { hour: "2-digit" });
+  var getMinute = date1.toLocaleString("fa-IR-u-nu-latn", {
+    minute: "2-digit",
+  });
+  var nowTime = getHour + ":" + getMinute;
   var dateToday = getYear + "-" + getMonth + "-" + getDay;
-  console.log(dateToday);
-  console.log(date);
+  if (date == dateToday) {
+    if (start_time <= nowTime && end_time >= nowTime) {
+      return 1;
+    } else {
+      return 2;
+    }
+  }
   if (date >= dateToday) {
-    return false;
+    return 2;
   } else {
-    return true;
+    return 0;
   }
 }

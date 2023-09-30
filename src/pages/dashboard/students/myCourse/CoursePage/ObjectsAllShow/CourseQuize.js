@@ -13,6 +13,7 @@ const CourseQuize = () => {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(true);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
@@ -51,7 +52,7 @@ const CourseQuize = () => {
     get_quizzes_user().then(() => {
       setLoading(false);
     });
-  }, [userInfo]);
+  }, [userInfo, reload]);
 
   if (loading)
     return (
@@ -95,7 +96,7 @@ const CourseQuize = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <QuizList data={data} />
+          <QuizList data={data} setReload={setReload} />
         </Grid>
       </Grid>
     </Container>

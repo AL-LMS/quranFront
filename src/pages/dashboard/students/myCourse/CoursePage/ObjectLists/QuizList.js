@@ -24,7 +24,7 @@ const statusTable = (item) => {
   }
 };
 
-const QuizList = ({ data }) => {
+const QuizList = ({ data, setReload }) => {
   return (
     <Card
       sx={{
@@ -164,10 +164,23 @@ const QuizList = ({ data }) => {
                         item.day,
                         item.start_time,
                         item.end_time
-                      ) ? (
+                      ) === 0 ? (
                         <TableCell sx={{ border: "none", textAlign: "center" }}>
                           <Chip
                             label={"اتمام مهلت"}
+                            color={"warning"}
+                            variant="outlined"
+                            sx={{ width: "auto" }}
+                          />
+                        </TableCell>
+                      ) : checkQuizLine(
+                          item.day,
+                          item.start_time,
+                          item.end_time
+                        ) === 2 ? (
+                        <TableCell sx={{ border: "none", textAlign: "center" }}>
+                          <Chip
+                            label={"آزمون فرانرسیده"}
                             color={"warning"}
                             variant="outlined"
                             sx={{ width: "auto" }}
@@ -178,12 +191,14 @@ const QuizList = ({ data }) => {
                           type="edit"
                           quizId={item.id}
                           answer_id={item.answer_id}
+                          setReload={setReload}
                         />
                       ) : (
                         <UploadQuizzesForm
                           type="create"
                           quizId={item.id}
                           answer_id={item.answer_id}
+                          setReload={setReload}
                         />
                       )}
                     </Tooltip>
