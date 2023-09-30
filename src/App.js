@@ -77,6 +77,7 @@ import CourseQuize from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllS
 import CourseNotifes from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseNotifes";
 import Meet from "./pages/site/Meet";
 import CourseHomeWorksAnswer from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseHomeWorksAnswer";
+import CourseQuizAnswer from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseQuizAnswer";
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -204,6 +205,11 @@ function App() {
               element={<CourseResources />}
             />
             <Route path="/panel/course/quizes/:id" element={<CourseQuize />} />
+
+            <Route
+              path="/panel/uploaded_quiz/:id"
+              element={<CourseQuizAnswer />}
+            />
             <Route
               path="/panel/course/notifs/:id"
               element={<CourseNotifes />}

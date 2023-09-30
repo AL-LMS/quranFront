@@ -13,8 +13,8 @@ import {
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import CourseHomeworkAnswerForm from "../../../../../../components/dashboard/teacher/course/CourseHomeworkAnswerForm";
 import { miladi_be_shamsi } from "../../../../../../helper/shamsi";
+import CourseQuizAnswerForm from "../../../../../../components/dashboard/teacher/course/CourseQuizAnswerForm";
 const HomeWorksAnswerLists = ({ data }) => {
   return (
     <Card
@@ -110,7 +110,7 @@ const HomeWorksAnswerLists = ({ data }) => {
                 <TableCell sx={{ border: "none" }}>
                   <Stack direction="row" justifyContent="center">
                     <Tooltip title="وضعیت ارسال">
-                      <CourseHomeworkAnswerForm
+                      <CourseQuizAnswerForm
                         type="create"
                         answer_id={item.answer_id}
                       />

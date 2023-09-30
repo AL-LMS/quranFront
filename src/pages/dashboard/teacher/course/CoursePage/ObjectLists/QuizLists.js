@@ -103,7 +103,7 @@ const QuizLists = ({ data }) => {
                 <TableCell sx={{ border: "none" }}>
                   <Stack direction="row" justifyContent="center">
                     <Tooltip title="وضعیت ارسال">
-                      <Link to={`/panel/uploaded_homework/${item.id}`}>
+                      <Link to={`/panel/uploaded_quiz/${item.id}`}>
                         <Button>
                           <DriveFolderUploadIcon />
                         </Button>
