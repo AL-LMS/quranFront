@@ -52,26 +52,22 @@ const CourseList = ({ data }) => {
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
+                توضیحات
+              </TableCell>
+              <TableCell
+                sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
+              >
                 تاریخ شروع
               </TableCell>
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
-                تعداد ثبت نامی
+                زمان آزمون
               </TableCell>
               <TableCell
                 sx={{ border: "none", fontSize: "16px", textAlign: "center" }}
               >
-                وضعیت
-              </TableCell>
-              <TableCell
-                sx={{
-                  border: "none",
-                  fontSize: "16px",
-                  textAlign: "center",
-                }}
-              >
-                <MoreHorizIcon color="#eee" />
+                نمره
               </TableCell>
             </TableRow>
           </TableHead>
@@ -91,7 +87,11 @@ const CourseList = ({ data }) => {
                   {index + 1}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  {item.name}
+                  {item.title}
+                </TableCell>
+                
+                <TableCell sx={{ border: "none", textAlign: "center" }}>
+                  {item.explain}
                 </TableCell>
                 <TableCell
                   sx={{
@@ -101,7 +101,7 @@ const CourseList = ({ data }) => {
                     textAlign: "center",
                   }}
                 >
-                  {item?.start_date && item?.start_date.slice(0, 10)}
+                  {item?.day && item?.day.slice(0, 10)}
                 </TableCell>
                 <TableCell
                   sx={{

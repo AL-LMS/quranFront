@@ -15,7 +15,6 @@ import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { DatePicker } from "zaman";
 import { TimePicker } from "react-ios-time-picker";
-
 import "./style.css";
 import { convertToPersianDate } from "../../../../pages/dashboard/converter/dateConverter";
 const CourseQuizForm = ({ type, data, setReload }) => {
@@ -38,14 +37,16 @@ const CourseQuizForm = ({ type, data, setReload }) => {
   const [form, setForm] = useState({
     file: data ? data.fileCourse : "",
     title: data ? data.title : "",
-    deadline: data ? data.endDateTime : null,
-    description: data ? data.description : "",
+    start_time: data ? data.endDateTime : null,
+    end_time: data ? data.endDateTime : null,
+    day: data ? data.day : "",
+    explain: "",
     type: data ? data.type : "",
   });
   const handleDatePicker = (e) => {
-    let deadline = "";
-    deadline = convertToPersianDate(e.value);
-    setForm({ ...form, deadline: deadline });
+    let day = "";
+    day = convertToPersianDate(e.value);
+    setForm({ ...form, day: day });
   };
   let myRef = useRef();
   const openFile = (file) => {
@@ -70,7 +71,7 @@ const CourseQuizForm = ({ type, data, setReload }) => {
   };
   const add_quiz = async () => {
     setLoading(true);
-    if (form.title && form.deadline) {
+    if (form.title && form.day && form.start_time && form.end_time) {
       let config = {
         url: "insert_request",
       };
@@ -80,8 +81,10 @@ const CourseQuizForm = ({ type, data, setReload }) => {
         data: {
           file: form?.file,
           title: form?.title,
-          deadline: form?.deadline,
-          description: form?.description,
+          start_time: form?.start_time,
+          end_time: form?.end_time,
+          day: form?.day,
+          explain: form?.explain,
           type: form?.type,
           teacher_id: user?.user_id,
           course_id: id,
@@ -172,10 +175,8 @@ const CourseQuizForm = ({ type, data, setReload }) => {
           <Grid item xs={12}>
             <TextField
               label="توضیحات"
-              value={form.description}
-              onChange={(e) =>
-                setForm({ ...form, description: e.target.value })
-              }
+              value={form.explain}
+              onChange={(e) => setForm({ ...form, explain: e.target.value })}
               fullWidth
             />
           </Grid>
