@@ -1,61 +1,18 @@
-import React, { useContext, useState } from "react";
-import axios from "axios";
-import useAuth from "../../../hooks/useAuth";
-import { DefiContext } from "../../../context/DefiContext";
+import React from "react";
 import { Button, Card, Divider, Grid, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { Stack } from "@mui/system";
 
-import { toastify } from "../../../helper/toast";
-
 import NoImage from "../../../assets/img/class1.jpeg";
-import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import {
   convert_ages,
   convert_degree,
   convert_sex,
 } from "../../../helper/converter";
-import { getUrl } from "../../../helper/getUrl";
 
 const CourseInfo = ({ data_course }) => {
   const { id } = useParams();
-  const { auth, user } = useAuth();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const register_course = async () => {
-    setLoading(true);
-    let config = {
-      url: "insert_request",
-    };
-    let data = {
-      table: "courses",
-      method_type: "register_course",
-      data: {
-        course_id: data_course.course_id,
-        student_id: user.user_id,
-        student_name: user.first_name + " " + user.last_name,
-        teacher_id: data_course.teacher_user_id,
-      },
-    };
-    let response = await axios({
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      data: {
-        ...data,
-      },
-
-      baseURL: getUrl() + "back_request/insert_request/",
-    });
-    if (response?.data?.tracking_code !== null) {
-      toastify("success", response?.data?.response);
-      navigate("/panel/dashboard");
-    } else {
-      toastify("error-login", response?.data?.error);
-    }
-  };
 
   return (
     <Card
@@ -86,6 +43,7 @@ const CourseInfo = ({ data_course }) => {
                 variant="h4"
                 color="#000"
                 fontWeight={800}
+                textAlign={"center"}
               >
                 {data_course["name"]}
               </Typography>
@@ -105,31 +63,31 @@ const CourseInfo = ({ data_course }) => {
                 }}
               >
                 <Stack spacing={2} direction="column">
-                  <Typography color="mainText">
+                  <Typography textAlign={"center"} color="mainText">
                     موضوع دوره:
                     <span style={{ color: "black" }}>
                       {" " + data_course["type"]}
                     </span>
                   </Typography>
-                  <Typography color="mainText">
+                  <Typography textAlign={"center"} color="mainText">
                     مقطع سنی:
                     <span style={{ color: "black" }}>
                       {" " + convert_ages(data_course["ages"])}
                     </span>
                   </Typography>
-                  <Typography color="mainText">
+                  <Typography textAlign={"center"} color="mainText">
                     حداقل مدرک تحصیلی:
                     <span style={{ color: "black" }}>
                       {" " + convert_degree(data_course["degree"])}
                     </span>
                   </Typography>
-                  <Typography color="mainText">
+                  <Typography textAlign={"center"} color="mainText">
                     پیشنیازها:
                     <span style={{ color: "black" }}>
                       {" " + data_course["prerequisite"]}
                     </span>
                   </Typography>
-                  <Typography color="mainText">
+                  <Typography textAlign={"center"} color="mainText">
                     جنسیت:
                     <span style={{ color: "black" }}>
                       {" " + convert_sex(data_course["sex"])}
@@ -138,7 +96,9 @@ const CourseInfo = ({ data_course }) => {
                 </Stack>
                 <Stack spacing={2} sx={{ marginTop: { xs: 2, md: 0 } }}>
                   <Stack direction="row" spacing={5}>
-                    <Typography color="mainText">هزینه آموزش دوره:</Typography>
+                    <Typography textAlign={"center"} color="mainText">
+                      هزینه آموزش دوره:
+                    </Typography>
                     <Typography
                       fontWeight={400}
                       color={data_course["price"] ? "#000" : "error"}
@@ -155,7 +115,9 @@ const CourseInfo = ({ data_course }) => {
                   </Stack>
                   {data_course.price2 && (
                     <Stack direction="row" spacing={5}>
-                      <Typography color="mainText">قیمت با تخفیف:</Typography>
+                      <Typography textAlign={"center"} color="mainText">
+                        قیمت با تخفیف:
+                      </Typography>
                       <Typography
                         fontWeight={400}
                         color="error"
@@ -186,7 +148,8 @@ const CourseInfo = ({ data_course }) => {
                     variant="contained"
                     fullWidth
                     fontSize="17px"
-                    onClick={() => register_course()}
+                    // onClick={() => register_course()}
+                    onClick={() => navigate("/panel/payment/" + id)}
                     disabled={data_course.enableforbuy}
                   >
                     ثبت نام دوره

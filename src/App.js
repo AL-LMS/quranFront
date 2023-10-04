@@ -79,6 +79,7 @@ import Meet from "./pages/site/Meet";
 import CourseHomeWorksAnswer from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseHomeWorksAnswer";
 import CourseQuizAnswer from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseQuizAnswer";
 import "./App.css";
+import PrePayments from "./pages/dashboard/students/prePayments";
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -116,6 +117,8 @@ function App() {
               path="/panel/course/details/:id"
               element={<CourseDetails />}
             />
+            <Route path="/panel/payment/:id" element={<PrePayments />} />
+
             {/* <Route path="/panel/dashboard" element={<Dashboard />} /> */}
             <Route path="/panel/wallet" element={<Wallet />} />
             <Route path="/panel/profile" element={<Profile />} />
