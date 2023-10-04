@@ -14,7 +14,6 @@ import {
 import DownloadIcon from "@mui/icons-material/Download";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { miladi_be_shamsi } from "../../../../../../helper/shamsi";
-import CourseQuizAnswerForm from "../../../../../../components/dashboard/teacher/course/CourseQuizAnswerForm";
 import CourseHomeworkAnswerForm from "../../../../../../components/dashboard/teacher/course/CourseHomeworkAnswerForm";
 const HomeWorksAnswerLists = ({ data, setReload }) => {
   return (

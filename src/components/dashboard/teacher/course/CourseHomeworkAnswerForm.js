@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import useAuth from "../../../../hooks/useAuth";
 import {
   Button,
   Dialog,
@@ -10,7 +9,6 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
 import { toastify } from "../../../../helper/toast";
 import "./style.css";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
@@ -19,6 +17,7 @@ const CourseHomeworkAnswerForm = ({ type, answer_id }) => {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     score: "",
+    explain: "",
   });
   const set_score_homework = async () => {
     setLoading(true);
@@ -32,6 +31,7 @@ const CourseHomeworkAnswerForm = ({ type, answer_id }) => {
         data: {
           answer_id: answer_id,
           score: form.score,
+          explain: form.explain,
         },
       };
       let response = await axios({
@@ -50,6 +50,10 @@ const CourseHomeworkAnswerForm = ({ type, answer_id }) => {
         toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
+        setForm({
+          score: "",
+          explain: "",
+        });
       } else {
         toastify("error-login", response?.data?.error);
         setLoading(false);
@@ -88,6 +92,15 @@ const CourseHomeworkAnswerForm = ({ type, answer_id }) => {
               value={form.score}
               type="number"
               onChange={(e) => setForm({ ...form, score: e.target.value })}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="توضیح"
+              value={form.explain}
+              type="text"
+              onChange={(e) => setForm({ ...form, explain: e.target.value })}
               fullWidth
             />
           </Grid>

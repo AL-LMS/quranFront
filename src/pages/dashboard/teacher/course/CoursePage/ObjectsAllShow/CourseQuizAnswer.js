@@ -93,7 +93,7 @@ const CourseQuizAnswer = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <HomeWorksAnswerLists data={data} />
+          <QuizAnswerLists data={data} />
         </Grid>
       </Grid>
     </Container>
