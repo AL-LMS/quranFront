@@ -6,6 +6,7 @@ import { Grid, Typography } from "@mui/material";
 import Loader from "../../../components/site/shared/Loader";
 import CourseList from "../../../components/dashboard/teacher/course/CourseList";
 import toastify from "../../../helper/toast";
+import { getUrl } from "../../../helper/getUrl";
 
 const Course = () => {
   const { auth, user } = useAuth();
@@ -36,8 +37,7 @@ const Course = () => {
         ...data,
       },
 
-      // baseURL: "http://daarolquran.com/back_request/select_request/",
-      baseURL: "http://127.0.0.1:5000/back_request/select_request/",
+      baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
       setData(response?.data?.response);

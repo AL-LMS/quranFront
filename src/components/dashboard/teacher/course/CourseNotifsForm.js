@@ -15,6 +15,7 @@ import { useParams } from "react-router-dom";
 import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import MUIRichTextEditor from "mui-rte";
+import { getUrl } from "../../../../helper/getUrl";
 
 const TeacherNotifsForm = ({ type, data, setReload }) => {
   const { id } = useParams();
@@ -54,8 +55,7 @@ const TeacherNotifsForm = ({ type, data, setReload }) => {
           ...data,
         },
 
-        // baseURL: "http://daarolquran.com/back_request/insert_request/",
-        baseURL: "http://127.0.0.1:5000/back_request/insert_request/",
+        baseURL: getUrl() + "back_request/insert_request/",
       });
       if (response?.data?.tracking_code !== null) {
         toastify("success", response?.data?.response);

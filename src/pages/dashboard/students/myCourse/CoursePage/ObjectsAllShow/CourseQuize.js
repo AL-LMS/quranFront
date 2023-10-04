@@ -7,6 +7,7 @@ import CourseList from "../../../../../../components/dashboard/teacher/course/Co
 import toastify from "../../../../../../helper/toast";
 import QuizList from "../ObjectLists/QuizList";
 import { useParams } from "react-router-dom";
+import { getUrl } from "../../../../../../helper/getUrl";
 
 const CourseQuize = () => {
   const { id } = useParams();
@@ -39,8 +40,7 @@ const CourseQuize = () => {
         ...data,
       },
 
-      // baseURL: "http://daarolquran.com/back_request/select_request/",
-      baseURL: "http://127.0.0.1:5000/back_request/select_request/",
+      baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
       setData(response?.data?.response);

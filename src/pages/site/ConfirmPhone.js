@@ -19,6 +19,7 @@ import useAuth from "../../hooks/useAuth";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
+import { getUrl } from "../../helper/getUrl";
 
 const ConfirmPhone = () => {
   const { setAuth, setUser } = useAuth();
@@ -79,8 +80,7 @@ const ConfirmPhone = () => {
         ...data,
       },
 
-      // baseURL: "http://daarolquran.com/back_request/register/",
-      baseURL: "http://127.0.0.1:5000/back_request/register/",
+      baseURL: getUrl() + "back_request/register/",
     });
     if (response?.data?.tracking_code !== null) {
       toastify(

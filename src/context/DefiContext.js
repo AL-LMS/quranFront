@@ -12,23 +12,7 @@ const DefiProvider = ({ children }) => {
   const [topicID, setTopicID] = useState([]);
   const [courseName, setCourseName] = useState([]);
   const [reload, setReload] = useState(false);
-  useEffect(() => {
-    // const fetchData = async () => {
-    //   const get_teacher_name = await axios.get(
-    //     "http://daarolquran.com/back_request/get_teacher_name/"
-    //   );
-    //   const get_course_name = await axios.get(
-    //     "http://daarolquran.com/back_request/get_course_name/"
-    //   );
-    //   const get_course_type = await axios.get(
-    //     "http://daarolquran.com/back_request/get_type_name/"
-    //   );
-    //   setTeacherID(get_teacher_name.data);
-    //   setTopicID(get_course_type.data);
-    //   setCourseName(get_course_name.data);
-    // };
-    // fetchData();
-  }, []);
+  useEffect(() => {}, []);
   return (
     <DefiContext.Provider
       value={{

@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import toastify from "../../../../../../helper/toast";
 import ResourcesLists from "../ObjectLists/ResourcesLists";
 import CourseResourceForm from "../../../../../../components/dashboard/teacher/course/CourseResourceForm";
+import { getUrl } from "../../../../../../helper/getUrl";
 
 const CourseResources = () => {
   const [data, setData] = useState([]);
@@ -37,8 +38,7 @@ const CourseResources = () => {
         ...data,
       },
 
-      // baseURL: "http://daarolquran.com/back_request/select_request/",
-      baseURL: "http://127.0.0.1:5000/back_request/select_request/",
+      baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
       setData(response?.data?.response);

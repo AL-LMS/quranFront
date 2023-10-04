@@ -12,6 +12,7 @@ import {
 import { toastify } from "../../../../helper/toast";
 import "./style.css";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
+import { getUrl } from "../../../../helper/getUrl";
 const CourseQuizAnswerForm = ({ type, answer_id }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,8 +45,7 @@ const CourseQuizAnswerForm = ({ type, answer_id }) => {
           ...data,
         },
 
-        // baseURL: "http://daarolquran.com/back_request/update_request/",
-        baseURL: "http://127.0.0.1:5000/back_request/update_request/",
+        baseURL: getUrl() + "back_request/update_request/",
       });
       if (response?.data?.tracking_code !== null) {
         toastify("success", response?.data?.response);

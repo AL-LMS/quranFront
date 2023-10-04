@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useEffect } from "react";
 import axios from "axios";
+import { getUrl } from "../../../helper/getUrl";
 
 const Filter = ({ setParams, query, setQuery }) => {
   const [filter, setFilter] = useState({
@@ -33,16 +34,13 @@ const Filter = ({ setParams, query, setQuery }) => {
   useEffect(() => {
     const fetchData = async () => {
       const get_teacher_name = await axios.get(
-        // "http://daarolquran.com/back_request/get_teacher_name/"
-        "http://127.0.0.1:5000/back_request/get_teacher_name/"
+        getUrl() + "back_request/get_teacher_name/"
       );
       const get_course_name = await axios.get(
-        // "http://daarolquran.com/back_request/get_course_name/"
-        "http://127.0.0.1:5000/back_request/get_course_name/"
+        getUrl() + "back_request/get_course_name/"
       );
       const get_course_type = await axios.get(
-        // "http://daarolquran.com/back_request/get_type_name/"
-        "http://127.0.0.1:5000/back_request/get_type_name/"
+        getUrl() + "back_request/get_type_name/"
       );
       setTeacherID(get_teacher_name.data);
       setTopicID(get_course_type.data);

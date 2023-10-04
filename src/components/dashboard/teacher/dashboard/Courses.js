@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 import CircleIcon from "../../../../assets/img/circle-small.svg";
 import toastify from "../../../../helper/toast";
+import { getUrl } from "../../../../helper/getUrl";
 
 const Courses = () => {
   const { auth, user } = useAuth();
@@ -36,8 +37,7 @@ const Courses = () => {
         ...data,
       },
 
-      // baseURL: "http://daarolquran.com/back_request/select_request/",
-      baseURL: "http://127.0.0.1:5000/back_request/select_request/",
+      baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
       setData(response?.data?.response);

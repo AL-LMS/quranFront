@@ -14,6 +14,7 @@ import { useContext } from "react";
 import { DefiContext } from "../../../context/DefiContext";
 import { setLocalStorageLogin } from "../../localStorage";
 import { useNavigate } from "react-router-dom";
+import { getUrl } from "../../../helper/getUrl";
 
 const Profile = () => {
   const { user, role, setAuth, setUser, setRole } = useAuth();
@@ -92,8 +93,7 @@ const Profile = () => {
             ...data,
           },
 
-          // baseURL: "http://daarolquran.com/back_request/update_request/",
-          baseURL: "http://127.0.0.1:5000/back_request/update_request/",
+          baseURL: getUrl() + "back_request/update_request/",
         });
         if (response?.data?.tracking_code !== null) {
           localStorage.clear("role");

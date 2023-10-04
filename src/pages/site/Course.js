@@ -9,6 +9,7 @@ import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import NotFound from "../../components/site/shared/NotFound";
 import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
+import { getUrl } from "../../helper/getUrl";
 const Course = () => {
   const [data, setData] = useState([]);
   const [params, setParams] = useSearchParams();
@@ -53,8 +54,7 @@ const Course = () => {
         ...data,
       },
 
-      // baseURL: "http://daarolquran.com/back_request/select_request/",
-      baseURL: "http://127.0.0.1:5000/back_request/select_request/",
+      baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
       setData(response?.data?.response);

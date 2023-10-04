@@ -15,6 +15,7 @@ import { convert_gender } from "../../../helper/converter";
 import Loader from "../../../components/site/shared/Loader";
 import toastify from "../../../helper/toast";
 import axios from "axios";
+import { getUrl } from "../../../helper/getUrl";
 const StudentList = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
@@ -41,8 +42,7 @@ const StudentList = () => {
         ...data,
       },
 
-      // baseURL: "http://daarolquran.com/back_request/select_request/",
-      baseURL: "http://127.0.0.1:5000/back_request/select_request/",
+      baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
       setData(response?.data?.response?.students);

@@ -14,6 +14,7 @@ import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import "./style.css";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { getUrl } from "../../../../helper/getUrl";
 const UploadExercisesForm = ({
   type,
   data,
@@ -78,8 +79,7 @@ const UploadExercisesForm = ({
           ...data,
         },
 
-        // baseURL: "http://daarolquran.com/back_request/insert_request/",
-        baseURL: "http://127.0.0.1:5000/back_request/insert_request/",
+        baseURL: getUrl() + "back_request/insert_request/",
       });
       if (response?.data?.tracking_code !== null) {
         toastify("success", response?.data?.response);
@@ -127,8 +127,7 @@ const UploadExercisesForm = ({
           ...data,
         },
 
-        // baseURL: "http://daarolquran.com/back_request/update_request/",
-        baseURL: "http://127.0.0.1:5000/back_request/update_request/",
+        baseURL: getUrl() + "back_request/update_request/",
       });
       if (response?.data?.tracking_code !== null) {
         toastify("success", response?.data?.response);

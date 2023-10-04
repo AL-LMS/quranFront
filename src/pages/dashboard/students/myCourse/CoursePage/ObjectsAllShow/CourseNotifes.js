@@ -6,6 +6,7 @@ import Loader from "../../../../../../components/site/shared/Loader";
 import toastify from "../../../../../../helper/toast";
 import NotifsLists from "../ObjectLists/NotifsLists";
 import { useParams } from "react-router-dom";
+import { getUrl } from "../../../../../../helper/getUrl";
 
 const CourseNotifes = () => {
   const [data, setData] = useState([]);
@@ -35,8 +36,7 @@ const CourseNotifes = () => {
         ...data,
       },
 
-      // baseURL: "http://daarolquran.com/back_request/select_request/",
-      baseURL: "http://127.0.0.1:5000/back_request/select_request/",
+      baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
       setData(response?.data?.response);

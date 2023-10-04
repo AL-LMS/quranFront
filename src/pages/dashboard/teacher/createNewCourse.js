@@ -22,6 +22,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import { TimePicker } from "react-ios-time-picker";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { getUrl } from "../../../helper/getUrl";
 const CreateCourse = () => {
   const [loading, setLoading] = useState(false);
   const [calendarValue, setCalendarValue] = useState(new Date());
@@ -101,8 +102,7 @@ const CreateCourse = () => {
         ...data,
       },
 
-      // baseURL: "http://daarolquran.com/back_request/insert_request/",
-      baseURL: "http://127.0.0.1:5000/back_request/insert_request/",
+      baseURL: getUrl() + "back_request/insert_request/",
     });
     if (response?.data?.tracking_code !== null) {
       toastify("success", response?.data?.response);
