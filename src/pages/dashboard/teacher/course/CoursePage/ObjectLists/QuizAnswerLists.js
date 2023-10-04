@@ -15,7 +15,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { miladi_be_shamsi } from "../../../../../../helper/shamsi";
 import CourseQuizAnswerForm from "../../../../../../components/dashboard/teacher/course/CourseQuizAnswerForm";
-const HomeWorksAnswerLists = ({ data, setReload }) => {
+const QuizAnswerLists = ({ data, setReload }) => {
   return (
     <Card
       sx={{
@@ -127,4 +127,4 @@ const HomeWorksAnswerLists = ({ data, setReload }) => {
   );
 };
 
-export default HomeWorksAnswerLists;
+export default QuizAnswerLists;

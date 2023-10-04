@@ -6,6 +6,7 @@ import Loader from "../../../../../../components/site/shared/Loader";
 import toastify from "../../../../../../helper/toast";
 import { useParams } from "react-router-dom";
 import HomeWorksAnswerLists from "../ObjectLists/HomeWorksAnswerLists";
+import QuizAnswerLists from "../ObjectLists/QuizAnswerLists";
 
 const CourseQuizAnswer = () => {
   const { id } = useParams();
