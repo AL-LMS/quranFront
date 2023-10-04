@@ -79,7 +79,8 @@ const ConfirmPhone = () => {
         ...data,
       },
 
-      baseURL: "http://daarolquran.com/back_request/register/",
+      // baseURL: "http://daarolquran.com/back_request/register/",
+      baseURL: "http://127.0.0.1:5000/back_request/register/",
     });
     if (response?.data?.tracking_code !== null) {
       toastify(

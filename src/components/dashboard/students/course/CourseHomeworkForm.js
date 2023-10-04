@@ -78,7 +78,8 @@ const UploadExercisesForm = ({
           ...data,
         },
 
-        baseURL: "http://daarolquran.com/back_request/insert_request/",
+        // baseURL: "http://daarolquran.com/back_request/insert_request/",
+        baseURL: "http://127.0.0.1:5000/back_request/insert_request/",
       });
       if (response?.data?.tracking_code !== null) {
         toastify("success", response?.data?.response);
@@ -98,11 +99,11 @@ const UploadExercisesForm = ({
 
   const edit_upload_homework = async () => {
     setLoading(true);
-    if (form.answer_id) {
+    console.log(form);
+    if (!form.answer_id) {
       setLoading(false);
       toastify("warning", "مشکلی پیش آمده لطفا صفحه خود را رفرش کنید");
-    }
-    if (form.file) {
+    } else if (form.file) {
       let config = {
         url: "update_request",
       };
@@ -114,6 +115,7 @@ const UploadExercisesForm = ({
           file: form?.file,
           type: form?.type,
           homework_id: homeworkId,
+          answer_id: form?.answer_id,
         },
       };
       let response = await axios({
@@ -126,7 +128,8 @@ const UploadExercisesForm = ({
           ...data,
         },
 
-        baseURL: "http://daarolquran.com/back_request/update_request/",
+        // baseURL: "http://daarolquran.com/back_request/update_request/",
+        baseURL: "http://127.0.0.1:5000/back_request/update_request/",
       });
       if (response?.data?.tracking_code !== null) {
         toastify("success", response?.data?.response);

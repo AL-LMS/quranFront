@@ -8,8 +8,6 @@ import { toastify } from "../../../helper/toast";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { ToastContainer } from "react-toastify";
 import { profileAuth } from "../../../auth/profile";
-import { useContext } from "react";
-import { DefiContext } from "../../../context/DefiContext";
 import Documnets from "./Documnets";
 import TeacherInfo from "../../../components/dashboard/students/profile/TeacherInfo";
 import MultiDocumnets from "./MultiDocumnets";
@@ -18,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { auth, user, role, setRole, setAuth, setUser } = useAuth();
-  const { reaload, setReload } = useContext(DefiContext);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
@@ -64,10 +61,10 @@ const Profile = () => {
     formData.append("degree", form.degree);
     if (!Object.keys(errors).length) {
       if (
-        String(form?.national_id) &&
-        String(form?.sex) &&
-        String(form?.ages) &&
-        String(form?.degree)
+        String(form?.national_id) !== "null" &&
+        String(form?.sex) !== "null" &&
+        String(form?.ages) !== "null" &&
+        String(form?.degree) !== "null"
       ) {
         let config = {
           url: "update_request",
@@ -97,7 +94,8 @@ const Profile = () => {
             ...data,
           },
 
-          baseURL: "http://daarolquran.com/back_request/update_request/",
+          // baseURL: "http://daarolquran.com/back_request/update_request/",
+          baseURL: "http://127.0.0.1:5000/back_request/update_request/",
         });
         if (response?.data?.tracking_code !== null) {
           localStorage.clear("role");
