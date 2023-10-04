@@ -37,7 +37,7 @@ const CourseResources = () => {
         ...data,
       },
 
-      baseURL: "http://127.0.0.1:5000/select_request/",
+      baseURL: "http://daarolquran.com/back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
       setData(response?.data?.response);
@@ -92,7 +92,7 @@ const CourseResources = () => {
           >
             منابع دوره
           </Typography>
-          <CourseResourceForm type="create"  setReload={setReload}/>
+          <CourseResourceForm type="create" setReload={setReload} />
         </Grid>
         <Grid item xs={12}>
           <ResourcesLists data={data} />

@@ -15,13 +15,13 @@ const DefiProvider = ({ children }) => {
   useEffect(() => {
     // const fetchData = async () => {
     //   const get_teacher_name = await axios.get(
-    //     "http://127.0.0.1:5000/get_teacher_name/"
+    //     "http://daarolquran.com/back_request/get_teacher_name/"
     //   );
     //   const get_course_name = await axios.get(
-    //     "http://127.0.0.1:5000/get_course_name/"
+    //     "http://daarolquran.com/back_request/get_course_name/"
     //   );
     //   const get_course_type = await axios.get(
-    //     "http://127.0.0.1:5000/get_type_name/"
+    //     "http://daarolquran.com/back_request/get_type_name/"
     //   );
     //   setTeacherID(get_teacher_name.data);
     //   setTopicID(get_course_type.data);

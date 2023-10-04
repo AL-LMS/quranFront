@@ -72,7 +72,7 @@ const UploadQuizzesForm = ({ type, data, quizId, answer_id, setReload }) => {
           ...data,
         },
 
-        baseURL: "http://127.0.0.1:5000/insert_request/",
+        baseURL: "http://daarolquran.com/back_request/insert_request/",
       });
       if (response?.data?.tracking_code !== null) {
         toastify("success", response?.data?.response);
@@ -117,7 +117,7 @@ const UploadQuizzesForm = ({ type, data, quizId, answer_id, setReload }) => {
           ...data,
         },
 
-        baseURL: "http://127.0.0.1:5000/update_request/",
+        baseURL: "http://daarolquran.com/back_request/update_request/",
       });
       if (response?.data?.tracking_code !== null) {
         toastify("success", response?.data?.response);
