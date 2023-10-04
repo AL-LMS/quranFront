@@ -98,7 +98,7 @@ const HomeWorksAnswerLists = ({ data, setReload }) => {
                   }}
                 >
                   {item?.file !== "" ? (
-                    <a download={item?.title} href={item?.file}>
+                    <a download={item?.name} href={item?.file}>
                       <Button>
                         <DownloadIcon />
                       </Button>
