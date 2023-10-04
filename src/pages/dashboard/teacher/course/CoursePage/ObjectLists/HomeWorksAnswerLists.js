@@ -15,7 +15,8 @@ import DownloadIcon from "@mui/icons-material/Download";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { miladi_be_shamsi } from "../../../../../../helper/shamsi";
 import CourseQuizAnswerForm from "../../../../../../components/dashboard/teacher/course/CourseQuizAnswerForm";
-const HomeWorksAnswerLists = ({ data }) => {
+import CourseHomeworkAnswerForm from "../../../../../../components/dashboard/teacher/course/CourseHomeworkAnswerForm";
+const HomeWorksAnswerLists = ({ data, setReload }) => {
   return (
     <Card
       sx={{
@@ -110,9 +111,10 @@ const HomeWorksAnswerLists = ({ data }) => {
                 <TableCell sx={{ border: "none" }}>
                   <Stack direction="row" justifyContent="center">
                     <Tooltip title="وضعیت ارسال">
-                      <CourseQuizAnswerForm
+                      <CourseHomeworkAnswerForm
                         type="create"
                         answer_id={item.answer_id}
+                        setReload={setReload}
                       />
                     </Tooltip>
                   </Stack>
