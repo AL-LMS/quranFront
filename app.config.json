@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "react-app",
+      "name": "quranFront",
       "script": "npx",
       "interpreter": "none",
       "args": "serve -s build -p 3000"
