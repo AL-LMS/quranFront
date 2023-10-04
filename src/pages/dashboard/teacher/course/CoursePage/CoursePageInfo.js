@@ -7,6 +7,7 @@ import { Stack } from "@mui/system";
 import { toastify } from "../../../../../helper/toast";
 import NoImage from "../../../../../assets/img/class1.jpeg";
 import persianDate from "persian-date";
+import { shamsi_format } from "../../../../../helper/shamsi_format";
 
 const days_show = (days) => {
   let days_string = "";
@@ -140,9 +141,9 @@ const CoursePageInfo = ({ data_course }) => {
                   <Typography color="mainText">
                     مدت دوره:
                     <span style={{ color: "black" }}>
-                      {data_course["start_date"] +
+                      {shamsi_format(data_course["start_date"]) +
                         " تا " +
-                        data_course["end_date"]}
+                        shamsi_format(data_course["end_date"])}
                     </span>
                   </Typography>
                   <Typography color="mainText">

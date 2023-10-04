@@ -78,6 +78,7 @@ import CourseNotifes from "./pages/dashboard/teacher/course/CoursePage/ObjectsAl
 import Meet from "./pages/site/Meet";
 import CourseHomeWorksAnswer from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseHomeWorksAnswer";
 import CourseQuizAnswer from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseQuizAnswer";
+import "./App.css";
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],

@@ -93,7 +93,10 @@ const UploadQuizzesForm = ({ type, data, quizId, answer_id, setReload }) => {
 
   const edit_upload_quiz = async () => {
     setLoading(true);
-    if (form.file && form.answer_id) {
+    if (!form.answer_id) {
+      setLoading(false);
+      toastify("warning", "مشکلی پیش آمده لطفا صفحه خود را رفرش کنید");
+    } else if (form.file && form.answer_id) {
       let config = {
         url: "update_request",
       };

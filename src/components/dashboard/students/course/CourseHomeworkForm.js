@@ -99,7 +99,6 @@ const UploadExercisesForm = ({
 
   const edit_upload_homework = async () => {
     setLoading(true);
-    console.log(form);
     if (!form.answer_id) {
       setLoading(false);
       toastify("warning", "مشکلی پیش آمده لطفا صفحه خود را رفرش کنید");
