@@ -206,7 +206,9 @@ const QuizList = ({ data, setReload }) => {
                 </TableCell>
 
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  {item.score ? item.score : "نمره داده نشده"}
+                  <Tooltip title={item.explain}>
+                    {item.score ? item.score : "نمره داده نشده"}
+                  </Tooltip>
                 </TableCell>
               </TableRow>
             ))}
