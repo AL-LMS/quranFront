@@ -1,22 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  Typography,
-  Grid,
-  Box,
-  InputBase,
-  Stack,
-  Button,
-  Tabs,
-  Tab,
-  TextField,
-} from "@mui/material";
+import { Card, Typography, Grid, Box, Button, TextField } from "@mui/material";
 import { Container } from "@mui/system";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
-import useAuth from "../../hooks/useAuth";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
@@ -24,7 +12,6 @@ import { getUrl } from "../../helper/getUrl";
 import { registerAuth } from "../../auth/register";
 
 const ConfirmPhone = () => {
-  const { setAuth, setUser } = useAuth();
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [time, setTime] = useState(0);
@@ -37,14 +24,6 @@ const ConfirmPhone = () => {
     repassword: "",
     type: "student",
   });
-  const handleChange = () => {
-    if (kind === "student") {
-      setKind("teacher");
-    } else {
-      setKind("student");
-    }
-  };
-
   let timer;
   useEffect(() => {
     timer = setInterval(() => {
@@ -57,41 +36,45 @@ const ConfirmPhone = () => {
   }, []);
 
   const signup = async () => {
-    let config = {
-      url: "signup",
-    };
-    let data = {
-      table: "users",
-      method_type: "",
-      data: {
-        first_name: confirm.first_name,
-        last_name: confirm.last_name,
-        phone: confirm.phone,
-        role: confirm.type,
-        password: confirm.password,
-        re_password: confirm.repassword,
-      },
-    };
-    let response = await axios({
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      data: {
-        ...data,
-      },
+    if (!Object.keys(errors).length) {
+      let config = {
+        url: "signup",
+      };
+      let data = {
+        table: "users",
+        method_type: "",
+        data: {
+          first_name: confirm.first_name,
+          last_name: confirm.last_name,
+          phone: confirm.phone,
+          role: confirm.type,
+          password: confirm.password,
+          re_password: confirm.repassword,
+        },
+      };
+      let response = await axios({
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        data: {
+          ...data,
+        },
 
-      baseURL: getUrl() + "back_request/register/",
-    });
-    if (response?.data?.tracking_code !== null) {
-      toastify(
-        "success",
-        "ثبت‌نام اولیه شما در سامانه انجام شد.برای تکمیل ثبت‌نام وارد سامانه شوید."
-      );
-      navigate("/signin");
+        baseURL: getUrl() + "back_request/register/",
+      });
+      if (response?.data?.tracking_code !== null) {
+        toastify(
+          "success",
+          "ثبت‌نام اولیه شما در سامانه انجام شد.برای تکمیل ثبت‌نام وارد سامانه شوید."
+        );
+        navigate("/signin");
+      } else {
+        toastify("error-login", response?.data?.error);
+      }
     } else {
-      toastify("error-login", response?.data?.error);
+      toastify("warning", "لطفا فیلد هارا با دقت پر کنید");
     }
   };
   useEffect(() => {
@@ -117,14 +100,7 @@ const ConfirmPhone = () => {
             <Typography mb={3} color="mainText" textAlign="center">
               فرم اولیه ثبت‌نام
             </Typography>
-            <Box
-              sx={{
-                backgroundColor: "#e8e8e8",
-                borderRadius: "10px",
-                padding: "4px 15px",
-                marginBottom: "2rem",
-              }}
-            >
+            <Box>
               <TextField
                 label="نام"
                 name="first_name"
@@ -137,14 +113,7 @@ const ConfirmPhone = () => {
                 helperText={errors.first_name && errors.first_name}
               />
             </Box>
-            <Box
-              sx={{
-                backgroundColor: "#e8e8e8",
-                borderRadius: "10px",
-                padding: "4px 15px",
-                marginBottom: "2rem",
-              }}
-            >
+            <Box>
               <TextField
                 label="نام خانوادگی"
                 name="last_name"
@@ -157,14 +126,7 @@ const ConfirmPhone = () => {
                 helperText={errors.last_name && errors.last_name}
               />
             </Box>
-            <Box
-              sx={{
-                backgroundColor: "#e8e8e8",
-                borderRadius: "10px",
-                padding: "4px 15px",
-                marginBottom: "2rem",
-              }}
-            >
+            <Box>
               <TextField
                 label="شماره تلفن"
                 name="phone"
@@ -177,14 +139,7 @@ const ConfirmPhone = () => {
                 helperText={errors.phone && errors.phone}
               />
             </Box>
-            <Box
-              sx={{
-                backgroundColor: "#e8e8e8",
-                borderRadius: "10px",
-                padding: "4px 15px",
-                marginBottom: "2rem",
-              }}
-            >
+            <Box>
               <TextField
                 label="رمز عبور"
                 name="password"
@@ -198,14 +153,7 @@ const ConfirmPhone = () => {
                 helperText={errors.password && errors.password}
               />
             </Box>
-            <Box
-              sx={{
-                backgroundColor: "#e8e8e8",
-                borderRadius: "10px",
-                padding: "4px 15px",
-                marginBottom: "2rem",
-              }}
-            >
+            <Box>
               <TextField
                 label="تکرار رمز عبور"
                 name="repassword"
