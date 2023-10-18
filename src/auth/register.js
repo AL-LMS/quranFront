@@ -19,6 +19,30 @@ export const registerAuth = (data) => {
   } else {
     delete errors.phone;
   }
+  return errors;
+};
+
+export const registerAuth222222 = (data) => {
+  const errors = {};
+  if (!data.first_name) {
+    errors.first_name = "نام اجباری است";
+  } else {
+    delete errors.first_name;
+  }
+  if (!data.last_name) {
+    errors.last_name = "نام خانوادگی اجباری است";
+  } else {
+    delete errors.last_name;
+  }
+  if (!data.phone) {
+    errors.phone = "شماره همراه ضروری است";
+  } else if (
+    !/^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$/.test(data.phone)
+  ) {
+    errors.phone = "شماره موبایل وارد شده صحیح نیست";
+  } else {
+    delete errors.phone;
+  }
   if (!data.national_code) {
     errors.national_code = "کدملی ضروری است";
   } else if (!/^([0-9]){10}$/.test(data.national_code)) {
