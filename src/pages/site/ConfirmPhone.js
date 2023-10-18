@@ -9,6 +9,7 @@ import {
   Button,
   Tabs,
   Tab,
+  TextField,
 } from "@mui/material";
 import { Container } from "@mui/system";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,11 +21,12 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import { getUrl } from "../../helper/getUrl";
+import { registerAuth } from "../../auth/register";
 
 const ConfirmPhone = () => {
   const { setAuth, setUser } = useAuth();
   const navigate = useNavigate();
-  const [sendCode, setSendCode] = useState(false);
+  const [errors, setErrors] = useState({});
   const [time, setTime] = useState(0);
   const [kind, setKind] = useState("student");
   const [confirm, setConfirm] = useState({
@@ -92,6 +94,9 @@ const ConfirmPhone = () => {
       toastify("error-login", response?.data?.error);
     }
   };
+  useEffect(() => {
+    setErrors(registerAuth(confirm));
+  }, [confirm]);
 
   const handleCheckboxChange = (event) => {
     setKind(event.target.name);
@@ -120,13 +125,16 @@ const ConfirmPhone = () => {
                 marginBottom: "2rem",
               }}
             >
-              <InputBase
-                placeholder="نام"
+              <TextField
+                label="نام"
+                name="first_name"
                 value={confirm.first_name}
                 fullWidth
                 onChange={(e) =>
                   setConfirm({ ...confirm, first_name: e.target.value })
                 }
+                size="small"
+                helperText={errors.first_name && errors.first_name}
               />
             </Box>
             <Box
@@ -137,13 +145,16 @@ const ConfirmPhone = () => {
                 marginBottom: "2rem",
               }}
             >
-              <InputBase
-                placeholder="نام خانوادگی"
+              <TextField
+                label="نام خانوادگی"
+                name="last_name"
                 value={confirm.last_name}
                 fullWidth
                 onChange={(e) =>
                   setConfirm({ ...confirm, last_name: e.target.value })
                 }
+                size="small"
+                helperText={errors.last_name && errors.last_name}
               />
             </Box>
             <Box
@@ -154,13 +165,16 @@ const ConfirmPhone = () => {
                 marginBottom: "2rem",
               }}
             >
-              <InputBase
-                placeholder="شماره تلفن"
+              <TextField
+                label="شماره تلفن"
+                name="phone"
                 value={confirm.phone}
                 fullWidth
                 onChange={(e) =>
                   setConfirm({ ...confirm, phone: e.target.value })
                 }
+                size="small"
+                helperText={errors.phone && errors.phone}
               />
             </Box>
             <Box
@@ -171,14 +185,17 @@ const ConfirmPhone = () => {
                 marginBottom: "2rem",
               }}
             >
-              <InputBase
-                placeholder="رمز عبور"
+              <TextField
+                label="رمز عبور"
+                name="password"
                 value={confirm.password}
                 fullWidth
                 type="password"
                 onChange={(e) =>
                   setConfirm({ ...confirm, password: e.target.value })
                 }
+                size="small"
+                helperText={errors.password && errors.password}
               />
             </Box>
             <Box
@@ -189,14 +206,17 @@ const ConfirmPhone = () => {
                 marginBottom: "2rem",
               }}
             >
-              <InputBase
-                placeholder="تکرار رمز عبور"
+              <TextField
+                label="تکرار رمز عبور"
+                name="repassword"
                 value={confirm.repassword}
                 fullWidth
                 type="password"
                 onChange={(e) =>
                   setConfirm({ ...confirm, repassword: e.target.value })
                 }
+                size="small"
+                helperText={errors.repassword && errors.repassword}
               />
             </Box>
             <FormGroup>
