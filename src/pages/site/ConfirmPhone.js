@@ -100,7 +100,11 @@ const ConfirmPhone = () => {
             <Typography mb={3} color="mainText" textAlign="center">
               فرم اولیه ثبت‌نام
             </Typography>
-            <Box>
+            <Box
+              sx={{
+                marginBottom: "2rem",
+              }}
+            >
               <TextField
                 label="نام"
                 name="first_name"
@@ -113,7 +117,11 @@ const ConfirmPhone = () => {
                 helperText={errors.first_name && errors.first_name}
               />
             </Box>
-            <Box>
+            <Box
+              sx={{
+                marginBottom: "2rem",
+              }}
+            >
               <TextField
                 label="نام خانوادگی"
                 name="last_name"
@@ -126,7 +134,11 @@ const ConfirmPhone = () => {
                 helperText={errors.last_name && errors.last_name}
               />
             </Box>
-            <Box>
+            <Box
+              sx={{
+                marginBottom: "2rem",
+              }}
+            >
               <TextField
                 label="شماره تلفن"
                 name="phone"
@@ -139,7 +151,11 @@ const ConfirmPhone = () => {
                 helperText={errors.phone && errors.phone}
               />
             </Box>
-            <Box>
+            <Box
+              sx={{
+                marginBottom: "2rem",
+              }}
+            >
               <TextField
                 label="رمز عبور"
                 name="password"
@@ -153,7 +169,11 @@ const ConfirmPhone = () => {
                 helperText={errors.password && errors.password}
               />
             </Box>
-            <Box>
+            <Box
+              sx={{
+                marginBottom: "2rem",
+              }}
+            >
               <TextField
                 label="تکرار رمز عبور"
                 name="repassword"
