@@ -16,8 +16,6 @@ import {
   Grid,
   InputLabel,
   MenuItem,
-  Radio,
-  RadioGroup,
   Select,
   TextField,
   Typography,
@@ -25,10 +23,8 @@ import {
 import { Container } from "@mui/system";
 import { registerAuth } from "../../auth/register";
 import Policy from "../../components/site/Policy";
-
 import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
-import DatePicker from "@hassanmojab/react-modern-calendar-datepicker";
 import { shamsi_be_miladi } from "../../helper/miladi";
 import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
 

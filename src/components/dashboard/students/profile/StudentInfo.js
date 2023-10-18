@@ -86,7 +86,12 @@ const StudentInfo = ({ form, setForm, errors }) => {
             options={sex}
             getOptionLabel={(option) => option.name || ""}
             renderInput={(params) => (
-              <TextField {...params} label="جنسیت" required />
+              <TextField
+                {...params}
+                label="جنسیت"
+                required
+                helperText={errors.sex && errors.sex}
+              />
             )}
           />
         </Grid>
@@ -101,7 +106,12 @@ const StudentInfo = ({ form, setForm, errors }) => {
             options={ages}
             getOptionLabel={(option) => option.name || ""}
             renderInput={(params) => (
-              <TextField {...params} label="رده سنی" required />
+              <TextField
+                {...params}
+                label="رده سنی"
+                required
+                helperText={errors.ages && errors.ages}
+              />
             )}
           />
         </Grid>
@@ -117,7 +127,12 @@ const StudentInfo = ({ form, setForm, errors }) => {
             options={degree}
             getOptionLabel={(option) => option.name || ""}
             renderInput={(params) => (
-              <TextField {...params} label="تحصیلات" required />
+              <TextField
+                {...params}
+                label="تحصیلات"
+                required
+                helperText={errors.degree && errors.degree}
+              />
             )}
           />
         </Grid>
