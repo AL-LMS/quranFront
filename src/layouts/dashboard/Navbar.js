@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import {
   AppBar,
-  Badge,
   IconButton,
   Menu,
   MenuItem,
@@ -14,7 +13,6 @@ import {
 import { Box, Container } from "@mui/system";
 //Icons
 import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
