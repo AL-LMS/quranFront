@@ -62,7 +62,8 @@ const CreateCourse = () => {
     isOnline: isOnline,
     start: null,
     end: null,
-    time: null,
+    start_time: null,
+    end_time: null,
     days: [],
     max: null,
     min: null,
@@ -78,7 +79,8 @@ const CreateCourse = () => {
     name: Yup.string().required("لطفا نام دوره را وارد نمایید."),
     explain: Yup.string().required("لطفا توضیحات دوره را وارد نمایید."),
     start: Yup.string().required("لطفا روز شروع دوره را وارد نمایید."),
-    time: Yup.string().required("لطفا ساعت شروع دوره را وارد نمایید."),
+    start_time: Yup.string().required("لطفا ساعت شروع دوره را وارد نمایید."),
+    end_time: Yup.string().required("لطفا ساعت پایان دوره را وارد نمایید."),
     days: Yup.array().required("لطفا روزهای دوره را وارد نمایید."),
     max: Yup.string().required("لطفا حداکثر تعداد نفرات دوره را وارد نمایید."),
     min: Yup.string().required("لطفا حداقل تعداد نفرات دوره را وارد نمایید."),
@@ -187,6 +189,7 @@ const CreateCourse = () => {
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={3} padding={2}>
             <Grid item md={6} xs={12}>
+              {/* <div style={{ display: "flex", flexDirection: "column" }}> */}
               <Autocomplete
                 fullWidth
                 value={formik.values.type}
@@ -207,6 +210,8 @@ const CreateCourse = () => {
                   </p>
                 </div>
               ) : null}
+              {/* </div>
+              <div style={{ display: "flex", flexDirection: "column" }}> */}
               <TextField
                 fullWidth
                 label="نام دوره"
@@ -222,6 +227,8 @@ const CreateCourse = () => {
                   </p>
                 </div>
               ) : null}
+              {/* </div>
+              <div style={{ display: "flex", flexDirection: "column" }}> */}
               <TextField
                 fullWidth
                 label="توضیحات"
@@ -239,6 +246,7 @@ const CreateCourse = () => {
                   </p>
                 </div>
               ) : null}
+              {/* </div> */}
               <FormGroup>
                 <FormControlLabel
                   control={
@@ -272,6 +280,7 @@ const CreateCourse = () => {
               </FormGroup>
             </Grid>
             <Grid item md={6} xs={12}>
+              {/* <div style={{ display: "flex", flexDirection: "column" }}> */}
               <Autocomplete
                 fullWidth
                 multiple
@@ -311,9 +320,10 @@ const CreateCourse = () => {
                   </p>
                 </div>
               ) : null}
-
+              {/* </div> */}
               <section className="wrapper">
                 <div className="libWrapper">
+                  {/* <div style={{ display: "flex", flexDirection: "column" }}> */}
                   <DatePicker
                     zindex={1000}
                     round="x1"
@@ -332,6 +342,8 @@ const CreateCourse = () => {
                       </p>
                     </div>
                   ) : null}
+                  {/* </div>
+                  <div style={{ display: "flex", flexDirection: "column" }}> */}
                   <TimePicker
                     style={{ direction: "rtl" }}
                     onChange={onChangeStartTime}
@@ -340,6 +352,15 @@ const CreateCourse = () => {
                     cancelButtonText="انصراف"
                     saveButtonText="ذخیره "
                   />
+                  {formik.touched.strat_time && formik.errors.strat_time ? (
+                    <div>
+                      <p style={{ fontSize: 10, color: "red" }}>
+                        {formik.errors.strat_time}
+                      </p>
+                    </div>
+                  ) : null}
+                  {/* </div>
+                  <div style={{ display: "flex", flexDirection: "column" }}> */}
                   <TimePicker
                     onChange={onChangeEndTime}
                     value={endValue}
@@ -347,6 +368,14 @@ const CreateCourse = () => {
                     cancelButtonText="انصراف"
                     saveButtonText="ذخیره "
                   />
+                  {formik.touched.end_time && formik.errors.end_time ? (
+                    <div>
+                      <p style={{ fontSize: 10, color: "red" }}>
+                        {formik.errors.end_time}
+                      </p>
+                    </div>
+                  ) : null}
+                  {/* </div> */}
                 </div>
               </section>
             </Grid>
@@ -355,142 +384,158 @@ const CreateCourse = () => {
           <Grid container spacing={3} padding={2}>
             <Grid item md={6} xs={12}>
               <Grid style={{ display: "flex" }}>
-                <TextField
-                  fullWidth
-                  label="حدنصاب کلاس"
-                  name="min"
-                  type="number"
-                  onChange={(e) => formik.setFieldValue("min", e.target.value)}
-                  value={formik.values.min}
-                  style={{ marginLeft: "5px" }}
-                />
-                {formik.touched.min && formik.errors.min ? (
-                  <div>
-                    <p style={{ fontSize: 10, color: "red" }}>
-                      {formik.errors.min}
-                    </p>
-                  </div>
-                ) : null}
-                <TextField
-                  fullWidth
-                  label="حداکثر کلاس"
-                  name="max"
-                  type="number"
-                  onChange={(e) => formik.setFieldValue("max", e.target.value)}
-                  value={formik.values.max}
-                  style={{ marginRight: "5px" }}
-                />
-                {formik.touched.max && formik.errors.max ? (
-                  <div>
-                    <p style={{ fontSize: 10, color: "red" }}>
-                      {formik.errors.max}
-                    </p>
-                  </div>
-                ) : null}
-              </Grid>
-              <Autocomplete
-                fullWidth
-                multiple
-                limitTags={1}
-                id="multiple-limit-tags"
-                getOptionLabel={(option) => option}
-                disableCloseOnSelect
-                value={prerequisite}
-                options={courseType}
-                onChange={(event, newValue) => {
-                  setPrerequisite([...newValue.filter((option) => option)]);
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} label="پیشنیاز‌ها" placeholder="" />
-                )}
-                renderOption={(props, option, { selected }) => (
-                  <MenuItem
-                    {...props}
-                    key={option}
-                    value={option}
-                    sx={{ justifyContent: "space-between" }}
-                  >
-                    {option}
-                    {selected ? <CheckIcon color="info" /> : null}
-                  </MenuItem>
-                )}
-                style={{ marginBottom: "5px", marginTop: "5px" }}
-              />
-              {formik.touched.prerequisite && formik.errors.prerequisite ? (
-                <div>
-                  <p style={{ fontSize: 10, color: "red" }}>
-                    {formik.errors.prerequisite}
-                  </p>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <TextField
+                    fullWidth
+                    label="حدنصاب کلاس"
+                    name="min"
+                    type="number"
+                    onChange={(e) =>
+                      formik.setFieldValue("min", e.target.value)
+                    }
+                    value={formik.values.min}
+                    style={{ marginLeft: "5px" }}
+                  />
+                  {formik.touched.min && formik.errors.min ? (
+                    <div>
+                      <p style={{ fontSize: 10, color: "red" }}>
+                        {formik.errors.min}
+                      </p>
+                    </div>
+                  ) : null}
                 </div>
-              ) : null}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <TextField
+                    fullWidth
+                    label="حداکثر کلاس"
+                    name="max"
+                    type="number"
+                    onChange={(e) =>
+                      formik.setFieldValue("max", e.target.value)
+                    }
+                    value={formik.values.max}
+                    style={{ marginRight: "5px" }}
+                  />
+                  {formik.touched.max && formik.errors.max ? (
+                    <div>
+                      <p style={{ fontSize: 10, color: "red" }}>
+                        {formik.errors.max}
+                      </p>
+                    </div>
+                  ) : null}
+                </div>
+              </Grid>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <Autocomplete
+                  fullWidth
+                  multiple
+                  limitTags={1}
+                  id="multiple-limit-tags"
+                  getOptionLabel={(option) => option}
+                  disableCloseOnSelect
+                  value={prerequisite}
+                  options={courseType}
+                  onChange={(event, newValue) => {
+                    setPrerequisite([...newValue.filter((option) => option)]);
+                  }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="پیشنیاز‌ها" placeholder="" />
+                  )}
+                  renderOption={(props, option, { selected }) => (
+                    <MenuItem
+                      {...props}
+                      key={option}
+                      value={option}
+                      sx={{ justifyContent: "space-between" }}
+                    >
+                      {option}
+                      {selected ? <CheckIcon color="info" /> : null}
+                    </MenuItem>
+                  )}
+                  style={{ marginBottom: "5px", marginTop: "5px" }}
+                />
+                {formik.touched.prerequisite && formik.errors.prerequisite ? (
+                  <div>
+                    <p style={{ fontSize: 10, color: "red" }}>
+                      {formik.errors.prerequisite}
+                    </p>
+                  </div>
+                ) : null}
+              </div>
             </Grid>
             <Grid item md={6} xs={12}>
               <Grid style={{ display: "flex" }}>
-                <Autocomplete
-                  fullWidth
-                  value={sex_for_class[formik.values.sex]}
-                  onChange={(event, newValue) => {
-                    formik.setFieldValue("sex", newValue.id);
-                  }}
-                  id="controllable-states-demo"
-                  options={sex_for_class}
-                  getOptionLabel={(option) => option.name || ""}
-                  renderInput={(params) => (
-                    <TextField {...params} label="جنسیت" />
-                  )}
-                  style={{ marginLeft: "5px" }}
-                />
-                {formik.touched.sex && formik.errors.sex ? (
-                  <div>
-                    <p style={{ fontSize: 10, color: "red" }}>
-                      {formik.errors.sex}
-                    </p>
-                  </div>
-                ) : null}
-                <Autocomplete
-                  fullWidth
-                  value={ages[formik.values.ages]}
-                  onChange={(event, newValue) => {
-                    formik.setFieldValue("ages", newValue.id);
-                  }}
-                  id="controllable-states-demo"
-                  options={ages}
-                  getOptionLabel={(option) => option.name || ""}
-                  renderInput={(params) => (
-                    <TextField {...params} label="رده سنی" />
-                  )}
-                  style={{ marginRight: "5px" }}
-                />
-                {formik.touched.ages && formik.errors.ages ? (
-                  <div>
-                    <p style={{ fontSize: 10, color: "red" }}>
-                      {formik.errors.ages}
-                    </p>
-                  </div>
-                ) : null}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <Autocomplete
+                    fullWidth
+                    value={sex_for_class[formik.values.sex]}
+                    onChange={(event, newValue) => {
+                      formik.setFieldValue("sex", newValue.id);
+                    }}
+                    id="controllable-states-demo"
+                    options={sex_for_class}
+                    getOptionLabel={(option) => option.name || ""}
+                    renderInput={(params) => (
+                      <TextField {...params} label="جنسیت" />
+                    )}
+                    style={{ marginLeft: "5px" }}
+                  />
+                  {formik.touched.sex && formik.errors.sex ? (
+                    <div>
+                      <p style={{ fontSize: 10, color: "red" }}>
+                        {formik.errors.sex}
+                      </p>
+                    </div>
+                  ) : null}
+                </div>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <Autocomplete
+                    fullWidth
+                    value={ages[formik.values.ages]}
+                    onChange={(event, newValue) => {
+                      formik.setFieldValue("ages", newValue.id);
+                    }}
+                    id="controllable-states-demo"
+                    options={ages}
+                    getOptionLabel={(option) => option.name || ""}
+                    renderInput={(params) => (
+                      <TextField {...params} label="رده سنی" />
+                    )}
+                    style={{ marginRight: "5px" }}
+                  />
+                  {formik.touched.ages && formik.errors.ages ? (
+                    <div>
+                      <p style={{ fontSize: 10, color: "red" }}>
+                        {formik.errors.ages}
+                      </p>
+                    </div>
+                  ) : null}
+                </div>
               </Grid>
               <Grid style={{ display: "flex", marginTop: "5px" }}>
-                <Autocomplete
-                  fullWidth
-                  value={degree[formik.values.degree]}
-                  onChange={(event, newValue) => {
-                    formik.setFieldValue("degree", newValue.id);
-                  }}
-                  id="controllable-states-demo"
-                  options={degree}
-                  getOptionLabel={(option) => option.name || ""}
-                  renderInput={(params) => (
-                    <TextField {...params} label="تحصیلات" />
-                  )}
-                  style={{ marginLeft: "5px" }}
-                />
-                {formik.touched.degree && formik.errors.degree ? (
-                  <div>
-                    <p style={{ fontSize: 10, color: "red" }}>
-                      {formik.errors.degree}
-                    </p>
-                  </div>
-                ) : null}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <Autocomplete
+                    fullWidth
+                    value={degree[formik.values.degree]}
+                    onChange={(event, newValue) => {
+                      formik.setFieldValue("degree", newValue.id);
+                    }}
+                    id="controllable-states-demo"
+                    options={degree}
+                    getOptionLabel={(option) => option.name || ""}
+                    renderInput={(params) => (
+                      <TextField {...params} label="تحصیلات" />
+                    )}
+                    style={{ marginLeft: "5px" }}
+                  />
+                  {formik.touched.degree && formik.errors.degree ? (
+                    <div>
+                      <p style={{ fontSize: 10, color: "red" }}>
+                        {formik.errors.degree}
+                      </p>
+                    </div>
+                  ) : null}
+                </div>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <TextField
                     fullWidth
