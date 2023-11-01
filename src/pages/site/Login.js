@@ -107,6 +107,7 @@ const Login = () => {
                 fullWidth
                 onChange={(e) => formik.setFieldValue("phone", e.target.value)}
                 size="small"
+                lang="en"
               />
               {formik.touched.phone && formik.errors.phone ? (
                 <div>
