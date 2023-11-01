@@ -79,10 +79,10 @@ const CreateCourse = () => {
     explain: Yup.string().required("لطفا توضیحات دوره را وارد نمایید."),
     start: Yup.string().required("لطفا روز شروع دوره را وارد نمایید."),
     time: Yup.string().required("لطفا ساعت شروع دوره را وارد نمایید."),
-    days: Yup.string().required("لطفا روزهای دوره را وارد نمایید."),
+    days: Yup.array().required("لطفا روزهای دوره را وارد نمایید."),
     max: Yup.string().required("لطفا حداکثر تعداد نفرات دوره را وارد نمایید."),
     min: Yup.string().required("لطفا حداقل تعداد نفرات دوره را وارد نمایید."),
-    prerequisite: Yup.string().required("لطفا پیش نیاز دوره را وارد نمایید."),
+    prerequisite: Yup.array().required("لطفا پیش نیاز دوره را وارد نمایید."),
     sex: Yup.string().required("لطفا جنسیت دوره را وارد نمایید."),
     ages: Yup.string().required("لطفا رده سنی دوره را وارد نمایید."),
     degree: Yup.string().required("لطفا تحصیلات مورد نظر دوره را وارد نمایید."),
@@ -491,24 +491,26 @@ const CreateCourse = () => {
                     </p>
                   </div>
                 ) : null}
-                <TextField
-                  fullWidth
-                  label="هزینه ثبت نام"
-                  name="price"
-                  type="number"
-                  onChange={(e) =>
-                    formik.setFieldValue("price", e.target.value)
-                  }
-                  value={formik.values.price}
-                  style={{ marginRight: "5px" }}
-                />
-                {formik.touched.price && formik.errors.price ? (
-                  <div>
-                    <p style={{ fontSize: 10, color: "red" }}>
-                      {formik.errors.price}
-                    </p>
-                  </div>
-                ) : null}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <TextField
+                    fullWidth
+                    label="هزینه ثبت نام"
+                    name="price"
+                    type="number"
+                    onChange={(e) =>
+                      formik.setFieldValue("price", e.target.value)
+                    }
+                    value={formik.values.price}
+                    style={{ marginRight: "5px" }}
+                  />
+                  {formik.touched.price && formik.errors.price ? (
+                    <div>
+                      <p style={{ fontSize: 10, color: "red" }}>
+                        {formik.errors.price}
+                      </p>
+                    </div>
+                  ) : null}
+                </div>
               </Grid>
             </Grid>
             <Grid item xs={12}>
