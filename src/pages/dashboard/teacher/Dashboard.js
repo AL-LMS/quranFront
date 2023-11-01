@@ -59,10 +59,6 @@ const Dashboard = () => {
   };
   useEffect(() => {
     if (userRole?.national_id === null) {
-      // toastify(
-      //   "warning",
-      //   "مربی گرامی، برای فعال سازی امکانات سامانه لطفا اطلاعات خود را در بخش پروفایل ثبت نمایید."
-      // );
       navigate("/panel/profile");
     }
     get_teacher_info().then(() => {

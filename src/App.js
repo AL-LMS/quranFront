@@ -87,14 +87,14 @@ const cacheRtl = createCache({
 
 function App() {
   const location = useLocation();
-  const { auth, user } = useAuth();
+  const { user } = useAuth();
   return (
     <CacheProvider value={cacheRtl}>
       {!location.pathname.includes("panel") && <Navbar />}
       <Routes>
         {/* <Route path="/" element={<HomePage />} /> */}
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        {/* <Route path="/register" element={<Register />} /> */}
         <Route path="/confirm-phone" element={<ConfirmPhone />} />
         <Route path="/meet" element={<Meet />} />
         {/* <Route path="/course" element={<Course />} />
