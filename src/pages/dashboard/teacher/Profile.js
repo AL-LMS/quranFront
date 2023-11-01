@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { getUrl } from "../../../helper/getUrl";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { regex_national_id } from "../../../helper/regex";
 const Profile = () => {
   const { user, role, setRole, setAuth, setUser } = useAuth();
   const [userInfo, setUserInfo] = useState(
@@ -49,7 +50,14 @@ const Profile = () => {
     certificates: [],
     role: "teacher",
   };
-  const RegistrationSchema = Yup.object().shape({});
+  const RegistrationSchema = Yup.object().shape({
+    national_id: Yup.string()
+      .required("کد ملی ضروری است.")
+      .matches(regex_national_id, "کد ملی را به درستی وارد نمایید."),
+    sex: Yup.string().required("انتخاب جنسیت ضروری است."),
+    ages: Yup.string().required("انتخاب رده سنی ضروری است."),
+    degree: Yup.string().required("انتخاب تحصیلات ضروری است."),
+  });
 
   const formik = useFormik({
     initialValues,

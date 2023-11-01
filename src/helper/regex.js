@@ -13,3 +13,4 @@ export const regex_username =
 export const regex_english = /^[A-Za-z][A-Za-z0-9]*$/g;
 export const regex_persian = /^[ آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+$/g;
 export const regex_phone = /^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$/g;
+export const regex_national_id = /^([0-9]){10}$/g;
