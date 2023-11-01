@@ -262,7 +262,7 @@ const ConfirmPhone = () => {
               />
             </FormGroup>
             <Button
-              type="submit0"
+              type="submit"
               variant="contained"
               fullWidth
               // onClick={() => submit_api().then(() => {})}

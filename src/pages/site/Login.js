@@ -1,15 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  Card,
-  Typography,
-  Grid,
-  Box,
-  InputBase,
-  Stack,
-  Button,
-  Tabs,
-  Tab,
-} from "@mui/material";
+import React from "react";
+import { Typography, Grid, Box, Button, TextField } from "@mui/material";
 import { Container } from "@mui/system";
 import { Link, useNavigate } from "react-router-dom";
 import { toastify } from "../../helper/toast";
@@ -18,15 +8,12 @@ import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import { setLocalStorageLogin } from "../localStorage";
 import { getUrl } from "../../helper/getUrl";
-
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { regex_phone } from "../../helper/regex";
 const Login = () => {
-  const { setAuth, setUser, user, setRole } = useAuth();
+  const { setAuth, setUser, setRole } = useAuth();
   const navigate = useNavigate();
-  const [time, setTime] = useState(0);
-  const [login, setLogin] = useState({
-    phone: "",
-    password: "",
-  });
   const signin = async () => {
     let config = {
       url: "login",
@@ -35,8 +22,8 @@ const Login = () => {
       table: "users",
       method_type: "",
       data: {
-        phone: login.phone,
-        password: login.password,
+        phone: formik.values.phone,
+        password: formik.values.password,
       },
     };
     let response = await axios({
@@ -68,6 +55,24 @@ const Login = () => {
       toastify("error-login", response?.data?.error);
     }
   };
+  const initialValues = {
+    phone: null,
+    password: "",
+  };
+  const RegistrationSchema = Yup.object().shape({
+    phone: Yup.string()
+      .required("لطفا شماره تلفن خود را وارد کنید")
+      .matches(regex_phone, "شماره تلفن را به درستی وارد نمایید."),
+    password: Yup.string().required("لطفا رمز عبور خود را وارد نمایید."),
+  });
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: RegistrationSchema,
+    onSubmit: (values, { setStatus, setSubmitting }) => {
+      signin().then(() => {});
+    },
+  });
 
   return (
     <Container maxWidth="lg">
@@ -81,66 +86,77 @@ const Login = () => {
         }}
       >
         <Grid item xs={12} md={4}>
-          <Card
-            sx={{
+          <form
+            onSubmit={formik.handleSubmit}
+            style={{
               boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
               borderRadius: "20px",
-              padding: 2,
+              padding: "20px",
+              marginBottom: "40px",
             }}
           >
             <Typography mb={3} color="mainText" textAlign="center">
               ورود به حساب کاربری
             </Typography>
-            <form onSubmit={signin}>
-              <Box
-                sx={{
-                  backgroundColor: "#e8e8e8",
-                  borderRadius: "10px",
-                  padding: "4px 15px",
-                  marginBottom: "2rem",
-                }}
-              >
-                <InputBase
-                  placeholder="شماره همراه"
-                  value={login.phone}
-                  fullWidth
-                  onChange={(e) =>
-                    setLogin({ ...login, phone: e.target.value })
-                  }
-                />
-              </Box>
-              <Box
-                sx={{
-                  backgroundColor: "#e8e8e8",
-                  borderRadius: "10px",
-                  padding: "4px 15px",
-                  marginBottom: "2rem",
-                }}
-              >
-                <InputBase
-                  placeholder="رمز عبور"
-                  value={login.password}
-                  fullWidth
-                  type="password"
-                  onChange={(e) =>
-                    setLogin({ ...login, password: e.target.value })
-                  }
-                />
-              </Box>
-              <Button
-                variant="contained"
+            <Box
+              sx={{
+                marginBottom: "2rem",
+              }}
+            >
+              <TextField
+                label="شماره تلفن"
+                name="phone"
+                value={formik.values.phone}
                 fullWidth
-                onClick={() => signin().then(() => {})}
-                sx={{
-                  borderRadius: "10px",
-                  padding: "6px 30px",
-                  boxShadow: "none",
-                  marginBottom: "20px",
-                }}
-              >
-                ورود
-              </Button>
-            </form>
+                onChange={(e) => formik.setFieldValue("phone", e.target.value)}
+                size="small"
+              />
+              {formik.touched.phone && formik.errors.phone ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.phone}
+                  </p>
+                </div>
+              ) : null}
+            </Box>
+            <Box
+              sx={{
+                marginBottom: "2rem",
+              }}
+            >
+              <TextField
+                label="رمز عبور"
+                name="password"
+                value={formik.values.password}
+                fullWidth
+                type="password"
+                onChange={(e) =>
+                  formik.setFieldValue("password", e.target.value)
+                }
+                size="small"
+              />
+              {formik.touched.password && formik.errors.password ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.password}
+                  </p>
+                </div>
+              ) : null}
+            </Box>
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              // onClick={() => signin().then(() => {})}
+              sx={{
+                borderRadius: "5px",
+                padding: "6px 30px",
+                boxShadow: "none",
+                marginBottom: "20px",
+              }}
+            >
+              ورود
+            </Button>
             <Link to="/confirm-phone">
               <Button
                 fullWidth
@@ -151,7 +167,7 @@ const Login = () => {
                 ثبت نام
               </Button>
             </Link>
-          </Card>
+          </form>
         </Grid>
       </Grid>
       <ToastContainer rtl={true} />
