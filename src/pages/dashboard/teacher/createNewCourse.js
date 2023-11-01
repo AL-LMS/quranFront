@@ -23,6 +23,8 @@ import { TimePicker } from "react-ios-time-picker";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { getUrl } from "../../../helper/getUrl";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 const CreateCourse = () => {
   const [loading, setLoading] = useState(false);
   const [calendarValue, setCalendarValue] = useState(new Date());
@@ -53,13 +55,56 @@ const CreateCourse = () => {
     picture: "",
     price: "",
   });
+  const initialValues = {
+    type: null,
+    name: null,
+    explain: null,
+    isOnline: isOnline,
+    start: null,
+    end: null,
+    time: null,
+    days: [],
+    max: null,
+    min: null,
+    prerequisite: [],
+    sex: null,
+    ages: null,
+    degree: null,
+    picture: null,
+    price: null,
+  };
+  const RegistrationSchema = Yup.object().shape({
+    type: Yup.string().required("لطفا نوع دوره را وارد نمایید."),
+    name: Yup.string().required("لطفا نام دوره را وارد نمایید."),
+    explain: Yup.string().required("لطفا توضیحات دوره را وارد نمایید."),
+    start: Yup.string().required("لطفا روز شروع دوره را وارد نمایید."),
+    time: Yup.string().required("لطفا ساعت شروع دوره را وارد نمایید."),
+    days: Yup.string().required("لطفا روزهای دوره را وارد نمایید."),
+    max: Yup.string().required("لطفا حداکثر تعداد نفرات دوره را وارد نمایید."),
+    min: Yup.string().required("لطفا حداقل تعداد نفرات دوره را وارد نمایید."),
+    prerequisite: Yup.string().required("لطفا پیش نیاز دوره را وارد نمایید."),
+    sex: Yup.string().required("لطفا جنسیت دوره را وارد نمایید."),
+    ages: Yup.string().required("لطفا رده سنی دوره را وارد نمایید."),
+    degree: Yup.string().required("لطفا تحصیلات مورد نظر دوره را وارد نمایید."),
+    picture: Yup.string().required("لطفا تصویر دوره را وارد نمایید."),
+    price: Yup.string().required("لطفا هزینه دوره را وارد نمایید."),
+  });
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: RegistrationSchema,
+    onSubmit: (values, { setStatus, setSubmitting }) => {
+      add_course().then(() => {});
+    },
+  });
+
   const handleCheckboxChange = () => {
     if (isOnline) {
       setIsOnline(false);
-      setForm({ ...form, isOnline: false });
+      formik.setFieldValue("isOnline", false);
     } else {
       setIsOnline(true);
-      setForm({ ...form, isOnline: true });
+      formik.setFieldValue("isOnline", true);
     }
   };
   const navigate = useNavigate();
@@ -71,23 +116,23 @@ const CreateCourse = () => {
       table: "courses",
       method_type: "add_course",
       data: {
-        type: form.type,
-        name: form.name,
-        explain: form.explain,
-        is_online: form.isOnline,
-        start_date: form.start,
-        end_date: form.end,
-        start_time: form.start_time,
-        end_time: form.end_time,
-        days: form.days,
-        max: form.max,
-        min: form.min,
-        prerequisite: form.prerequisite,
-        sex: form.sex,
-        ages: form.ages,
-        degree: form.degree,
-        picture: form.picture,
-        price: form.price,
+        type: formik.values.type,
+        name: formik.values.name,
+        explain: formik.values.explain,
+        is_online: formik.values.isOnline,
+        start_date: formik.values.start,
+        end_date: formik.values.end,
+        start_time: formik.values.start_time,
+        end_time: formik.values.end_time,
+        days: formik.values.days,
+        max: formik.values.max,
+        min: formik.values.min,
+        prerequisite: formik.values.prerequisite,
+        sex: formik.values.sex,
+        ages: formik.values.ages,
+        degree: formik.values.degree,
+        picture: formik.values.picture,
+        price: formik.values.price,
         t_name: userInfo.first_name + " " + userInfo.last_name,
         teacher_user_id: userInfo.user_id,
       },
@@ -113,12 +158,12 @@ const CreateCourse = () => {
   };
 
   const onChangeStartTime = (timeValue) => {
-    setForm({ ...form, start_time: timeValue });
+    formik.setFieldValue("start_time", timeValue);
     setStartValue(timeValue);
   };
 
   const onChangeEndTime = (timeValue) => {
-    setForm({ ...form, end_time: timeValue });
+    formik.setFieldValue("end_time", timeValue);
     setEndValue(timeValue);
   };
   const handleDatePicker = (e) => {
@@ -126,14 +171,15 @@ const CreateCourse = () => {
     let persianEnd = "";
     persianStart = convertToPersianDate(e.from);
     persianEnd = convertToPersianDate(e.to);
-    setForm({ ...form, start: persianStart, end: persianEnd });
+    formik.setFieldValue("start", persianStart);
+    formik.setFieldValue("end", persianEnd);
   };
   useEffect(() => {
-    setForm({ ...form, days: days });
+    formik.setFieldValue("days", days);
   }, [days]);
 
   useEffect(() => {
-    setForm({ ...form, prerequisite: prerequisite });
+    formik.setFieldValue("prerequisite", prerequisite);
   }, [prerequisite]);
   return (
     <Container>
@@ -142,9 +188,9 @@ const CreateCourse = () => {
           <Grid item md={6} xs={12}>
             <Autocomplete
               fullWidth
-              value={form.type}
+              value={formik.values.type}
               onChange={(event, newValue) => {
-                setForm({ ...form, type: newValue });
+                formik.setFieldValue("type", newValue);
               }}
               id="controllable-states-demo"
               options={courseType}
@@ -153,22 +199,43 @@ const CreateCourse = () => {
                 <TextField {...params} label="دسته بندی موضوعی" />
               )}
             />
+            {formik.touched.type && formik.errors.type ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.type}
+                </p>
+              </div>
+            ) : null}
             <TextField
               fullWidth
               label="نام دوره"
               name="name"
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              value={form.name}
+              onChange={(e) => formik.setFieldValue("name", e.target.value)}
+              value={formik.values.name}
               sx={{ marginTop: 1 }}
             />
+            {formik.touched.name && formik.errors.name ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.name}
+                </p>
+              </div>
+            ) : null}
             <TextField
               fullWidth
               label="توضیحات"
               name="explain"
-              onChange={(e) => setForm({ ...form, explain: e.target.value })}
-              value={form.explain}
+              onChange={(e) => formik.setFieldValue("explain", e.target.value)}
+              value={formik.values.explain}
               sx={{ marginTop: 1 }}
             />
+            {formik.touched.explain && formik.errors.explain ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.explain}
+                </p>
+              </div>
+            ) : null}
             <FormGroup>
               <FormControlLabel
                 control={
@@ -201,7 +268,6 @@ const CreateCourse = () => {
               />
             </FormGroup>
           </Grid>
-
           <Grid item md={6} xs={12}>
             <Autocomplete
               fullWidth
@@ -231,6 +297,13 @@ const CreateCourse = () => {
               )}
               style={{ marginBottom: "2px" }}
             />
+            {formik.touched.days && formik.errors.days ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.days}
+                </p>
+              </div>
+            ) : null}
 
             <section className="wrapper">
               <div className="libWrapper">
@@ -245,7 +318,13 @@ const CreateCourse = () => {
                   onChange={(e) => handleDatePicker(e)}
                   range
                 />
-
+                {formik.touched.start && formik.errors.start ? (
+                  <div>
+                    <p style={{ fontSize: 10, color: "red" }}>
+                      {formik.errors.start}
+                    </p>
+                  </div>
+                ) : null}
                 <TimePicker
                   style={{ direction: "rtl" }}
                   onChange={onChangeStartTime}
@@ -254,7 +333,6 @@ const CreateCourse = () => {
                   cancelButtonText="انصراف"
                   saveButtonText="ذخیره "
                 />
-
                 <TimePicker
                   onChange={onChangeEndTime}
                   value={endValue}
@@ -275,19 +353,33 @@ const CreateCourse = () => {
                 label="حدنصاب کلاس"
                 name="min"
                 type="number"
-                onChange={(e) => setForm({ ...form, min: e.target.value })}
-                value={form.min}
+                onChange={(e) => formik.setFieldValue("min", e.target.value)}
+                value={formik.values.min}
                 style={{ marginLeft: "5px" }}
               />
+              {formik.touched.min && formik.errors.min ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.min}
+                  </p>
+                </div>
+              ) : null}
               <TextField
                 fullWidth
                 label="حداکثر کلاس"
                 name="max"
                 type="number"
-                onChange={(e) => setForm({ ...form, max: e.target.value })}
-                value={form.max}
+                onChange={(e) => formik.setFieldValue("max", e.target.value)}
+                value={formik.values.max}
                 style={{ marginRight: "5px" }}
               />
+              {formik.touched.max && formik.errors.max ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.max}
+                  </p>
+                </div>
+              ) : null}
             </Grid>
             <Autocomplete
               fullWidth
@@ -317,14 +409,21 @@ const CreateCourse = () => {
               )}
               style={{ marginBottom: "5px", marginTop: "5px" }}
             />
+            {formik.touched.prerequisite && formik.errors.prerequisite ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.prerequisite}
+                </p>
+              </div>
+            ) : null}
           </Grid>
           <Grid item md={6} xs={12}>
             <Grid style={{ display: "flex" }}>
               <Autocomplete
                 fullWidth
-                value={sex_for_class[form.sex]}
+                value={sex_for_class[formik.values.sex]}
                 onChange={(event, newValue) => {
-                  setForm({ ...form, sex: newValue.id });
+                  formik.setFieldValue("sex", newValue.id);
                 }}
                 id="controllable-states-demo"
                 options={sex_for_class}
@@ -334,11 +433,18 @@ const CreateCourse = () => {
                 )}
                 style={{ marginLeft: "5px" }}
               />
+              {formik.touched.sex && formik.errors.sex ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.sex}
+                  </p>
+                </div>
+              ) : null}
               <Autocomplete
                 fullWidth
-                value={ages[form.ages]}
+                value={ages[formik.values.ages]}
                 onChange={(event, newValue) => {
-                  setForm({ ...form, ages: newValue.id });
+                  formik.setFieldValue("ages", newValue.id);
                 }}
                 id="controllable-states-demo"
                 options={ages}
@@ -348,13 +454,20 @@ const CreateCourse = () => {
                 )}
                 style={{ marginRight: "5px" }}
               />
+              {formik.touched.ages && formik.errors.ages ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.ages}
+                  </p>
+                </div>
+              ) : null}
             </Grid>
             <Grid style={{ display: "flex", marginTop: "5px" }}>
               <Autocomplete
                 fullWidth
-                value={degree[form.degree]}
+                value={degree[formik.values.degree]}
                 onChange={(event, newValue) => {
-                  setForm({ ...form, degree: newValue.id });
+                  formik.setFieldValue("degree", newValue.id);
                 }}
                 id="controllable-states-demo"
                 options={degree}
@@ -364,21 +477,34 @@ const CreateCourse = () => {
                 )}
                 style={{ marginLeft: "5px" }}
               />
+              {formik.touched.degree && formik.errors.degree ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.degree}
+                  </p>
+                </div>
+              ) : null}
               <TextField
                 fullWidth
                 label="هزینه ثبت نام"
                 name="price"
                 type="number"
-                onChange={(e) => setForm({ ...form, price: e.target.value })}
-                value={form.price}
+                onChange={(e) => formik.setFieldValue("price", e.target.value)}
+                value={formik.values.price}
                 style={{ marginRight: "5px" }}
               />
+              {formik.touched.price && formik.errors.price ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.price}
+                  </p>
+                </div>
+              ) : null}
             </Grid>
           </Grid>
           <Grid item xs={12}>
             <Documnets
-              form={form}
-              setForm={setForm}
+              formik={formik}
               showLastCertificate={showLastCertificate}
               setShowLastCertificate={setShowLastCertificate}
               nameOfSection={"تصویر دوره"}
@@ -398,19 +524,6 @@ const CreateCourse = () => {
             </Button>
           </Grid>
         </Grid>
-        {/* {isOnline && (
-        <MapContainer
-          center={position}
-          zoom={13}
-          style={{ width: "50px", height: "500px" }}
-          onClick={handleMapClick}
-        >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <Marker position={position}>
-            <Popup>Your selected location</Popup>
-          </Marker>
-        </MapContainer>
-      )} */}
       </Structure>
       <ToastContainer rtl={true} />
     </Container>
