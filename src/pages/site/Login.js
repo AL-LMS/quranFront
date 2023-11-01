@@ -15,9 +15,6 @@ const Login = () => {
   const { setAuth, setUser, setRole } = useAuth();
   const navigate = useNavigate();
   const signin = async () => {
-    let config = {
-      url: "login",
-    };
     let data = {
       table: "users",
       method_type: "",

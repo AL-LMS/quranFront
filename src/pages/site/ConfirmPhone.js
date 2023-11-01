@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Card, Typography, Grid, Box, Button, TextField } from "@mui/material";
+import React, { useState } from "react";
+import { Typography, Grid, Box, Button, TextField } from "@mui/material";
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import { toastify } from "../../helper/toast";
@@ -14,23 +14,9 @@ import * as Yup from "yup";
 import { regex_phone } from "../../helper/regex";
 const ConfirmPhone = () => {
   const navigate = useNavigate();
-  const [time, setTime] = useState(0);
   const [kind, setKind] = useState("student");
-  let timer;
-  useEffect(() => {
-    timer = setInterval(() => {
-      setTime((prevTime) => prevTime - 1);
-      if (time === 1) {
-        clearInterval(timer);
-      }
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   const signup = async () => {
-    let config = {
-      url: "signup",
-    };
     let data = {
       table: "users",
       method_type: "",
@@ -236,7 +222,7 @@ const ConfirmPhone = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={kind == "student" ? true : false}
+                    checked={kind === "student" ? true : false}
                     onChange={handleCheckboxChange}
                     name="student"
                     color="primary"
@@ -249,7 +235,7 @@ const ConfirmPhone = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={kind == "teacher" ? true : false}
+                    checked={kind === "teacher" ? true : false}
                     onChange={handleCheckboxChange}
                     name="teacher"
                     color="primary"
