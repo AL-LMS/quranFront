@@ -89,6 +89,13 @@ const Documnets = ({
           ) : (
             <Typography color="text.secondary" textAlign="center" mt={2}>
               هیچ تصویری آپلود نشده
+              {formik.touched.picture && formik.errors.picture ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.picture}
+                  </p>
+                </div>
+              ) : null}
             </Typography>
           )}
         </Grid>

@@ -259,6 +259,7 @@ const CreateCourse = () => {
                   }
                   label="کلاس به صورت مجازی برگزار می‌شود."
                   sx={{
+                    fontSize: "13px",
                     padding: "4px 15px",
                   }}
                 />
@@ -273,6 +274,7 @@ const CreateCourse = () => {
                   }
                   label="کلاس به صورت حضوری برگزار می‌شود."
                   sx={{
+                    fontSize: "13px",
                     padding: "4px 15px",
                     marginBottom: "2rem",
                   }}
