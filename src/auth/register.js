@@ -1,4 +1,4 @@
-export const registerAuth = (data) => {
+export const registerAuth =  (data) => {
   const errors = {};
   if (!data.first_name) {
     errors.first_name = "نام اجباری است";

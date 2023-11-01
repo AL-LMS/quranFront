@@ -9,21 +9,13 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import { getUrl } from "../../helper/getUrl";
-import { registerAuth } from "../../auth/register";
-
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { regex_phone } from "../../helper/regex";
 const ConfirmPhone = () => {
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({});
   const [time, setTime] = useState(0);
   const [kind, setKind] = useState("student");
-  const [confirm, setConfirm] = useState({
-    phone: "",
-    first_name: "",
-    last_name: "",
-    password: "",
-    repassword: "",
-    type: "student",
-  });
   let timer;
   useEffect(() => {
     timer = setInterval(() => {
@@ -36,64 +28,93 @@ const ConfirmPhone = () => {
   }, []);
 
   const signup = async () => {
-    if (!Object.keys(errors).length) {
-      let config = {
-        url: "signup",
-      };
-      let data = {
-        table: "users",
-        method_type: "",
-        data: {
-          first_name: confirm.first_name,
-          last_name: confirm.last_name,
-          phone: confirm.phone,
-          role: confirm.type,
-          password: confirm.password,
-          re_password: confirm.repassword,
-        },
-      };
-      let response = await axios({
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        data: {
-          ...data,
-        },
+    let config = {
+      url: "signup",
+    };
+    let data = {
+      table: "users",
+      method_type: "",
+      data: {
+        first_name: formik.values.first_name,
+        last_name: formik.values.last_name,
+        phone: formik.values.phone,
+        role: formik.values.type,
+        password: formik.values.password,
+        re_password: formik.values.repassword,
+      },
+    };
+    let response = await axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        ...data,
+      },
 
-        baseURL: getUrl() + "back_request/register/",
-      });
-      if (response?.data?.tracking_code !== null) {
-        toastify(
-          "success",
-          "ثبت‌نام اولیه شما در سامانه انجام شد.برای تکمیل ثبت‌نام وارد سامانه شوید."
-        );
-        navigate("/signin");
-      } else {
-        toastify("error-login", response?.data?.error);
-      }
+      baseURL: getUrl() + "back_request/register/",
+    });
+    if (response?.data?.tracking_code !== null) {
+      toastify(
+        "success",
+        "ثبت‌نام اولیه شما در سامانه انجام شد.برای تکمیل ثبت‌نام وارد سامانه شوید."
+      );
+      navigate("/signin");
     } else {
-      toastify("warning", "لطفا فیلد هارا با دقت پر کنید");
+      toastify("error-login", response?.data?.error);
     }
   };
-  useEffect(() => {
-    setErrors(registerAuth(confirm));
-  }, [confirm]);
+
+  const initialValues = {
+    phone: "",
+    first_name: "",
+    last_name: "",
+    password: "",
+    repassword: "",
+    type: "student",
+  };
+  const RegistrationSchema = Yup.object().shape({
+    first_name: Yup.string().required("لطفا نام خود را وارد نمایید."),
+    last_name: Yup.string().required("لطفا نام‌خانوادگی خود را وارد نمایید."),
+    phone: Yup.string().matches(
+      regex_phone,
+      "شماره تلفن را به درستی وارد نمایید."
+    ),
+    password: Yup.string().required("لطفا رمز عبور خود را وارد نمایید."),
+    repassword: Yup.string()
+      .required("لطفا رمز عبور خود را وارد نمایید")
+      .when("password", {
+        is: (val) => (val && val.length > 0 ? true : false),
+        then: Yup.string().oneOf(
+          [Yup.ref("password")],
+          "رمزعبور و تکرار رمز  با هم مطابقت ندارند"
+        ),
+      }),
+  });
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: RegistrationSchema,
+    onSubmit: (values, { setStatus, setSubmitting }) => {
+      signup().then(() => {});
+    },
+  });
 
   const handleCheckboxChange = (event) => {
     setKind(event.target.name);
-    setConfirm({ ...confirm, type: event.target.name });
+    formik.setFieldValue("type", event.target.name);
   };
   return (
     <Container maxWidth="lg">
       <Grid container mt={8} sx={{ height: "100vh" }}>
         <Grid item xs={12} md={4} sx={{ margin: "0 auto" }}>
-          <Card
-            sx={{
+          <form
+            onSubmit={formik.handleSubmit}
+            style={{
               boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
               borderRadius: "20px",
-              padding: 2,
+              padding: "20px",
               marginBottom: "40px",
             }}
           >
@@ -108,14 +129,20 @@ const ConfirmPhone = () => {
               <TextField
                 label="نام"
                 name="first_name"
-                value={confirm.first_name}
+                value={formik.values.first_name}
                 fullWidth
                 onChange={(e) =>
-                  setConfirm({ ...confirm, first_name: e.target.value })
+                  formik.setFieldValue("first_name", e.target.value)
                 }
                 size="small"
-                helperText={errors.first_name && errors.first_name}
               />
+              {formik.touched.first_name && formik.errors.first_name ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.first_name}
+                  </p>
+                </div>
+              ) : null}
             </Box>
             <Box
               sx={{
@@ -125,14 +152,20 @@ const ConfirmPhone = () => {
               <TextField
                 label="نام خانوادگی"
                 name="last_name"
-                value={confirm.last_name}
+                value={formik.values.last_name}
                 fullWidth
                 onChange={(e) =>
-                  setConfirm({ ...confirm, last_name: e.target.value })
+                  formik.setFieldValue("last_name", e.target.value)
                 }
                 size="small"
-                helperText={errors.last_name && errors.last_name}
               />
+              {formik.touched.last_name && formik.errors.last_name ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.last_name}
+                  </p>
+                </div>
+              ) : null}
             </Box>
             <Box
               sx={{
@@ -142,14 +175,18 @@ const ConfirmPhone = () => {
               <TextField
                 label="شماره تلفن"
                 name="phone"
-                value={confirm.phone}
+                value={formik.values.phone}
                 fullWidth
-                onChange={(e) =>
-                  setConfirm({ ...confirm, phone: e.target.value })
-                }
+                onChange={(e) => formik.setFieldValue("phone", e.target.value)}
                 size="small"
-                helperText={errors.phone && errors.phone}
               />
+              {formik.touched.phone && formik.errors.phone ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.phone}
+                  </p>
+                </div>
+              ) : null}
             </Box>
             <Box
               sx={{
@@ -159,15 +196,21 @@ const ConfirmPhone = () => {
               <TextField
                 label="رمز عبور"
                 name="password"
-                value={confirm.password}
+                value={formik.values.password}
                 fullWidth
                 type="password"
                 onChange={(e) =>
-                  setConfirm({ ...confirm, password: e.target.value })
+                  formik.setFieldValue("password", e.target.value)
                 }
                 size="small"
-                helperText={errors.password && errors.password}
               />
+              {formik.touched.password && formik.errors.password ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.password}
+                  </p>
+                </div>
+              ) : null}
             </Box>
             <Box
               sx={{
@@ -177,15 +220,21 @@ const ConfirmPhone = () => {
               <TextField
                 label="تکرار رمز عبور"
                 name="repassword"
-                value={confirm.repassword}
+                value={formik.values.repassword}
                 fullWidth
                 type="password"
                 onChange={(e) =>
-                  setConfirm({ ...confirm, repassword: e.target.value })
+                  formik.setFieldValue("repassword", e.target.value)
                 }
                 size="small"
-                helperText={errors.repassword && errors.repassword}
               />
+              {formik.touched.repassword && formik.errors.repassword ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.repassword}
+                  </p>
+                </div>
+              ) : null}
             </Box>
             <FormGroup>
               <FormControlLabel
@@ -217,9 +266,10 @@ const ConfirmPhone = () => {
               />
             </FormGroup>
             <Button
+              type="submit0"
               variant="contained"
               fullWidth
-              onClick={() => signup().then(() => {})}
+              // onClick={() => submit_api().then(() => {})}
               sx={{
                 borderRadius: "10px",
                 padding: "6px 30px",
@@ -229,7 +279,7 @@ const ConfirmPhone = () => {
             >
               ثبت نام
             </Button>
-          </Card>
+          </form>
         </Grid>
       </Grid>
       <ToastContainer rtl={true} />
