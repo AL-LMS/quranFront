@@ -81,10 +81,10 @@ const CreateCourse = () => {
     start: Yup.string().required("لطفا روز شروع دوره را وارد نمایید."),
     start_time: Yup.string().required("لطفا ساعت شروع دوره را وارد نمایید."),
     end_time: Yup.string().required("لطفا ساعت پایان دوره را وارد نمایید."),
-    days: Yup.array().required("لطفا روزهای دوره را وارد نمایید."),
+    days: Yup.array().min(1, "لطفا روزهای دوره را وارد نمایید."),
     max: Yup.string().required("لطفا حداکثر تعداد نفرات دوره را وارد نمایید."),
     min: Yup.string().required("لطفا حداقل تعداد نفرات دوره را وارد نمایید."),
-    prerequisite: Yup.array().required("لطفا پیش نیاز دوره را وارد نمایید."),
+    prerequisite: Yup.array().min(1, "لطفا پیش نیاز دوره را وارد نمایید."),
     sex: Yup.string().required("لطفا جنسیت دوره را وارد نمایید."),
     ages: Yup.string().required("لطفا رده سنی دوره را وارد نمایید."),
     degree: Yup.string().required("لطفا تحصیلات مورد نظر دوره را وارد نمایید."),
@@ -352,10 +352,10 @@ const CreateCourse = () => {
                     cancelButtonText="انصراف"
                     saveButtonText="ذخیره "
                   />
-                  {formik.touched.strat_time && formik.errors.strat_time ? (
+                  {formik.touched.start_time && formik.errors.start_time ? (
                     <div>
                       <p style={{ fontSize: 10, color: "red" }}>
-                        {formik.errors.strat_time}
+                        {formik.errors.start_time}
                       </p>
                     </div>
                   ) : null}
