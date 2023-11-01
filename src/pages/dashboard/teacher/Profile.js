@@ -6,7 +6,6 @@ import { Container } from "@mui/system";
 import { toastify } from "../../../helper/toast";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { ToastContainer } from "react-toastify";
-import { profileAuth } from "../../../auth/profile";
 import Documnets from "./Documnets";
 import TeacherInfo from "../../../components/dashboard/students/profile/TeacherInfo";
 import MultiDocumnets from "./MultiDocumnets";

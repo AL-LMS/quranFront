@@ -83,9 +83,6 @@ const TeacherInfo = ({ formik }) => {
           <Autocomplete
             fullWidth
             value={sex[formik.values.sex]}
-            // onChange={(event, newValue) => {
-            //   setForm({ ...form, sex: newValue.id });
-            // }}
             onChange={(event, newValue) =>
               formik.setFieldValue("sex", newValue.id)
             }
@@ -104,9 +101,6 @@ const TeacherInfo = ({ formik }) => {
           <Autocomplete
             fullWidth
             value={ages[formik.values.ages]}
-            // onChange={(event, newValue) => {
-            //   setForm({ ...form, ages: newValue.id });
-            // }}
             onChange={(event, newValue) =>
               formik.setFieldValue("ages", newValue.id)
             }
@@ -121,14 +115,10 @@ const TeacherInfo = ({ formik }) => {
             </div>
           ) : null}
         </Grid>
-
         <Grid item xs={12} md={6}>
           <Autocomplete
             fullWidth
             value={degree[formik.values.degree]}
-            // onChange={(event, newValue) => {
-            //   setForm({ ...form, degree: newValue.id });
-            // }}
             onChange={(event, newValue) =>
               formik.setFieldValue("degree", newValue.id)
             }
