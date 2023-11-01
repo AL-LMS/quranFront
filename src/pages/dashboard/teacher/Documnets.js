@@ -2,8 +2,7 @@ import React, { useRef, useState } from "react";
 import { Avatar, Button, Card, Grid, Typography } from "@mui/material";
 
 const Documnets = ({
-  form,
-  setForm,
+  formik,
   showLastCertificate,
   setShowLastCertificate,
   nameOfSection,
@@ -24,8 +23,7 @@ const Documnets = ({
         file_name: input.files[0].name,
         file_size: input.files[0].size,
       };
-
-      form.picture = data.file;
+      formik.setFieldValue("picture", data.file);
       setShowLastCertificate(URL.createObjectURL(input.files[0]));
     };
 
@@ -57,8 +55,6 @@ const Documnets = ({
             accept="image/*"
             style={{ display: "none" }}
             id="LastCertificate"
-            // onChange={birthCertificateHandler}
-            // onChange={(data) => handelUploadFile(data)}
             onChange={(event) => openFile(event)}
           />
           <label htmlFor="LastCertificate">
@@ -66,7 +62,7 @@ const Documnets = ({
               {nameOfButtonField}
             </Button>
           </label>
-          {form.picture ? (
+          {formik?.values?.picture ? (
             <Avatar
               alt="LastCertificate"
               src={

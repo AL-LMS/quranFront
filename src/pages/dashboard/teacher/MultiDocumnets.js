@@ -1,12 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Avatar, Button, Card, Grid, Typography } from "@mui/material";
 
-const MultiDocumnets = ({
-  form,
-  setForm,
-  nameOfSection,
-  nameOfButtonField,
-}) => {
+const MultiDocumnets = ({ formik, nameOfSection, nameOfButtonField }) => {
   let myRef = useRef();
   const openFile = (file) => {
     const input = file.target;
@@ -22,10 +17,9 @@ const MultiDocumnets = ({
         file_name: input.files[0].name,
         file_size: input.files[0].size,
       };
-
-      form.certificates.push(data.file);
-      setForm({ ...form });
-      // setshowCertificate(URL.createObjectURL(input.files[0]));
+      cert = formik.values.certificates;
+      cert.push(data.file);
+      formik.setFieldValue("certificates", cert);
     };
 
     reader.readAsDataURL(input.files[0]);
@@ -64,10 +58,10 @@ const MultiDocumnets = ({
               {nameOfButtonField}
             </Button>
           </label>
-          {form?.certificates.length > 0 ? (
+          {formik?.values?.certificates.length > 0 ? (
             <Avatar
               alt="Certificate"
-              src={form.certificates.slice(-1)}
+              src={formik.cvalues?.ertificates.slice(-1)}
               sx={{
                 width: 140,
                 height: 140,
@@ -76,10 +70,10 @@ const MultiDocumnets = ({
                 borderRadius: 2,
               }}
             />
-          ) : form?.certificates.lenght > 0 ? (
+          ) : formik?.values?.certificates.lenght > 0 ? (
             <Avatar
               alt="Certificate"
-              src={form.certificates.slice(-1)}
+              src={formik.cvalues?.ertificates.slice(-1)}
               sx={{
                 width: 140,
                 height: 140,
