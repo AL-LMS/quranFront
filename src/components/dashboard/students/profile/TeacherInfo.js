@@ -69,7 +69,6 @@ const TeacherInfo = ({ formik }) => {
               formik.setFieldValue("national_id", e.target.value)
             }
             fullWidth
-            required
             onWheel={(e) => e.target.blur()}
           />
           {formik.touched.national_id && formik.errors.national_id ? (
@@ -93,9 +92,7 @@ const TeacherInfo = ({ formik }) => {
             id="controllable-states-demo"
             options={sex}
             getOptionLabel={(option) => option.name || ""}
-            renderInput={(params) => (
-              <TextField {...params} label="جنسیت" required />
-            )}
+            renderInput={(params) => <TextField {...params} label="جنسیت" />}
           />
           {formik.touched.sex && formik.errors.sex ? (
             <div>
@@ -116,9 +113,7 @@ const TeacherInfo = ({ formik }) => {
             id="controllable-states-demo"
             options={ages}
             getOptionLabel={(option) => option.name || ""}
-            renderInput={(params) => (
-              <TextField {...params} label="رده سنی" required />
-            )}
+            renderInput={(params) => <TextField {...params} label="رده سنی" />}
           />
           {formik.touched.ages && formik.errors.ages ? (
             <div>
@@ -140,9 +135,7 @@ const TeacherInfo = ({ formik }) => {
             id="controllable-states-demo"
             options={degree}
             getOptionLabel={(option) => option.name || ""}
-            renderInput={(params) => (
-              <TextField {...params} label="تحصیلات" required />
-            )}
+            renderInput={(params) => <TextField {...params} label="تحصیلات" />}
           />
           {formik.touched.degree && formik.errors.degree ? (
             <div>
