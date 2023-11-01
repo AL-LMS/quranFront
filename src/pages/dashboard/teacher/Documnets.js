@@ -65,9 +65,7 @@ const Documnets = ({
           {formik?.values?.picture ? (
             <Avatar
               alt="LastCertificate"
-              src={
-                showLastCertificate || `https://api.srvschool.ir${form.picture}`
-              }
+              src={showLastCertificate}
               sx={{
                 width: 140,
                 height: 140,

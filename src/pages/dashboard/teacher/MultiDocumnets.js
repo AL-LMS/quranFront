@@ -17,7 +17,8 @@ const MultiDocumnets = ({ formik, nameOfSection, nameOfButtonField }) => {
         file_name: input.files[0].name,
         file_size: input.files[0].size,
       };
-      cert = formik.values.certificates;
+
+      let cert = formik.values.certificates;
       cert.push(data.file);
       formik.setFieldValue("certificates", cert);
     };
