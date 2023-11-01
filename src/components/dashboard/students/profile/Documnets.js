@@ -2,8 +2,7 @@ import React, { useRef, useState } from "react";
 import { Avatar, Button, Card, Grid, Typography } from "@mui/material";
 
 const Documnets = ({
-  form,
-  setForm,
+  formik,
   showBirthCertificate,
   setShowBirthCertificate,
 }) => {
@@ -23,7 +22,7 @@ const Documnets = ({
         file_size: input.files[0].size,
       };
 
-      form.picture = data.file;
+      formik.setFieldValue("picture", data.file);
       setShowBirthCertificate(URL.createObjectURL(input.files[0]));
     };
 
@@ -63,13 +62,10 @@ const Documnets = ({
               آپلود تصویر شناسنامه یا کارت ملی
             </Button>
           </label>
-          {form.picture ? (
+          {formik?.values?.picture ? (
             <Avatar
               alt="BirthCertificate"
-              src={
-                showBirthCertificate ||
-                `https://api.srvschool.ir${form.picture}`
-              }
+              src={showBirthCertificate}
               sx={{
                 width: 140,
                 height: 140,
@@ -93,6 +89,13 @@ const Documnets = ({
           ) : (
             <Typography color="text.secondary" textAlign="center" mt={2}>
               هیچ تصویری آپلود نشده
+              {formik.touched.picture && formik.errors.picture ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.picture}
+                  </p>
+                </div>
+              ) : null}
             </Typography>
           )}
         </Grid>

@@ -9,144 +9,122 @@ import Documnets from "../../../components/dashboard/students/profile/Documnets"
 
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { ToastContainer } from "react-toastify";
-import { profileAuthStudent } from "../../../auth/profile";
-import { useContext } from "react";
-import { DefiContext } from "../../../context/DefiContext";
 import { setLocalStorageLogin } from "../../localStorage";
 import { useNavigate } from "react-router-dom";
 import { getUrl } from "../../../helper/getUrl";
-
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { regex_national_id } from "../../../helper/regex";
 const Profile = () => {
   const { user, role, setAuth, setUser, setRole } = useAuth();
-  const { reaload, setReload } = useContext(DefiContext);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
-  const [form, setForm] = useState({
+
+  const initialValues = {
     first_name: user?.first_name,
     last_name: user?.last_name,
     national_id: role?.national_id,
     phone: user?.phone,
-    sex: role?.sex,
-    ages: role?.ages,
-    degree: role?.degree,
-    picture: "",
+    picture: null,
+    sex: role?.sex ? role?.sex : null,
+    ages: role?.ages ? role?.ages : null,
+    degree: role?.degree ? role?.degree : null,
+    certificates: [],
     role: "student",
+  };
+  const RegistrationSchema = Yup.object().shape({
+    national_id: Yup.string()
+      .required("کد ملی ضروری است.")
+      .matches(regex_national_id, "کد ملی را به درستی وارد نمایید."),
+    sex: Yup.string().required("انتخاب جنسیت ضروری است."),
+    ages: Yup.string().required("انتخاب رده سنی ضروری است."),
+    degree: Yup.string().required("انتخاب تحصیلات ضروری است."),
+    // picture: Yup.string().required("افزودن مدرک الزامیست"),
+  });
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: RegistrationSchema,
+    onSubmit: (values, { setStatus, setSubmitting }) => {
+      edit_user().then(() => {});
+    },
   });
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
   const [showBirthCertificate, setShowBirthCertificate] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setErrors(profileAuthStudent(form));
-  }, [form]);
+  const edit_user = async () => {
+    let config = {
+      url: "update_request",
+    };
+    let data = {
+      table: "teachers",
+      method_type: "edit_user",
+      data: {
+        user_id: userInfo?.user_id,
+        phone: userInfo?.phone,
+        national_id: formik.values.national_id,
+        first_name: userInfo?.first_name,
+        last_name: userInfo?.last_name,
+        sex: formik.values.sex,
+        ages: formik.values.ages,
+        degree: formik.values.degree,
+        role: userInfo?.role,
+      },
+    };
+    let response = await axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        ...data,
+      },
 
-  useEffect(() => {
-    const fetchStudentData = async () => {};
-    fetchStudentData();
-  }, [reaload]);
-  const submitData = async () => {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("phone", form.phone);
-    formData.append("national_id", form.national_id);
-    formData.append("role", "student");
-    formData.append("first_name", form.first_name);
-    formData.append("last_name", form.last_name);
-    formData.append("type", "student");
-    formData.append("sex", form.sex);
-    formData.append("ages", form.ages);
-    formData.append("degree", form.degree);
-    if (!Object.keys(errors).length) {
-      if (
-        String(form?.national_id) !== "null" &&
-        String(form?.sex) !== "null" &&
-        String(form?.ages) !== "null" &&
-        String(form?.degree) !== "null"
-      ) {
-        let config = {
-          url: "update_request",
-        };
-        let data = {
-          table: "teachers",
-          method_type: "edit_user",
-          data: {
-            user_id: userInfo?.user_id,
-            phone: form.phone,
-            national_id: form.national_id,
-            first_name: form.first_name,
-            last_name: form.last_name,
-            sex: form.sex,
-            ages: form.ages,
-            degree: form.degree,
-            role: form.role,
-          },
-        };
-        let response = await axios({
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-          data: {
-            ...data,
-          },
-
-          baseURL: getUrl() + "back_request/update_request/",
-        });
-        if (response?.data?.tracking_code !== null) {
-          localStorage.clear("role");
-          localStorage.clear("user");
-          localStorage.clear("token");
-          setLocalStorageLogin(
-            "token",
-            response?.data?.response?.token,
-            () => {}
-          );
-          setLocalStorageLogin("user", response?.data?.response, () => {});
-          setLocalStorageLogin(
-            "role",
-            response?.data?.response?.role_data,
-            () => {}
-          );
-          setAuth(response?.data?.response?.token);
-          setUser(response?.data?.response);
-          setRole(response?.data?.response?.role_data);
-          toastify("success", "ثبت‌نام شما در سامانه با موفقیت انجام شد.");
-          setLoading(false);
-          navigate("/panel/dashboard");
-        } else {
-          toastify("error-login", response?.data?.error);
-        }
-      } else {
-        setLoading(false);
-        toastify("warning", "لطفا تمامی فیلدها را با دقت پر کنید");
-      }
+      baseURL: getUrl() + "back_request/update_request/",
+    });
+    if (response?.data?.tracking_code !== null) {
+      localStorage.clear("role");
+      localStorage.clear("user");
+      localStorage.clear("token");
+      setLocalStorageLogin("token", response?.data?.response?.token, () => {});
+      setLocalStorageLogin("user", response?.data?.response, () => {});
+      setLocalStorageLogin(
+        "role",
+        response?.data?.response?.role_data,
+        () => {}
+      );
+      setAuth(response?.data?.response?.token);
+      setUser(response?.data?.response);
+      setRole(response?.data?.response?.role_data);
+      toastify(
+        "success",
+        "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
+      );
+      navigate("/panel/dashboard");
     } else {
-      setLoading(false);
-      toastify("warning", "لطفا فیلدها را با دقت پر کنید");
+      toastify("error-login", response?.data?.error);
     }
   };
-
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={3}>
         <Grid item xs={12}>
-          <StudentInfo form={form} setForm={setForm} errors={errors} />
+          <StudentInfo formik={formik} />
         </Grid>
         <Grid item xs={12}>
           <Documnets
-            form={form}
-            setForm={setForm}
+            formik={formik}
             showBirthCertificate={showBirthCertificate}
             setShowBirthCertificate={setShowBirthCertificate}
           />
         </Grid>
         <Button
+          type="submit"
           variant="contained"
           endIcon={<SaveOutlinedIcon />}
-          onClick={submitData}
           sx={{
             boxShadow: "none",
             position: "fixed",
