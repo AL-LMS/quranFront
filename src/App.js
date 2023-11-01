@@ -110,6 +110,8 @@ function App() {
           path="/timing-package/details/:id"
           element={<TimingPackageDetails />}
         /> */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
+
         {user?.role?.toLowerCase() === "student" ? (
           <Route element={<PrivateRoutes />}>
             <Route path="/panel/dashboard" element={<StudentDash />} />
@@ -249,11 +251,11 @@ function App() {
             <Route path="/*" element={<Navigate to="/panel/dashboard" />} />
           </Route>
         )}
-        <Route path="/*" element={<Navigate to="/" />} />
+        {/* <Route path="/*" element={<Navigate to="/" />} /> */}
       </Routes>
       <ToastContainer rtl={true} />
 
-      {!location.pathname.includes("panel") && <Footer />}
+      {/* {!location.pathname.includes("panel") && <Footer />} */}
     </CacheProvider>
   );
 }

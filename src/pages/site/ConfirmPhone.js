@@ -67,7 +67,7 @@ const ConfirmPhone = () => {
   };
 
   const initialValues = {
-    phone: "",
+    phone: null,
     first_name: "",
     last_name: "",
     password: "",
@@ -77,20 +77,16 @@ const ConfirmPhone = () => {
   const RegistrationSchema = Yup.object().shape({
     first_name: Yup.string().required("لطفا نام خود را وارد نمایید."),
     last_name: Yup.string().required("لطفا نام‌خانوادگی خود را وارد نمایید."),
-    phone: Yup.string().matches(
-      regex_phone,
-      "شماره تلفن را به درستی وارد نمایید."
-    ),
+    phone: Yup.string()
+      .required("لطفا شماره تلفن خود را وارد کنید")
+      .matches(regex_phone, "شماره تلفن را به درستی وارد نمایید."),
     password: Yup.string().required("لطفا رمز عبور خود را وارد نمایید."),
     repassword: Yup.string()
       .required("لطفا رمز عبور خود را وارد نمایید")
-      .when("password", {
-        is: (val) => (val && val.length > 0 ? true : false),
-        then: Yup.string().oneOf(
-          [Yup.ref("password")],
-          "رمزعبور و تکرار رمز  با هم مطابقت ندارند"
-        ),
-      }),
+      .oneOf(
+        [Yup.ref("password"), null],
+        "رمزعبور و تکرار رمز  با هم مطابقت ندارند"
+      ),
   });
 
   const formik = useFormik({
@@ -106,7 +102,7 @@ const ConfirmPhone = () => {
     formik.setFieldValue("type", event.target.name);
   };
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ height: "100vh" }}>
       <Grid container mt={8} sx={{ height: "100vh" }}>
         <Grid item xs={12} md={4} sx={{ margin: "0 auto" }}>
           <form
