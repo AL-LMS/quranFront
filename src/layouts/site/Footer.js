@@ -114,7 +114,7 @@ const Footer = () => {
             </Typography>
             <Stack direction="row" spacing={2}>
               <a
-                href="https://t.me/konkoorehadaf"
+                href="https://t.me/konkooredaarolquran"
                 target="_blank"
                 rel="noreferrer"
                 style={{ width: "50%" }}
@@ -147,7 +147,7 @@ const Footer = () => {
                 </Box>
               </a>
               <a
-                href="https://www.instagram.com/konkoorehadaf/"
+                href="https://www.instagram.com/konkooredaarolquran/"
                 target="_blank"
                 rel="noreferrer"
                 style={{ width: "50%" }}
@@ -183,7 +183,7 @@ const Footer = () => {
             </Stack>
             <Stack direction="row" spacing={2} mt={2}>
               <a
-                href="https://www.aparat.com/konkoorehadaf"
+                href="https://www.aparat.com/konkooredaarolquran"
                 target="_blank"
                 rel="noreferrer"
                 style={{ width: "50%" }}
@@ -216,7 +216,7 @@ const Footer = () => {
                 </Box>
               </a>
               <a
-                href="https://www.instagram.com/konkoorehadaf/"
+                href="https://www.instagram.com/konkooredaarolquran/"
                 target="_blank"
                 rel="noreferrer"
                 style={{ width: "50%" }}
@@ -278,7 +278,7 @@ const Footer = () => {
                 sx={{ flexDirection: { xs: "column", md: "row" } }}
               >
                 <a
-                  href="https://dl.hadaf.academy/applications/hadafPlayer-v2.4.10.apk"
+                  href="https://dl.daarolquran.academy/applications/daarolquranPlayer-v2.4.10.apk"
                   download
                   style={{ marginTop: 0 }}
                 >
@@ -294,7 +294,7 @@ const Footer = () => {
                   />
                 </a>
                 <a
-                  href="https://sibche.com/applications/hadaf-player"
+                  href="https://sibche.com/applications/daarolquran-player"
                   download
                   style={{ margin: "0 10px" }}
                 >
@@ -310,7 +310,7 @@ const Footer = () => {
                   />
                 </a>
                 <a
-                  href="https://dl.hadaf.academy/applications/HadafAcademySetup-4.7.7.zip"
+                  href="https://dl.daarolquran.academy/applications/daarolquranAcademySetup-4.7.7.zip"
                   download
                   style={{ marginTop: 0 }}
                 >
@@ -453,7 +453,7 @@ const Footer = () => {
                     fontFamily="iranyekanFn"
                     fontWeight={400}
                   >
-                    konkoorehadaf@gmail.com
+                    konkooredaarolquran@gmail.com
                   </Typography>
                 </Grid>
               </Grid>

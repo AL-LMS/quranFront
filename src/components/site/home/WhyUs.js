@@ -41,7 +41,7 @@ const WhyUs = () => {
           <CardMedia
             component="img"
             src={QuizzesIcon}
-            alt="hadaf"
+            alt="daarolquran"
             sx={{
               width: "80px",
               height: "80px",
@@ -77,7 +77,7 @@ const WhyUs = () => {
           <CardMedia
             component="img"
             src={ClassIcon}
-            alt="hadaf"
+            alt="daarolquran"
             sx={{
               width: "80px",
               height: "80px",
@@ -114,7 +114,7 @@ const WhyUs = () => {
           <CardMedia
             component="img"
             src={ChatIcon}
-            alt="hadaf"
+            alt="daarolquran"
             sx={{
               width: "80px",
               height: "80px",

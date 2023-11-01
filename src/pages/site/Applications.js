@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
-import {Container} from "@mui/system"
+import { Container } from "@mui/system";
 import DownloadCard from "../../components/site/app/DownloadCard";
 
 //Icons
@@ -32,7 +32,7 @@ const Applications = () => {
           <DownloadCard
             system="android"
             peName="اندروید"
-            link="https://dl.hadaf.academy/applications/hadafPlayer-v2.4.10.apk"
+            link="https://dl.daarolquran.academy/applications/daarolquranPlayer-v2.4.10.apk"
             icon={AndroidIcon}
           />
         </Grid>
@@ -40,7 +40,7 @@ const Applications = () => {
           <DownloadCard
             system="ios"
             peName="آی او اس"
-            link="https://sibche.com/applications/hadaf-player"
+            link="https://sibche.com/applications/daarolquran-player"
             icon={AppleIcon}
           />
         </Grid>
@@ -48,7 +48,7 @@ const Applications = () => {
           <DownloadCard
             system="windows"
             peName="ویندوز"
-            link="https://dl.hadaf.academy/applications/HadafAcademySetup-4.7.7.zip"
+            link="https://dl.daarolquran.academy/applications/daarolquranAcademySetup-4.7.7.zip"
             icon={WindowsIcon}
           />
         </Grid>
