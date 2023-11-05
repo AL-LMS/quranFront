@@ -38,13 +38,12 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
   const openFile = (file) => {
     const input = file.target;
     const reader = new FileReader();
-
     reader.onload = function () {
       const dataURL = reader.result;
       let image = input.files[0].type;
 
       let data = {
-        file: dataURL,
+        file: file.target.files[0],
         file_type: image.split("/")[1],
         file_name: input.files[0].name,
         file_size: input.files[0].size,
@@ -55,6 +54,9 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
 
     reader.readAsDataURL(input.files[0]);
   };
+  console.log("====================================");
+  console.log(form);
+  console.log("====================================");
   const add_homework = async () => {
     setLoading(true);
     if (form.title && form.deadline) {

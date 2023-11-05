@@ -12,7 +12,7 @@ import { getUrl } from "../../../../../../helper/getUrl";
 const CourseHomeWorks = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(true);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
@@ -47,11 +47,11 @@ const CourseHomeWorks = () => {
     }
   };
 
-  useEffect(() => {
-    get_homeworks().then(() => {
-      setLoading(false);
-    });
-  }, [userInfo, reload]);
+  // useEffect(() => {
+  //   get_homeworks().then(() => {
+  //     setLoading(false);
+  //   });
+  // }, [userInfo, reload]);
 
   if (loading)
     return (

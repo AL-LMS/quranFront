@@ -9,8 +9,8 @@ const Back = () => {
     <Button
       sx={{
         position: "fixed",
-        top: "2rem",
-        right: "2rem",
+        top: "25px",
+        right: "1px",
         zIndex: 100000,
         boxShadow: "0 5px 10px rgba(112,112,112,112,0.2)",
       }}

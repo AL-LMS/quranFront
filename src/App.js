@@ -110,7 +110,7 @@ function App() {
           path="/timing-package/details/:id"
           element={<TimingPackageDetails />}
         /> */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        {/* <Route path="*" element={<Navigate to="/login" replace />} /> */}
 
         {user?.role?.toLowerCase() === "student" ? (
           <Route element={<PrivateRoutes />}>
