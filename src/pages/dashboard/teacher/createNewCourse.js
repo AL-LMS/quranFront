@@ -53,32 +53,14 @@ const CreateCourse = () => {
       },
     },
   };
-  function handleSubmit(selectedDate) {
-    const date = format(selectedDate.date, "yyyy/MM/dd");
-    formik.setFieldValue("date", date);
+  function handleSubmit(selectedDate, field) {
+    const date = format(selectedDate.date, "yyyy-MM-dd");
+    formik.setFieldValue(field, date);
   }
   const [open, setOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
-  const [form, setForm] = useState({
-    type: "",
-    name: "",
-    explain: "",
-    isOnline: isOnline,
-    start: "",
-    end: "",
-    time: "",
-    days: [],
-    max: "",
-    min: "",
-    prerequisite: [],
-    sex: "",
-    ages: "",
-    degree: "",
-    picture: "",
-    price: "",
-  });
   const initialValues = {
     type: null,
     name: null,
@@ -103,6 +85,7 @@ const CreateCourse = () => {
     name: Yup.string().required("لطفا نام دوره را وارد نمایید."),
     explain: Yup.string().required("لطفا توضیحات دوره را وارد نمایید."),
     start: Yup.string().required("لطفا روز شروع دوره را وارد نمایید."),
+    end: Yup.string().required("لطفا روز پایان دوره را وارد نمایید."),
     start_time: Yup.string().required("لطفا ساعت شروع دوره را وارد نمایید."),
     end_time: Yup.string().required("لطفا ساعت پایان دوره را وارد نمایید."),
     days: Yup.array().min(1, "لطفا روزهای دوره را وارد نمایید."),
@@ -213,7 +196,6 @@ const CreateCourse = () => {
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={3} padding={2}>
             <Grid item md={6} xs={12}>
-              {/* <div style={{ display: "flex", flexDirection: "column" }}> */}
               <Autocomplete
                 fullWidth
                 value={formik.values.type}
@@ -234,8 +216,6 @@ const CreateCourse = () => {
                   </p>
                 </div>
               ) : null}
-              {/* </div>
-              <div style={{ display: "flex", flexDirection: "column" }}> */}
               <TextField
                 fullWidth
                 label="نام دوره"
@@ -251,8 +231,6 @@ const CreateCourse = () => {
                   </p>
                 </div>
               ) : null}
-              {/* </div>
-              <div style={{ display: "flex", flexDirection: "column" }}> */}
               <TextField
                 fullWidth
                 label="توضیحات"
@@ -270,7 +248,6 @@ const CreateCourse = () => {
                   </p>
                 </div>
               ) : null}
-              {/* </div> */}
               <FormGroup>
                 <FormControlLabel
                   control={
@@ -306,7 +283,6 @@ const CreateCourse = () => {
               </FormGroup>
             </Grid>
             <Grid item md={6} xs={12}>
-              {/* <div style={{ display: "flex", flexDirection: "column" }}> */}
               <Autocomplete
                 fullWidth
                 multiple
@@ -346,19 +322,18 @@ const CreateCourse = () => {
                   </p>
                 </div>
               ) : null}
-              {/* </div> */}
               <TextField
-                label="تاریخ"
-                name="date"
-                value={formik.values.date}
+                label="تاربخ شروع"
+                name="start_date"
+                value={formik.values.start}
                 fullWidth
                 onClick={() => setOpen(true)}
-                size="small"
+                sx={{ marginTop: 1 }}
               />
-              {formik.touched.date && formik.errors.date ? (
+              {formik.touched.start && formik.errors.start ? (
                 <div>
                   <p style={{ fontSize: 10, color: "red" }}>
-                    {formik.errors.date}
+                    {formik.errors.start}
                   </p>
                 </div>
               ) : null}
@@ -370,33 +345,39 @@ const CreateCourse = () => {
                 initialValue={new Date("2021-03-20T20:30:00.000Z")}
                 onSubmit={(date) => {
                   setOpen(false);
-                  handleSubmit(date);
+                  handleSubmit(date, "start");
+                }}
+                theme="light"
+              />
+              <TextField
+                label="تاربخ پایان"
+                name="end_date"
+                value={formik.values.end}
+                fullWidth
+                onClick={() => setOpen(true)}
+                sx={{ marginTop: 1 }}
+              />
+              {formik.touched.end && formik.errors.end ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.end}
+                  </p>
+                </div>
+              ) : null}
+              <Picker
+                config={config}
+                isOpen={open}
+                highlightHolidays
+                highlightWeekends
+                initialValue={new Date("2021-03-20T20:30:00.000Z")}
+                onSubmit={(date) => {
+                  setOpen(false);
+                  handleSubmit(date, "end");
                 }}
                 theme="light"
               />
               <section className="wrapper">
                 <div className="libWrapper">
-                  {/* <div style={{ display: "flex", flexDirection: "column" }}> */}
-                  <DatePicker
-                    zindex={1000}
-                    round="x1"
-                    accentColor="#6374ae"
-                    defaultValue={calendarValue}
-                    inputAttributes={{
-                      placeholder: "تاریخ شروع - پایان",
-                    }}
-                    onChange={(e) => handleDatePicker(e)}
-                    range
-                  />
-                  {formik.touched.start && formik.errors.start ? (
-                    <div>
-                      <p style={{ fontSize: 10, color: "red" }}>
-                        {formik.errors.start}
-                      </p>
-                    </div>
-                  ) : null}
-                  {/* </div>
-                  <div style={{ display: "flex", flexDirection: "column" }}> */}
                   <TimePicker
                     style={{ direction: "rtl" }}
                     onChange={onChangeStartTime}
@@ -412,8 +393,6 @@ const CreateCourse = () => {
                       </p>
                     </div>
                   ) : null}
-                  {/* </div>
-                  <div style={{ display: "flex", flexDirection: "column" }}> */}
                   <TimePicker
                     onChange={onChangeEndTime}
                     value={endValue}
@@ -428,7 +407,6 @@ const CreateCourse = () => {
                       </p>
                     </div>
                   ) : null}
-                  {/* </div> */}
                 </div>
               </section>
             </Grid>
@@ -625,7 +603,6 @@ const CreateCourse = () => {
               <Button
                 variant="contained"
                 type="submit"
-                // onClick={() => add_course()}
                 fullWidth
                 disabled={loading}
                 sx={{ boxShadow: "none", padding: "12px 0" }}
