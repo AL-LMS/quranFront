@@ -15,7 +15,7 @@ import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 export const stRoutes = [
   {
     id: 0,
-    name: "داشبورد",
+    name: "میزکار",
     route: "dashboard",
     icon: <DashboardOutlinedIcon />,
   },

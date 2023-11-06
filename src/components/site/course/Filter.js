@@ -73,7 +73,7 @@ const Filter = ({ setParams, query, setQuery }) => {
           <Chip
             color="secondary"
             sx={{ color: "#fff", fontSize: "1rem" }}
-            label="فیلتر"
+            label="جستجوی دوره"
           />
         }
         sx={{ padding: "10px 3px" }}
@@ -176,7 +176,7 @@ const Filter = ({ setParams, query, setQuery }) => {
               fullWidth
               onClick={resetFilter}
             >
-              پاک کردن فیلتر
+              پاک کردن جستجو
             </Button>
           </Grid>
         </Grid>

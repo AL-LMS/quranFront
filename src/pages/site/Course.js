@@ -5,7 +5,7 @@ import Filter from "../../components/site/course/Filter";
 import CourseCard from "../../components/site/course/CourseCard";
 import { Container } from "@mui/system";
 import Loader from "../../components/site/shared/Loader";
-import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import NotFound from "../../components/site/shared/NotFound";
 import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";

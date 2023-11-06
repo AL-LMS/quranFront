@@ -25,6 +25,8 @@ import { useNavigate } from "react-router-dom";
 import { getUrl } from "../../../helper/getUrl";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { Picker, format } from "@persian-tools/persian-mobile-datepicker";
+
 const CreateCourse = () => {
   const [loading, setLoading] = useState(false);
   const [calendarValue, setCalendarValue] = useState(new Date());
@@ -34,6 +36,28 @@ const CreateCourse = () => {
   const [isOnline, setIsOnline] = useState(true);
   const [startValue, setStartValue] = useState(null);
   const [endValue, setEndValue] = useState(null);
+  const config = {
+    year: {
+      caption: {
+        text: "سال",
+      },
+    },
+    month: {
+      caption: {
+        text: "ماه",
+      },
+    },
+    day: {
+      caption: {
+        text: "روز",
+      },
+    },
+  };
+  function handleSubmit(selectedDate) {
+    const date = format(selectedDate.date, "yyyy/MM/dd");
+    formik.setFieldValue("date", date);
+  }
+  const [open, setOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
@@ -323,6 +347,33 @@ const CreateCourse = () => {
                 </div>
               ) : null}
               {/* </div> */}
+              <TextField
+                label="تاریخ"
+                name="date"
+                value={formik.values.date}
+                fullWidth
+                onClick={() => setOpen(true)}
+                size="small"
+              />
+              {formik.touched.date && formik.errors.date ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.date}
+                  </p>
+                </div>
+              ) : null}
+              <Picker
+                config={config}
+                isOpen={open}
+                highlightHolidays
+                highlightWeekends
+                initialValue={new Date("2021-03-20T20:30:00.000Z")}
+                onSubmit={(date) => {
+                  setOpen(false);
+                  handleSubmit(date);
+                }}
+                theme="light"
+              />
               <section className="wrapper">
                 <div className="libWrapper">
                   {/* <div style={{ display: "flex", flexDirection: "column" }}> */}

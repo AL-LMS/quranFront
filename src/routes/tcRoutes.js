@@ -8,7 +8,7 @@ import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 export const tcRoutes = [
   {
     id: 0,
-    name: "داشبورد",
+    name: "میزکار",
     route: "dashboard",
     icon: <DashboardOutlinedIcon />,
   },

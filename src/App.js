@@ -191,6 +191,7 @@ function App() {
         ) : (
           <Route element={<PrivateRoutes />}>
             <Route path="/panel/dashboard" element={<TeacherDash />} />
+            <Route path="/panel/all-courses" element={<StudentDash />} />
             <Route path="/panel/profile" element={<ProfileTeacher />} />
             <Route path="/panel/my-coures" element={<TeacherCourse />} />
             <Route path="/course/details/:id" element={<CourseDetails />} />
