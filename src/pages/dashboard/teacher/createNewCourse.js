@@ -75,7 +75,7 @@ const CreateCourse = () => {
     end_time: null,
     days: [],
     max: null,
-    min: null,
+    min: 1,
     prerequisite: [],
     sex: null,
     ages: null,
@@ -428,7 +428,7 @@ const CreateCourse = () => {
             </Grid>
           </Grid>
           <Divider />
-          {/* <Grid container spacing={3} padding={2}>
+          <Grid container spacing={3} padding={2}>
             <Grid item md={6} xs={12}>
               <Grid style={{ display: "flex" }}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
@@ -680,7 +680,7 @@ const CreateCourse = () => {
                 ثبت اطلاعات
               </Button>
             </Grid>
-          </Grid> */}
+          </Grid>
         </form>
       </Structure>
       <ToastContainer rtl={true} />
