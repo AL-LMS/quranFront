@@ -13,7 +13,6 @@ import { ToastContainer } from "react-toastify";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
-import { DatePicker } from "zaman";
 import "./style.css";
 import { convertToPersianDate } from "../converter/dateConverter";
 import { Days, ages, courseType, degree, sex_for_class } from "./CourseData";
@@ -29,13 +28,15 @@ import { Picker, format } from "@persian-tools/persian-mobile-datepicker";
 
 const CreateCourse = () => {
   const [loading, setLoading] = useState(false);
-  const [calendarValue, setCalendarValue] = useState(new Date());
   const [showLastCertificate, setShowLastCertificate] = useState("");
   const [prerequisite, setPrerequisite] = useState([]);
   const [days, setDays] = useState([]);
   const [isOnline, setIsOnline] = useState(true);
   const [startValue, setStartValue] = useState(null);
   const [endValue, setEndValue] = useState(null);
+  const [openStart, setOpenStart] = useState(false);
+  const [openEnd, setOpenEnd] = useState(false);
+
   const config = {
     year: {
       caption: {
@@ -54,10 +55,12 @@ const CreateCourse = () => {
     },
   };
   function handleSubmit(selectedDate, field) {
+    if (field === "start") {
+      setStartValue(selectedDate.date);
+    }
     const date = format(selectedDate.date, "yyyy-MM-dd");
     formik.setFieldValue(field, date);
   }
-  const [open, setOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
@@ -322,61 +325,74 @@ const CreateCourse = () => {
                   </p>
                 </div>
               ) : null}
-              <TextField
-                label="تاربخ شروع"
-                name="start_date"
-                value={formik.values.start}
-                fullWidth
-                onClick={() => setOpen(true)}
-                sx={{ marginTop: 1 }}
-              />
-              {formik.touched.start && formik.errors.start ? (
-                <div>
-                  <p style={{ fontSize: 10, color: "red" }}>
-                    {formik.errors.start}
-                  </p>
-                </div>
-              ) : null}
-              <Picker
-                config={config}
-                isOpen={open}
-                highlightHolidays
-                highlightWeekends
-                initialValue={new Date("2021-03-20T20:30:00.000Z")}
-                onSubmit={(date) => {
-                  setOpen(false);
-                  handleSubmit(date, "start");
-                }}
-                theme="light"
-              />
-              <TextField
-                label="تاربخ پایان"
-                name="end_date"
-                value={formik.values.end}
-                fullWidth
-                onClick={() => setOpen(true)}
-                sx={{ marginTop: 1 }}
-              />
-              {formik.touched.end && formik.errors.end ? (
-                <div>
-                  <p style={{ fontSize: 10, color: "red" }}>
-                    {formik.errors.end}
-                  </p>
-                </div>
-              ) : null}
-              <Picker
-                config={config}
-                isOpen={open}
-                highlightHolidays
-                highlightWeekends
-                initialValue={new Date("2021-03-20T20:30:00.000Z")}
-                onSubmit={(date) => {
-                  setOpen(false);
-                  handleSubmit(date, "end");
-                }}
-                theme="light"
-              />
-              <section className="wrapper">
+              <Grid style={{ display: "flex", flexWrap: "wrap" }}>
+                <TextField
+                  label="تاربخ شروع"
+                  name="start_date"
+                  value={formik.values.start ? formik.values.start : ""}
+                  fullWidth
+                  onFocus={() => setOpenStart(true)}
+                  sx={{ marginTop: 1 }}
+                />
+                {formik.touched.start && formik.errors.start ? (
+                  <div>
+                    <p style={{ fontSize: 10, color: "red" }}>
+                      {formik.errors.start}
+                    </p>
+                  </div>
+                ) : null}
+                <Picker
+                  config={config}
+                  isOpen={openStart}
+                  highlightHolidays
+                  highlightWeekends
+                  addDayName
+                  initialValue={new Date("2021-03-20T20:30:00.000Z")}
+                  onSubmit={(date) => {
+                    handleSubmit(date, "start");
+                    setOpenStart(false);
+                  }}
+                  onCancel={() => setOpenStart(false)}
+                  onClose={() => setOpenStart(false)}
+                  theme="light"
+                />
+                <TextField
+                  label="تاربخ پایان"
+                  name="end_date"
+                  value={formik.values.end ? formik.values.end : ""}
+                  fullWidth
+                  onFocus={() => setOpenEnd(true)}
+                  sx={{ marginTop: 1 }}
+                />
+                {formik.touched.end && formik.errors.end ? (
+                  <div>
+                    <p style={{ fontSize: 10, color: "red" }}>
+                      {formik.errors.end}
+                    </p>
+                  </div>
+                ) : null}
+                <Picker
+                  config={config}
+                  isOpen={openEnd}
+                  highlightHolidays
+                  highlightWeekends
+                  addDayName
+                  minDate={
+                    startValue
+                      ? startValue
+                      : new Date("2021-03-20T20:30:00.000Z")
+                  }
+                  initialValue={new Date("2021-03-20T20:30:00.000Z")}
+                  onSubmit={(date) => {
+                    handleSubmit(date, "end");
+                    setOpenEnd(false);
+                  }}
+                  onCancel={() => setOpenEnd(false)}
+                  onClose={() => setOpenEnd(false)}
+                  theme="light"
+                />
+              </Grid>
+              {/* <section className="wrapper">
                 <div className="libWrapper">
                   <TimePicker
                     style={{ direction: "rtl" }}
@@ -408,11 +424,11 @@ const CreateCourse = () => {
                     </div>
                   ) : null}
                 </div>
-              </section>
+              </section> */}
             </Grid>
           </Grid>
           <Divider />
-          <Grid container spacing={3} padding={2}>
+          {/* <Grid container spacing={3} padding={2}>
             <Grid item md={6} xs={12}>
               <Grid style={{ display: "flex" }}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
@@ -425,7 +441,7 @@ const CreateCourse = () => {
                       formik.setFieldValue("min", e.target.value)
                     }
                     value={formik.values.min}
-                    style={{ marginLeft: "5px" }}
+                    // style={{ marginLeft: "5px" }}
                   />
                   {formik.touched.min && formik.errors.min ? (
                     <div>
@@ -445,7 +461,7 @@ const CreateCourse = () => {
                       formik.setFieldValue("max", e.target.value)
                     }
                     value={formik.values.max}
-                    style={{ marginRight: "5px" }}
+                    // style={{ marginRight: "5px" }}
                   />
                   {formik.touched.max && formik.errors.max ? (
                     <div>
@@ -456,7 +472,13 @@ const CreateCourse = () => {
                   ) : null}
                 </div>
               </Grid>
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  flexWrap: "wrap",
+                }}
+              >
                 <Autocomplete
                   fullWidth
                   multiple
@@ -495,8 +517,14 @@ const CreateCourse = () => {
               </div>
             </Grid>
             <Grid item md={6} xs={12}>
-              <Grid style={{ display: "flex" }}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                  }}
+                >
                   <Autocomplete
                     fullWidth
                     value={sex_for_class[formik.values.sex]}
@@ -507,7 +535,7 @@ const CreateCourse = () => {
                     options={sex_for_class}
                     getOptionLabel={(option) => option.name || ""}
                     renderInput={(params) => (
-                      <TextField {...params} label="جنسیت" />
+                      <TextField fullWidth {...params} label="جنسیت" />
                     )}
                     style={{ marginLeft: "5px" }}
                   />
@@ -517,9 +545,21 @@ const CreateCourse = () => {
                         {formik.errors.sex}
                       </p>
                     </div>
-                  ) : null}
+                  ) : (
+                    <div>
+                      <p style={{ fontSize: 15, color: "white" }}>
+                        {"............................................."}
+                      </p>
+                    </div>
+                  )}
                 </div>
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                  }}
+                >
                   <Autocomplete
                     fullWidth
                     value={ages[formik.values.ages]}
@@ -530,7 +570,7 @@ const CreateCourse = () => {
                     options={ages}
                     getOptionLabel={(option) => option.name || ""}
                     renderInput={(params) => (
-                      <TextField {...params} label="رده سنی" />
+                      <TextField fullWidth {...params} label="رده سنی" />
                     )}
                     style={{ marginRight: "5px" }}
                   />
@@ -540,11 +580,23 @@ const CreateCourse = () => {
                         {formik.errors.ages}
                       </p>
                     </div>
-                  ) : null}
+                  ) : (
+                    <div>
+                      <p style={{ fontSize: 15, color: "white" }}>
+                        {"............................................."}
+                      </p>
+                    </div>
+                  )}
                 </div>
-              </Grid>
+              </div>
               <Grid style={{ display: "flex", marginTop: "5px" }}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                  }}
+                >
                   <Autocomplete
                     fullWidth
                     value={degree[formik.values.degree]}
@@ -555,7 +607,7 @@ const CreateCourse = () => {
                     options={degree}
                     getOptionLabel={(option) => option.name || ""}
                     renderInput={(params) => (
-                      <TextField {...params} label="تحصیلات" />
+                      <TextField fullWidth {...params} label="تحصیلات" />
                     )}
                     style={{ marginLeft: "5px" }}
                   />
@@ -565,9 +617,21 @@ const CreateCourse = () => {
                         {formik.errors.degree}
                       </p>
                     </div>
-                  ) : null}
+                  ) : (
+                    <div>
+                      <p style={{ fontSize: 15, color: "white" }}>
+                        {"............................................."}
+                      </p>
+                    </div>
+                  )}
                 </div>
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                  }}
+                >
                   <TextField
                     fullWidth
                     label="هزینه ثبت نام"
@@ -585,7 +649,13 @@ const CreateCourse = () => {
                         {formik.errors.price}
                       </p>
                     </div>
-                  ) : null}
+                  ) : (
+                    <div>
+                      <p style={{ fontSize: 15, color: "white" }}>
+                        {"........"}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </Grid>
             </Grid>
@@ -610,7 +680,7 @@ const CreateCourse = () => {
                 ثبت اطلاعات
               </Button>
             </Grid>
-          </Grid>
+          </Grid> */}
         </form>
       </Structure>
       <ToastContainer rtl={true} />
