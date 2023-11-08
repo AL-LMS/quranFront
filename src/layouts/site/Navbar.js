@@ -67,8 +67,8 @@ const Navbar = () => {
               <Link
                 to={
                   window.location.pathname === "/login"
-                    ? "/confirm-phone"
-                    : window.location.pathname === "/confirm-phone"
+                    ? "/signup"
+                    : window.location.pathname === "/signup"
                     ? "/login"
                     : "/panel/dashboard"
                 }

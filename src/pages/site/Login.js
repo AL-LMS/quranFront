@@ -155,7 +155,7 @@ const Login = () => {
             >
               ورود
             </Button>
-            <Link to="/confirm-phone">
+            <Link to="/signup">
               <Button
                 fullWidth
                 sx={{

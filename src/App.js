@@ -3,18 +3,14 @@ import { prefixer } from "stylis";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
-
 import Navbar from "./layouts/site/Navbar";
-import HomePage from "./pages/site/HomePage";
-import Footer from "./layouts/site/Footer";
 import { ToastContainer } from "react-toastify";
-
 import CourseDetails from "./pages/site/CourseDetails";
-import Packages from "./pages/site/Packages";
-import Applications from "./pages/site/Applications";
 import FAQ from "./pages/site/FAQ";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import Login from "./pages/site/Login";
+import Signup from "./pages/site/Signup";
+import ConfirmPhone from "./pages/site/ConfirmPhone";
 //Students dahboard
 import StudentDash from "./pages/site/Course";
 import Dashboard from "./pages/dashboard/students/Dashboard";
@@ -50,7 +46,6 @@ import TeacherCoursePage from "./pages/dashboard/teacher/course/CoursePage";
 import TeacherQuiz from "./pages/dashboard/teacher/course/Quiz";
 import QuizForm from "./pages/dashboard/teacher/course/QuizForm";
 import Students from "./pages/dashboard/teacher/course/Students";
-import ConfirmPhone from "./pages/site/ConfirmPhone";
 import ForumList from "./pages/dashboard/students/myCourse/ForumList";
 import SingleAnswer from "./pages/dashboard/students/quiz/SingleAnswer";
 import Package from "./pages/dashboard/students/Package";
@@ -95,7 +90,10 @@ function App() {
         {/* <Route path="/" element={<HomePage />} /> */}
         <Route path="/login" element={<Login />} />
         {/* <Route path="/register" element={<Register />} /> */}
+        <Route path="/signup" element={<Signup />} />
         <Route path="/confirm-phone" element={<ConfirmPhone />} />
+        <Route path="/send-otp" element={<ConfirmPhone />} />
+        <Route path="/check-otp" element={<ConfirmPhone />} />
         <Route path="/meet" element={<Meet />} />
         {/* <Route path="/course" element={<Course />} />
         <Route path="/course/details/:id" element={<CourseDetails />} />
