@@ -17,9 +17,6 @@ const Courses = () => {
   );
   const get_course = async () => {
     setLoading(true);
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_teacher_course",

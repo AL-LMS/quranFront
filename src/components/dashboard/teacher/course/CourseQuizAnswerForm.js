@@ -23,9 +23,6 @@ const CourseQuizAnswerForm = ({ type, answer_id }) => {
   const set_score_quiz = async () => {
     setLoading(true);
     if (form.score) {
-      let config = {
-        url: "update_request",
-      };
       let data = {
         table: "courses",
         method_type: "set_score_quiz",

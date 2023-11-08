@@ -3,12 +3,8 @@ import axios from "axios";
 import { Grid } from "@mui/material";
 import CourseInfo from "../../components/site/course/CourseInfo";
 import CourseDescrption from "../../components/site/course/CourseDescrption";
-import CourseFreeVideos from "../../components/site/course/CourseFreeVideos";
-import CourseTitle from "../../components/site/course/CourseTitle";
-import RelatedCourse from "../../components/site/course/RelatedCourse";
 import { Container } from "@mui/system";
 import { useParams } from "react-router-dom";
-import { classData } from "./courseData";
 import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
 import { getUrl } from "../../helper/getUrl";
@@ -16,9 +12,6 @@ const CourseDetails = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const get_course = async () => {
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_course",

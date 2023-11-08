@@ -4,7 +4,6 @@ import useAuth from "../../../hooks/useAuth";
 import { Button, Grid, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import CourseList from "../../../components/dashboard/students/myCourse/CourseList";
-
 import NoDataImage from "../../../assets/img/no-data.png";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -21,9 +20,6 @@ const MyCourse = () => {
   );
   const get_register_course = async () => {
     setLoading(true);
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_register_course",

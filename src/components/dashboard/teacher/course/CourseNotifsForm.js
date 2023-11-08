@@ -14,7 +14,6 @@ import {
 import { useParams } from "react-router-dom";
 import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import MUIRichTextEditor from "mui-rte";
 import { getUrl } from "../../../../helper/getUrl";
 
 const TeacherNotifsForm = ({ type, data, setReload }) => {
@@ -30,9 +29,6 @@ const TeacherNotifsForm = ({ type, data, setReload }) => {
   const add_notifs = async () => {
     setLoading(true);
     if (form.title) {
-      let config = {
-        url: "insert_request",
-      };
       let data = {
         table: "courses",
         method_type: "add_notifs",
@@ -116,7 +112,6 @@ const TeacherNotifsForm = ({ type, data, setReload }) => {
               }
               fullWidth
             />
-            {/* <MUIRichTextEditor label="Start typing..."   /> */}
           </Grid>
           <Grid item xs={12}>
             <Chip

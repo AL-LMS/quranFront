@@ -16,9 +16,6 @@ const CoursePage = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const get_course = async () => {
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_course_page",

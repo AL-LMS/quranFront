@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import useAuth from "../../../hooks/useAuth";
 import { Container } from "@mui/system";
 import { Button, Grid, Typography } from "@mui/material";
-
 import Loader from "../../../components/site/shared/Loader";
-
 import CourseList from "../../../components/dashboard/teacher/course/CourseList";
 import { useNavigate } from "react-router-dom";
 import toastify from "../../../helper/toast";
 import { getUrl } from "../../../helper/getUrl";
 
 const MyCourse = () => {
-  const { auth, user } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -20,9 +16,6 @@ const MyCourse = () => {
     JSON.parse(localStorage.getItem("user"))
   );
   const get_course = async () => {
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_teacher_course",

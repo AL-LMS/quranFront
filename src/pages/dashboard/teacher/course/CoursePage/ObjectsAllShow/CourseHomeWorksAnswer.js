@@ -17,9 +17,6 @@ const CourseHomeWorksAnswer = () => {
     JSON.parse(localStorage.getItem("user"))
   );
   const get_uploaded_homework = async () => {
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_uploaded_homework",

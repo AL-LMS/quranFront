@@ -22,9 +22,6 @@ const StudentList = () => {
   const [data_students, setData] = useState([]);
   const get_teacher_info = async () => {
     setLoading(true);
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_course_students",

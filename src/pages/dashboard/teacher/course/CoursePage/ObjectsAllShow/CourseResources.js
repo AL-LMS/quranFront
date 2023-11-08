@@ -18,9 +18,6 @@ const CourseResources = () => {
     JSON.parse(localStorage.getItem("user"))
   );
   const get_resource = async () => {
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_resources",

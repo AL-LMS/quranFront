@@ -54,15 +54,9 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
 
     reader.readAsDataURL(input.files[0]);
   };
-  console.log("====================================");
-  console.log(form);
-  console.log("====================================");
   const add_homework = async () => {
     setLoading(true);
     if (form.title && form.deadline) {
-      let config = {
-        url: "insert_request",
-      };
       let data = {
         table: "courses",
         method_type: "add_homework",

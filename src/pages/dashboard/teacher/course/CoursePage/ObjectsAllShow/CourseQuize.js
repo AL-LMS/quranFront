@@ -19,9 +19,6 @@ const CourseQuize = () => {
     JSON.parse(localStorage.getItem("user"))
   );
   const get_quizzes = async () => {
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_quizzes",

@@ -16,9 +16,6 @@ const CourseNotifes = () => {
     JSON.parse(localStorage.getItem("user"))
   );
   const get_notifs = async () => {
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_notifs",

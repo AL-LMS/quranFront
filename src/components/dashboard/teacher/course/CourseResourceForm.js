@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import {
@@ -24,7 +24,6 @@ const TeacherResourceForm = ({ type, data, setReload }) => {
     file: data ? data.fileCourse : "",
     title: data ? data.title : "",
   });
-  let myRef = useRef();
   const openFile = (file) => {
     const input = file.target;
     const reader = new FileReader();
@@ -48,9 +47,6 @@ const TeacherResourceForm = ({ type, data, setReload }) => {
   const add_resource = async () => {
     setLoading(true);
     if (form.file && form.title) {
-      let config = {
-        url: "insert_request",
-      };
       let data = {
         table: "courses",
         method_type: "add_resource",

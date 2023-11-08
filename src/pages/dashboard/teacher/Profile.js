@@ -4,7 +4,6 @@ import useAuth from "../../../hooks/useAuth";
 import { Button, Divider, Grid } from "@mui/material";
 import { Container } from "@mui/system";
 import { toastify } from "../../../helper/toast";
-import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { ToastContainer } from "react-toastify";
 import Documnets from "./Documnets";
 import TeacherInfo from "../../../components/dashboard/students/profile/TeacherInfo";
@@ -42,7 +41,6 @@ const Profile = () => {
     sex: Yup.string().required("انتخاب جنسیت ضروری است."),
     birth_day: Yup.string().required("انتخاب تاریخ تولد ضروری است."),
     degree: Yup.string().required("انتخاب تحصیلات ضروری است."),
-    // picture: Yup.string().required("افزودن مدرک الزامیست"),
   });
 
   const formik = useFormik({
@@ -62,9 +60,6 @@ const Profile = () => {
     }
   }, [role]);
   const edit_user = async () => {
-    let config = {
-      url: "update_request",
-    };
     let data = {
       table: "teachers",
       method_type: "edit_user",
@@ -154,20 +149,6 @@ const Profile = () => {
           </Grid>
           <Grid item xs={12}></Grid>
           <Grid item xs={12}>
-            {/* <Button
-              type="submit"
-              variant="contained"
-              endIcon={<SaveOutlinedIcon />}
-              sx={{
-                boxShadow: "none",
-                position: "fixed",
-                bottom: "1rem",
-                right: "1rem",
-                width: "120px",
-              }}
-            >
-              ذخیره
-            </Button> */}
             <Button
               variant="contained"
               type="submit"

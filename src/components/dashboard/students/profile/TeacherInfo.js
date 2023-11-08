@@ -1,16 +1,11 @@
 import React, { useState } from "react";
-import { Card, TextField, Grid, Typography, Autocomplete } from "@mui/material";
+import { TextField, Grid, Typography, Autocomplete } from "@mui/material";
 import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
-import {
-  ages,
-  degree,
-  sex,
-} from "../../../../pages/dashboard/teacher/CourseData";
+import { degree, sex } from "../../../../pages/dashboard/teacher/CourseData";
 import { Picker, format } from "@persian-tools/persian-mobile-datepicker";
 
 const TeacherInfo = ({ formik }) => {
   const [openBirthDay, setOpenBirthDay] = useState(false);
-
   const config = {
     year: {
       caption: {
@@ -34,13 +29,6 @@ const TeacherInfo = ({ formik }) => {
   }
 
   return (
-    // <Card
-    //   sx={{
-    //     padding: 2,
-    //     boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-    //     borderRadius: 3,
-    //   }}
-    // >
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Typography
@@ -170,7 +158,6 @@ const TeacherInfo = ({ formik }) => {
         ) : null}
       </Grid>
     </Grid>
-    // </Card>
   );
 };
 

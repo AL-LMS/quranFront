@@ -1,8 +1,7 @@
-import React, { useRef, useState } from "react";
-import { Avatar, Button, Card, Grid, Typography } from "@mui/material";
+import React from "react";
+import { Avatar, Button, Grid, Typography } from "@mui/material";
 
 const MultiDocumnets = ({ formik, nameOfSection, nameOfButtonField }) => {
-  let myRef = useRef();
   const openFile = (file) => {
     const input = file.target;
     const reader = new FileReader();
@@ -26,13 +25,6 @@ const MultiDocumnets = ({ formik, nameOfSection, nameOfButtonField }) => {
     reader.readAsDataURL(input.files[0]);
   };
   return (
-    // <Card
-    //   sx={{
-    //     padding: 2,
-    //     // boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-    //     // borderRadius: 3,
-    //   }}
-    // >
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Typography
@@ -90,7 +82,6 @@ const MultiDocumnets = ({ formik, nameOfSection, nameOfButtonField }) => {
         )}
       </Grid>
     </Grid>
-    // </Card>
   );
 };
 

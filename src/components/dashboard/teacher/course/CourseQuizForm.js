@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import {
@@ -49,7 +49,6 @@ const CourseQuizForm = ({ type, data, setReload }) => {
     day = convertToPersianDate(e.value);
     setForm({ ...form, day: day });
   };
-  let myRef = useRef();
   const openFile = (file) => {
     const input = file.target;
     const reader = new FileReader();
@@ -73,9 +72,6 @@ const CourseQuizForm = ({ type, data, setReload }) => {
   const add_quiz = async () => {
     setLoading(true);
     if (form.title && form.day && form.start_time && form.end_time) {
-      let config = {
-        url: "insert_request",
-      };
       let data = {
         table: "courses",
         method_type: "add_quiz",

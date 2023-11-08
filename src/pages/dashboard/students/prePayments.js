@@ -14,9 +14,6 @@ const PrePayments = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const get_course = async () => {
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_course",
@@ -47,9 +44,6 @@ const PrePayments = () => {
   }, [id]);
   const register_course = async () => {
     setLoading(true);
-    let config = {
-      url: "insert_request",
-    };
     let data = {
       table: "courses",
       method_type: "register_course",

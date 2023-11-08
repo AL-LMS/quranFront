@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import {
@@ -25,7 +25,6 @@ const UploadQuizzesForm = ({ type, data, quizId, answer_id, setReload }) => {
     type: data ? data.type : "",
     answer_id: answer_id ? answer_id : "",
   });
-  let myRef = useRef();
   const openFile = (file) => {
     const input = file.target;
     const reader = new FileReader();
@@ -49,9 +48,6 @@ const UploadQuizzesForm = ({ type, data, quizId, answer_id, setReload }) => {
   const upload_quiz = async () => {
     setLoading(true);
     if (form.file) {
-      let config = {
-        url: "insert_request",
-      };
       let data = {
         table: "courses",
         method_type: "upload_quiz",
@@ -97,9 +93,6 @@ const UploadQuizzesForm = ({ type, data, quizId, answer_id, setReload }) => {
       setLoading(false);
       toastify("warning", "مشکلی پیش آمده لطفا صفحه خود را رفرش کنید");
     } else if (form.file && form.answer_id) {
-      let config = {
-        url: "update_request",
-      };
       let data = {
         table: "courses",
         method_type: "edit_upload_quiz",

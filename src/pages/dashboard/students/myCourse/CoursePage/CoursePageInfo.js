@@ -51,9 +51,6 @@ const CoursePageInfo = ({ data_course }) => {
   const [loading, setLoading] = useState(false);
   const register_course = async () => {
     setLoading(true);
-    let config = {
-      url: "insert_request",
-    };
     let data = {
       table: "courses",
       method_type: "register_course",

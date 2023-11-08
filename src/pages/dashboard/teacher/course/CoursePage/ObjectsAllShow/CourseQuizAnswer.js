@@ -18,9 +18,6 @@ const CourseQuizAnswer = () => {
     JSON.parse(localStorage.getItem("user"))
   );
   const get_uploaded_quiz = async () => {
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_uploaded_quiz",

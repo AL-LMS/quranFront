@@ -34,9 +34,6 @@ const Course = () => {
   }, [query]);
 
   const get_courses = async () => {
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_courses",

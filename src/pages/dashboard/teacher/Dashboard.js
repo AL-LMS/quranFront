@@ -28,9 +28,6 @@ const Dashboard = () => {
 
   const get_teacher_info = async () => {
     setLoading(true);
-    let config = {
-      url: "select_request",
-    };
     let data = {
       table: "courses",
       method_type: "get_teacher_info",

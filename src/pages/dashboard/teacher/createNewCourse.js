@@ -121,9 +121,6 @@ const CreateCourse = () => {
   };
   const navigate = useNavigate();
   const add_course = async () => {
-    let config = {
-      url: "insert_request",
-    };
     let data = {
       table: "courses",
       method_type: "add_course",
