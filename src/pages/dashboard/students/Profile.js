@@ -112,7 +112,7 @@ const Profile = () => {
           <Grid item xs={12}>
             <StudentInfo formik={formik} />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ marginTop: "20px" }}>
             <Documnets
               formik={formik}
               showBirthCertificate={showBirthCertificate}
@@ -124,7 +124,7 @@ const Profile = () => {
               variant="contained"
               type="submit"
               fullWidth
-              sx={{ boxShadow: "none", padding: "12px 0" }}
+              sx={{ boxShadow: "none", padding: "12px 0", marginTop: "20px" }}
             >
               ذخیره اطلاعات
             </Button>
