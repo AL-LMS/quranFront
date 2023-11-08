@@ -28,7 +28,7 @@ const Profile = () => {
     phone: user?.phone,
     picture: null,
     sex: role?.sex ? role?.sex : null,
-    ages: role?.ages ? role?.ages : null,
+    birth_day: role?.birth_day ? role?.birth_day : null,
     degree: role?.degree ? role?.degree : null,
     certificates: [],
     role: "student",
@@ -38,7 +38,7 @@ const Profile = () => {
       .required("کد ملی ضروری است.")
       .matches(regex_national_id, "کد ملی را به درستی وارد نمایید."),
     sex: Yup.string().required("انتخاب جنسیت ضروری است."),
-    ages: Yup.string().required("انتخاب رده سنی ضروری است."),
+    birth_day: Yup.string().required("انتخاب تاریخ تولد ضروری است."),
     degree: Yup.string().required("انتخاب تحصیلات ضروری است."),
     // picture: Yup.string().required("افزودن مدرک الزامیست"),
   });
@@ -68,7 +68,7 @@ const Profile = () => {
         first_name: userInfo?.first_name,
         last_name: userInfo?.last_name,
         sex: formik.values.sex,
-        ages: formik.values.ages,
+        birth_day: formik.values.birth_day,
         degree: formik.values.degree,
         role: userInfo?.role,
       },
@@ -111,30 +111,45 @@ const Profile = () => {
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={3}>
-        <Grid item xs={12}>
-          <StudentInfo formik={formik} />
-        </Grid>
-        <Grid item xs={12}>
-          <Documnets
-            formik={formik}
-            showBirthCertificate={showBirthCertificate}
-            setShowBirthCertificate={setShowBirthCertificate}
-          />
-        </Grid>
-        <Button
-          type="submit"
-          variant="contained"
-          endIcon={<SaveOutlinedIcon />}
-          sx={{
-            boxShadow: "none",
-            position: "fixed",
-            bottom: "1rem",
-            right: "1rem",
-            width: "120px",
-          }}
+        <form
+          onSubmit={formik.handleSubmit}
+          style={{ backgroundColor: "#fff", padding: 10 }}
         >
-          ذخیره
-        </Button>
+          <Grid item xs={12}>
+            <StudentInfo formik={formik} />
+          </Grid>
+          <Grid item xs={12}>
+            <Documnets
+              formik={formik}
+              showBirthCertificate={showBirthCertificate}
+              setShowBirthCertificate={setShowBirthCertificate}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            {/* <Button
+              type="submit"
+              variant="contained"
+              endIcon={<SaveOutlinedIcon />}
+              sx={{
+                boxShadow: "none",
+                position: "fixed",
+                bottom: "1rem",
+                right: "1rem",
+                width: "120px",
+              }}
+            >
+              ذخیره
+            </Button> */}
+            <Button
+              variant="contained"
+              type="submit"
+              fullWidth
+              sx={{ boxShadow: "none", padding: "12px 0" }}
+            >
+              ذخیره اطلاعات
+            </Button>
+          </Grid>
+        </form>
       </Grid>
       <Backdrop open={loading} />
       <ToastContainer rtl={true} />

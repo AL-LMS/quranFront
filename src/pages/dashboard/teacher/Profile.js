@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
-import { Button, Grid } from "@mui/material";
+import { Button, Divider, Grid } from "@mui/material";
 import { Container } from "@mui/system";
 import { toastify } from "../../../helper/toast";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
@@ -30,7 +30,7 @@ const Profile = () => {
     phone: user?.phone,
     picture: null,
     sex: role?.sex ? role?.sex : null,
-    ages: role?.ages ? role?.ages : null,
+    birth_day: role?.birth_day ? role?.birth_day : null,
     degree: role?.degree ? role?.degree : null,
     certificates: [],
     role: "teacher",
@@ -40,7 +40,7 @@ const Profile = () => {
       .required("کد ملی ضروری است.")
       .matches(regex_national_id, "کد ملی را به درستی وارد نمایید."),
     sex: Yup.string().required("انتخاب جنسیت ضروری است."),
-    ages: Yup.string().required("انتخاب رده سنی ضروری است."),
+    birth_day: Yup.string().required("انتخاب تاریخ تولد ضروری است."),
     degree: Yup.string().required("انتخاب تحصیلات ضروری است."),
     // picture: Yup.string().required("افزودن مدرک الزامیست"),
   });
@@ -75,7 +75,7 @@ const Profile = () => {
         first_name: userInfo?.first_name,
         last_name: userInfo?.last_name,
         sex: formik.values.sex,
-        ages: formik.values.ages,
+        birth_day: formik.values.birth_day,
         degree: formik.values.degree,
         role: userInfo?.role,
       },
@@ -119,11 +119,23 @@ const Profile = () => {
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={3}>
-        <form onSubmit={formik.handleSubmit}>
-          <Grid item xs={12}>
+        <form
+          onSubmit={formik.handleSubmit}
+          style={{ backgroundColor: "#fff", padding: 10 }}
+        >
+          <Grid item xs={12} style={{ marginBottom: "30px" }}>
             <TeacherInfo formik={formik} />
           </Grid>
-          <Grid item xs={12}>
+          <Grid
+            item
+            xs={12}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              marginBottom: "30px",
+              flexWrap: "wrap",
+            }}
+          >
             <Documnets
               formik={formik}
               showLastCertificate={showLastCertificate}
@@ -131,8 +143,7 @@ const Profile = () => {
               nameOfSection={"آخرین مدرک مربی"}
               nameOfButtonField={"آپلود تصویر آخرین مدرک تحصیلی"}
             />
-          </Grid>
-          <Grid item xs={12}>
+            <Divider />
             <MultiDocumnets
               formik={formik}
               showCertificate={showCertificate}
@@ -141,20 +152,31 @@ const Profile = () => {
               nameOfButtonField={"آپلود تصاویر گواهی"}
             />
           </Grid>
-          <Button
-            type="submit"
-            variant="contained"
-            endIcon={<SaveOutlinedIcon />}
-            sx={{
-              boxShadow: "none",
-              position: "fixed",
-              bottom: "1rem",
-              right: "1rem",
-              width: "120px",
-            }}
-          >
-            ذخیره
-          </Button>
+          <Grid item xs={12}></Grid>
+          <Grid item xs={12}>
+            {/* <Button
+              type="submit"
+              variant="contained"
+              endIcon={<SaveOutlinedIcon />}
+              sx={{
+                boxShadow: "none",
+                position: "fixed",
+                bottom: "1rem",
+                right: "1rem",
+                width: "120px",
+              }}
+            >
+              ذخیره
+            </Button> */}
+            <Button
+              variant="contained"
+              type="submit"
+              fullWidth
+              sx={{ boxShadow: "none", padding: "12px 0" }}
+            >
+              ذخیره اطلاعات
+            </Button>
+          </Grid>
         </form>
       </Grid>
       <ToastContainer rtl={true} />

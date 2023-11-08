@@ -30,77 +30,77 @@ const Documnets = ({
     reader.readAsDataURL(input.files[0]);
   };
   return (
-    <Card
-      sx={{
-        padding: 2,
-        boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-        borderRadius: 3,
-      }}
-    >
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Typography
-            component="h6"
-            variant="h6"
-            fontWeight={500}
-            color="mainText"
-            textAlign="center"
-          >
-            {nameOfSection}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={6} sx={{ margin: "0 auto" }}>
-          <input
-            type="file"
-            accept="image/*"
-            style={{ display: "none" }}
-            id="LastCertificate"
-            onChange={(event) => openFile(event)}
-          />
-          <label htmlFor="LastCertificate">
-            <Button variant="outlined" fullWidth component="span">
-              {nameOfButtonField}
-            </Button>
-          </label>
-          {formik?.values?.picture ? (
-            <Avatar
-              alt="LastCertificate"
-              src={showLastCertificate}
-              sx={{
-                width: 140,
-                height: 140,
-                display: "block",
-                margin: "10px auto",
-                borderRadius: 2,
-              }}
-            />
-          ) : showLastCertificate ? (
-            <Avatar
-              alt="LastCertificate"
-              src={showLastCertificate}
-              sx={{
-                width: 140,
-                height: 140,
-                display: "block",
-                margin: "10px auto",
-                borderRadius: 2,
-              }}
-            />
-          ) : (
-            <Typography color="text.secondary" textAlign="center" mt={2}>
-              هیچ تصویری آپلود نشده
-              {formik.touched.picture && formik.errors.picture ? (
-                <div>
-                  <p style={{ fontSize: 10, color: "red" }}>
-                    {formik.errors.picture}
-                  </p>
-                </div>
-              ) : null}
-            </Typography>
-          )}
-        </Grid>
+    // <Card
+    //   sx={{
+    //     padding: 2,
+    //     boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
+    //     borderRadius: 3,
+    //   }}
+    // >
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Typography
+          component="h6"
+          variant="h6"
+          fontWeight={500}
+          color="mainText"
+          textAlign="center"
+        >
+          {nameOfSection}
+        </Typography>
       </Grid>
-    </Card>
+      <Grid item xs={12} md={6} sx={{ margin: "0 auto" }}>
+        <input
+          type="file"
+          accept="image/*"
+          style={{ display: "none" }}
+          id="LastCertificate"
+          onChange={(event) => openFile(event)}
+        />
+        <label htmlFor="LastCertificate">
+          <Button variant="outlined" fullWidth component="span">
+            {nameOfButtonField}
+          </Button>
+        </label>
+        {formik?.values?.picture ? (
+          <Avatar
+            alt="LastCertificate"
+            src={showLastCertificate}
+            sx={{
+              width: 140,
+              height: 140,
+              display: "block",
+              margin: "10px auto",
+              borderRadius: 2,
+            }}
+          />
+        ) : showLastCertificate ? (
+          <Avatar
+            alt="LastCertificate"
+            src={showLastCertificate}
+            sx={{
+              width: 140,
+              height: 140,
+              display: "block",
+              margin: "10px auto",
+              borderRadius: 2,
+            }}
+          />
+        ) : (
+          <Typography color="text.secondary" textAlign="center" mt={2}>
+            هیچ تصویری آپلود نشده
+            {formik.touched.picture && formik.errors.picture ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.picture}
+                </p>
+              </div>
+            ) : null}
+          </Typography>
+        )}
+      </Grid>
+    </Grid>
+    // </Card>
   );
 };
 

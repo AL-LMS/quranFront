@@ -1,13 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, TextField, Grid, Typography, Autocomplete } from "@mui/material";
 import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
-import {
-  ages,
-  degree,
-  sex,
-} from "../../../../pages/dashboard/teacher/CourseData";
+import { degree, sex } from "../../../../pages/dashboard/teacher/CourseData";
+import styled from "styled-components";
+import { Picker, format } from "@persian-tools/persian-mobile-datepicker";
 
 const StudentInfo = ({ formik }) => {
+  const [openBirthDay, setOpenBirthDay] = useState(false);
+
+  const config = {
+    year: {
+      caption: {
+        text: "سال",
+      },
+    },
+    month: {
+      caption: {
+        text: "ماه",
+      },
+    },
+    day: {
+      caption: {
+        text: "روز",
+      },
+    },
+  };
+  function handleSubmit(selectedDate, field) {
+    const date = format(selectedDate.date, "yyyy-MM-dd");
+    formik.setFieldValue(field, date);
+  }
   return (
     <Card
       sx={{
@@ -101,24 +122,38 @@ const StudentInfo = ({ formik }) => {
           ) : null}
         </Grid>
         <Grid item xs={12} md={6}>
-          <Autocomplete
-            fullWidth
-            value={ages[formik.values.ages]}
-            onChange={(event, newValue) =>
-              formik.setFieldValue("ages", newValue.id)
-            }
-            id="controllable-states-demo"
-            options={ages}
-            getOptionLabel={(option) => option.name || ""}
-            renderInput={(params) => (
-              <TextField {...params} label="رده سنی" required />
-            )}
-          />
-          {formik.touched.ages && formik.errors.ages ? (
-            <div>
-              <p style={{ fontSize: 10, color: "red" }}>{formik.errors.ages}</p>
-            </div>
-          ) : null}
+          <ContainerX>
+            <TextField
+              label="تاربخ شروع"
+              name="start_date"
+              value={formik.values.birth_day ? formik.values.birth_day : ""}
+              fullWidth
+              onFocus={() => setOpenBirthDay(true)}
+              sx={{ marginTop: 1 }}
+            />
+            {formik.touched.birth_day && formik.errors.birth_day ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.birth_day}
+                </p>
+              </div>
+            ) : null}
+            <Picker
+              config={config}
+              isOpen={openBirthDay}
+              highlightHolidays
+              highlightWeekends
+              addDayName
+              initialValue={new Date("2021-03-20T20:30:00.000Z")}
+              onSubmit={(date) => {
+                handleSubmit(date, "birth_day");
+                setOpenBirthDay(false);
+              }}
+              onCancel={() => setOpenBirthDay(false)}
+              onClose={() => setOpenBirthDay(false)}
+              theme="light"
+            />
+          </ContainerX>
         </Grid>
 
         <Grid item xs={12} md={6}>
@@ -149,3 +184,17 @@ const StudentInfo = ({ formik }) => {
 };
 
 export default StudentInfo;
+export const ContainerX = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  @media screen and (max-width: 768px) {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  @media screen and (max-width: 480px) {
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 10px;
+  }
+`;

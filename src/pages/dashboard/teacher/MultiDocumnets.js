@@ -26,71 +26,71 @@ const MultiDocumnets = ({ formik, nameOfSection, nameOfButtonField }) => {
     reader.readAsDataURL(input.files[0]);
   };
   return (
-    <Card
-      sx={{
-        padding: 2,
-        boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-        borderRadius: 3,
-      }}
-    >
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Typography
-            component="h6"
-            variant="h6"
-            fontWeight={500}
-            color="mainText"
-            textAlign="center"
-          >
-            {nameOfSection}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={6} sx={{ margin: "0 auto" }}>
-          <input
-            type="file"
-            accept="image/*"
-            style={{ display: "none" }}
-            id="Certificate"
-            multiple
-            onChange={(event) => openFile(event)}
-          />
-          <label htmlFor="Certificate">
-            <Button variant="outlined" fullWidth component="span">
-              {nameOfButtonField}
-            </Button>
-          </label>
-          {formik?.values?.certificates.length > 0 ? (
-            <Avatar
-              alt="Certificate"
-              src={formik.cvalues?.ertificates.slice(-1)}
-              sx={{
-                width: 140,
-                height: 140,
-                display: "block",
-                margin: "10px auto",
-                borderRadius: 2,
-              }}
-            />
-          ) : formik?.values?.certificates.lenght > 0 ? (
-            <Avatar
-              alt="Certificate"
-              src={formik.cvalues?.ertificates.slice(-1)}
-              sx={{
-                width: 140,
-                height: 140,
-                display: "block",
-                margin: "10px auto",
-                borderRadius: 2,
-              }}
-            />
-          ) : (
-            <Typography color="text.secondary" textAlign="center" mt={2}>
-              هیچ تصویری آپلود نشده
-            </Typography>
-          )}
-        </Grid>
+    // <Card
+    //   sx={{
+    //     padding: 2,
+    //     // boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
+    //     // borderRadius: 3,
+    //   }}
+    // >
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Typography
+          component="h6"
+          variant="h6"
+          fontWeight={500}
+          color="mainText"
+          textAlign="center"
+        >
+          {nameOfSection}
+        </Typography>
       </Grid>
-    </Card>
+      <Grid item xs={12} md={6} sx={{ margin: "0 auto" }}>
+        <input
+          type="file"
+          accept="image/*"
+          style={{ display: "none" }}
+          id="Certificate"
+          multiple
+          onChange={(event) => openFile(event)}
+        />
+        <label htmlFor="Certificate">
+          <Button variant="outlined" fullWidth component="span">
+            {nameOfButtonField}
+          </Button>
+        </label>
+        {formik?.values?.certificates.length > 0 ? (
+          <Avatar
+            alt="Certificate"
+            src={formik.cvalues?.ertificates.slice(-1)}
+            sx={{
+              width: 140,
+              height: 140,
+              display: "block",
+              margin: "10px auto",
+              borderRadius: 2,
+            }}
+          />
+        ) : formik?.values?.certificates.lenght > 0 ? (
+          <Avatar
+            alt="Certificate"
+            src={formik.cvalues?.ertificates.slice(-1)}
+            sx={{
+              width: 140,
+              height: 140,
+              display: "block",
+              margin: "10px auto",
+              borderRadius: 2,
+            }}
+          />
+        ) : (
+          <Typography color="text.secondary" textAlign="center" mt={2}>
+            هیچ تصویری آپلود نشده
+          </Typography>
+        )}
+      </Grid>
+    </Grid>
+    // </Card>
   );
 };
 
