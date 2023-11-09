@@ -16,7 +16,7 @@ const ConfirmPhone = () => {
   const confirm_phone = async () => {
     let data = {
       table: "users",
-      method_type: "",
+      method_type: "confirm_phone",
       data: {
         phone: JSON.parse(localStorage.getItem("phone")),
         code: formik.values.code,
@@ -32,7 +32,7 @@ const ConfirmPhone = () => {
         ...data,
       },
 
-      baseURL: getUrl() + "back_request/confirm_phone/",
+      baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
       toastify(
