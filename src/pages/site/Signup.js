@@ -43,10 +43,7 @@ const Signup = () => {
       baseURL: getUrl() + "back_request/register/",
     });
     if (response?.data?.tracking_code !== null) {
-      toastify(
-        "success",
-        "ثبت‌نام اولیه شما در سامانه انجام شد. کد ارسال شده را وارد کنید."
-      );
+      toastify("success", "کد احراز هویت برای شما ارسال شد.");
       setLocalStorageLogin("phone", response?.data?.response?.phone, () => {});
       navigate("/confirm-phone");
     } else {

@@ -62,8 +62,8 @@ const ConfirmPhone = () => {
     code: Yup.string()
       .required()
       .matches(/^[0-9]+$/, "کد وارد شده بایستی عدد باشد.")
-      .min(5, "کد بایستی 6 رقمی باشد.")
-      .max(5, "کد بایستی 6 رقمی باشد."),
+      .min(6, "کد بایستی 6 رقمی باشد.")
+      .max(6, "کد بایستی 6 رقمی باشد."),
   });
 
   const formik = useFormik({
