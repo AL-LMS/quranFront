@@ -119,7 +119,7 @@ const Login = () => {
             </Box>
             <Box
               sx={{
-                marginBottom: "2rem",
+                marginBottom: "1rem",
               }}
             >
               <TextField
@@ -141,11 +141,23 @@ const Login = () => {
                 </div>
               ) : null}
             </Box>
+            <Link to="/send-otp">
+              <Button
+                fullWidth
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  marginBottom: "20px",
+                }}
+              >
+                فراموشی رمز عبور
+              </Button>
+            </Link>
             <Button
               type="submit"
               variant="contained"
               fullWidth
-              // onClick={() => signin().then(() => {})}
               sx={{
                 borderRadius: "5px",
                 padding: "6px 30px",

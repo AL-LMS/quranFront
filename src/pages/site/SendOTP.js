@@ -34,7 +34,7 @@ const SendOTP = () => {
     });
     if (response?.data?.tracking_code !== null) {
       setLocalStorageLogin("phone", response?.data?.response?.phone, () => {});
-      navigate("/check_otp");
+      navigate("/check-otp");
     } else {
       toastify("error-login", response?.data?.error);
     }
