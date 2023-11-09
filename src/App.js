@@ -11,6 +11,8 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 import Login from "./pages/site/Login";
 import Signup from "./pages/site/Signup";
 import ConfirmPhone from "./pages/site/ConfirmPhone";
+import SendOTP from "./pages/site/SendOTP";
+import CheckOTP from "./pages/site/CheckOTP";
 //Students dahboard
 import StudentDash from "./pages/site/Course";
 import Dashboard from "./pages/dashboard/students/Dashboard";
@@ -92,8 +94,8 @@ function App() {
         {/* <Route path="/register" element={<Register />} /> */}
         <Route path="/signup" element={<Signup />} />
         <Route path="/confirm-phone" element={<ConfirmPhone />} />
-        <Route path="/send-otp" element={<ConfirmPhone />} />
-        <Route path="/check-otp" element={<ConfirmPhone />} />
+        <Route path="/send-otp" element={<SendOTP />} />
+        <Route path="/check-otp" element={<CheckOTP />} />
         <Route path="/meet" element={<Meet />} />
         {/* <Route path="/course" element={<Course />} />
         <Route path="/course/details/:id" element={<CourseDetails />} />
