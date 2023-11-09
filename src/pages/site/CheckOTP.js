@@ -16,7 +16,7 @@ const CheckOTP = () => {
   const check_otp = async () => {
     let data = {
       table: "users",
-      method_type: "",
+      method_type: "check_otp",
       data: {
         phone: JSON.parse(localStorage.getItem("phone")),
         code: formik.values.code,
@@ -32,13 +32,10 @@ const CheckOTP = () => {
         ...data,
       },
 
-      baseURL: getUrl() + "back_request/check_otp/",
+      baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      toastify(
-        "success",
-        "ثبت‌نام اولیه شما در سامانه انجام شد.برای تکمیل ثبت‌نام وارد سامانه شوید."
-      );
+      toastify("success", "ورود شما با موفقیت انجام شد");
       setLocalStorageLogin("token", response?.data?.response?.token, () => {});
       setLocalStorageLogin("user", response?.data?.response, () => {});
       setLocalStorageLogin(
@@ -62,8 +59,8 @@ const CheckOTP = () => {
     code: Yup.string()
       .required()
       .matches(/^[0-9]+$/, "کد وارد شده بایستی عدد باشد.")
-      .min(5, "کد بایستی 6 رقمی باشد.")
-      .max(5, "کد بایستی 6 رقمی باشد."),
+      .min(6, "کد بایستی 6 رقمی باشد.")
+      .max(6, "کد بایستی 6 رقمی باشد."),
   });
 
   const formik = useFormik({
@@ -96,7 +93,7 @@ const CheckOTP = () => {
               }}
             >
               <TextField
-                label="کد تایید"
+                label="کد فراموشی"
                 name="code"
                 value={formik.values.code}
                 fullWidth

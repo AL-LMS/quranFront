@@ -15,7 +15,7 @@ const SendOTP = () => {
   const send_otp = async () => {
     let data = {
       table: "users",
-      method_type: "",
+      method_type: "send_otp",
       data: {
         phone: formik.values.phone,
       },
@@ -30,7 +30,7 @@ const SendOTP = () => {
         ...data,
       },
 
-      baseURL: getUrl() + "back_request/send_otp/",
+      baseURL: getUrl() + "back_request/insert_request/",
     });
     if (response?.data?.tracking_code !== null) {
       setLocalStorageLogin("phone", response?.data?.response?.phone, () => {});
