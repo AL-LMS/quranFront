@@ -33,6 +33,7 @@ const SendOTP = () => {
       baseURL: getUrl() + "back_request/insert_request/",
     });
     if (response?.data?.tracking_code !== null) {
+      toastify("success", response?.data?.response?.message);
       setLocalStorageLogin("phone", response?.data?.response?.phone, () => {});
       navigate("/check-otp");
     } else {
