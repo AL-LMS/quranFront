@@ -61,17 +61,6 @@ const CourseCard = ({ data }) => {
             >
               {data.explain}
             </Typography>
-            {data.price2 && (
-              <Typography
-                variant="subtitle1"
-                fontFamily="iranyekanFn"
-                fontWeight={500}
-                fontSize="14px"
-                color="error"
-              >
-                {data.price2?.toLocaleString()} تومان
-              </Typography>
-            )}
           </Stack>
         </CardContent>
       </Link>
