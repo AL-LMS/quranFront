@@ -6,6 +6,7 @@ import {
   CardContent,
   CardMedia,
   Chip,
+  Divider,
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
@@ -52,13 +53,14 @@ const CourseCard = ({ data }) => {
               }}
             >
               <img
-                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                style={{ width: "30px", height: "30px", borderRadius: "50%" }}
                 src={NoImage}
               />
-              <span style={{ fontSize: "12px", marginRight: "5px" }}>
+              <span style={{ fontSize: "12px", marginRight: "10px" }}>
                 احمد اسدی
               </span>
             </div>
+            <Divider />
             <Typography
               variant="body1"
               fontWeight={400}
@@ -112,21 +114,6 @@ const CourseCard = ({ data }) => {
           >
             اطلاعات مربی
           </Button>
-          {/* <Chip
-          label={
-            <Stack direction="row" spacing={1} alignItems="center" color="#999">
-              <Typography
-                color="text.secondary"
-                fontSize="14px"
-                fontFamily="iranyekanFn"
-                fontWight={400}
-              >
-                {data.max - data.course_sCount}
-              </Typography>
-              <PeopleOutlineIcon fontSize="small" />
-            </Stack>
-          }
-        /> */}
         </Stack>
       </Card>
       <Dialog
@@ -154,6 +141,7 @@ const CourseCard = ({ data }) => {
               style={{ width: "75px", height: "75px", borderRadius: "50%" }}
             />
           </div>
+          <Divider />
           <div>
             <p
               style={{

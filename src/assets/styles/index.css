@@ -165,5 +165,5 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .MuiChip-label {
-  font-family: "iranyekanFn" !important;
+  /* font-family: "iranyekanFn" !important; */
 }
