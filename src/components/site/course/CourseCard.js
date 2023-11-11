@@ -53,10 +53,10 @@ const CourseCard = ({ data }) => {
             >
               <img
                 style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-                src={NoImage}
+                src={data.teacher_pic ? data.teacher_pic : NoImage}
               />
               <span style={{ fontSize: "12px", marginRight: "10px" }}>
-                احمد اسدی
+                {data.teacher_name}
               </span>
             </div>
             <Divider style={{ marginBottom: "5px" }} />
@@ -135,9 +135,9 @@ const CourseCard = ({ data }) => {
               marginBottom: "5px",
             }}
           >
-            <span style={{ fontSize: "20px" }}>احمد اسدی</span>
+            <span style={{ fontSize: "20px" }}>{data.teacher_name}</span>
             <img
-              src={NoImage}
+              teacher_pic
               style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
           </div>
@@ -153,17 +153,7 @@ const CourseCard = ({ data }) => {
                 lineHeight: "1.8em",
               }}
             >
-              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-              استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله
-              در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد
-              نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.
-              کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان
-              جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای
-              طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان
-              فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری
-              موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد
-              نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل
-              دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+              {data.teacher_description}
             </p>
           </div>
         </div>
