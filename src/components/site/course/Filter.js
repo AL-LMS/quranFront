@@ -100,7 +100,12 @@ const Filter = ({ setParams, query, setQuery }) => {
         title={
           <Chip
             color="secondary"
-            sx={{ color: "#fff", fontSize: "1rem", borderRadius: "5px" }}
+            sx={{
+              color: "#fff",
+              fontSize: "1rem",
+              borderRadius: "5px",
+              fontFamily: "IRANSansWeb_Farsi",
+            }}
             label="جستجوی دوره"
           />
         }
