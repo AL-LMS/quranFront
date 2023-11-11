@@ -50,6 +50,7 @@ const CourseCard = ({ data }) => {
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
+                marginBottom: "5px",
               }}
             >
               <img
@@ -60,7 +61,7 @@ const CourseCard = ({ data }) => {
                 احمد اسدی
               </span>
             </div>
-            <Divider />
+            <Divider style={{ marginBottom: "5px" }} />
             <Typography
               variant="body1"
               fontWeight={400}
@@ -133,6 +134,7 @@ const CourseCard = ({ data }) => {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
+              marginBottom: "5px",
             }}
           >
             <span style={{ fontSize: "20px" }}>احمد اسدی</span>
@@ -142,7 +144,7 @@ const CourseCard = ({ data }) => {
             />
           </div>
           <Divider />
-          <div>
+          <div style={{ marginTop: "5px" }}>
             <p
               style={{
                 display: "block",

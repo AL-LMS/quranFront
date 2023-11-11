@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import useAuth from "../../../hooks/useAuth";
 import { Container } from "@mui/system";
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import Loader from "../../../components/site/shared/Loader";
 import CourseList from "../../../components/dashboard/teacher/course/CourseList";
 import toastify from "../../../helper/toast";
 import { getUrl } from "../../../helper/getUrl";
+import { useNavigate } from "react-router-dom";
 
 const Course = () => {
-  const { auth, user } = useAuth();
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState(
@@ -87,6 +87,13 @@ const Course = () => {
           >
             دوره‌های ثبت نام شده
           </Typography>
+          <Button
+            variant="contained"
+            sx={{ boxShadow: "none" }}
+            onClick={() => navigate("/panel/all-courses")}
+          >
+            دوره‌ها
+          </Button>
         </Grid>
         <Grid item xs={12}>
           <CourseList data={data} />
