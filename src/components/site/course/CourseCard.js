@@ -137,7 +137,7 @@ const CourseCard = ({ data }) => {
           >
             <span style={{ fontSize: "20px" }}>{data.teacher_name}</span>
             <img
-              teacher_pic
+              src={data.teacher_pic ? data.teacher_pic : NoImage}
               style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
           </div>
