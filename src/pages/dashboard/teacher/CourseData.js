@@ -17,7 +17,7 @@ export const sex = [
 export const sex_for_class = [
   { name: "خواهران", id: 0 },
   { name: "برادران", id: 1 },
-  { name: "ترکیبی", id: 2 },
+  { name: "هر دو", id: 2 },
 ];
 
 export const ages = [

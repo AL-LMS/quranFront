@@ -80,7 +80,7 @@ const Navbar = () => {
                     marginRight: "100px !important",
                   }}
                   sx={{
-                    borderRadius: "40px",
+                    borderRadius: "5px",
                     ml: 2,
                     boxShadow: "none",
                   }}

@@ -1,8 +1,9 @@
 import { Box } from "@mui/material";
 import React, { useRef } from "react";
 import "./style.css";
-import AvatarSVG from "../../assets/img/Virtual Class.png";
-export default function Index({ value, setValues }) {
+import AvatarSVG from "../../assets/img/profile.jpg";
+import styled from "styled-components";
+export default function Index({ formik }) {
   let myRef = useRef();
   const openFile = (file) => {
     const input = file.target;
@@ -17,7 +18,7 @@ export default function Index({ value, setValues }) {
           file_name: input.files[0].name,
           file_size: input.files[0].size,
         };
-        setValues(data);
+        formik.setFieldValue("picture", data.file);
       };
       reader.readAsDataURL(input.files[0]);
     }
@@ -27,8 +28,8 @@ export default function Index({ value, setValues }) {
   };
   return (
     <Box>
-      {value === "" ? (
-        <div
+      {formik.values.picture === null ? (
+        <Container
           class="container"
           onClick={(event) => handelclik(event.currentTarget.value)}
         >
@@ -36,8 +37,8 @@ export default function Index({ value, setValues }) {
             src={AvatarSVG}
             style={{
               borderRadius: "100%",
-              width: "160px",
-              height: "160px",
+              width: "75px",
+              height: "75px",
               marginLeft: "auto",
               marginRight: "auto",
               marginBottom: "10px",
@@ -45,21 +46,22 @@ export default function Index({ value, setValues }) {
               objectFit: "cover",
             }}
           />
+          <span style={{ textAlign: "center" }}>تصویر مربی</span>
           <div class="overlay">
             <div class="text">افزودن تصویر</div>
           </div>
-        </div>
+        </Container>
       ) : (
-        <div
+        <Container
           class="container"
           onClick={(event) => handelclik(event.currentTarget.value)}
         >
           <img
-            src={value}
+            src={formik.values.picture}
             style={{
               borderRadius: "50%",
-              width: "160px",
-              height: "160px",
+              width: "75px",
+              height: "75px",
               marginLeft: "auto",
               marginRight: "auto",
               marginBottom: "10px",
@@ -69,7 +71,7 @@ export default function Index({ value, setValues }) {
           <div class="overlay">
             <div class="text">تغییر تصویر</div>
           </div>
-        </div>
+        </Container>
       )}
       <input
         type="file"
@@ -80,3 +82,15 @@ export default function Index({ value, setValues }) {
     </Box>
   );
 }
+
+export const Container = styled.div`
+  margin-left: 50px;
+  @media screen and (max-width: 768px) {
+    margin-left: 0px;
+    margin-bottom: 20px;
+  }
+  @media screen and (max-width: 480px) {
+    margin-left: 0px;
+    margin-bottom: 20px;
+  }
+`;

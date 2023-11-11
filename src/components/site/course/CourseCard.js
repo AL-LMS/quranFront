@@ -5,13 +5,11 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Chip,
   Divider,
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import NoImage from "../../../assets/img/class1.jpeg";
-import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import Slide from "@mui/material/Slide";
@@ -140,7 +138,7 @@ const CourseCard = ({ data }) => {
             <span style={{ fontSize: "20px" }}>احمد اسدی</span>
             <img
               src={NoImage}
-              style={{ width: "75px", height: "75px", borderRadius: "50%" }}
+              style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
           </div>
           <Divider />

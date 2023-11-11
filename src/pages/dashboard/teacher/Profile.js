@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
-import { Button, Divider, Grid } from "@mui/material";
+import { Button, Divider, Grid, TextField } from "@mui/material";
 import { Container } from "@mui/system";
 import { toastify } from "../../../helper/toast";
 import { ToastContainer } from "react-toastify";
@@ -14,6 +14,8 @@ import { getUrl } from "../../../helper/getUrl";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { regex_national_id } from "../../../helper/regex";
+import styled from "styled-components";
+import Image from "../../../helper/base64Images";
 const Profile = () => {
   const { user, role, setRole, setAuth, setUser } = useAuth();
   const [userInfo, setUserInfo] = useState(
@@ -28,6 +30,7 @@ const Profile = () => {
     national_id: role?.national_id,
     phone: user?.phone,
     picture: null,
+    description: user?.description,
     sex: role?.sex ? role?.sex : null,
     birth_day: role?.birth_day ? role?.birth_day : null,
     degree: role?.degree ? role?.degree : null,
@@ -41,6 +44,7 @@ const Profile = () => {
     sex: Yup.string().required("انتخاب جنسیت ضروری است."),
     birth_day: Yup.string().required("انتخاب تاریخ تولد ضروری است."),
     degree: Yup.string().required("انتخاب تحصیلات ضروری است."),
+    description: Yup.string().required("توضیحات سوابق ضروری است."),
   });
 
   const formik = useFormik({
@@ -52,10 +56,15 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    if (role?.confirm !== 1) {
+    if (role?.national_id === null) {
       toastify(
         "warning",
         "مربی گرامی، برای فعال سازی امکانات سامانه لطفا اطلاعات خود را در بخش پروفایل ثبت نمایید."
+      );
+    } else if (role?.confirm !== 1) {
+      toastify(
+        "warning",
+        "برای افزودن دوره ابتدا بایستی اکانت شما توسط ادمین تایید شود."
       );
     }
   }, [role]);
@@ -73,6 +82,8 @@ const Profile = () => {
         birth_day: formik.values.birth_day,
         degree: formik.values.degree,
         role: userInfo?.role,
+        picture: formik.values.picture,
+        description: formik.values.description,
       },
     };
     let response = await axios({
@@ -101,16 +112,24 @@ const Profile = () => {
       setAuth(response?.data?.response?.token);
       setUser(response?.data?.response);
       setRole(response?.data?.response?.role_data);
-      toastify(
-        "success",
-        "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
-      );
+      if (role?.confirm !== 1) {
+        toastify(
+          "success",
+          "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
+        );
+      } else {
+        toastify(
+          "success",
+          "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
+        );
+      }
       navigate("/panel/dashboard");
     } else {
       toastify("error-login", response?.data?.error);
     }
   };
   const navigate = useNavigate();
+  console.log("formik", formik.values);
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={3}>
@@ -121,15 +140,33 @@ const Profile = () => {
           <Grid item xs={12} style={{ marginBottom: "30px" }}>
             <TeacherInfo formik={formik} />
           </Grid>
-          <Grid
-            item
-            xs={12}
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              marginBottom: "30px",
-              flexWrap: "wrap",
-            }}
+          <DescriptionContainer>
+            <Image formik={formik} />
+            <TextField
+              label="توضیحات سوابق"
+              value={formik.values.description}
+              fullWidth
+              multiline
+              rows={2}
+              maxRows={4}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onChange={(e) =>
+                formik.setFieldValue("description", e.target.value)
+              }
+            />
+            {formik.touched.description && formik.errors.description ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.description}
+                </p>
+              </div>
+            ) : null}
+          </DescriptionContainer>
+          <DocumentsContainer
+          // item
+          // xs={12}
           >
             <Documnets
               formik={formik}
@@ -146,7 +183,7 @@ const Profile = () => {
               nameOfSection={"گواهی‌های مربی"}
               nameOfButtonField={"آپلود تصاویر گواهی"}
             />
-          </Grid>
+          </DocumentsContainer>
           <Grid item xs={12}></Grid>
           <Grid item xs={12}>
             <Button
@@ -166,3 +203,32 @@ const Profile = () => {
 };
 
 export default Profile;
+
+export const DocumentsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  @media screen and (max-width: 768px) {
+    flex-wrap: wrap;
+  }
+  @media screen and (max-width: 480px) {
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+`;
+export const DescriptionContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  @media screen and (max-width: 768px) {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  @media screen and (max-width: 480px) {
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+`;
