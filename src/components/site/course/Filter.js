@@ -1,5 +1,4 @@
-import React, { useState, useContext } from "react";
-import { DefiContext } from "../../../context/DefiContext";
+import React, { useState } from "react";
 import {
   Button,
   Card,
@@ -30,7 +29,6 @@ const Filter = ({ setParams, query, setQuery }) => {
   const [teacherID, setTeacherID] = useState([]);
   const [topicID, setTopicID] = useState([]);
   const [courseName, setCourseName] = useState([]);
-  const [reload, setReload] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       const get_teacher_name = await axios({
@@ -95,14 +93,14 @@ const Filter = ({ setParams, query, setQuery }) => {
       sx={{
         boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
         padding: 2,
-        borderRadius: "25px",
+        borderRadius: "5px",
       }}
     >
       <CardHeader
         title={
           <Chip
             color="secondary"
-            sx={{ color: "#fff", fontSize: "1rem" }}
+            sx={{ color: "#fff", fontSize: "1rem", borderRadius: "5px" }}
             label="جستجوی دوره"
           />
         }

@@ -29,14 +29,14 @@ const CourseCard = ({ data }) => {
       <Card
         sx={{
           boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-          borderRadius: "25px",
+          borderRadius: "5px",
           padding: 1,
         }}
       >
         <Link to={`/panel/course/details/${data?.course_id}`}>
           <CardMedia
             component="img"
-            sx={{ width: "100%", borderRadius: "20px", height: "200px" }}
+            sx={{ width: "100%", borderRadius: "5px", height: "200px" }}
             alt="course"
             src={
               // data.picture1 ? `https://api.srvschool.ir${data.picture1}` : NoImage
@@ -44,10 +44,15 @@ const CourseCard = ({ data }) => {
             }
           />
           <CardContent>
-            <img
-              style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-              src={NoImage}
-            />
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <img
+                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                src={NoImage}
+              />
+              <span style={{ fontSize: "12px", marginRight: "5px" }}>
+                احمد اسدی
+              </span>
+            </div>
             <Typography
               variant="body1"
               fontWeight={400}
@@ -83,7 +88,7 @@ const CourseCard = ({ data }) => {
             variant="contained"
             sx={{
               boxShadow: "none",
-              borderRadius: "30px",
+              borderRadius: "5px",
               padding: "10px",
             }}
             onClick={() => navigate("/panel/course/details/" + data.course_id)}
@@ -94,7 +99,7 @@ const CourseCard = ({ data }) => {
             variant="contained"
             sx={{
               boxShadow: "none",
-              borderRadius: "30px",
+              borderRadius: "5px",
               padding: "10px",
             }}
             onClick={() => setOpenModal(true)}
@@ -126,7 +131,9 @@ const CourseCard = ({ data }) => {
         aria-describedby="alert-dialog-slide-description"
         style={{ direction: "rtl", padding: "10px" }}
       >
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", padding: "20px" }}
+        >
           <div
             style={{
               display: "flex",
@@ -142,9 +149,18 @@ const CourseCard = ({ data }) => {
             />
           </div>
           <div>
-            <span>
+            <p
+              style={{
+                display: "block",
+                textOverflow: "ellipsis",
+                wordWrap: "break-word",
+                overflow: "hidden",
+                maxHeight: "3.6em",
+                lineHeight: "1.8em",
+              }}
+            >
               توضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحات
-            </span>
+            </p>
           </div>
         </div>
         <DialogActions>
