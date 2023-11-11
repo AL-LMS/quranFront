@@ -84,7 +84,7 @@ const CourseCard = ({ data }) => {
             sx={{
               boxShadow: "none",
               borderRadius: "30px",
-              padding: "4px 20px",
+              padding: "10px",
             }}
             onClick={() => navigate("/panel/course/details/" + data.course_id)}
           >
@@ -95,7 +95,7 @@ const CourseCard = ({ data }) => {
             sx={{
               boxShadow: "none",
               borderRadius: "30px",
-              padding: "4px 20px",
+              padding: "10px",
             }}
             onClick={() => setOpenModal(true)}
           >
@@ -124,19 +124,28 @@ const CourseCard = ({ data }) => {
         keepMounted
         onClose={() => handleClose()}
         aria-describedby="alert-dialog-slide-description"
-        style={{ direction: "rtl" }}
+        style={{ direction: "rtl", padding: "10px" }}
       >
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <span style={{ fontSize: "24px" }}>احمد اسدی</span>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <span style={{ fontSize: "20px" }}>احمد اسدی</span>
             <img
               src={NoImage}
-              style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+              style={{ width: "75px", height: "75px", borderRadius: "50%" }}
             />
           </div>
-          <span>
-            توضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحات
-          </span>
+          <div>
+            <span>
+              توضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحاتتوضیحات
+            </span>
+          </div>
         </div>
         <DialogActions>
           <Button onClick={() => handleClose()}>برگشت</Button>
