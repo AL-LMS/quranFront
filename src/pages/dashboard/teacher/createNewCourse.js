@@ -4,8 +4,12 @@ import {
   Autocomplete,
   Button,
   Divider,
+  FormControl,
+  FormLabel,
   Grid,
   MenuItem,
+  Radio,
+  RadioGroup,
   TextField,
 } from "@mui/material";
 import { toastify } from "../../../helper/toast";
@@ -36,7 +40,7 @@ const CreateCourse = () => {
   const [startValue, setStartValue] = useState(null);
   const [openStart, setOpenStart] = useState(false);
   const [openEnd, setOpenEnd] = useState(false);
-
+  const [variant, setVariant] = useState(0);
   const config = {
     year: {
       caption: {
@@ -81,7 +85,7 @@ const CreateCourse = () => {
     ages: null,
     degree: null,
     picture: defaultPic,
-    price: null,
+    price: 0,
   };
   const RegistrationSchema = Yup.object().shape({
     type: Yup.string().required("لطفا نوع دوره را وارد نمایید."),
@@ -167,8 +171,8 @@ const CreateCourse = () => {
   };
 
   const onChangeSetTime = (date) => {
-    formik.setFieldValue("start_time", date[0].format("HH:mm"));
-    formik.setFieldValue("end_time", date[1].format("HH:mm"));
+    formik.setFieldValue("start_time", date[0].format("HH") + ":00");
+    formik.setFieldValue("end_time", date[1].format("HH") + ":00");
   };
 
   useEffect(() => {
@@ -221,6 +225,8 @@ const CreateCourse = () => {
               ) : null}
               <TextField
                 fullWidth
+                multiline
+                rows={5}
                 label="توضیحات"
                 name="explain"
                 onChange={(e) =>
@@ -236,39 +242,6 @@ const CreateCourse = () => {
                   </p>
                 </div>
               ) : null}
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={isOnline}
-                      onChange={handleCheckboxChange}
-                      name="isOnline"
-                      color="primary"
-                    />
-                  }
-                  label="کلاس به صورت مجازی برگزار می‌شود."
-                  sx={{
-                    fontSize: "13px",
-                    padding: "4px 15px",
-                  }}
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={!isOnline}
-                      onChange={handleCheckboxChange}
-                      name="isOffline"
-                      color="primary"
-                    />
-                  }
-                  label="کلاس به صورت حضوری برگزار می‌شود."
-                  sx={{
-                    fontSize: "13px",
-                    padding: "4px 15px",
-                    marginBottom: "2rem",
-                  }}
-                />
-              </FormGroup>
             </Grid>
             <Grid item md={6} xs={12}>
               <Autocomplete
@@ -333,7 +306,7 @@ const CreateCourse = () => {
                     highlightHolidays
                     highlightWeekends
                     addDayName
-                    initialValue={new Date("2021-03-20T20:30:00.000Z")}
+                    initialValue={new Date()}
                     onSubmit={(date) => {
                       handleSubmit(date, "start");
                       setOpenStart(false);
@@ -365,12 +338,8 @@ const CreateCourse = () => {
                     highlightHolidays
                     highlightWeekends
                     addDayName
-                    minDate={
-                      startValue
-                        ? startValue
-                        : new Date("2021-03-20T20:30:00.000Z")
-                    }
-                    initialValue={new Date("2021-03-20T20:30:00.000Z")}
+                    minDate={startValue ? startValue : new Date()}
+                    initialValue={new Date()}
                     onSubmit={(date) => {
                       handleSubmit(date, "end");
                       setOpenEnd(false);
@@ -382,10 +351,11 @@ const CreateCourse = () => {
                 </ContainerX>
               </Grid>
               <TimePicker.RangePicker
-                defaultValue={dayjs("12:08", "HH:mm")}
+                defaultValue={dayjs("12:00", "HH:mm")}
                 size="large"
                 direction="rtl"
-                format="HH:mm"
+                format="HH"
+                disabledHours={() => [0, 1, 2, 3, 4, 5, 6, 23]}
                 locale={{
                   ...locale,
                   lang: {
@@ -404,6 +374,39 @@ const CreateCourse = () => {
                   </p>
                 </div>
               ) : null}
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={isOnline}
+                      onChange={handleCheckboxChange}
+                      name="isOnline"
+                      color="primary"
+                    />
+                  }
+                  label="کلاس به صورت مجازی برگزار می‌شود."
+                  sx={{
+                    fontSize: "13px",
+                    padding: "4px 15px",
+                  }}
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={!isOnline}
+                      onChange={handleCheckboxChange}
+                      name="isOffline"
+                      color="primary"
+                    />
+                  }
+                  label="کلاس به صورت حضوری برگزار می‌شود."
+                  sx={{
+                    fontSize: "13px",
+                    padding: "4px 15px",
+                    marginBottom: "2rem",
+                  }}
+                />
+              </FormGroup>
             </Grid>
           </Grid>
           <Divider />
@@ -550,7 +553,7 @@ const CreateCourse = () => {
                 style={{ display: "flex", marginTop: "5px", flexWrap: "wrap" }}
               >
                 <ContainerX>
-                  <Autocomplete
+                  {/* <Autocomplete
                     fullWidth
                     value={degree[formik.values.degree]}
                     onChange={(event, newValue) => {
@@ -569,27 +572,52 @@ const CreateCourse = () => {
                         {formik.errors.degree}
                       </p>
                     </div>
-                  ) : null}
+                  ) : null} */}
+                  <FormControl>
+                    <FormLabel>نوع کلاس</FormLabel>
+                    <RadioGroup
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                      value={variant}
+                      onChange={(event) =>
+                        setVariant(parseInt(event.target.value))
+                      }
+                    >
+                      <Radio value={0} label="رایگان" />
+                      <label>رایگان</label>
+                      <Radio value={1} label="هزینه‌ای" />
+                      <label>هزینه‌ای</label>
+                    </RadioGroup>
+                  </FormControl>
                 </ContainerX>
-                <ContainerX>
-                  <TextField
-                    fullWidth
-                    label="هزینه ثبت نام"
-                    name="price"
-                    type="number"
-                    onChange={(e) =>
-                      formik.setFieldValue("price", e.target.value)
-                    }
-                    value={formik.values.price}
-                  />
-                  {formik.touched.price && formik.errors.price ? (
-                    <div>
-                      <p style={{ fontSize: 10, color: "red" }}>
-                        {formik.errors.price}
-                      </p>
-                    </div>
-                  ) : null}
-                </ContainerX>
+                {variant !== 0 ? (
+                  <ContainerX>
+                    <TextField
+                      fullWidth
+                      label="هزینه ثبت نام"
+                      name="price"
+                      type="number"
+                      onChange={(e) =>
+                        formik.setFieldValue("price", e.target.value)
+                      }
+                      value={formik.values.price}
+                    />
+                    {formik.touched.price && formik.errors.price ? (
+                      <div>
+                        <p style={{ fontSize: 10, color: "red" }}>
+                          {formik.errors.price}
+                        </p>
+                      </div>
+                    ) : null}
+                  </ContainerX>
+                ) : (
+                  <></>
+                )}
               </Grid>
             </Grid>
             <Grid item xs={12}>
