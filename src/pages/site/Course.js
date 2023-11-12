@@ -27,12 +27,7 @@ const Course = () => {
       navigate("/panel/profile");
     }
     get_courses().then(() => {});
-  }, [userInfo]);
-
-  useEffect(() => {
-    get_courses().then(() => {});
-  }, [query]);
-
+  }, [userInfo, query]);
   const get_courses = async () => {
     let data = {
       table: "courses",
