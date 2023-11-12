@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Grid, Box, Button, TextField } from "@mui/material";
 import { Container } from "@mui/system";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
@@ -79,21 +79,41 @@ const CheckOTP = () => {
             onSubmit={formik.handleSubmit}
             style={{
               boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-              borderRadius: "20px",
+              borderRadius: "5px",
               padding: "20px",
               marginBottom: "40px",
             }}
           >
-            <Typography mb={3} color="mainText" textAlign="center">
-              تایید کد فراموشی
-            </Typography>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography color="mainText" textAlign="center">
+                ورود با پیامک
+              </Typography>
+              <span
+                style={{
+                  color: "#666666",
+                  fontSize: "10px",
+                  marginBottom: "20px",
+                }}
+              >
+                {"(کد 6 رقمی برای ورد به شماره تلفن " +
+                  JSON.parse(localStorage.getItem("phone")) +
+                  " ارسال شد)"}
+              </span>
+            </div>
             <Box
               sx={{
-                marginBottom: "2rem",
+                marginBottom: "1rem",
               }}
             >
               <TextField
-                label="کد فراموشی"
+                label="کد"
                 name="code"
                 value={formik.values.code}
                 fullWidth
@@ -108,12 +128,25 @@ const CheckOTP = () => {
                 </div>
               ) : null}
             </Box>
+            <Link to="/send-otp">
+              <Button
+                fullWidth
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  marginBottom: "20px",
+                }}
+              >
+                تغییر شماره تلفن
+              </Button>
+            </Link>
             <Button
               type="submit"
               variant="contained"
               fullWidth
               sx={{
-                borderRadius: "10px",
+                borderRadius: "5px",
                 padding: "6px 30px",
                 boxShadow: "none",
                 marginBottom: "20px",

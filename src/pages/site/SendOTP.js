@@ -66,13 +66,13 @@ const SendOTP = () => {
             onSubmit={formik.handleSubmit}
             style={{
               boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-              borderRadius: "20px",
+              borderRadius: "5px",
               padding: "20px",
               marginBottom: "40px",
             }}
           >
             <Typography mb={3} color="mainText" textAlign="center">
-              ارسال کد فراموشی
+              ورود با پیامک
             </Typography>
             <Box
               sx={{
@@ -100,7 +100,7 @@ const SendOTP = () => {
               variant="contained"
               fullWidth
               sx={{
-                borderRadius: "10px",
+                borderRadius: "5px",
                 padding: "6px 30px",
                 boxShadow: "none",
                 marginBottom: "20px",

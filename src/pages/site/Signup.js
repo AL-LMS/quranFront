@@ -13,8 +13,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { regex_phone } from "../../helper/regex";
 import { setLocalStorageLogin } from "../localStorage";
+import Loader from "../../components/site/shared/Loader";
 const Signup = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [kind, setKind] = useState("student");
 
   const signup = async () => {
@@ -78,7 +80,10 @@ const Signup = () => {
     initialValues,
     validationSchema: RegistrationSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
-      signup().then(() => {});
+      setLoading(true);
+      signup().then(() => {
+        setLoading(false);
+      });
     },
   });
 
@@ -86,6 +91,25 @@ const Signup = () => {
     setKind(event.target.name);
     formik.setFieldValue("type", event.target.name);
   };
+  if (loading)
+    return (
+      <Container maxWidth="lg">
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100vh",
+            }}
+          >
+            <Loader />
+          </Grid>
+        </Grid>
+      </Container>
+    );
   return (
     <Container maxWidth="lg" sx={{ height: "100vh" }}>
       <Grid container mt={8} sx={{ height: "100vh" }}>
@@ -94,7 +118,7 @@ const Signup = () => {
             onSubmit={formik.handleSubmit}
             style={{
               boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-              borderRadius: "20px",
+              borderRadius: "5px",
               padding: "20px",
               marginBottom: "40px",
             }}
@@ -252,7 +276,7 @@ const Signup = () => {
               fullWidth
               // onClick={() => submit_api().then(() => {})}
               sx={{
-                borderRadius: "10px",
+                borderRadius: "5px",
                 padding: "6px 30px",
                 boxShadow: "none",
                 marginBottom: "20px",

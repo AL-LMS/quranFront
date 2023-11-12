@@ -87,7 +87,7 @@ const Login = () => {
             onSubmit={formik.handleSubmit}
             style={{
               boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-              borderRadius: "20px",
+              borderRadius: "5px",
               padding: "20px",
               marginBottom: "40px",
             }}
@@ -151,7 +151,7 @@ const Login = () => {
                   marginBottom: "20px",
                 }}
               >
-                فراموشی رمز عبور
+                ورود با پیامک
               </Button>
             </Link>
             <Button
