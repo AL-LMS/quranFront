@@ -7,7 +7,7 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
 import CourseImage from "../../../../assets/img/c.jpg";
 
@@ -17,7 +17,7 @@ const VideoCard = () => {
       sx={{
         padding: 2,
         boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-        borderRadius: 3,
+        borderRadius: "5px",
         width: "fit-content",
       }}
     >
@@ -40,7 +40,7 @@ const VideoCard = () => {
           ین دوره در زمینه مشترک ریاضی و تجربی مخ...
         </Typography>
       </CardContent>
-      <CardActions sx={{justifyContent:"center"}}>
+      <CardActions sx={{ justifyContent: "center" }}>
         <Link to="/" style={{ display: "block" }}>
           <Button variant="outlined" sx={{ boxShadow: "none" }}>
             جزییات بیشتر

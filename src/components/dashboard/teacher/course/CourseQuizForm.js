@@ -121,7 +121,7 @@ const CourseQuizForm = ({ type, data, setReload }) => {
       {type === "create" ? (
         <Button
           variant="contained"
-          sx={{ boxShadow: "none", borderRadius: 3 }}
+          sx={{ boxShadow: "none", borderRadius: "5px" }}
           onClick={() => setOpen(true)}
         >
           ایجاد آزمون
@@ -217,7 +217,11 @@ const CourseQuizForm = ({ type, data, setReload }) => {
             {type === "create" ? (
               <Button
                 variant="contained"
-                sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
                 onClick={() => add_quiz().then(() => {})}
                 fullWidth
                 disabled={loading}
@@ -227,7 +231,11 @@ const CourseQuizForm = ({ type, data, setReload }) => {
             ) : (
               <Button
                 variant="contained"
-                sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
                 onClick={() => add_quiz().then(() => {})}
                 fullWidth
                 disabled={loading}

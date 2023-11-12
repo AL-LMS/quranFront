@@ -189,7 +189,11 @@ const UploadExercisesForm = ({
             {type === "create" ? (
               <Button
                 variant="contained"
-                sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
                 onClick={() => upload_homework().then(() => {})}
                 fullWidth
                 disabled={loading}
@@ -199,7 +203,11 @@ const UploadExercisesForm = ({
             ) : (
               <Button
                 variant="contained"
-                sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
                 onClick={() => edit_upload_homework().then(() => {})}
                 fullWidth
                 disabled={loading}

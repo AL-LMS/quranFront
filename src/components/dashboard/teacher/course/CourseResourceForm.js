@@ -90,7 +90,7 @@ const TeacherResourceForm = ({ type, data, setReload }) => {
       {type === "create" ? (
         <Button
           variant="contained"
-          sx={{ boxShadow: "none", borderRadius: 3 }}
+          sx={{ boxShadow: "none", borderRadius: "5px" }}
           onClick={() => setOpen(true)}
         >
           افزودن منبع
@@ -147,7 +147,11 @@ const TeacherResourceForm = ({ type, data, setReload }) => {
             {type === "create" ? (
               <Button
                 variant="contained"
-                sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
                 onClick={() => add_resource().then(() => {})}
                 fullWidth
                 disabled={loading}
@@ -157,7 +161,11 @@ const TeacherResourceForm = ({ type, data, setReload }) => {
             ) : (
               <Button
                 variant="contained"
-                sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
                 onClick={() => add_resource().then(() => {})}
                 fullWidth
                 disabled={loading}

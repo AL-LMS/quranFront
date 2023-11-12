@@ -120,7 +120,7 @@ const PackageDetails = () => {
                   onClick={addToCart}
                   sx={{
                     boxShadow: "none",
-                    borderRadius: 3,
+                    borderRadius: "5px",
                     padding: "10px 24px",
                     float: "right",
                   }}

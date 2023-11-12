@@ -207,7 +207,7 @@ const QuizTDetails = () => {
               }
               sx={{
                 boxShadow: "none",
-                borderRadius: 3,
+                borderRadius: "5px",
                 margin: "2rem auto",
                 display: "block",
                 padding: "10px 30px",

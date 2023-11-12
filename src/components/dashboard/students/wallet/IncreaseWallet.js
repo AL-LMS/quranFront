@@ -35,7 +35,7 @@ const IncreaseWallet = () => {
     <div>
       <Button
         variant="contained"
-        sx={{ boxShadow: "none", borderRadius: 3 }}
+        sx={{ boxShadow: "none", borderRadius: "5px" }}
         onClick={() => setOpen(true)}
         fullWidth
       >
@@ -68,7 +68,7 @@ const IncreaseWallet = () => {
           <Grid item xs={12}>
             <Button
               variant="contained"
-              sx={{ boxShadow: "none", borderRadius: 3 }}
+              sx={{ boxShadow: "none", borderRadius: "5px" }}
               fullWidth
               onClick={payByCard}
             >

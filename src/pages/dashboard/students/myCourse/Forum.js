@@ -176,7 +176,7 @@ const Forum = () => {
             />
             <Button
               variant="contained"
-              sx={{ boxShadow: "none", borderRadius: 3 }}
+              sx={{ boxShadow: "none", borderRadius: "5px" }}
               endIcon={<NearMeOutlinedIcon />}
               type="submit"
               disabled={loading}

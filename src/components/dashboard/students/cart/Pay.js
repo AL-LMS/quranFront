@@ -95,8 +95,7 @@ const Pay = ({ wallet, data }) => {
         }
       );
       window.location.replace(response.data);
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   return (
@@ -104,7 +103,7 @@ const Pay = ({ wallet, data }) => {
       sx={{
         padding: 2,
         boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-        borderRadius: 3,
+        borderRadius: "5px",
       }}
     >
       <Grid container spacing={2}>
@@ -209,7 +208,7 @@ const Pay = ({ wallet, data }) => {
             sx={{
               boxShadow: "none",
               padding: "10px 0",
-              borderRadius: 3,
+              borderRadius: "5px",
               color: "#fff",
             }}
             color="success"

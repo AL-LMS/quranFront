@@ -68,7 +68,7 @@ const CourseList = ({ data }) => {
       </CardContent>
       <CardActions sx={{ marginLeft: "auto", alignSelf: "flex-start" }}>
         <Button
-          sx={{ boxShadow: "none", borderRadius: 3 }}
+          sx={{ boxShadow: "none", borderRadius: "5px" }}
           fullWidth
           id="demo-customized-button"
           aria-controls={open ? "demo-customized-menu" : undefined}

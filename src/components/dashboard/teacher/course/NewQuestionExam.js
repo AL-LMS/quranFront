@@ -179,7 +179,7 @@ const NewQuestionExam = ({ header }) => {
                   variant="contained"
                   sx={{
                     boxShadow: "none",
-                    borderRadius: 3,
+                    borderRadius: "5px",
                     color: "#fff",
                     fontSize: "17px",
                   }}

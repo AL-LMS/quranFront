@@ -17,7 +17,7 @@ const ProductCard = ({ data }) => {
     <ListItem
       sx={{
         padding: 0,
-        borderRadius: 3,
+        borderRadius: "5px",
         boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
         backgroundColor: "#fff",
       }}
@@ -51,14 +51,12 @@ const ProductCard = ({ data }) => {
         secondary={
           <Stack direction="row" spacing={1} mt={2}>
             <Typography color="text.secondary">قیمت دوره:</Typography>
-            <Typography color="mainText">
-              {data?.price} تومان
-            </Typography>
+            <Typography color="mainText">{data?.price} تومان</Typography>
           </Stack>
         }
       />
       <Stack sx={{ display: { xs: "flex", md: "none" } }}>
-      <DeletePackage type="cart" url="dashboard/basket" id={data.id} />
+        <DeletePackage type="cart" url="dashboard/basket" id={data.id} />
       </Stack>
     </ListItem>
   );

@@ -72,7 +72,7 @@ const ResourcesLists = ({ data }) => {
                     <a download={item?.title} href={item?.file}>
                       <Button
                         variant="contained"
-                        sx={{ boxShadow: "none", borderRadius: 3 }}
+                        sx={{ boxShadow: "none", borderRadius: "5px" }}
                       >
                         <DownloadIcon />
                       </Button>

@@ -183,7 +183,11 @@ const UploadQuizzesForm = ({ type, data, quizId, answer_id, setReload }) => {
             {type === "create" ? (
               <Button
                 variant="contained"
-                sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
                 onClick={() => upload_quiz().then(() => {})}
                 fullWidth
                 disabled={loading}
@@ -193,7 +197,11 @@ const UploadQuizzesForm = ({ type, data, quizId, answer_id, setReload }) => {
             ) : (
               <Button
                 variant="contained"
-                sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
                 onClick={() => edit_upload_quiz().then(() => {})}
                 fullWidth
                 disabled={loading}

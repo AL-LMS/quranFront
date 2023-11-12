@@ -145,7 +145,7 @@ const EditQuestionExam = ({ data }) => {
               <Button
                 onClick={editHandler}
                 fullWidth
-                sx={{ boxShadow: "none", height: "56px", borderRadius: 3 }}
+                sx={{ boxShadow: "none", height: "56px", borderRadius: "5px" }}
                 disabled={loading}
                 variant="contained"
               >

@@ -108,7 +108,7 @@ const Quiz = () => {
                       display: "block",
                       margin: "1rem auto",
                       padding: "8px 25px",
-                      borderRadius: 3,
+                      borderRadius: "5px",
                     }}
                   >
                     خرید دوره

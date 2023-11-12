@@ -109,7 +109,11 @@ const CourseHomeworkAnswerForm = ({ type, answer_id }) => {
             {type === "create" ? (
               <Button
                 variant="contained"
-                sx={{ boxShadow: "none", borderRadius: 3, padding: "12px 0" }}
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
                 onClick={() => set_score_homework().then(() => {})}
                 fullWidth
                 disabled={loading}
