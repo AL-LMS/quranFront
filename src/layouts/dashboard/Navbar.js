@@ -76,7 +76,7 @@ const Navbar = ({ setSidebar }) => {
               onClick={openHandler}
               sx={[
                 {
-                  borderRadius: 3,
+                  borderRadius: "5px",
                   marginLeft: 2,
                   fontSize: "15px",
                   backgroundColor: "#9126FF",

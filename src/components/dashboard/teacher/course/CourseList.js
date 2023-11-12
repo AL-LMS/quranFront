@@ -30,7 +30,7 @@ const CourseList = ({ data }) => {
       sx={{
         padding: 2,
         boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-        borderRadius: "30px",
+        borderRadius: "5px",
         marginTop: "1rem",
       }}
     >
@@ -80,7 +80,7 @@ const CourseList = ({ data }) => {
                 key={item.id}
                 sx={{
                   transition: "0.3s",
-                  borderRadius: "20px",
+                  borderRadius: "5px",
                   "&:hover": {
                     boxShadow: "0 5px 15px rgba(112,112,112,0.3)",
                   },
@@ -122,20 +122,19 @@ const CourseList = ({ data }) => {
                   />
                 </TableCell>
                 <TableCell sx={{ border: "none" }}>
-                  <Stack direction="row" justifyContent="center">
+                  <Stack direction="row" justifyContent="space-evenly">
                     <Tooltip title="دوره">
                       <Link to={`/panel/course/course-page/${item.course_id}`}>
-                        {/* <Button>
-                          <MenuBookOutlinedIcon />
-                        </Button> */}
                         <Button
                           type="submit"
                           variant="contained"
                           fullWidth
                           sx={{
+                            fontSize: "12px",
                             borderRadius: "5px",
                             padding: "6px 30px",
                             boxShadow: "none",
+                            // marginRight: "10px",
                           }}
                         >
                           صفحه دوره
