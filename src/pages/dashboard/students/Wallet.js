@@ -51,7 +51,7 @@ const Wallet = () => {
             sx={{
               boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
               padding: 2,
-              borderRadius: "20px",
+              borderRadius: "5px",
             }}
           >
             <Typography

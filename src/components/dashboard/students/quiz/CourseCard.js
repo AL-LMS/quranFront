@@ -16,7 +16,7 @@ const CourseCard = ({ data }) => {
     <Card
       sx={{
         boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-        borderRadius: "30px",
+        borderRadius: "5px",
       }}
     >
       <CardMedia component="img" src={CourseImage} height={210} />

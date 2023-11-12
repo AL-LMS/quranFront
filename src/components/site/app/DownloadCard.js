@@ -15,7 +15,7 @@ const DownloadCard = ({ link, system, peName, icon }) => {
     <Card
       sx={{
         boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-        borderRadius: "25px",
+        borderRadius: "5px",
         padding: 2,
         display: "flex",
         alignItems: "center",
@@ -27,7 +27,7 @@ const DownloadCard = ({ link, system, peName, icon }) => {
           display: "inline-block",
           width: "80px",
           height: "80px",
-          borderRadius: "25px",
+          borderRadius: "5px",
           textAlign: "center",
           lineHeight: "100px",
           backgroundColor: systemObj[system].secondary,

@@ -83,7 +83,7 @@ const PrePayments = () => {
       <Card
         sx={{
           boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-          borderRadius: "10px",
+          borderRadius: "5px",
           padding: 2,
         }}
       >

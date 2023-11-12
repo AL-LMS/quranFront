@@ -7,7 +7,6 @@ import CourseIcon from "../../../../assets/img/e-learning.svg";
 import Charts from "../../../../assets/img/chart-line-up.svg";
 
 const OverView = ({ type, count }) => {
-
   return (
     <Card
       sx={{
@@ -22,7 +21,7 @@ const OverView = ({ type, count }) => {
           sx={{
             width: "60px",
             height: "60px",
-            borderRadius: "10px",
+            borderRadius: "5px",
             display: "inline-block",
             backgroundColor: "#651fff",
             textAlign: "center",

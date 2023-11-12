@@ -77,7 +77,7 @@ const StudentList = () => {
       sx={{
         padding: 2,
         boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-        borderRadius: "30px",
+        borderRadius: "5px",
         marginTop: "1rem",
       }}
     >
@@ -120,7 +120,7 @@ const StudentList = () => {
                 key={item.id}
                 sx={{
                   transition: "0.3s",
-                  borderRadius: "20px",
+                  borderRadius: "5px",
                   "&:hover": {
                     boxShadow: "0 5px 15px rgba(112,112,112,0.3)",
                   },

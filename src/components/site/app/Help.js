@@ -24,14 +24,14 @@ const Help = () => {
           sx={{
             boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
             padding: 2,
-            borderRadius: "25px",
+            borderRadius: "5px",
           }}
         >
           <CardMedia
             component="video"
             // src={Android}
             controls
-            sx={{ height: "300px", borderRadius: "20px" }}
+            sx={{ height: "300px", borderRadius: "5px" }}
           />
           <Typography color="mainText" textAlign="center" mt={2}>
             آموزش نسخه اندروید
@@ -43,14 +43,14 @@ const Help = () => {
           sx={{
             boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
             padding: 2,
-            borderRadius: "25px",
+            borderRadius: "5px",
           }}
         >
           <CardMedia
             component="video"
             // src={Apple}
             controls
-            sx={{ height: "300px", borderRadius: "20px" }}
+            sx={{ height: "300px", borderRadius: "5px" }}
           />
           <Typography color="mainText" textAlign="center" mt={2}>
             آموزش نسخه آی او اس
@@ -62,14 +62,14 @@ const Help = () => {
           sx={{
             boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
             padding: 2,
-            borderRadius: "25px",
+            borderRadius: "5px",
           }}
         >
           <CardMedia
             component="video"
             // src={Windows}
             controls
-            sx={{ height: "300px", borderRadius: "20px" }}
+            sx={{ height: "300px", borderRadius: "5px" }}
           />
           <Typography color="mainText" textAlign="center" mt={2}>
             آموزش نسخه ویندوز

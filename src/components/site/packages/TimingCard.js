@@ -19,14 +19,14 @@ const TimingCard = ({ data }) => {
       <Card
         sx={{
           boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-          borderRadius: "25px",
+          borderRadius: "5px",
           padding: 1,
           position: "relative",
         }}
       >
         <Box
           component="div"
-          sx={{ backgroundColor: "#F3E6FF", borderRadius: "20px", padding: 2 }}
+          sx={{ backgroundColor: "#F3E6FF", borderRadius: "5px", padding: 2 }}
         >
           <img
             src={CourseImage}
@@ -82,7 +82,7 @@ const TimingCard = ({ data }) => {
             variant="contained"
             sx={{
               boxShadow: "none",
-              borderRadius: "30px",
+              borderRadius: "5px",
               padding: "4px 20px",
             }}
           >

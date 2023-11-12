@@ -91,7 +91,7 @@ const ForumList = () => {
             <Card
               sx={{
                 padding: 2,
-                borderRadius: "20px",
+                borderRadius: "5px",
                 boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
               }}
             >

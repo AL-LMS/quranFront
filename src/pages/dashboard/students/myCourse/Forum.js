@@ -143,7 +143,7 @@ const Forum = () => {
               alignItems: "center",
               position: "fixed",
               padding: "10px",
-              borderRadius: "20px",
+              borderRadius: "5px",
               boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
               bottom: 0,
               backgroundColor: "#fff",
@@ -193,7 +193,7 @@ const Forum = () => {
                   sx={{
                     boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
                     padding: 2,
-                    borderRadius: "20px",
+                    borderRadius: "5px",
                     maxWidth: { xs: "80%", md: "60%" },
                     width: "fit-content",
                     backgroundColor: "#E5D8FF",
@@ -288,7 +288,7 @@ const Forum = () => {
                   sx={{
                     boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
                     padding: 2,
-                    borderRadius: "20px",
+                    borderRadius: "5px",
                     maxWidth: { xs: "80%", md: "60%" },
                     width: "fit-content",
                   }}

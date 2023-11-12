@@ -45,7 +45,7 @@ const QuizTDetails = () => {
     if (data?.end_data) {
       const date = new Date(data.end_data).getTime();
       localStorage.setItem("dnq", JSON.stringify(date));
-      localStorage.setItem("time", JSON.stringify(data.quizTime*60));
+      localStorage.setItem("time", JSON.stringify(data.quizTime * 60));
     }
   }, [data]);
 
@@ -103,7 +103,7 @@ const QuizTDetails = () => {
           <Card
             sx={{
               boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-              borderRadius: "30px",
+              borderRadius: "5px",
               padding: 2,
             }}
           >

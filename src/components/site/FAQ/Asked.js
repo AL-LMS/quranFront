@@ -20,7 +20,7 @@ const Asked = ({ active, title, text }) => {
       onChange={handleChange(active)}
       sx={{
         boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-        borderRadius: "20px",
+        borderRadius: "5px",
       }}
     >
       <AccordionSummary

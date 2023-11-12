@@ -18,7 +18,7 @@ const CourseInfo = ({ data_course }) => {
     <Card
       sx={{
         boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
-        borderRadius: "25px",
+        borderRadius: "5px",
         padding: 2,
       }}
     >
@@ -32,7 +32,7 @@ const CourseInfo = ({ data_course }) => {
                 : NoImage
             }
             alt="course"
-            style={{ maxWidth: "100%", borderRadius: "20px" }}
+            style={{ maxWidth: "100%", borderRadius: "5px" }}
           />
         </Grid>
         <Grid item xs={12} md={8}>

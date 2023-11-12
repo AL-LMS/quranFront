@@ -42,7 +42,7 @@ const Slider = () => {
             <img
               src={`https://api.srvschool.ir${item?.picture}`}
               alt="slider"
-              style={{ maxWidth: "100%", borderRadius: "20px" }}
+              style={{ maxWidth: "100%", borderRadius: "5px" }}
             />
           </a>
         </SwiperSlide>
