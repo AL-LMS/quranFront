@@ -3,10 +3,9 @@ import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import { Button, Card, Grid, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-
-import CircleIcon from "../../../../assets/img/circle-small.svg";
 import toastify from "../../../../helper/toast";
 import { getUrl } from "../../../../helper/getUrl";
+import CourseList from "../course/CourseList";
 
 const Courses = () => {
   const { auth, user } = useAuth();
@@ -62,24 +61,27 @@ const Courses = () => {
       </Typography>
       <Grid container spacing={4}>
         {data.length > 0 ? (
-          data.map((item) => (
-            <Grid item xs={12} mt={3} md={6} key={item.id}>
-              <Stack direction="row" justifyContent="space-between">
-                <Stack direction="row" spacing={1}>
-                  <img src={CircleIcon} alt="circle" />
-                  <Typography color="mainText" fontWeight={400}>
-                    {item.name}
-                  </Typography>
-                </Stack>
-                <Typography
-                  fontFamily="iranyekanFn"
-                  color={item.active ? "success.main" : "error"}
-                >
-                  {item.active ? "فعال" : "غیرفعال"}
-                </Typography>
-              </Stack>
-            </Grid>
-          ))
+          // data.map((item) => (
+          //   <Grid item xs={12} mt={3} md={6} key={item.id}>
+          //     <Stack direction="row" justifyContent="space-between">
+          //       <Stack direction="row" spacing={1}>
+          //         <img src={CircleIcon} alt="circle" />
+          //         <Typography color="mainText" fontWeight={400}>
+          //           {item.name}
+          //         </Typography>
+          //       </Stack>
+          //       <Typography
+          //         fontFamily="iranyekanFn"
+          //         color={item.active ? "success.main" : "error"}
+          //       >
+          //         {item.active ? "فعال" : "غیرفعال"}
+          //       </Typography>
+          //     </Stack>
+          //   </Grid>
+          // ))
+          <Grid item xs={12}>
+            <CourseList data={data} />
+          </Grid>
         ) : (
           <Grid item xs={12}>
             <Typography variant="h5" color="#888" textAlign="center">
@@ -90,6 +92,9 @@ const Courses = () => {
         <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Link to="/panel/my-coures">
             <Button>مشاهده همه دوره‌ها</Button>
+          </Link>
+          <Link to="/panel/new-coures">
+            <Button>ایجاد دوره توسط مربی</Button>
           </Link>
         </Grid>
       </Grid>

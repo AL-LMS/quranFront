@@ -93,7 +93,7 @@ const MyCourse = () => {
             sx={{ boxShadow: "none" }}
             onClick={() => navigate("/panel/new-coures")}
           >
-            ایجاد دوره جدید
+            ایجاد دوره توسط مربی
           </Button>
         </Grid>
         <Grid item xs={12}>

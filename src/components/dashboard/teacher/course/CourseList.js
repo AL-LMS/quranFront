@@ -13,8 +13,8 @@ import {
   Tooltip,
 } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
-import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+// import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
+// import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import { Link } from "react-router-dom";
 
 const statusTable = (item) => {
@@ -125,15 +125,37 @@ const CourseList = ({ data }) => {
                   <Stack direction="row" justifyContent="center">
                     <Tooltip title="دوره">
                       <Link to={`/panel/course/course-page/${item.course_id}`}>
-                        <Button>
+                        {/* <Button>
                           <MenuBookOutlinedIcon />
+                        </Button> */}
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          fullWidth
+                          sx={{
+                            borderRadius: "5px",
+                            padding: "6px 30px",
+                            boxShadow: "none",
+                          }}
+                        >
+                          صفحه دوره
                         </Button>
                       </Link>
                     </Tooltip>
                     <Tooltip title="دانش آموزان">
                       <Link to={`/panel/course/students/${item.course_id}`}>
-                        <Button>
-                          <GroupsOutlinedIcon />
+                        {/* <Button><GroupsOutlinedIcon /></Button> */}
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          fullWidth
+                          sx={{
+                            borderRadius: "5px",
+                            padding: "6px 30px",
+                            boxShadow: "none",
+                          }}
+                        >
+                          دانش آموزان
                         </Button>
                       </Link>
                     </Tooltip>
