@@ -132,7 +132,7 @@ const StudentInfo = ({ formik }) => {
           highlightHolidays
           highlightWeekends
           addDayName
-          initialValue={new Date("2021-03-20T20:30:00.000Z")}
+          initialValue={new Date("1980-03-20T20:30:00.000Z")}
           onSubmit={(date) => {
             handleSubmit(date, "birth_day");
             setOpenBirthDay(false);

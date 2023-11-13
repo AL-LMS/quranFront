@@ -9,20 +9,19 @@ const Documnets = ({
   nameOfButtonField,
 }) => {
   const openFile = (file) => {
+    console.log(file);
     const input = file.target;
     const reader = new FileReader();
-
     reader.onload = function () {
       const dataURL = reader.result;
       let image = input.files[0].type;
-
       let data = {
         file: dataURL,
         file_type: image.split("/")[1],
         file_name: input.files[0].name,
         file_size: input.files[0].size,
       };
-      formik.setFieldValue("picture", data.file);
+      formik.setFieldValue("picture", file.target.files[0]);
       setShowLastCertificate(URL.createObjectURL(input.files[0]));
     };
 

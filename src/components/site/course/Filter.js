@@ -29,53 +29,53 @@ const Filter = ({ setParams, query, setQuery }) => {
   const [teacherID, setTeacherID] = useState([]);
   const [topicID, setTopicID] = useState([]);
   const [courseName, setCourseName] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const get_teacher_name = await axios({
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        data: {
-          table: "users",
-          method_type: "get_teacher_name",
-          data: {},
-        },
-        baseURL: getUrl() + "back_request/select_request/",
-      });
-      const get_course_name = await axios({
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        data: {
-          table: "users",
-          method_type: "get_course_name",
-          data: {},
-        },
-        baseURL: getUrl() + "back_request/select_request/",
-      });
-      const get_course_type = await axios({
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        data: {
-          table: "users",
-          method_type: "get_type_name",
-          data: {},
-        },
-        baseURL: getUrl() + "back_request/select_request/",
-      });
-      setTeacherID(get_teacher_name.data);
-      setTopicID(get_course_type.data);
-      setCourseName(get_course_name.data);
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const get_teacher_name = await axios({
+  //       method: "POST",
+  //       headers: {
+  //         "content-type": "application/json",
+  //         "Access-Control-Allow-Origin": "*",
+  //       },
+  //       data: {
+  //         table: "users",
+  //         method_type: "get_teacher_name",
+  //         data: {},
+  //       },
+  //       baseURL: getUrl() + "back_request/select_request/",
+  //     });
+  //     const get_course_name = await axios({
+  //       method: "POST",
+  //       headers: {
+  //         "content-type": "application/json",
+  //         "Access-Control-Allow-Origin": "*",
+  //       },
+  //       data: {
+  //         table: "users",
+  //         method_type: "get_course_name",
+  //         data: {},
+  //       },
+  //       baseURL: getUrl() + "back_request/select_request/",
+  //     });
+  //     const get_course_type = await axios({
+  //       method: "POST",
+  //       headers: {
+  //         "content-type": "application/json",
+  //         "Access-Control-Allow-Origin": "*",
+  //       },
+  //       data: {
+  //         table: "users",
+  //         method_type: "get_type_name",
+  //         data: {},
+  //       },
+  //       baseURL: getUrl() + "back_request/select_request/",
+  //     });
+  //     setTeacherID(get_teacher_name.data);
+  //     setTopicID(get_course_type.data);
+  //     setCourseName(get_course_name.data);
+  //   };
+  //   fetchData();
+  // }, []);
   useEffect(() => {
     setParams(query);
   }, [query]);

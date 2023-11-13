@@ -8,9 +8,10 @@ import { useParams } from "react-router-dom";
 import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
 import { getUrl } from "../../helper/getUrl";
+import { DataDetail } from "../../test";
 const CourseDetails = () => {
   const { id } = useParams();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(DataDetail);
   const get_course = async () => {
     let data = {
       table: "courses",
@@ -37,9 +38,9 @@ const CourseDetails = () => {
       toastify("error-login", response?.data?.error);
     }
   };
-  useEffect(() => {
-    get_course().then(() => {});
-  }, [id]);
+  // useEffect(() => {
+  //   get_course().then(() => {});
+  // }, [id]);
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={1}>

@@ -10,8 +10,10 @@ import NotFound from "../../components/site/shared/NotFound";
 import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
 import { getUrl } from "../../helper/getUrl";
+import Data from "../../test";
 const Course = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(Data);
+  const [item, setItem] = useState([]);
   const [params, setParams] = useSearchParams();
   const [notFound, setNotFound] = useState(false);
   const [count, setCount] = useState(0);
@@ -20,14 +22,18 @@ const Course = () => {
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("role"))
   );
-  const navigate = useNavigate();
   useEffect(() => {
-    if (userInfo?.national_id === null) {
-      toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
-      navigate("/panel/profile");
-    }
-    get_courses().then(() => {});
-  }, [userInfo, query]);
+    setItem(data.slice(0, 6));
+    setCount(data.length);
+  }, [data]);
+  const navigate = useNavigate();
+  // useEffect(() => {
+  //   if (userInfo?.national_id === null) {
+  //     toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
+  //     navigate("/panel/profile");
+  //   }
+  //   get_courses().then(() => {});
+  // }, [userInfo, query]);
   const get_courses = async () => {
     let data = {
       table: "courses",
@@ -68,7 +74,7 @@ const Course = () => {
         {data.length > 0 ? (
           <Grid item xs={12} md={8}>
             <Grid container spacing={3}>
-              {data.map((course) => (
+              {item.map((course) => (
                 <Grid item xs={12} md={4} key={course.id}>
                   <CourseCard data={course} />
                 </Grid>
@@ -76,11 +82,11 @@ const Course = () => {
             </Grid>
             <Grid item xs={12} mt={6}>
               <Pagination
-                count={Math.ceil(count / 9)}
+                count={Math.ceil(count / 6)}
                 color="primary"
                 sx={{ display: "flex", justifyContent: "center" }}
                 onChange={(event, value) => {
-                  setQuery({ ...query, page: value });
+                  setItem(data.slice((value - 1) * 6, value * 6));
                 }}
               />
             </Grid>

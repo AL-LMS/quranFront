@@ -89,7 +89,8 @@ const Profile = () => {
     let response = await axios({
       method: "POST",
       headers: {
-        "content-type": "application/json",
+        // "content-type": "application/json",
+        "content-type": "multipart/form-data",
         "Access-Control-Allow-Origin": "*",
       },
       data: {

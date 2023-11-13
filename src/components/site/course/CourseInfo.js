@@ -32,7 +32,7 @@ const CourseInfo = ({ data_course }) => {
                 : NoImage
             }
             alt="course"
-            style={{ maxWidth: "100%", borderRadius: "5px" }}
+            style={{ maxWidth: "100%", height: "100%", borderRadius: "5px" }}
           />
         </Grid>
         <Grid item xs={12} md={8}>
@@ -52,7 +52,7 @@ const CourseInfo = ({ data_course }) => {
               <Stack
                 direction="row"
                 justifyContent="space-between"
-                sx={{ borderBottom: "1px solid #e8e8e8", paddingBottom: 1 }}
+                sx={{ borderBottom: "1px solid #e8e8e8" }}
               ></Stack>
             </Grid>
             <Grid item xs={12}>
@@ -62,32 +62,58 @@ const CourseInfo = ({ data_course }) => {
                   justifyContent: { md: "space-between" },
                 }}
               >
-                <Stack spacing={2} direction="column">
-                  <Typography textAlign={"center"} color="mainText">
+                <Stack spacing={1} direction="column">
+                  <Typography color="mainText">
                     موضوع دوره:
                     <span style={{ color: "black" }}>
                       {" " + data_course["type"]}
                     </span>
                   </Typography>
-                  <Typography textAlign={"center"} color="mainText">
+                  <Typography color="mainText">
                     مقطع سنی:
                     <span style={{ color: "black" }}>
                       {" " + convert_ages(data_course["ages"])}
                     </span>
                   </Typography>
-                  <Typography textAlign={"center"} color="mainText">
-                    حداقل مدرک تحصیلی:
-                    <span style={{ color: "black" }}>
-                      {" " + convert_degree(data_course["degree"])}
-                    </span>
-                  </Typography>
-                  <Typography textAlign={"center"} color="mainText">
+                  <Typography color="mainText">
                     پیشنیازها:
                     <span style={{ color: "black" }}>
                       {" " + data_course["prerequisite"]}
                     </span>
                   </Typography>
-                  <Typography textAlign={"center"} color="mainText">
+                  <Typography color="mainText">
+                    جنسیت:
+                    <span style={{ color: "black" }}>
+                      {" " + convert_sex(data_course["sex"])}
+                    </span>
+                  </Typography>
+                  <Typography color="mainText">
+                    نوع دوره:
+                    <span style={{ color: "black" }}>
+                      {" " + data_course["is_onlie"] ? "حضوری" : "مجازی"}
+                    </span>
+                  </Typography>
+                </Stack>
+                <Stack spacing={1} direction="column">
+                  <Typography color="mainText">
+                    موضوع دوره:
+                    <span style={{ color: "black" }}>
+                      {" " + data_course["type"]}
+                    </span>
+                  </Typography>
+                  <Typography color="mainText">
+                    مقطع سنی:
+                    <span style={{ color: "black" }}>
+                      {" " + convert_ages(data_course["ages"])}
+                    </span>
+                  </Typography>
+                  <Typography color="mainText">
+                    پیشنیازها:
+                    <span style={{ color: "black" }}>
+                      {" " + data_course["prerequisite"]}
+                    </span>
+                  </Typography>
+                  <Typography color="mainText">
                     جنسیت:
                     <span style={{ color: "black" }}>
                       {" " + convert_sex(data_course["sex"])}
@@ -96,9 +122,7 @@ const CourseInfo = ({ data_course }) => {
                 </Stack>
                 <Stack spacing={2} sx={{ marginTop: { xs: 2, md: 0 } }}>
                   <Stack direction="row" spacing={5}>
-                    <Typography textAlign={"center"} color="mainText">
-                      هزینه آموزش دوره:
-                    </Typography>
+                    <Typography color="mainText">هزینه آموزش دوره:</Typography>
                     <Typography
                       fontWeight={400}
                       color={data_course["price"] ? "#000" : "error"}
@@ -115,9 +139,7 @@ const CourseInfo = ({ data_course }) => {
                   </Stack>
                   {data_course.price2 && (
                     <Stack direction="row" spacing={5}>
-                      <Typography textAlign={"center"} color="mainText">
-                        قیمت با تخفیف:
-                      </Typography>
+                      <Typography color="mainText">قیمت با تخفیف:</Typography>
                       <Typography
                         fontWeight={400}
                         color="error"
@@ -127,16 +149,6 @@ const CourseInfo = ({ data_course }) => {
                       </Typography>
                     </Stack>
                   )}
-                  {/* <Stack direction="row" spacing={5}>
-                    <Typography color="mainText">وضعیت دوره:</Typography>
-                    <Typography
-                      fontWeight={400}
-                      color={data_course.active ? "success.main" : " error"}
-                      fontFamily="iranyekanFn"
-                    >
-                      {data_course.active ? "فعال" : " غیرفعال"}
-                    </Typography>
-                  </Stack> */}
 
                   <Divider />
                   <Button
