@@ -111,6 +111,7 @@ const CreateCourse = () => {
     initialValues,
     validationSchema: RegistrationSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
+      setLoading(true)
       add_course().then(() => {});
     },
   });
@@ -125,44 +126,36 @@ const CreateCourse = () => {
   };
   const navigate = useNavigate();
   const add_course = async () => {
-    let data = {
-      table: "courses",
-      method_type: "add_course",
-      data: {
-        type: formik.values.type,
-        name: formik.values.name,
-        explain: formik.values.explain,
-        is_online: formik.values.isOnline,
-        start_date: formik.values.start,
-        end_date: formik.values.end,
-        start_time: formik.values.start_time,
-        end_time: formik.values.end_time,
-        days: formik.values.days,
-        max: formik.values.max,
-        min: formik.values.min,
-        prerequisite: formik.values.prerequisite,
-        sex: formik.values.sex,
-        ages: formik.values.ages,
-        degree: formik.values.degree,
-        picture: formik.values.picture ? formik.values.picture : "default",
-        price: formik.values.price,
-        t_name: userInfo.first_name + " " + userInfo.last_name,
-        teacher_user_id: userInfo.user_id,
-      },
-    };
-    let response = await axios({
-      method: "POST",
-      headers: {
-        // "content-type": "application/json",
-        "content-type": "multipart/form-data",
-        "Access-Control-Allow-Origin": "*",
-      },
-      data: {
-        ...data,
-      },
-
-      baseURL: getUrl() + "back_request/insert_request/",
-    });
+    const formData = new FormData();
+    formData.append("type", formik.values.type);
+    formData.append("name", formik.values.name);
+    formData.append("explain", formik.values.explain);
+    formData.append("is_online", formik.values.isOnline);
+    formData.append("start_date", formik.values.start);
+    formData.append("end_date", formik.values.end);
+    formData.append("days", formik.values.days);
+    formData.append("start_time", formik.values.start_time);
+    formData.append("end_time", formik.values.end_time);
+    formData.append("sex", formik.values.sex);
+    formData.append("ages", formik.values.ages);
+    formData.append("degree", formik.values.degree);
+    formData.append("price", formik.values.price);
+    formData.append(
+      "picture",
+      formik.values.picture ? formik.values.picture : "default"
+    );
+    formData.append("t_name", userInfo.first_name + " " + userInfo.last_name);
+    formData.append("teacher_user_id", userInfo.user_id);
+    let response = await axios.post(
+      getUrl() + "back_request/create_new_course/",
+      formData,
+      {
+        headers: {
+          "content-type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
     if (response?.data?.tracking_code !== null) {
       toastify("success", response?.data?.response);
       navigate("/panel/dashboard");
@@ -170,7 +163,6 @@ const CreateCourse = () => {
       toastify("error-login", response?.data?.error);
     }
   };
-
   const onChangeSetTime = (date) => {
     formik.setFieldValue("start_time", date[0].format("HH") + ":00");
     formik.setFieldValue("end_time", date[1].format("HH") + ":00");
@@ -554,26 +546,6 @@ const CreateCourse = () => {
                 style={{ display: "flex", marginTop: "5px", flexWrap: "wrap" }}
               >
                 <ContainerX>
-                  {/* <Autocomplete
-                    fullWidth
-                    value={degree[formik.values.degree]}
-                    onChange={(event, newValue) => {
-                      formik.setFieldValue("degree", newValue.id);
-                    }}
-                    id="controllable-states-demo"
-                    options={degree}
-                    getOptionLabel={(option) => option.name || ""}
-                    renderInput={(params) => (
-                      <TextField fullWidth {...params} label="تحصیلات" />
-                    )}
-                  />
-                  {formik.touched.degree && formik.errors.degree ? (
-                    <div>
-                      <p style={{ fontSize: 10, color: "red" }}>
-                        {formik.errors.degree}
-                      </p>
-                    </div>
-                  ) : null} */}
                   <FormControl>
                     <FormLabel>نوع کلاس</FormLabel>
                     <RadioGroup
