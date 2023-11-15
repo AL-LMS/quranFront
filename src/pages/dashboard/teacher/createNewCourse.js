@@ -106,7 +106,6 @@ const CreateCourse = () => {
     degree: Yup.string().required("لطفا تحصیلات مورد نظر دوره را وارد نمایید."),
     price: Yup.string().required("لطفا هزینه دوره را وارد نمایید."),
   });
-
   const formik = useFormik({
     initialValues,
     validationSchema: RegistrationSchema,
