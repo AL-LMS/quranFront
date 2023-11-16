@@ -111,7 +111,9 @@ const CreateCourse = () => {
     validationSchema: RegistrationSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
       setLoading(true);
-      add_course().then(() => {});
+      add_course().then(() => {
+        setLoading(false);
+      });
     },
   });
   const handleCheckboxChange = () => {
@@ -125,6 +127,7 @@ const CreateCourse = () => {
   };
   const navigate = useNavigate();
   const add_course = async () => {
+    console.log(formik.values);
     const formData = new FormData();
     formData.append("type", formik.values.type);
     formData.append("name", formik.values.name);
