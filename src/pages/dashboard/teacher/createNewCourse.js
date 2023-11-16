@@ -135,7 +135,7 @@ const CreateCourse = () => {
     formData.append("is_online", formik.values.isOnline);
     formData.append("start_date", formik.values.start);
     formData.append("end_date", formik.values.end);
-    formData.append("days", formik.values.days);
+    formData.append("days", JSON.stringify(formik.values.days));
     formData.append("start_time", formik.values.start_time);
     formData.append("end_time", formik.values.end_time);
     formData.append("sex", formik.values.sex);
