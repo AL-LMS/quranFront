@@ -14,6 +14,7 @@ import NoImage from "../../../assets/img/class1.jpeg";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import Slide from "@mui/material/Slide";
+import { getUrl } from "../../../helper/getUrl";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -41,7 +42,7 @@ const CourseCard = ({ data }) => {
             alt="course"
             src={
               // data.picture1 ? `https://api.srvschool.ir${data.picture1}` : NoImage
-              data.picture ? data.picture : NoImage
+              data.picture ? getUrl() + "/get_file/" + data.picture : NoImage
             }
           />
           <CardContent>
