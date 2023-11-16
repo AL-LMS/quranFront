@@ -10,9 +10,9 @@ import NotFound from "../../components/site/shared/NotFound";
 import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
 import { getUrl } from "../../helper/getUrl";
-import Data from "../../test";
+// import Data from "../../test";
 const Course = () => {
-  const [data, setData] = useState(Data);
+  const [data, setData] = useState([]);
   const [item, setItem] = useState([]);
   const [params, setParams] = useSearchParams();
   const [notFound, setNotFound] = useState(false);
@@ -27,13 +27,13 @@ const Course = () => {
     setCount(data.length);
   }, [data]);
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (userInfo?.national_id === null) {
-  //     toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
-  //     navigate("/panel/profile");
-  //   }
-  //   get_courses().then(() => {});
-  // }, [userInfo, query]);
+  useEffect(() => {
+    if (userInfo?.national_id === null) {
+      toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
+      navigate("/panel/profile");
+    }
+    get_courses().then(() => {});
+  }, [userInfo, query]);
   const get_courses = async () => {
     let data = {
       table: "courses",
