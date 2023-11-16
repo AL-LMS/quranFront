@@ -42,7 +42,7 @@ const CourseCard = ({ data }) => {
             alt="course"
             src={
               // data.picture1 ? `https://api.srvschool.ir${data.picture1}` : NoImage
-              data.picture ? getUrl() + "/get_file/" + data.picture : NoImage
+              data.picture ? getUrl() + "get_file/" + data.picture : NoImage
             }
           />
           <CardContent>
