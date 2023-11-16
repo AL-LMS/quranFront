@@ -31,8 +31,9 @@ const Course = () => {
     if (userInfo?.national_id === null) {
       toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
       navigate("/panel/profile");
+    } else {
+      get_courses().then(() => {});
     }
-    get_courses().then(() => {});
   }, [userInfo, query]);
   const get_courses = async () => {
     let data = {
