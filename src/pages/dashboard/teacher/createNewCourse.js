@@ -141,7 +141,7 @@ const CreateCourse = () => {
     formData.append("sex", formik.values.sex);
     formData.append("min", formik.values.min);
     formData.append("max", formik.values.max);
-    formData.append("prerequisite", formik.values.prerequisite);
+    formData.append("prerequisite", JSON.stringify(formik.values.prerequisite));
     formData.append("ages", formik.values.ages);
     formData.append("degree", formik.values.degree);
     formData.append("price", formik.values.price);
