@@ -83,7 +83,7 @@ const CreateCourse = () => {
     prerequisite: [],
     sex: null,
     ages: null,
-    degree: null,
+    degree: 1,
     picture: defaultPic,
     price: 0,
   };
