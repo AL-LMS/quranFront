@@ -103,7 +103,7 @@ const CreateCourse = () => {
     prerequisite: Yup.array().min(1, "لطفا پیش نیاز دوره را وارد نمایید."),
     sex: Yup.string().required("لطفا جنسیت دوره را وارد نمایید."),
     ages: Yup.string().required("لطفا رده سنی دوره را وارد نمایید."),
-    degree: Yup.string().required("لطفا تحصیلات مورد نظر دوره را وارد نمایید."),
+    // degree: Yup.string().required("لطفا تحصیلات مورد نظر دوره را وارد نمایید."),
     price: Yup.string().required("لطفا هزینه دوره را وارد نمایید."),
   });
   const formik = useFormik({
