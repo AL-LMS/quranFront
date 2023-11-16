@@ -110,7 +110,7 @@ const CreateCourse = () => {
     initialValues,
     validationSchema: RegistrationSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
-      setLoading(true)
+      setLoading(true);
       add_course().then(() => {});
     },
   });
@@ -136,6 +136,9 @@ const CreateCourse = () => {
     formData.append("start_time", formik.values.start_time);
     formData.append("end_time", formik.values.end_time);
     formData.append("sex", formik.values.sex);
+    formData.append("min", formik.values.min);
+    formData.append("max", formik.values.max);
+    formData.append("prerequisite", formik.values.prerequisite);
     formData.append("ages", formik.values.ages);
     formData.append("degree", formik.values.degree);
     formData.append("price", formik.values.price);
