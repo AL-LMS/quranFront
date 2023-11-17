@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import { regex_phone } from "../../helper/regex";
 const Login = () => {
   const { setAuth, setUser, setRole } = useAuth();
+  const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const signin = async () => {
     let data = {
@@ -49,6 +50,7 @@ const Login = () => {
       setRole(response?.data?.response?.role_data);
       navigate("/panel/dashboard");
     } else {
+      setLoading(false);
       toastify("error-login", response?.data?.error);
     }
   };
@@ -67,6 +69,7 @@ const Login = () => {
     initialValues,
     validationSchema: RegistrationSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
+      setStatus(true);
       signin().then(() => {});
     },
   });
@@ -157,6 +160,7 @@ const Login = () => {
             <Button
               type="submit"
               variant="contained"
+              disabled={loading}
               fullWidth
               sx={{
                 borderRadius: "5px",

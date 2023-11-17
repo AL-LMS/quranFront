@@ -15,7 +15,6 @@ import SendOTP from "./pages/site/SendOTP";
 import CheckOTP from "./pages/site/CheckOTP";
 //Students dahboard
 import StudentDash from "./pages/site/Course";
-import Dashboard from "./pages/dashboard/students/Dashboard";
 import Wallet from "./pages/dashboard/students/Wallet";
 import Profile from "./pages/dashboard/students/Profile";
 import Cart from "./pages/dashboard/students/Cart";
@@ -31,7 +30,6 @@ import QuizDetails from "./pages/dashboard/students/quiz/QuizDetails";
 import StartQuiz from "./pages/dashboard/students/quiz/StartQuiz";
 import PrivacyPolicy from "./pages/dashboard/students/PrivacyPolicy";
 import Notifications from "./pages/dashboard/students/Notifications";
-import Register from "./pages/site/Register";
 import useAuth from "./hooks/useAuth";
 import StudentCoursePage from "./pages/dashboard/students/myCourse/CoursePage";
 import SCourseHomeWorks from "./pages/dashboard/students/myCourse/CoursePage/ObjectsAllShow/CourseHomeWorks";
@@ -52,18 +50,13 @@ import ForumList from "./pages/dashboard/students/myCourse/ForumList";
 import SingleAnswer from "./pages/dashboard/students/quiz/SingleAnswer";
 import Package from "./pages/dashboard/students/Package";
 import PackageCourseList from "./pages/dashboard/students/PackageCoursList";
-import PackageDetails from "./pages/site/PackageDetails";
 import QuizQuestion from "./pages/dashboard/teacher/course/QuizQuestion";
 import Live from "./pages/dashboard/teacher/Live";
 import CourseTag from "./pages/dashboard/students/myCourse/CourseTag";
-import TimingPackage from "./pages/site/TimingPackage";
-import TimingPackageDetails from "./pages/site/TimingPackageDetails";
 import EndQuiz from "./pages/dashboard/students/quiz/EndQuiz";
 import QuizTDetails from "./pages/dashboard/students/quiz/QuizTDetails";
 import StartTQuiz from "./pages/dashboard/students/quiz/StartTQuiz";
 import EndQT from "./pages/dashboard/students/quiz/EndQT";
-import Search from "./pages/site/Search";
-import Auth from "./pages/site/Auth";
 import MyExercise from "./pages/dashboard/students/myCourse/MyExercise";
 import QuizScore from "./pages/dashboard/students/quiz/QuizScore";
 import ProfileTeacher from "./pages/dashboard/teacher/Profile";
@@ -75,13 +68,12 @@ import CourseNotifes from "./pages/dashboard/teacher/course/CoursePage/ObjectsAl
 import Meet from "./pages/site/Meet";
 import CourseHomeWorksAnswer from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseHomeWorksAnswer";
 import CourseQuizAnswer from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseQuizAnswer";
-import "./App.css";
 import PrePayments from "./pages/dashboard/students/prePayments";
+import "./App.css";
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
 });
-
 function App() {
   const location = useLocation();
   const { user } = useAuth();
@@ -89,29 +81,13 @@ function App() {
     <CacheProvider value={cacheRtl}>
       {!location.pathname.includes("panel") && <Navbar />}
       <Routes>
-        {/* <Route path="/" element={<HomePage />} /> */}
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/register" element={<Register />} /> */}
         <Route path="/signup" element={<Signup />} />
         <Route path="/confirm-phone" element={<ConfirmPhone />} />
         <Route path="/send-otp" element={<SendOTP />} />
         <Route path="/check-otp" element={<CheckOTP />} />
         <Route path="/meet" element={<Meet />} />
-        {/* <Route path="/course" element={<Course />} />
-        <Route path="/course/details/:id" element={<CourseDetails />} />
-        <Route path="/packages" element={<Packages />} />
-        <Route path="/packages/details/:id" element={<PackageDetails />} />
-        <Route path="/applications" element={<Applications />} /> */}
         <Route path="/FAQ" element={<FAQ />} />
-        {/* <Route path="/search/*" element={<Search />} /> */}
-        {/* <Route path="/auth/:token" element={<Auth />} /> */}
-        {/* <Route path="/timing-package" element={<TimingPackage />} /> */}
-        {/* <Route
-          path="/timing-package/details/:id"
-          element={<TimingPackageDetails />}
-        /> */}
-        {/* <Route path="*" element={<Navigate to="/login" replace />} /> */}
-
         {user?.role?.toLowerCase() === "student" ? (
           <Route element={<PrivateRoutes />}>
             <Route path="/panel/dashboard" element={<StudentDash />} />
@@ -120,8 +96,6 @@ function App() {
               element={<CourseDetails />}
             />
             <Route path="/panel/payment/:id" element={<PrePayments />} />
-
-            {/* <Route path="/panel/dashboard" element={<Dashboard />} /> */}
             <Route path="/panel/wallet" element={<Wallet />} />
             <Route path="/panel/profile" element={<Profile />} />
             <Route path="/panel/cart" element={<Cart />} />
@@ -257,10 +231,8 @@ function App() {
             <Route path="/*" element={<Navigate to="/panel/dashboard" />} />
           </Route>
         )}
-        {/* <Route path="/*" element={<Navigate to="/" />} /> */}
       </Routes>
       <ToastContainer rtl={true} />
-
       {/* {!location.pathname.includes("panel") && <Footer />} */}
     </CacheProvider>
   );

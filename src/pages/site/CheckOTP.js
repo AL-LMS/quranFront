@@ -13,6 +13,7 @@ import useAuth from "../../hooks/useAuth";
 const CheckOTP = () => {
   const navigate = useNavigate();
   const { setAuth, setUser, setRole } = useAuth();
+  const [loading, setLoading] = React.useState(false);
   const check_otp = async () => {
     let data = {
       table: "users",
@@ -48,6 +49,7 @@ const CheckOTP = () => {
       setRole(response?.data?.response?.role_data);
       navigate("/panel/dashboard");
     } else {
+      setLoading(false);
       toastify("error-login", response?.data?.error);
     }
   };
@@ -67,6 +69,7 @@ const CheckOTP = () => {
     initialValues,
     validationSchema: RegistrationSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
+      setLoading(true);
       check_otp().then(() => {});
     },
   });
@@ -145,6 +148,7 @@ const CheckOTP = () => {
               type="submit"
               variant="contained"
               fullWidth
+              disabled={loading}
               sx={{
                 borderRadius: "5px",
                 padding: "6px 30px",

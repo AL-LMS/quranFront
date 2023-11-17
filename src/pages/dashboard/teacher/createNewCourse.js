@@ -305,6 +305,8 @@ const CreateCourse = () => {
                     highlightWeekends
                     addDayName
                     initialValue={new Date()}
+                    minDate={new Date()}
+                    maxDate={new Date("2026-03-20")}
                     onSubmit={(date) => {
                       handleSubmit(date, "start");
                       setOpenStart(false);
@@ -337,6 +339,7 @@ const CreateCourse = () => {
                     highlightWeekends
                     addDayName
                     minDate={startValue ? startValue : new Date()}
+                    maxDate={new Date("2026-03-20")}
                     initialValue={new Date()}
                     onSubmit={(date) => {
                       handleSubmit(date, "end");

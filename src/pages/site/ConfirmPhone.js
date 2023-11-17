@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Typography, Grid, Box, Button, TextField } from "@mui/material";
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ import useAuth from "../../hooks/useAuth";
 const ConfirmPhone = () => {
   const navigate = useNavigate();
   const { setAuth, setUser, setRole } = useAuth();
+  const [loading, setLoading] = useState(false);
   const confirm_phone = async () => {
     let data = {
       table: "users",
@@ -51,6 +52,7 @@ const ConfirmPhone = () => {
       setRole(response?.data?.response?.role_data);
       navigate("/panel/dashboard");
     } else {
+      setLoading(false);
       toastify("error-login", response?.data?.error);
     }
   };
@@ -70,6 +72,7 @@ const ConfirmPhone = () => {
     initialValues,
     validationSchema: RegistrationSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
+      setLoading(true);
       confirm_phone().then(() => {});
     },
   });
@@ -115,6 +118,7 @@ const ConfirmPhone = () => {
               type="submit"
               variant="contained"
               fullWidth
+              disabled={loading}
               sx={{
                 borderRadius: "5px",
                 padding: "6px 30px",

@@ -42,7 +42,7 @@ const CourseCard = ({ data }) => {
             src={
               // data.picture1 ? `https://api.srvschool.ir${data.picture1}` : NoImage
               data.picture
-                ? `http://daarolquran.com/back_request/get_file${data.picture}`
+                ? `http://daarolquran.com/back_request/get_course_pic/${data.picture}`
                 : NoImage
             }
           />

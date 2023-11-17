@@ -13,7 +13,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { regex_phone } from "../../helper/regex";
 import { setLocalStorageLogin } from "../localStorage";
-import Loader from "../../components/site/shared/Loader";
 const Signup = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -49,6 +48,7 @@ const Signup = () => {
       setLocalStorageLogin("phone", response?.data?.response?.phone, () => {});
       navigate("/confirm-phone");
     } else {
+      setLoading(false);
       toastify("error-login", response?.data?.error);
     }
   };
@@ -81,9 +81,7 @@ const Signup = () => {
     validationSchema: RegistrationSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
       setLoading(true);
-      signup().then(() => {
-        setLoading(false);
-      });
+      signup().then(() => {});
     },
   });
 
@@ -91,25 +89,6 @@ const Signup = () => {
     setKind(event.target.name);
     formik.setFieldValue("type", event.target.name);
   };
-  if (loading)
-    return (
-      <Container maxWidth="lg">
-        <Grid container>
-          <Grid
-            item
-            xs={12}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100vh",
-            }}
-          >
-            <Loader />
-          </Grid>
-        </Grid>
-      </Container>
-    );
   return (
     <Container maxWidth="lg" sx={{ height: "100vh" }}>
       <Grid container mt={8} sx={{ height: "100vh" }}>
@@ -274,6 +253,7 @@ const Signup = () => {
               type="submit"
               variant="contained"
               fullWidth
+              disabled={loading}
               // onClick={() => submit_api().then(() => {})}
               sx={{
                 borderRadius: "5px",

@@ -11,6 +11,7 @@ import * as Yup from "yup";
 import { setLocalStorageLogin } from "../localStorage";
 import { regex_phone } from "../../helper/regex";
 const SendOTP = () => {
+  const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const send_otp = async () => {
     let data = {
@@ -37,6 +38,7 @@ const SendOTP = () => {
       setLocalStorageLogin("phone", response?.data?.response?.phone, () => {});
       navigate("/check-otp");
     } else {
+      setLoading(false);
       toastify("error-login", response?.data?.error);
     }
   };
@@ -54,6 +56,7 @@ const SendOTP = () => {
     initialValues,
     validationSchema: RegistrationSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
+      setLoading(true);
       send_otp().then(() => {});
     },
   });
@@ -98,6 +101,7 @@ const SendOTP = () => {
             <Button
               type="submit"
               variant="contained"
+              disabled={loading}
               fullWidth
               sx={{
                 borderRadius: "5px",
