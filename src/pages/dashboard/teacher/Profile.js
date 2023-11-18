@@ -81,16 +81,49 @@ const Profile = () => {
     formData.append("picture", formik.values.picture);
     formData.append("description", formik.values.description);
     formData.append("certificates", JSON.stringify(formik.values.certificates));
-    let response = await axios.post(
-      getUrl() + "back_request/update_teacher_info/",
-      formData,
-      {
+    if (formik.values.picture instanceof File) {
+      let response = await axios.post(
+        getUrl() + "back_request/update_teacher_info/",
+        formData,
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+    } else {
+      let data = {
+        table: "teachers",
+        method_type: "edit_user",
+        data: {
+          user_id: userInfo?.user_id,
+          phone: userInfo?.phone,
+          national_id: formik.values.national_id,
+          first_name: userInfo?.first_name,
+          last_name: userInfo?.last_name,
+          sex: formik.values.sex,
+          birth_day: formik.values.birth_day,
+          degree: formik.values.degree,
+          role: userInfo?.role,
+          picture: formik.values.picture,
+          description: formik.values.description,
+        },
+      };
+      let response = await axios({
+        method: "POST",
         headers: {
-          "content-type": "multipart/form-data",
+          "content-type": "application/json",
+          // "content-type": "multipart/form-data",
           "Access-Control-Allow-Origin": "*",
         },
-      }
-    );
+        data: {
+          ...data,
+        },
+
+        baseURL: getUrl() + "back_request/update_request/",
+      });
+    }
     if (response?.data?.tracking_code !== null) {
       localStorage.clear("role");
       localStorage.clear("user");
