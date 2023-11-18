@@ -9,7 +9,7 @@ import "./prepayment.css";
 import useAuth from "../../../hooks/useAuth";
 const PrePayments = () => {
   const { id } = useParams();
-  const [data, setData] = useState([]);
+  const [dataCourse, setDataCourse] = useState([]);
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -34,13 +34,16 @@ const PrePayments = () => {
       baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      setData(response?.data?.response);
+      setDataCourse(response?.data?.response);
     } else {
       toastify("error-login", response?.data?.error);
     }
   };
   useEffect(() => {
-    get_course().then(() => {});
+    setLoading(true);
+    get_course().then(() => {
+      setLoading(false);
+    });
   }, [id]);
   const register_course = async () => {
     setLoading(true);
@@ -48,10 +51,10 @@ const PrePayments = () => {
       table: "courses",
       method_type: "register_course",
       data: {
-        course_id: data.course_id,
+        course_id: id,
         student_id: user.user_id,
         student_name: user.first_name + " " + user.last_name,
-        teacher_id: data.teacher_user_id,
+        teacher_id: dataCourse.teacher_user_id,
       },
     };
     let response = await axios({
@@ -73,10 +76,30 @@ const PrePayments = () => {
       toastify("error-login", response?.data?.error);
     }
   };
+  if (loading)
+    return (
+      <Container maxWidth="lg">
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              height: "100vh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Loader />
+          </Grid>
+        </Grid>
+      </Container>
+    );
+
   return (
     <Container
       sx={{
-        width: "300px",
+        width: "600px",
         marginTop: "15px",
       }}
     >
@@ -98,27 +121,36 @@ const PrePayments = () => {
               <Stack direction="row" spacing={5}>
                 <Typography
                   fontWeight={400}
-                  fontSize={30}
-                  color={data["price"] ? "#888" : "error"}
+                  color={"#000"}
+                  fontFamily="iranyekanFn"
                   sx={{
-                    textDecoration: !data["price"] ? "line-through" : "initial",
-                    color: data["price"] ? "#888" : "#666",
                     textAlign: "center",
+                    color: "#000",
                   }}
                 >
-                  {" " + data["price"]?.toLocaleString()} تومان
+                  {dataCourse["price"] === 0
+                    ? " رایگان"
+                    : " " + dataCourse["price"]?.toLocaleString() + "تومان"}
                 </Typography>
               </Stack>
               <Typography color="mainText">
                 نام دوره:
-                <span style={{ color: "black" }}>{data["type"]}</span>
+                <span style={{ color: "black" }}>{dataCourse["type"]}</span>
               </Typography>
               <Typography color="mainText">
                 توضیح دوره:
                 <span
                   style={{ color: "black", fontSize: 10, fontStyle: "bold" }}
                 >
-                  {data["explain"]}
+                  {dataCourse["explain"]}
+                </span>
+              </Typography>
+              <Typography color="mainText">
+                نام مربی:
+                <span
+                  style={{ color: "black", fontSize: 10, fontStyle: "bold" }}
+                >
+                  {dataCourse["teacher_name"]}
                 </span>
               </Typography>
             </Stack>
@@ -128,7 +160,7 @@ const PrePayments = () => {
         <Button
           sx={{
             boxShadow: "none",
-            borderRadius: "12px",
+            borderRadius: "5px",
             padding: "10px 0",
             marginTop: "20px",
           }}
@@ -136,7 +168,7 @@ const PrePayments = () => {
           fullWidth
           fontSize="17px"
           onClick={() => register_course()}
-          disabled={data.enableforbuy}
+          disabled={loading}
         >
           پرداخت
         </Button>
