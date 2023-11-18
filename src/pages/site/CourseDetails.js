@@ -9,6 +9,7 @@ import { toastify } from "../../helper/toast";
 import { ToastContainer } from "react-toastify";
 import { getUrl } from "../../helper/getUrl";
 import { DataDetail } from "../../test";
+import CourseTeacherInfo from "../../components/site/course/CourseTeacherInfo";
 const CourseDetails = () => {
   const { id } = useParams();
   const [data, setData] = useState(DataDetail);
@@ -38,14 +39,17 @@ const CourseDetails = () => {
       toastify("error-login", response?.data?.error);
     }
   };
-  // useEffect(() => {
-  //   get_course().then(() => {});
-  // }, [id]);
+  useEffect(() => {
+    get_course().then(() => {});
+  }, [id]);
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={1}>
         <Grid item xs={12}>
           <CourseInfo data_course={data} />
+        </Grid>
+        <Grid item xs={12}>
+          <CourseTeacherInfo data={data} />
         </Grid>
         <Grid item xs={12}>
           <CourseDescrption data={data} />

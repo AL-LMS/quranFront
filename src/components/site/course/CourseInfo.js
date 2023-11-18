@@ -9,6 +9,19 @@ import {
   convert_degree,
   convert_sex,
 } from "../../../helper/converter";
+import { shamsi_format } from "../../../helper/shamsi_format";
+
+const days_show = (days) => {
+  let days_string = "";
+  for (let index = 0; index < days.length; index++) {
+    if (index === 0) {
+      days_string = days[index];
+    } else {
+      days_string = days_string + ", " + days[index];
+    }
+  }
+  return days_string;
+};
 
 const CourseInfo = ({ data_course }) => {
   const { id } = useParams();
@@ -27,8 +40,7 @@ const CourseInfo = ({ data_course }) => {
           <img
             src={
               data_course?.picture
-                ? // ? `https://api.srvschool.ir${data_course.picture1}`
-                  data_course?.picture
+                ? `http://daarolquran.com/back_request/get_course_pic/${data_course?.picture}`
                 : NoImage
             }
             alt="course"
@@ -96,27 +108,25 @@ const CourseInfo = ({ data_course }) => {
                 </Stack>
                 <Stack spacing={1} direction="column">
                   <Typography color="mainText">
-                    موضوع دوره:
+                    روزهای برگزاری:
                     <span style={{ color: "black" }}>
-                      {" " + data_course["type"]}
+                      {days_show(data_course["days"])}
                     </span>
                   </Typography>
                   <Typography color="mainText">
-                    مقطع سنی:
+                    مدت دوره:
                     <span style={{ color: "black" }}>
-                      {" " + convert_ages(data_course["ages"])}
+                      {shamsi_format(data_course["start_date"]) +
+                        " تا " +
+                        shamsi_format(data_course["end_date"])}
                     </span>
                   </Typography>
                   <Typography color="mainText">
-                    پیشنیازها:
+                    ساعت برگزاری:
                     <span style={{ color: "black" }}>
-                      {" " + data_course["prerequisite"]}
-                    </span>
-                  </Typography>
-                  <Typography color="mainText">
-                    جنسیت:
-                    <span style={{ color: "black" }}>
-                      {" " + convert_sex(data_course["sex"])}
+                      {data_course["start_time"].slice(0, 5) +
+                        " تا " +
+                        data_course["end_time"].slice(0, 5)}
                     </span>
                   </Typography>
                 </Stack>

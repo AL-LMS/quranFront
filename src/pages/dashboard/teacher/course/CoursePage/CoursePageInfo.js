@@ -94,8 +94,7 @@ const CoursePageInfo = ({ data_course }) => {
           <img
             src={
               data_course?.picture
-                ? // ? `https://api.srvschool.ir${data_course.picture1}`
-                  data_course?.picture
+                ? `http://daarolquran.com/back_request/get_course_pic/${data_course?.picture}`
                 : NoImage
             }
             alt="course"
