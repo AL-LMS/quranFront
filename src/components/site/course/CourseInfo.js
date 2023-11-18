@@ -141,7 +141,7 @@ const CourseInfo = ({ data_course }) => {
                         color: "#000",
                       }}
                     >
-                      {data["price"] === 0
+                      {data_course["price"] === 0
                         ? " رایگان"
                         : " " +
                           data_course["price"]?.toLocaleString() +
