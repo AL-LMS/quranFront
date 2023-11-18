@@ -135,42 +135,29 @@ const CourseInfo = ({ data_course }) => {
                     <Typography color="mainText">هزینه آموزش دوره:</Typography>
                     <Typography
                       fontWeight={400}
-                      color={data_course["price"] ? "#000" : "error"}
+                      color={"#000"}
                       fontFamily="iranyekanFn"
                       sx={{
-                        textDecoration: !data_course["price"]
-                          ? "line-through"
-                          : "initial",
-                        color: data_course["price"] ? "#000" : "#666",
+                        color: "#000",
                       }}
                     >
-                      {" " + data_course["price"]?.toLocaleString()} تومان
+                      {data["price"] === 0
+                        ? " رایگان"
+                        : " " +
+                          data_course["price"]?.toLocaleString() +
+                          "تومان"}
                     </Typography>
                   </Stack>
-                  {data_course.price2 && (
-                    <Stack direction="row" spacing={5}>
-                      <Typography color="mainText">قیمت با تخفیف:</Typography>
-                      <Typography
-                        fontWeight={400}
-                        color="error"
-                        fontFamily="iranyekanFn"
-                      >
-                        {data_course.price2?.toLocaleString()} تومان
-                      </Typography>
-                    </Stack>
-                  )}
-
                   <Divider />
                   <Button
                     sx={{
                       boxShadow: "none",
-                      borderRadius: "12px",
+                      borderRadius: "5px",
                       padding: "10px 0",
                     }}
                     variant="contained"
                     fullWidth
                     fontSize="17px"
-                    // onClick={() => register_course()}
                     onClick={() => navigate("/panel/payment/" + id)}
                     disabled={data_course.enableforbuy}
                   >

@@ -77,7 +77,7 @@ const CourseDetails = () => {
         <Grid item xs={12}>
           <CourseTeacherInfo data={data} />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ marginBottom: "50px" }}>
           <CourseDescrption data={data} />
         </Grid>
         {/* <Grid item xs={12}>
