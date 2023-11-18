@@ -15,6 +15,7 @@ const CourseDetails = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  console.log(id);
   const get_course = async () => {
     let data = {
       table: "courses",
@@ -43,6 +44,7 @@ const CourseDetails = () => {
     }
   };
   useEffect(() => {
+    setLoading(true);
     get_course().then(() => {});
   }, [id]);
   if (loading)
