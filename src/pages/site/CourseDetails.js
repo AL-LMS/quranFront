@@ -12,7 +12,7 @@ import { DataDetail } from "../../test";
 import CourseTeacherInfo from "../../components/site/course/CourseTeacherInfo";
 const CourseDetails = () => {
   const { id } = useParams();
-  const [data, setData] = useState(DataDetail);
+  const [data, setData] = useState([]);
   const get_course = async () => {
     let data = {
       table: "courses",
