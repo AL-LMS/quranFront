@@ -91,7 +91,7 @@ const Dashboard = () => {
         <Grid item xs={12} md={6}>
           <OverView type="course" count={cCount} />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ marginBottom: "50px" }}>
           <Courses />
         </Grid>
       </Grid>

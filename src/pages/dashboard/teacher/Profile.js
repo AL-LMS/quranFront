@@ -193,7 +193,7 @@ const Profile = () => {
       <Grid container spacing={3} mt={3}>
         <form
           onSubmit={formik.handleSubmit}
-          style={{ backgroundColor: "#fff", padding: 10 }}
+          style={{ backgroundColor: "#fff", padding: 10, marginBottom: "50px" }}
         >
           <Grid item xs={12} style={{ marginBottom: "30px" }}>
             <TeacherInfo formik={formik} />
