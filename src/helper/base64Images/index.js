@@ -47,6 +47,9 @@ export default function Index({ formik }) {
             }}
           />
           <span style={{ textAlign: "center" }}>تصویر مربی</span>
+          <span style={{ textAlign: "center", fontSize: "8px" }}>
+            برای تغییر تصویر خود روی عکس بالا کیلک کنید
+          </span>
           <div class="overlay">
             <div class="text">افزودن تصویر</div>
           </div>
@@ -68,6 +71,9 @@ export default function Index({ formik }) {
               display: "block",
             }}
           />
+          <span style={{ textAlign: "center", fontSize: "8px" }}>
+            برای تغییر تصویر خود روی عکس بالا کیلک کنید
+          </span>
           <div class="overlay">
             <div class="text">تغییر تصویر</div>
           </div>

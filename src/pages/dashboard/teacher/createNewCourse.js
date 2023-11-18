@@ -127,7 +127,6 @@ const CreateCourse = () => {
   };
   const navigate = useNavigate();
   const add_course = async () => {
-    console.log(formik.values);
     const formData = new FormData();
     formData.append("type", formik.values.type);
     formData.append("name", formik.values.name);

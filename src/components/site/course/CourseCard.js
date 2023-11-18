@@ -40,7 +40,6 @@ const CourseCard = ({ data }) => {
             sx={{ width: "100%", borderRadius: "5px", height: "150px" }}
             alt="course"
             src={
-              // data.picture1 ? `https://api.srvschool.ir${data.picture1}` : NoImage
               data.picture
                 ? `http://daarolquran.com/back_request/get_course_pic/${data.picture}`
                 : NoImage
@@ -53,7 +52,6 @@ const CourseCard = ({ data }) => {
                 flexDirection: "row",
                 alignItems: "center",
                 marginBottom: "5px",
-                // justifyContent: "space-between"
               }}
             >
               <img
@@ -145,7 +143,11 @@ const CourseCard = ({ data }) => {
           >
             <span style={{ fontSize: "20px" }}>{data.teacher_name}</span>
             <img
-              src={data.teacher_pic ? data.teacher_pic : NoImage}
+              src={
+                data.teacher_pic
+                  ? `http://daarolquran.com/back_request/get_teacher_pic/${data.teacher_pic}`
+                  : NoImage
+              }
               style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
           </div>

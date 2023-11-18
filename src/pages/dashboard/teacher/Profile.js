@@ -23,7 +23,7 @@ const Profile = () => {
   );
   const [showLastCertificate, setShowLastCertificate] = useState("");
   const [showCertificate, setShowCertificate] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const initialValues = {
     first_name: user?.first_name,
     last_name: user?.last_name,
@@ -44,13 +44,14 @@ const Profile = () => {
     sex: Yup.string().required("انتخاب جنسیت ضروری است."),
     birth_day: Yup.string().required("انتخاب تاریخ تولد ضروری است."),
     degree: Yup.string().required("انتخاب تحصیلات ضروری است."),
-    description: Yup.string().required("توضیحات سوابق ضروری است."),
+    // description: Yup.string().required("توضیحات سوابق ضروری است."),
   });
 
   const formik = useFormik({
     initialValues,
     validationSchema: RegistrationSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
+      setLoading(true);
       edit_user().then(() => {});
     },
   });
@@ -69,36 +70,27 @@ const Profile = () => {
     }
   }, [role]);
   const edit_user = async () => {
-    let data = {
-      table: "teachers",
-      method_type: "edit_user",
-      data: {
-        user_id: userInfo?.user_id,
-        phone: userInfo?.phone,
-        national_id: formik.values.national_id,
-        first_name: userInfo?.first_name,
-        last_name: userInfo?.last_name,
-        sex: formik.values.sex,
-        birth_day: formik.values.birth_day,
-        degree: formik.values.degree,
-        role: userInfo?.role,
-        picture: formik.values.picture,
-        description: formik.values.description,
-      },
-    };
-    let response = await axios({
-      method: "POST",
-      headers: {
-        // "content-type": "application/json",
-        "content-type": "multipart/form-data",
-        "Access-Control-Allow-Origin": "*",
-      },
-      data: {
-        ...data,
-      },
-
-      baseURL: getUrl() + "back_request/update_request/",
-    });
+    const formData = new FormData();
+    formData.append("national_id", formik.values.national_id);
+    formData.append("phone", userInfo?.phone);
+    formData.append("role", userInfo?.role);
+    formData.append("user_id", userInfo?.user_id);
+    formData.append("sex", formik.values.sex);
+    formData.append("birth_day", formik.values.birth_day);
+    formData.append("degree", formik.values.degree);
+    formData.append("picture", formik.values.picture);
+    formData.append("description", formik.values.description);
+    formData.append("certificates", JSON.stringify(formik.values.certificates));
+    let response = await axios.post(
+      getUrl() + "back_request/update_teacher_info/",
+      formData,
+      {
+        headers: {
+          "content-type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
     if (response?.data?.tracking_code !== null) {
       localStorage.clear("role");
       localStorage.clear("user");
@@ -119,18 +111,15 @@ const Profile = () => {
           "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
         );
       } else {
-        toastify(
-          "success",
-          "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
-        );
+        toastify("success", "اطلاعات شما با موفقیت ثبت شد");
       }
       navigate("/panel/dashboard");
     } else {
+      setLoading(false);
       toastify("error-login", response?.data?.error);
     }
   };
   const navigate = useNavigate();
-  console.log("formik", formik.values);
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={3}>
@@ -165,10 +154,7 @@ const Profile = () => {
               </div>
             ) : null}
           </DescriptionContainer>
-          <DocumentsContainer
-          // item
-          // xs={12}
-          >
+          <DocumentsContainer>
             <Documnets
               formik={formik}
               showLastCertificate={showLastCertificate}
@@ -191,6 +177,7 @@ const Profile = () => {
               variant="contained"
               type="submit"
               fullWidth
+              disabled={loading}
               sx={{ boxShadow: "none", padding: "12px 0" }}
             >
               ذخیره اطلاعات
