@@ -165,7 +165,7 @@ const CreateCourse = () => {
     get_course().then(() => {
       setLoading(false);
     });
-  });
+  }, []);
   const navigate = useNavigate();
   const add_course = async () => {
     const formData = new FormData();
