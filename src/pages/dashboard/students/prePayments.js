@@ -7,6 +7,7 @@ import { getUrl } from "../../../helper/getUrl";
 import toastify from "../../../helper/toast";
 import "./prepayment.css";
 import useAuth from "../../../hooks/useAuth";
+import Loader from "../../../components/site/shared/Loader";
 const PrePayments = () => {
   const { id } = useParams();
   const [dataCourse, setDataCourse] = useState([]);
