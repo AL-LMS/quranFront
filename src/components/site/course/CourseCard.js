@@ -56,7 +56,11 @@ const CourseCard = ({ data }) => {
             >
               <img
                 style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-                src={data.teacher_pic ? data.teacher_pic : NoImage}
+                src={
+                  data.teacher_pic
+                    ? `http://daarolquran.com/back_request/get_teacher_pic/${data.teacher_pic}`
+                    : NoImage
+                }
               />
               <span
                 style={{ color: "#000", fontSize: "12px", marginRight: "10px" }}

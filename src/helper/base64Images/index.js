@@ -31,6 +31,11 @@ export default function Index({ formik }) {
       {formik.values.picture === null ? (
         <Container
           class="container"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
           onClick={(event) => handelclik(event.currentTarget.value)}
         >
           <img
@@ -60,6 +65,11 @@ export default function Index({ formik }) {
           onClick={(event) => handelclik(event.currentTarget.value)}
         >
           <img
+            // src={
+            //   formik.values.picture
+            //     ? `http://daarolquran.com/back_request/get_teacher_pic/${formik.values.picture}`
+            //     : AvatarSVG
+            // }
             src={formik.values.picture}
             style={{
               borderRadius: "50%",
