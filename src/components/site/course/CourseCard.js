@@ -40,9 +40,9 @@ const CourseCard = ({ data }) => {
             sx={{ width: "100%", borderRadius: "5px", height: "150px" }}
             alt="course"
             src={
-              data.picture
-                ? `http://daarolquran.com/back_request/get_course_pic/${data.picture}`
-                : NoImage
+              data.picture === "default"
+                ? NoImage
+                : `http://daarolquran.com/back_request/get_course_pic/${data.picture}`
             }
           />
           <CardContent>

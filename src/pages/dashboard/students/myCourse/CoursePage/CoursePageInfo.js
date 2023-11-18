@@ -93,9 +93,9 @@ const CoursePageInfo = ({ data_course }) => {
         <Grid item xs={12} md={4}>
           <img
             src={
-              data_course?.picture
-                ? `http://daarolquran.com/back_request/get_course_pic/${data_course?.picture}`
-                : NoImage
+              data_course?.picture === "default"
+                ? NoImage
+                : `http://daarolquran.com/back_request/get_course_pic/${data_course?.picture}`
             }
             alt="course"
             style={{ maxWidth: "100%", borderRadius: "5px" }}

@@ -100,7 +100,7 @@ const CreateCourse = () => {
     days: Yup.array().min(1, "لطفا روزهای دوره را وارد نمایید."),
     max: Yup.string().required("لطفا حداکثر تعداد نفرات دوره را وارد نمایید."),
     min: Yup.string().required("لطفا حداقل تعداد نفرات دوره را وارد نمایید."),
-    prerequisite: Yup.array().min(1, "لطفا پیش نیاز دوره را وارد نمایید."),
+    // prerequisite: Yup.array().min(1, "لطفا پیش نیاز دوره را وارد نمایید."),
     sex: Yup.string().required("لطفا جنسیت دوره را وارد نمایید."),
     ages: Yup.string().required("لطفا رده سنی دوره را وارد نمایید."),
     // degree: Yup.string().required("لطفا تحصیلات مورد نظر دوره را وارد نمایید."),
@@ -150,21 +150,67 @@ const CreateCourse = () => {
     );
     formData.append("t_name", userInfo.first_name + " " + userInfo.last_name);
     formData.append("teacher_user_id", userInfo.user_id);
-    let response = await axios.post(
-      getUrl() + "back_request/create_new_course/",
-      formData,
-      {
+    if (formik.values.picture instanceof File) {
+      let response = await axios.post(
+        getUrl() + "back_request/create_new_course/",
+        formData,
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+      if (response?.data?.tracking_code !== null) {
+        toastify("success", response?.data?.response);
+        navigate("/panel/dashboard");
+      } else {
+        toastify("error-login", response?.data?.error);
+      }
+    } else {
+      let data = {
+        table: "courses",
+        method_type: "add_course",
+        data: {
+          type: formik.values.type,
+          name: formik.values.name,
+          explain: formik.values.explain,
+          is_online: formik.values.isOnline,
+          start_date: formik.values.start,
+          end_date: formik.values.end,
+          start_time: formik.values.start_time,
+          end_time: formik.values.end_time,
+          days: formik.values.days,
+          max: formik.values.max,
+          min: formik.values.min,
+          prerequisite: formik.values.prerequisite,
+          sex: formik.values.sex,
+          ages: formik.values.ages,
+          degree: formik.values.degree,
+          picture: formik.values.picture ? formik.values.picture : "default",
+          price: formik.values.price,
+          t_name: userInfo.first_name + " " + userInfo.last_name,
+          teacher_user_id: userInfo.user_id,
+        },
+      };
+      let response = await axios({
+        method: "POST",
         headers: {
-          "content-type": "multipart/form-data",
+          "content-type": "application/json",
           "Access-Control-Allow-Origin": "*",
         },
+        data: {
+          ...data,
+        },
+
+        baseURL: getUrl() + "back_request/insert_request/",
+      });
+      if (response?.data?.tracking_code !== null) {
+        toastify("success", response?.data?.response);
+        navigate("/panel/dashboard");
+      } else {
+        toastify("error-login", response?.data?.error);
       }
-    );
-    if (response?.data?.tracking_code !== null) {
-      toastify("success", response?.data?.response);
-      navigate("/panel/dashboard");
-    } else {
-      toastify("error-login", response?.data?.error);
     }
   };
   const onChangeSetTime = (date) => {
