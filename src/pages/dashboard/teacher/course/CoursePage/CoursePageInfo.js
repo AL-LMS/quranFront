@@ -156,7 +156,7 @@ const CoursePageInfo = ({ data_course }) => {
                   <Button
                     sx={{
                       boxShadow: "none",
-                      borderRadius: "12px",
+                      borderRadius: "5px",
                       padding: "10px 10px",
                     }}
                     variant="contained"
