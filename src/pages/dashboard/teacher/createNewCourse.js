@@ -228,7 +228,7 @@ const CreateCourse = () => {
           sex: formik.values.sex,
           ages: formik.values.ages,
           degree: formik.values.degree,
-          picture: formik.values.picture ? formik.values.picture : "default",
+          picture: "default",
           price: formik.values.price,
           t_name: userInfo.first_name + " " + userInfo.last_name,
           teacher_user_id: userInfo.user_id,
