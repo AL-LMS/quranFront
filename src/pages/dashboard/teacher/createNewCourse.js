@@ -26,13 +26,20 @@ import { useNavigate } from "react-router-dom";
 import { getUrl } from "../../../helper/getUrl";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Picker, format } from "@persian-tools/persian-mobile-datepicker";
+import {
+  Picker,
+  convertDateInstanceToDateObject,
+  format,
+  newDate,
+} from "@persian-tools/persian-mobile-datepicker";
 import { TimePicker } from "antd";
 import dayjs from "dayjs";
 import locale from "antd/es/date-picker/locale/fa_IR";
 import defaultPic from "../../../assets/img/class1.jpeg";
 const CreateCourse = () => {
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const date = convertDateInstanceToDateObject(new Date());
   const [showLastCertificate, setShowLastCertificate] = useState(defaultPic);
   const [prerequisite, setPrerequisite] = useState([]);
   const [days, setDays] = useState([]);
@@ -125,6 +132,40 @@ const CreateCourse = () => {
       formik.setFieldValue("isOnline", true);
     }
   };
+
+  const get_course = async () => {
+    setLoading(true);
+    let data = {
+      table: "courses",
+      method_type: "get_teacher_course",
+      data: {
+        user_id: userInfo.user_id,
+      },
+    };
+    let response = await axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        ...data,
+      },
+
+      baseURL: getUrl() + "back_request/select_request/",
+    });
+    if (response?.data?.tracking_code !== null) {
+      setData(response?.data?.response);
+    } else {
+      toastify("error-login", response?.data?.error);
+    }
+  };
+  useEffect(() => {
+    setLoading(true);
+    get_course().then(() => {
+      setLoading(false);
+    });
+  });
   const navigate = useNavigate();
   const add_course = async () => {
     const formData = new FormData();
@@ -350,7 +391,11 @@ const CreateCourse = () => {
                     highlightWeekends
                     addDayName
                     initialValue={new Date()}
-                    minDate={new Date()}
+                    minDate={newDate({
+                      year: date.year,
+                      month: date.month,
+                      day: date.day,
+                    })}
                     maxDate={new Date("2026-03-20")}
                     onSubmit={(date) => {
                       handleSubmit(date, "start");
@@ -383,8 +428,12 @@ const CreateCourse = () => {
                     highlightHolidays
                     highlightWeekends
                     addDayName
-                    minDate={startValue ? startValue : new Date()}
-                    maxDate={new Date("2026-03-20")}
+                    minDate={
+                      startValue
+                        ? startValue
+                        : new Date().toLocaleDateString("fa-IR")
+                    }
+                    maxDate={new Date("2026-03-20").toLocaleDateString("fa-IR")}
                     initialValue={new Date()}
                     onSubmit={(date) => {
                       handleSubmit(date, "end");
