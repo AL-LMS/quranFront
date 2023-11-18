@@ -9,7 +9,6 @@ const Documnets = ({
   nameOfButtonField,
 }) => {
   const openFile = (file) => {
-    console.log(file);
     const input = file.target;
     const reader = new FileReader();
     reader.onload = function () {

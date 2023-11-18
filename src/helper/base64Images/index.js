@@ -18,7 +18,7 @@ export default function Index({ formik }) {
           file_name: input.files[0].name,
           file_size: input.files[0].size,
         };
-        formik.setFieldValue("picture", data.file);
+        formik.setFieldValue("picture", file.target.files[0]);
       };
       reader.readAsDataURL(input.files[0]);
     }
