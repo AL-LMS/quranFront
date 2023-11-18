@@ -1,7 +1,7 @@
 import React from "react";
-import { Card, Typography } from "@mui/material";
+import { Card, Divider, Typography } from "@mui/material";
 import sanitizeHtml from "sanitize-html";
-
+import NoImage from "../../../assets/img/class1.jpeg";
 const CourseTeacherInfo = ({ data }) => {
   return (
     <Card
