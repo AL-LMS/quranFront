@@ -116,9 +116,9 @@ const CourseInfo = ({ data_course }) => {
                   <Typography color="mainText">
                     مدت دوره:
                     <span style={{ color: "black" }}>
-                      {shamsi_format(data_course["start_date"]) +
+                      {data_course["start_date"] +
                         " تا " +
-                        shamsi_format(data_course["end_date"])}
+                        data_course["end_date"]}
                     </span>
                   </Typography>
                   <Typography color="mainText">

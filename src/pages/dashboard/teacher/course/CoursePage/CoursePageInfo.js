@@ -129,21 +129,21 @@ const CoursePageInfo = ({ data_course }) => {
                 }}
               >
                 <Stack spacing={2} direction="column">
-                  <Typography color="mainText" textAlign={"center"}>
+                  <Typography color="mainText" textAlign={"right"}>
                     روزهای برگزاری:
                     <span style={{ color: "black" }}>
                       {days_show(data_course["days"])}
                     </span>
                   </Typography>
-                  <Typography color="mainText" textAlign={"center"}>
+                  <Typography color="mainText" textAlign={"right"}>
                     مدت دوره:
                     <span style={{ color: "black" }}>
-                      {shamsi_format(data_course["start_date"]) +
+                      {data_course["start_date"] +
                         " تا " +
-                        shamsi_format(data_course["end_date"])}
+                        data_course["end_date"]}
                     </span>
                   </Typography>
-                  <Typography color="mainText" textAlign={"center"}>
+                  <Typography color="mainText" textAlign={"right"}>
                     ساعت برگزاری:
                     <span style={{ color: "black" }}>
                       {data_course["start_time"].slice(0, 5) +
