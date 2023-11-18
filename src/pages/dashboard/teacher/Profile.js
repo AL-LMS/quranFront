@@ -92,6 +92,37 @@ const Profile = () => {
           },
         }
       );
+      if (response?.data?.tracking_code !== null) {
+        localStorage.clear("role");
+        localStorage.clear("user");
+        localStorage.clear("token");
+        setLocalStorageLogin(
+          "token",
+          response?.data?.response?.token,
+          () => {}
+        );
+        setLocalStorageLogin("user", response?.data?.response, () => {});
+        setLocalStorageLogin(
+          "role",
+          response?.data?.response?.role_data,
+          () => {}
+        );
+        setAuth(response?.data?.response?.token);
+        setUser(response?.data?.response);
+        setRole(response?.data?.response?.role_data);
+        if (role?.confirm !== 1) {
+          toastify(
+            "success",
+            "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
+          );
+        } else {
+          toastify("success", "اطلاعات شما با موفقیت ثبت شد");
+        }
+        navigate("/panel/dashboard");
+      } else {
+        setLoading(false);
+        toastify("error-login", response?.data?.error);
+      }
     } else {
       let data = {
         table: "teachers",
@@ -123,33 +154,37 @@ const Profile = () => {
 
         baseURL: getUrl() + "back_request/update_request/",
       });
-    }
-    if (response?.data?.tracking_code !== null) {
-      localStorage.clear("role");
-      localStorage.clear("user");
-      localStorage.clear("token");
-      setLocalStorageLogin("token", response?.data?.response?.token, () => {});
-      setLocalStorageLogin("user", response?.data?.response, () => {});
-      setLocalStorageLogin(
-        "role",
-        response?.data?.response?.role_data,
-        () => {}
-      );
-      setAuth(response?.data?.response?.token);
-      setUser(response?.data?.response);
-      setRole(response?.data?.response?.role_data);
-      if (role?.confirm !== 1) {
-        toastify(
-          "success",
-          "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
+      if (response?.data?.tracking_code !== null) {
+        localStorage.clear("role");
+        localStorage.clear("user");
+        localStorage.clear("token");
+        setLocalStorageLogin(
+          "token",
+          response?.data?.response?.token,
+          () => {}
         );
+        setLocalStorageLogin("user", response?.data?.response, () => {});
+        setLocalStorageLogin(
+          "role",
+          response?.data?.response?.role_data,
+          () => {}
+        );
+        setAuth(response?.data?.response?.token);
+        setUser(response?.data?.response);
+        setRole(response?.data?.response?.role_data);
+        if (role?.confirm !== 1) {
+          toastify(
+            "success",
+            "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
+          );
+        } else {
+          toastify("success", "اطلاعات شما با موفقیت ثبت شد");
+        }
+        navigate("/panel/dashboard");
       } else {
-        toastify("success", "اطلاعات شما با موفقیت ثبت شد");
+        setLoading(false);
+        toastify("error-login", response?.data?.error);
       }
-      navigate("/panel/dashboard");
-    } else {
-      setLoading(false);
-      toastify("error-login", response?.data?.error);
     }
   };
   const navigate = useNavigate();
