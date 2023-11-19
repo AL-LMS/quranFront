@@ -176,6 +176,8 @@ const CourseQuizForm = ({ type, data, setReload }) => {
               value={form.explain}
               onChange={(e) => setForm({ ...form, explain: e.target.value })}
               fullWidth
+              multiline
+              rows={4}
             />
           </Grid>
           <Grid item xs={12} sx={{ position: "relative" }}>

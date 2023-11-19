@@ -110,13 +110,15 @@ const TeacherNotifsForm = ({ type, data, setReload }) => {
               onChange={(e) =>
                 setForm({ ...form, description: e.target.value })
               }
+              multiline
+              rows={4}
               fullWidth
             />
           </Grid>
           <Grid item xs={12}>
             <Chip
               color={form.active ? "error" : "success"}
-              sx={{ color: "#fff", padding: "8px 20px" }}
+              sx={{ color: "#fff", borderRadius: "5px" }}
               label={form.active ? "غیرفعال کردن" : "فعال کردن"}
               onClick={() => setForm({ ...form, active: !form.active })}
             />

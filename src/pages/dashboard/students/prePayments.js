@@ -100,7 +100,7 @@ const PrePayments = () => {
   return (
     <Container
       sx={{
-        width: "600px",
+        width: "auto",
         marginTop: "15px",
       }}
     >

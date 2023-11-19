@@ -24,6 +24,15 @@ const statusTable = (item) => {
     return "غیرفعال";
   }
 };
+
+const checkDate = (item) => {
+  const today = new Date()
+    .toLocaleDateString("fa-IR-u-nu-latn")
+    .format("yyyy-MM-dd");
+  if (today >= item) {
+  }
+};
+
 const CourseList = ({ data }) => {
   return (
     <Card
@@ -115,7 +124,10 @@ const CourseList = ({ data }) => {
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
                   <Chip
-                    label={statusTable(item.active)}
+                    label={statusTable(
+                      item.active,
+                      item?.start_date.slice(0, 10)
+                    )}
                     color={item.active ? "success" : "error"}
                     variant="outlined"
                     sx={{ width: "82px" }}

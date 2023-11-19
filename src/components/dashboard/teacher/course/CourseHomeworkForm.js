@@ -175,6 +175,8 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
                 setForm({ ...form, description: e.target.value })
               }
               fullWidth
+              multiline
+              rows={4}
             />
           </Grid>
           <Grid item xs={12}>
