@@ -138,9 +138,10 @@ const CoursePageInfo = ({ data_course }) => {
                   <Typography color="mainText" style={{ textAlign: "right" }}>
                     مدت دوره:
                     <span style={{ color: "black" }}>
-                      {data_course["start_date"] +
+                      {/* {data_course["start_date"] +
                         " تا " +
-                        data_course["end_date"]}
+                        data_course["end_date"]} */}
+                      {data_course["start_date"]}
                     </span>
                   </Typography>
                   <Typography color="mainText" style={{ textAlign: "right" }}>
