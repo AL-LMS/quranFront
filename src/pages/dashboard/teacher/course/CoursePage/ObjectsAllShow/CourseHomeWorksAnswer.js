@@ -87,7 +87,7 @@ const CourseHomeWorksAnswer = () => {
             color="mainText"
             fontWeight={500}
           >
-            پاسخ تمرین‌های دوره
+            پاسخ تکالیف قرآن‌آموز
           </Typography>
         </Grid>
         <Grid item xs={12}>

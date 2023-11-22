@@ -78,9 +78,9 @@ const CoursePage = () => {
         <Grid item xs={12}>
           <CoursePageHomeWorks data_course={data?.homeworks} id={id} />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <CoursePageQuizes data_course={data?.quiz} id={id} />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} style={{ marginBottom: "50px" }}>
           <CoursePageResources data_course={data?.resources} id={id} />
         </Grid>

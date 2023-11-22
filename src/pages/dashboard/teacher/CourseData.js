@@ -33,5 +33,5 @@ export const degree = [
   { name: "راهنمایی", id: 2 },
   { name: "متوسطه", id: 3 },
   { name: "دانشگاهی", id: 4 },
-  { name: "غیره", id: 5 },
+  { name: "حوزوی", id: 5 },
 ];

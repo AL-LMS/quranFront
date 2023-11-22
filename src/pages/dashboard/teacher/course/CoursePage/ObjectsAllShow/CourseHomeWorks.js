@@ -88,7 +88,7 @@ const CourseHomeWorks = () => {
             color="mainText"
             fontWeight={500}
           >
-            تمرین‌های دوره
+            تکالیف دوره
           </Typography>
           <CourseHomeworkForm type="create" setReload={setReload} />
         </Grid>

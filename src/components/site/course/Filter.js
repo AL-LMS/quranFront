@@ -99,17 +99,20 @@ const Filter = ({ setParams, query, setQuery }) => {
       <CardHeader
         title={
           <Chip
-            color="secondary"
             sx={{
-              color: "#fff",
+              color: "#000",
               fontSize: "1rem",
               borderRadius: "5px",
               fontFamily: "IRANSansWeb_Farsi",
             }}
-            label="جستجوی دوره"
+            label="جستجوی پیشرفته"
           />
         }
-        sx={{ padding: "10px 3px" }}
+        sx={{
+          padding: "10px 3px",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
       />
       <CardContent>
         <Grid container spacing={3}>
@@ -209,7 +212,7 @@ const Filter = ({ setParams, query, setQuery }) => {
               fullWidth
               onClick={resetFilter}
             >
-              پاک کردن جستجو
+              نمایش همه‌ی کلاس‌ها
             </Button>
           </Grid>
         </Grid>

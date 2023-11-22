@@ -370,7 +370,7 @@ const CreateCourse = () => {
               <Grid style={{ display: "flex", flexWrap: "wrap" }}>
                 <ContainerX>
                   <TextField
-                    label="تاربخ شروع"
+                    label="تاریخ شروع"
                     name="start_date"
                     value={formik.values.start ? formik.values.start : ""}
                     fullWidth
@@ -408,7 +408,7 @@ const CreateCourse = () => {
                 </ContainerX>
                 <ContainerX>
                   <TextField
-                    label="تاربخ پایان"
+                    label="تاریخ پایان"
                     name="end_date"
                     value={formik.values.end ? formik.values.end : ""}
                     fullWidth

@@ -88,7 +88,7 @@ const CourseHomeWorks = () => {
             color="mainText"
             fontWeight={500}
           >
-            تمرین‌های دوره
+            تکالیف قرآن‌آموز
           </Typography>
         </Grid>
         <Grid item xs={12}>

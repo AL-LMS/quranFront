@@ -22,13 +22,13 @@ const ShowCourseHWs = ({ data, id }) => {
       ) : (
         <Grid item xs={12}>
           <Typography variant="h5" color="#888" textAlign="center">
-            درحال حاضر تمرینی برای دوره ثبت نشده
+            درحال حاضر تکلیفی برای دوره ثبت نشده
           </Typography>
         </Grid>
       )}
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Link to={"/panel/course/home-works/" + id}>
-          <Button>مشاهده همه تمرین‌ها</Button>
+          <Button>مشاهده همه تکالیف</Button>
         </Link>
       </Grid>
     </Grid>

@@ -113,7 +113,7 @@ const StudentInfo = ({ formik }) => {
       </Grid>
       <Grid item xs={12} md={6}>
         <TextField
-          label="تاربخ شروع"
+          label="تاریخ شروع"
           name="start_date"
           value={formik.values.birth_day ? formik.values.birth_day : ""}
           fullWidth

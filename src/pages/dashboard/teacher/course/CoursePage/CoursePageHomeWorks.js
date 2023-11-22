@@ -23,7 +23,7 @@ const CoursePageHomeWorks = ({ data_course, id }) => {
                 marginBottom={5}
                 textAlign={"center"}
               >
-                تمرین‌ها
+                تکالیف قرآن‌آموز
               </Typography>
             </Grid>
             <Divider />
