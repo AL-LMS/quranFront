@@ -32,12 +32,18 @@ export const tcRoutes = [
   },
   {
     id: 4,
+    name: "گواهی‌ و مدارک مربی",
+    route: "documents",
+    icon: <LocalMallOutlinedIcon />,
+  },
+  {
+    id: 5,
     name: "تراکنش‌ها",
     route: "payments",
     icon: <PaymentOutlinedIcon />,
   },
   {
-    id: 5,
+    id: 6,
     name: "سابقه پرداخت‌ها",
     route: "wallet",
     icon: <AccountBalanceWalletOutlinedIcon />,

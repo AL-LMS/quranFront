@@ -47,7 +47,8 @@ const CreateCourse = () => {
   const [startValue, setStartValue] = useState(null);
   const [openStart, setOpenStart] = useState(false);
   const [openEnd, setOpenEnd] = useState(false);
-  const [variant, setVariant] = useState(0);
+  const [perShow, setPerShow] = useState(1);
+  const [priceShow, setPriceShow] = useState(0);
   const config = {
     year: {
       caption: {
@@ -567,49 +568,95 @@ const CreateCourse = () => {
                   ) : null}
                 </ContainerX>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  flexWrap: "wrap",
-                }}
+              <Grid
+                style={{ display: "flex", marginTop: "5px", flexWrap: "wrap" }}
               >
-                <Autocomplete
-                  fullWidth
-                  multiple
-                  limitTags={1}
-                  id="multiple-limit-tags"
-                  getOptionLabel={(option) => option}
-                  disableCloseOnSelect
-                  value={prerequisite}
-                  options={courseType}
-                  onChange={(event, newValue) => {
-                    setPrerequisite([...newValue.filter((option) => option)]);
-                  }}
-                  renderInput={(params) => (
-                    <TextField {...params} label="پیشنیاز‌ها" placeholder="" />
-                  )}
-                  renderOption={(props, option, { selected }) => (
-                    <MenuItem
-                      {...props}
-                      key={option}
-                      value={option}
-                      sx={{ justifyContent: "space-between" }}
+                <ContainerX>
+                  <FormControl style={{ marginTop: "0.5rem" }}>
+                    <FormLabel>دوره پیشنیاز دارد؟</FormLabel>
+                    <RadioGroup
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                      value={perShow}
+                      onChange={(event) =>
+                        setPerShow(parseInt(event.target.value))
+                      }
                     >
-                      {option}
-                      {selected ? <CheckIcon color="info" /> : null}
-                    </MenuItem>
-                  )}
-                  style={{ marginBottom: "5px", marginTop: "5px" }}
-                />
-                {formik.touched.prerequisite && formik.errors.prerequisite ? (
-                  <div>
-                    <p style={{ fontSize: 10, color: "red" }}>
-                      {formik.errors.prerequisite}
-                    </p>
-                  </div>
-                ) : null}
-              </div>
+                      <div>
+                        <Radio
+                          style={{ marginRight: "10px" }}
+                          size={"small"}
+                          value={0}
+                          label="بله"
+                        />
+                        <label>بله</label>
+                      </div>
+                      <div>
+                        <Radio
+                          style={{ marginRight: "10px" }}
+                          size={"small"}
+                          value={1}
+                          label="خیر"
+                        />
+                        <label>خیر</label>
+                      </div>
+                    </RadioGroup>
+                  </FormControl>
+                </ContainerX>
+                {perShow == 0 ? (
+                  <ContainerX>
+                    <Autocomplete
+                      fullWidth
+                      multiple
+                      limitTags={1}
+                      id="multiple-limit-tags"
+                      getOptionLabel={(option) => option}
+                      disableCloseOnSelect
+                      value={prerequisite}
+                      options={courseType}
+                      onChange={(event, newValue) => {
+                        setPrerequisite([
+                          ...newValue.filter((option) => option),
+                        ]);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="پیشنیاز‌ها"
+                          placeholder=""
+                        />
+                      )}
+                      renderOption={(props, option, { selected }) => (
+                        <MenuItem
+                          {...props}
+                          key={option}
+                          value={option}
+                          sx={{ justifyContent: "space-between" }}
+                        >
+                          {option}
+                          {selected ? <CheckIcon color="info" /> : null}
+                        </MenuItem>
+                      )}
+                      style={{ marginBottom: "5px", marginTop: "5px" }}
+                    />
+                    {formik.touched.prerequisite &&
+                    formik.errors.prerequisite ? (
+                      <div>
+                        <p style={{ fontSize: 10, color: "red" }}>
+                          {formik.errors.prerequisite}
+                        </p>
+                      </div>
+                    ) : null}
+                  </ContainerX>
+                ) : (
+                  <></>
+                )}
+              </Grid>
             </Grid>
             <Grid item md={6} xs={12}>
               <div
@@ -667,44 +714,44 @@ const CreateCourse = () => {
               <Grid
                 style={{ display: "flex", marginTop: "5px", flexWrap: "wrap" }}
               >
-                {/* <ContainerX> */}
-                <FormControl style={{ marginTop: "0.5rem" }}>
-                  <FormLabel>دوره رایگان باشد؟</FormLabel>
-                  <RadioGroup
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      flexWrap: "wrap",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                    value={variant}
-                    onChange={(event) =>
-                      setVariant(parseInt(event.target.value))
-                    }
-                  >
-                    <div>
-                      <Radio
-                        style={{ marginRight: "10px" }}
-                        size={"small"}
-                        value={0}
-                        label="بله"
-                      />
-                      <label>بله</label>
-                    </div>
-                    <div>
-                      <Radio
-                        style={{ marginRight: "10px" }}
-                        size={"small"}
-                        value={1}
-                        label="خیر"
-                      />
-                      <label>خیر</label>
-                    </div>
-                  </RadioGroup>
-                </FormControl>
-                {/* </ContainerX> */}
-                {variant !== 0 ? (
+                <ContainerX>
+                  <FormControl style={{ marginTop: "0.5rem" }}>
+                    <FormLabel>دوره رایگان باشد؟</FormLabel>
+                    <RadioGroup
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                      value={priceShow}
+                      onChange={(event) =>
+                        setPriceShow(parseInt(event.target.value))
+                      }
+                    >
+                      <div>
+                        <Radio
+                          style={{ marginRight: "10px" }}
+                          size={"small"}
+                          value={0}
+                          label="بله"
+                        />
+                        <label>بله</label>
+                      </div>
+                      <div>
+                        <Radio
+                          style={{ marginRight: "10px" }}
+                          size={"small"}
+                          value={1}
+                          label="خیر"
+                        />
+                        <label>خیر</label>
+                      </div>
+                    </RadioGroup>
+                  </FormControl>
+                </ContainerX>
+                {priceShow !== 0 ? (
                   <ContainerX>
                     <TextField
                       fullWidth
@@ -715,6 +762,7 @@ const CreateCourse = () => {
                         formik.setFieldValue("price", e.target.value)
                       }
                       value={formik.values.price}
+                      style={{ marginBottom: "5px", marginTop: "5px" }}
                     />
                     {formik.touched.price && formik.errors.price ? (
                       <div>

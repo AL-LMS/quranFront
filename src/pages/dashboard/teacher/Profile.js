@@ -44,7 +44,6 @@ const Profile = () => {
     sex: Yup.string().required("انتخاب جنسیت ضروری است."),
     birth_day: Yup.string().required("انتخاب تاریخ تولد ضروری است."),
     degree: Yup.string().required("انتخاب تحصیلات ضروری است."),
-    // description: Yup.string().required("توضیحات سوابق ضروری است."),
   });
 
   const formik = useFormik({
@@ -145,7 +144,6 @@ const Profile = () => {
         method: "POST",
         headers: {
           "content-type": "application/json",
-          // "content-type": "multipart/form-data",
           "Access-Control-Allow-Origin": "*",
         },
         data: {
@@ -239,7 +237,6 @@ const Profile = () => {
               nameOfButtonField={"آپلود تصاویر گواهی"}
             />
           </DocumentsContainer>
-          <Grid item xs={12}></Grid>
           <Grid item xs={12}>
             <Button
               variant="contained"

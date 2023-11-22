@@ -70,6 +70,7 @@ import CourseHomeWorksAnswer from "./pages/dashboard/teacher/course/CoursePage/O
 import CourseQuizAnswer from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseQuizAnswer";
 import PrePayments from "./pages/dashboard/students/prePayments";
 import "./App.css";
+import TeachersDocument from "./pages/dashboard/teacher/TeachersDocument";
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -172,6 +173,7 @@ function App() {
             />
             <Route path="/panel/payment/:id" element={<PrePayments />} />
             <Route path="/panel/profile" element={<ProfileTeacher />} />
+            <Route path="/panel/documents" element={<TeachersDocument />} />
             <Route path="/panel/my-coures" element={<TeacherCourse />} />
             <Route path="/course/details/:id" element={<CourseDetails />} />
             <Route
