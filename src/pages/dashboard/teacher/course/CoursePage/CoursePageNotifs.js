@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Divider, Grid, Typography } from "@mui/material";
 import ShowCourseNotif from "./ShowObjects/ShowCourseNotif";
+import NotifsLists from "./ObjectLists/NotifsLists";
 
 const CoursePageNotifs = ({ data_course, id }) => {
   return (
@@ -28,7 +29,8 @@ const CoursePageNotifs = ({ data_course, id }) => {
             </Grid>
             <Divider />
             <Grid container spacing={3}>
-              <ShowCourseNotif data={data_course} id={id} />
+              {/* <ShowCourseNotif data={data_course} id={id} /> */}
+              <NotifsLists data={data_course} />
             </Grid>
           </Grid>
         </Grid>

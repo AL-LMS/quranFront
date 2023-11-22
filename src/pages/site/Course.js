@@ -19,6 +19,8 @@ const Course = () => {
   const [count, setCount] = useState(0);
   const [query, setQuery] = useState({});
   const [filtered, setFiltred] = useState(false);
+  const [from, setFrom] = useState(0);
+  const [to, setTo] = useState(6);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("role"))
   );
@@ -41,6 +43,8 @@ const Course = () => {
       method_type: "get_courses",
       data: {
         query: query,
+        from: from,
+        to: to,
       },
     };
     let response = await axios({

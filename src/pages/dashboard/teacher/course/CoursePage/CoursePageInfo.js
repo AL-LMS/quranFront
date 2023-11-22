@@ -137,19 +137,19 @@ const CoursePageInfo = ({ data_course }) => {
                   </Typography>
                   <Typography color="mainText" style={{ textAlign: "right" }}>
                     مدت دوره:
-                    <span style={{ color: "black" }}>
-                      {/* {data_course["start_date"] +
+                    {/* <span style={{ color: "black" }}> */}
+                    {/* {data_course["start_date"] +
                         " تا " +
                         data_course["end_date"]} */}
-                      {data_course["start_date"]}
-                    </span>
+                    {data_course["start_date"]}
+                    {/* </span> */}
                   </Typography>
                   <Typography color="mainText" style={{ textAlign: "right" }}>
                     ساعت برگزاری:
                     <span style={{ color: "black" }}>
                       {data_course["start_time"].slice(0, 5) +
                         " تا " +
-                        data_course["end_time"].slice(0, 5)}{" "}
+                        data_course["end_time"].slice(0, 5)}
                     </span>
                   </Typography>
                 </Stack>
@@ -173,7 +173,7 @@ const CoursePageInfo = ({ data_course }) => {
                     }
                     disabled={data_course.enableforbuy}
                   >
-                    ایجاد کلاس
+                    اتاق جلسه
                   </Button>
                 </Stack>
               </Stack>

@@ -34,70 +34,71 @@ const CourseCard = ({ data }) => {
           height: "400px",
         }}
       >
-        <Link to={`/panel/course/details/${data?.course_id}`}>
-          <CardMedia
-            component="img"
-            sx={{ width: "100%", borderRadius: "5px", height: "150px" }}
-            alt="course"
-            src={
-              data.picture === "default"
-                ? NoImage
-                : `http://daarolquran.com/back_request/get_course_pic/${data.picture}`
-            }
-          />
-          <CardContent>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                marginBottom: "5px",
-              }}
+        {/* <Link to={`/panel/course/details/${data?.course_id}`}> */}
+        <CardMedia
+          component="img"
+          sx={{ width: "100%", borderRadius: "5px", height: "150px" }}
+          alt="course"
+          src={
+            data.picture === "default"
+              ? NoImage
+              : `http://daarolquran.com/back_request/get_course_pic/${data.picture}`
+          }
+        />
+        <CardContent>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: "5px",
+            }}
+            onClick={() => setOpenModal(true)}
+          >
+            <img
+              style={{ width: "30px", height: "30px", borderRadius: "50%" }}
+              src={
+                data.teacher_pic
+                  ? `http://daarolquran.com/back_request/get_teacher_pic/${data.teacher_pic}`
+                  : NoImage
+              }
+            />
+            <span
+              style={{ color: "#000", fontSize: "12px", marginRight: "10px" }}
             >
-              <img
-                style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-                src={
-                  data.teacher_pic
-                    ? `http://daarolquran.com/back_request/get_teacher_pic/${data.teacher_pic}`
-                    : NoImage
-                }
-              />
-              <span
-                style={{ color: "#000", fontSize: "12px", marginRight: "10px" }}
+              {data.teacher_name}
+            </span>
+          </div>
+          <Divider style={{ marginBottom: "5px" }} />
+          <Typography
+            fontWeight={400}
+            fontSize="15px"
+            color="#000"
+            height={50}
+            mb={1}
+          >
+            {data.name}
+          </Typography>
+          <Stack direction="row" justifyContent="space-between" height={45}>
+            <Tooltip title={data.explain}>
+              <Typography
+                fontFamily="iranyekanFn"
+                fontWeight={500}
+                fontSize="10px"
+                sx={{
+                  display: "-webkit-box",
+                  overflow: "hidden",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 3,
+                  color: "#000",
+                }}
               >
-                {data.teacher_name}
-              </span>
-            </div>
-            <Divider style={{ marginBottom: "5px" }} />
-            <Typography
-              fontWeight={400}
-              fontSize="15px"
-              color="#000"
-              height={50}
-              mb={1}
-            >
-              {data.name}
-            </Typography>
-            <Stack direction="row" justifyContent="space-between" height={45}>
-              <Tooltip title={data.explain}>
-                <Typography
-                  fontFamily="iranyekanFn"
-                  fontWeight={500}
-                  fontSize="10px"
-                  sx={{
-                    display: "-webkit-box",
-                    overflow: "hidden",
-                    WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 3,
-                    color: "#000",
-                  }}
-                >
-                  {data.explain}
-                </Typography>
-              </Tooltip>
-            </Stack>
-          </CardContent>
-        </Link>
+                {data.explain}
+              </Typography>
+            </Tooltip>
+          </Stack>
+        </CardContent>
+        {/* </Link> */}
         <Stack direction="row" justifyContent="space-evenly">
           <Button
             variant="contained"
