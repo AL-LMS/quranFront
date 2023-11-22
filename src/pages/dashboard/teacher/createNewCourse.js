@@ -95,7 +95,7 @@ const CreateCourse = () => {
     price: 0,
   };
   const RegistrationSchema = Yup.object().shape({
-    type: Yup.string().required("لطفا نوع دوره را وارد نمایید."),
+    type: Yup.string().required("لطفا موضوع دوره را وارد نمایید."),
     name: Yup.string().required("لطفا نام دوره را وارد نمایید."),
     explain: Yup.string().required("لطفا توضیحات دوره را وارد نمایید."),
     start: Yup.string().required("لطفا روز شروع دوره را وارد نمایید."),
@@ -160,12 +160,12 @@ const CreateCourse = () => {
       toastify("error-login", response?.data?.error);
     }
   };
-  useEffect(() => {
-    setLoading(true);
-    get_course().then(() => {
-      setLoading(false);
-    });
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   get_course().then(() => {
+  //     setLoading(false);
+  //   });
+  // }, []);
   const navigate = useNavigate();
   const add_course = async () => {
     const formData = new FormData();
@@ -272,38 +272,55 @@ const CreateCourse = () => {
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={3} padding={2}>
             <Grid item md={6} xs={12}>
-              <Autocomplete
-                fullWidth
-                value={formik.values.type}
-                onChange={(event, newValue) => {
-                  formik.setFieldValue("type", newValue);
-                }}
-                id="controllable-states-demo"
-                options={courseType}
-                getOptionLabel={(option) => option || ""}
-                renderInput={(params) => (
-                  <TextField {...params} label="دسته بندی موضوعی" />
-                )}
-              />
-              {formik.touched.type && formik.errors.type ? (
-                <div>
-                  <p style={{ fontSize: 10, color: "red" }}>
-                    {formik.errors.type}
-                  </p>
-                </div>
-              ) : null}
               <TextField
                 fullWidth
                 label="نام دوره"
                 name="name"
                 onChange={(e) => formik.setFieldValue("name", e.target.value)}
                 value={formik.values.name}
-                sx={{ marginTop: 1 }}
               />
               {formik.touched.name && formik.errors.name ? (
                 <div>
                   <p style={{ fontSize: 10, color: "red" }}>
                     {formik.errors.name}
+                  </p>
+                </div>
+              ) : null}
+              <FormControl style={{ marginTop: "0.5rem" }}>
+                <FormLabel>
+                  کدام یک از موضوعات زیر در این دوره ارئه می‌شود؟
+                </FormLabel>
+                <RadioGroup
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                  value={formik.values.type}
+                  onChange={(event) => {
+                    formik.setFieldValue("type", event.target.value);
+                  }}
+                >
+                  {courseType.map((item) => (
+                    <div>
+                      <Radio
+                        style={{ marginRight: "10px" }}
+                        size={"small"}
+                        value={item}
+                        label={item}
+                      />
+                      <label>{item}</label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </FormControl>
+
+              {formik.touched.type && formik.errors.type ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.type}
                   </p>
                 </div>
               ) : null}
@@ -343,7 +360,7 @@ const CreateCourse = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="روز‌های برگزاری"
+                    label="روز‌های برگزاری دوره"
                     placeholder=""
                   />
                 )}
@@ -370,7 +387,7 @@ const CreateCourse = () => {
               <Grid style={{ display: "flex", flexWrap: "wrap" }}>
                 <ContainerX>
                   <TextField
-                    label="تاریخ شروع"
+                    label="تاریخ شروع دوره"
                     name="start_date"
                     value={formik.values.start ? formik.values.start : ""}
                     fullWidth
@@ -408,7 +425,7 @@ const CreateCourse = () => {
                 </ContainerX>
                 <ContainerX>
                   <TextField
-                    label="تاریخ پایان"
+                    label="تاریخ پایان دوره"
                     name="end_date"
                     value={formik.values.end ? formik.values.end : ""}
                     fullWidth
@@ -469,36 +486,39 @@ const CreateCourse = () => {
                   </p>
                 </div>
               ) : null}
-              <FormGroup>
+              <FormGroup style={{ marginTop: "0.5rem" }}>
+                <FormLabel>نحوه‌ی برگزاری دوره؟</FormLabel>
                 <FormControlLabel
                   control={
-                    <Checkbox
+                    <Radio
+                      size={"small"}
                       checked={isOnline}
                       onChange={handleCheckboxChange}
                       name="isOnline"
                       color="primary"
                     />
                   }
-                  label="کلاس به صورت مجازی برگزار می‌شود."
+                  label="دوره به صورت مجازی برگزار می‌شود."
                   sx={{
-                    fontSize: "13px",
-                    padding: "4px 15px",
+                    fontSize: "10px",
+                    // padding: "4px 15px",
                   }}
                 />
                 <FormControlLabel
                   control={
-                    <Checkbox
+                    <Radio
+                      size={"small"}
                       checked={!isOnline}
                       onChange={handleCheckboxChange}
                       name="isOffline"
                       color="primary"
                     />
                   }
-                  label="کلاس به صورت حضوری برگزار می‌شود."
+                  label="دوره به صورت حضوری برگزار می‌شود."
                   sx={{
-                    fontSize: "13px",
-                    padding: "4px 15px",
-                    marginBottom: "2rem",
+                    fontSize: "10px",
+                    // padding: "4px 15px",
+                    // marginBottom: "2rem",
                   }}
                 />
               </FormGroup>
@@ -511,7 +531,7 @@ const CreateCourse = () => {
                 <ContainerX>
                   <TextField
                     fullWidth
-                    label="حدنصاب کلاس"
+                    label="حدنصاب دوره"
                     name="min"
                     type="number"
                     onChange={(e) =>
@@ -530,7 +550,7 @@ const CreateCourse = () => {
                 <ContainerX>
                   <TextField
                     fullWidth
-                    label="حداکثر کلاس"
+                    label="حداکثر دوره"
                     name="max"
                     type="number"
                     onChange={(e) =>
@@ -647,29 +667,43 @@ const CreateCourse = () => {
               <Grid
                 style={{ display: "flex", marginTop: "5px", flexWrap: "wrap" }}
               >
-                <ContainerX>
-                  <FormControl>
-                    <FormLabel>نوع کلاس</FormLabel>
-                    <RadioGroup
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        flexWrap: "wrap",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                      value={variant}
-                      onChange={(event) =>
-                        setVariant(parseInt(event.target.value))
-                      }
-                    >
-                      <Radio value={0} label="رایگان" />
-                      <label>رایگان</label>
-                      <Radio value={1} label="هزینه‌ای" />
-                      <label>هزینه‌ای</label>
-                    </RadioGroup>
-                  </FormControl>
-                </ContainerX>
+                {/* <ContainerX> */}
+                <FormControl style={{ marginTop: "0.5rem" }}>
+                  <FormLabel>دوره رایگان باشد؟</FormLabel>
+                  <RadioGroup
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      flexWrap: "wrap",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    }}
+                    value={variant}
+                    onChange={(event) =>
+                      setVariant(parseInt(event.target.value))
+                    }
+                  >
+                    <div>
+                      <Radio
+                        style={{ marginRight: "10px" }}
+                        size={"small"}
+                        value={0}
+                        label="بله"
+                      />
+                      <label>بله</label>
+                    </div>
+                    <div>
+                      <Radio
+                        style={{ marginRight: "10px" }}
+                        size={"small"}
+                        value={1}
+                        label="خیر"
+                      />
+                      <label>خیر</label>
+                    </div>
+                  </RadioGroup>
+                </FormControl>
+                {/* </ContainerX> */}
                 {variant !== 0 ? (
                   <ContainerX>
                     <TextField
