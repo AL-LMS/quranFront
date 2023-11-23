@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import useAuth from "../../../hooks/useAuth";
 import { Button, Grid, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import CourseList from "../../../components/dashboard/students/myCourse/CourseList";
@@ -12,7 +11,6 @@ import toastify from "../../../helper/toast";
 import { getUrl } from "../../../helper/getUrl";
 
 const MyCourse = () => {
-  const { auth, user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [userInfo, setUserInfo] = useState(

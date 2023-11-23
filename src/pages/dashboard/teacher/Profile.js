@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
-import { Button, Divider, Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import { Container } from "@mui/system";
 import { toastify } from "../../../helper/toast";
 import { ToastContainer } from "react-toastify";
-import Documnets from "./Documnets";
 import TeacherInfo from "../../../components/dashboard/students/profile/TeacherInfo";
-import MultiDocumnets from "./MultiDocumnets";
 import { setLocalStorageLogin } from "../../localStorage";
 import { useNavigate } from "react-router-dom";
 import { getUrl } from "../../../helper/getUrl";
@@ -21,8 +19,6 @@ const Profile = () => {
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
-  const [showLastCertificate, setShowLastCertificate] = useState("");
-  const [showCertificate, setShowCertificate] = useState("");
   const [loading, setLoading] = useState(false);
   const initialValues = {
     first_name: user?.first_name,
@@ -34,7 +30,6 @@ const Profile = () => {
     sex: role?.sex ? role?.sex : null,
     birth_day: role?.birth_day ? role?.birth_day : null,
     degree: role?.degree ? role?.degree : null,
-    certificates: [],
     role: "teacher",
   };
   const RegistrationSchema = Yup.object().shape({
@@ -79,7 +74,6 @@ const Profile = () => {
     formData.append("degree", formik.values.degree);
     formData.append("picture", formik.values.picture);
     formData.append("description", formik.values.description);
-    formData.append("certificates", JSON.stringify(formik.values.certificates));
     if (formik.values.picture instanceof File) {
       let response = await axios.post(
         getUrl() + "back_request/update_teacher_info/",
@@ -220,23 +214,6 @@ const Profile = () => {
               </div>
             ) : null}
           </DescriptionContainer>
-          <DocumentsContainer>
-            <Documnets
-              formik={formik}
-              showLastCertificate={showLastCertificate}
-              setShowLastCertificate={setShowLastCertificate}
-              nameOfSection={"آخرین مدرک مربی"}
-              nameOfButtonField={"آپلود تصویر آخرین مدرک تحصیلی"}
-            />
-            <Divider />
-            <MultiDocumnets
-              formik={formik}
-              showCertificate={showCertificate}
-              setShowCertificate={setShowCertificate}
-              nameOfSection={"گواهی‌های مربی"}
-              nameOfButtonField={"آپلود تصاویر گواهی"}
-            />
-          </DocumentsContainer>
           <Grid item xs={12}>
             <Button
               variant="contained"

@@ -100,6 +100,7 @@ const Filter = ({ setParams, query, setQuery }) => {
         title={
           <Chip
             sx={{
+              backgroundColor: "#fff",
               color: "#000",
               fontSize: "1rem",
               borderRadius: "5px",

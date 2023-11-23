@@ -2,15 +2,8 @@ import React from "react";
 import { Button, Card, Divider, Grid, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { Stack } from "@mui/system";
-
 import NoImage from "../../../assets/img/class1.jpeg";
-import {
-  convert_ages,
-  convert_degree,
-  convert_sex,
-} from "../../../helper/converter";
-import { shamsi_format } from "../../../helper/shamsi_format";
-
+import { convert_ages, convert_sex } from "../../../helper/converter";
 const days_show = (days) => {
   let days_string = "";
   for (let index = 0; index < days.length; index++) {

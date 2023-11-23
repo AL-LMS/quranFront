@@ -113,13 +113,6 @@ const Profile = () => {
           <Grid item xs={12}>
             <StudentInfo formik={formik} />
           </Grid>
-          {/* <Grid item xs={12} style={{ marginTop: "20px" }}>
-            <Documnets
-              formik={formik}
-              showBirthCertificate={showBirthCertificate}
-              setShowBirthCertificate={setShowBirthCertificate}
-            />
-          </Grid> */}
           <Grid item xs={12}>
             <Button
               variant="contained"
