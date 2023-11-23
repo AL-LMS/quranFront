@@ -40,7 +40,7 @@ const DataTable = ({
         component="div"
         sx={{
           border: "1px solid #e8e8e8",
-          borderRadius: 4,
+          borderRadius: "5px",
           padding: 1,
           margin: "0 auto",
           width: { xs: "100%", md: "50%" },

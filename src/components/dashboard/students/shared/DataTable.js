@@ -32,7 +32,7 @@ const DataTable = ({
   return (
     <Card
       sx={{
-        borderRadius: 4,
+        borderRadius: "5px",
         boxShadow: "0 5px 20px rgba(112,112,112,.2)",
         padding: 2,
       }}

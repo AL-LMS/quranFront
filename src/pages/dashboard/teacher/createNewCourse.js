@@ -18,7 +18,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import "./style.css";
-import { Days, ages, courseType, degree, sex_for_class } from "./CourseData";
+import { Days, ages, courseType, sex_for_class } from "./CourseData";
 import Documnets from "./Documnets";
 import CheckIcon from "@mui/icons-material/Check";
 import { styled } from "styled-components";

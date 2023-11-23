@@ -240,7 +240,7 @@ const Forum = () => {
                       elevation: 0,
                       sx: {
                         boxShadow: "none",
-                        borderRadius: 4,
+                        borderRadius: "5px",
                         color: "#666",
                         textAlign: "center",
                         padding: "0 1rem",

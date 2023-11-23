@@ -27,11 +27,25 @@ export const ages = [
   { name: "بزرگسالان", id: 3 },
 ];
 
-export const degree = [
-  { name: "پیش‌دبستانی", id: 0 },
-  { name: "دبستان", id: 1 },
-  { name: "راهنمایی", id: 2 },
-  { name: "متوسطه", id: 3 },
-  { name: "دانشگاهی", id: 4 },
-  { name: "حوزوی", id: 5 },
-];
+export const degree = {
+  student: [
+    [
+      { name: "پیش‌دبستانی", id: 0 },
+      { name: "دبستان", id: 1 },
+      { name: "راهنمایی", id: 2 },
+      { name: "متوسطه", id: 3 },
+      { name: "دانشگاهی", id: 4 },
+      { name: "حوزوی", id: 5 },
+    ],
+  ],
+  teacher: [
+    [
+      { name: "پیش‌دبستانی", id: 0 },
+      { name: "دبستان", id: 1 },
+      { name: "راهنمایی", id: 2 },
+      { name: "متوسطه", id: 3 },
+      { name: "دانشگاهی", id: 4 },
+      { name: "حوزوی", id: 5 },
+    ],
+  ],
+};

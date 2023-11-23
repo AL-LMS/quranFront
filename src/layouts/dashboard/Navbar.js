@@ -104,7 +104,7 @@ const Navbar = ({ setSidebar }) => {
             elevation: 0,
             sx: {
               boxShadow: "0 5px 10px rgba(112,112,112,.2)",
-              borderRadius: 4,
+              borderRadius: "5px",
               color: "#666",
               textAlign: "center",
               padding: "0 1rem",
