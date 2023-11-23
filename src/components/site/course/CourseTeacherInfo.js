@@ -36,7 +36,7 @@ const CourseTeacherInfo = ({ data }) => {
             style={{ width: "50px", height: "50px", borderRadius: "50%" }}
           />
         </div>
-        <Divider />
+        <Divider style={{ marginTop: "20px", marginBottom: "20px" }} />
         <div
           style={{ marginTop: "5px", textAlign: "right" }}
           dangerouslySetInnerHTML={{

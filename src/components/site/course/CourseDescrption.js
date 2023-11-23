@@ -15,7 +15,7 @@ const CourseDescrption = ({ data }) => {
         توضیحات دوره
       </Typography>
       <div
-        style={{ textAlign: "right" }}
+        style={{ textAlign: "right", marginTop: "20px", marginBottom: "20px" }}
         dangerouslySetInnerHTML={{
           __html: sanitizeHtml(data["explain"]),
         }}
