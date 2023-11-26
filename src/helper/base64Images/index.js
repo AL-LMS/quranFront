@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import "./style.css";
 import AvatarSVG from "../../assets/img/profile.jpg";
 import styled from "styled-components";
-export default function Index({ formik }) {
+export default function Index({ formik, pic, setPic }) {
   let myRef = useRef();
   const openFile = (file) => {
     const input = file.target;
@@ -18,6 +18,7 @@ export default function Index({ formik }) {
           file_name: input.files[0].name,
           file_size: input.files[0].size,
         };
+        setPic(data.file);
         formik.setFieldValue("picture", file.target.files[0]);
       };
       reader.readAsDataURL(input.files[0]);
@@ -57,6 +58,30 @@ export default function Index({ formik }) {
           </span>
           <div class="overlay">
             <div class="text">افزودن تصویر</div>
+          </div>
+        </Container>
+      ) : formik.values.picture instanceof File ? (
+        <Container
+          class="container"
+          onClick={(event) => handelclik(event.currentTarget.value)}
+        >
+          <img
+            src={pic}
+            style={{
+              borderRadius: "50%",
+              width: "75px",
+              height: "75px",
+              marginLeft: "auto",
+              marginRight: "auto",
+              marginBottom: "10px",
+              display: "block",
+            }}
+          />
+          <span style={{ textAlign: "center", fontSize: "8px" }}>
+            برای تغییر تصویر خود روی عکس بالا کیلک کنید
+          </span>
+          <div class="overlay">
+            <div class="text">تغییر تصویر</div>
           </div>
         </Container>
       ) : (

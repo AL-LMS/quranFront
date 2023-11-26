@@ -20,6 +20,7 @@ const Profile = () => {
     JSON.parse(localStorage.getItem("user"))
   );
   const [loading, setLoading] = useState(false);
+  const [showPic, setShowPic] = useState(false);
   const initialValues = {
     first_name: user?.first_name,
     last_name: user?.last_name,
@@ -191,7 +192,7 @@ const Profile = () => {
             <TeacherInfo formik={formik} />
           </Grid>
           <DescriptionContainer>
-            <Image formik={formik} />
+            <Image formik={formik} pic={showPic} setPic={setShowPic} />
             <TextField
               label="توضیحات سوابق"
               value={formik.values.description}

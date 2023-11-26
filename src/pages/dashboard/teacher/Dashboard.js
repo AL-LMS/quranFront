@@ -3,7 +3,6 @@ import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 import { Grid } from "@mui/material";
 import { Container } from "@mui/system";
-
 import OverView from "../../../components/dashboard/teacher/dashboard/OverView";
 import Loader from "../../../components/site/shared/Loader";
 import Courses from "../../../components/dashboard/teacher/dashboard/Courses";
@@ -13,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 import { getUrl } from "../../../helper/getUrl";
 
 const Dashboard = () => {
-  const { auth, user, role } = useAuth();
   const [loading, setLoading] = useState(false);
   const [stCount, setStCount] = useState("");
   const [cCount, setCCount] = useState("");
@@ -56,6 +54,7 @@ const Dashboard = () => {
   };
   useEffect(() => {
     if (userRole?.national_id === null) {
+      toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
       navigate("/panel/profile");
     }
     get_teacher_info().then(() => {

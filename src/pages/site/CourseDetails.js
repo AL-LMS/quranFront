@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Grid } from "@mui/material";
 import CourseInfo from "../../components/site/course/CourseInfo";
@@ -12,33 +12,9 @@ import CourseTeacherInfo from "../../components/site/course/CourseTeacherInfo";
 import Loader from "../../components/site/shared/Loader";
 const CourseDetails = () => {
   const { id } = useParams();
-  const [data, setData] = useState({
-    course_id: 11,
-    days: ["یکشنبه", "دوشنبه", "سه شنبه"],
-    end_date: "1402-11-28",
-    start_date: "1402-08-28",
-    teacher_name: "محمدرضا قادری",
-    teacher_user_id: 1,
-    teacher_pic: "Fi0SsaPWYAghPcM.jpeg",
-    teacher_description: "سوابق من",
-    explain: "قرائت بایستی بتوانیم انجام دهیم.",
-    is_online: false,
-    ages: 2,
-    degree: 1,
-    sex: 0,
-    type: "قرائت",
-    name: "دوره تست قرائت",
-    min: 1,
-    max: 50,
-    price: 100000,
-    prerequisite: [],
-    start_time: "09:00:00",
-    end_time: "11:00:00",
-    picture: "catsee.jpg",
-  });
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const get_course = async () => {
-    console.log("set api");
     let data = {
       table: "courses",
       method_type: "get_course",
@@ -65,12 +41,12 @@ const CourseDetails = () => {
       toastify("error-login", response?.data?.error);
     }
   };
-  // useEffect(() => {
-  //   setLoading(true);
-  //   get_course().then(() => {
-  //     setLoading(false);
-  //   });
-  // }, [id]);
+  useEffect(() => {
+    setLoading(true);
+    get_course().then(() => {
+      setLoading(false);
+    });
+  }, [id]);
   if (loading)
     return (
       <Container maxWidth="lg">
