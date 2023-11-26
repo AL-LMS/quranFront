@@ -28,7 +28,7 @@ const CoursePageNotifs = ({ data_course, id }) => {
               </Typography>
             </Grid>
             <Divider />
-            <Grid container spacing={3}>
+            <Grid container spacing={3} style={{ justifyContent: "center" }}>
               {/* <ShowCourseNotif data={data_course} id={id} /> */}
               <NotifsLists data={data_course} />
             </Grid>

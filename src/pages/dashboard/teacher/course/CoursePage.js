@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CoursePageInfo from "./CoursePage/CoursePageInfo";
 import CoursePageNotifs from "./CoursePage/CoursePageNotifs";
-import CoursePageQuizes from "./CoursePage/CoursePageQuizes";
 import CoursePageHomeWorks from "./CoursePage/CoursePageHomeWorks";
 import CoursePageResources from "./CoursePage/CoursePageResources";
 import axios from "axios";

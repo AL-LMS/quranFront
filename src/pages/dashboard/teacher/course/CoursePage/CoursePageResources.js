@@ -28,7 +28,7 @@ const CoursePageResources = ({ data_course, id }) => {
               </Typography>
             </Grid>
             <Divider />
-            <Grid container spacing={3}>
+            <Grid container spacing={3} style={{ justifyContent: "center" }}>
               {/* <ShowCourseResouces data={data_course} id={id} /> */}
               <ResourcesLists data={data_course} />
             </Grid>
