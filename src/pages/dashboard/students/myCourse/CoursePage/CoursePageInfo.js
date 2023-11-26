@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import useAuth from "../../../../../hooks/useAuth";
-import { Button, Card, Divider, Grid, Typography } from "@mui/material";
+import { Button, Card, Grid, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { Stack } from "@mui/system";
 import { toastify } from "../../../../../helper/toast";
 import NoImage from "../../../../../assets/img/class1.jpeg";
 import persianDate from "persian-date";
-import { shamsi_format } from "../../../../../helper/shamsi_format";
 import { getUrl } from "../../../../../helper/getUrl";
 
 const days_show = (days) => {
@@ -20,6 +19,13 @@ const days_show = (days) => {
     }
   }
   return days_string;
+};
+
+const edit_show_date = (date) => {
+  let date_string = "";
+  let date_array = date.split("-");
+  date_string = date_array[2] + "-" + date_array[1] + "-" + date_array[0];
+  return date_string;
 };
 
 const check_time_for_class = (start_date, end_date, time, days) => {
@@ -138,9 +144,10 @@ const CoursePageInfo = ({ data_course }) => {
                   <Typography color="mainText" style={{ textAlign: "right" }}>
                     مدت دوره:
                     <span style={{ color: "black" }}>
-                      {data_course["start_date"] +
+                      {" " +
+                        edit_show_date(data_course["start_date"]) +
                         " تا " +
-                        data_course["end_date"]}
+                        edit_show_date(data_course["end_date"])}
                     </span>
                   </Typography>
                   <Typography color="mainText" style={{ textAlign: "right" }}>
