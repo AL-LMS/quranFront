@@ -182,137 +182,137 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
         <DialogTitle sx={{ textAlign: "center" }}>
           {type === "create" ? "ایجاد تکلیف" : "ویرایش تکلیف"}
         </DialogTitle>
-        <Grid container spacing={3} padding={2}>
-          <form onSubmit={formik.handleSubmit}>
-            <Grid item xs={12}>
-              <input
-                style={{ display: "none" }}
-                id="raised-button-file"
-                multiple
-                type="file"
-                onChange={(event) => openFile(event)}
-              />
-              <label htmlFor="raised-button-file">
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  sx={{ height: "56px" }}
-                  component="span"
-                >
-                  آپلود فایل تکلیف
-                </Button>
-              </label>
-              {formik.touched.file && formik.errors.file ? (
-                <div>
-                  <p style={{ fontSize: 10, color: "red" }}>
-                    {formik.errors.file}
-                  </p>
-                </div>
-              ) : null}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="عنوان"
-                value={formik.values.title}
-                onChange={(e) => formik.setFieldValue("title", e.target.value)}
+        {/* <Grid container spacing={3} padding={2}> */}
+        <form onSubmit={formik.handleSubmit} style={{ padding: "10px" }}>
+          <Grid item xs={12} mb={"10px"}>
+            <input
+              style={{ display: "none" }}
+              id="raised-button-file"
+              multiple
+              type="file"
+              onChange={(event) => openFile(event)}
+            />
+            <label htmlFor="raised-button-file">
+              <Button
+                variant="outlined"
                 fullWidth
-              />
-              {formik.touched.title && formik.errors.title ? (
-                <div>
-                  <p style={{ fontSize: 10, color: "red" }}>
-                    {formik.errors.title}
-                  </p>
-                </div>
-              ) : null}
-            </Grid>
-            <Grid item xs={12} sx={{ position: "relative" }}>
-              <TextField
-                label="مهلت انجام"
-                name="deadline"
-                value={formik.values.deadline ? formik.values.deadline : ""}
-                fullWidth
-                onFocus={() => setOpenBirthDay(true)}
-              />
-              {formik.touched.deadline && formik.errors.deadline ? (
-                <div>
-                  <p style={{ fontSize: 10, color: "red" }}>
-                    {formik.errors.deadline}
-                  </p>
-                </div>
-              ) : null}
-              <Picker
-                config={config}
-                isOpen={openBirthDay}
-                highlightHolidays
-                highlightWeekends
-                addDayName
-                initialValue={new Date("2021-03-20T20:30:00.000Z")}
-                onSubmit={(date) => {
-                  handleSubmit(date, "deadline");
-                  setOpenBirthDay(false);
+                sx={{ height: "56px" }}
+                component="span"
+              >
+                آپلود فایل تکلیف
+              </Button>
+            </label>
+            {formik.touched.file && formik.errors.file ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.file}
+                </p>
+              </div>
+            ) : null}
+          </Grid>
+          <Grid item xs={12} mb={"10px"}>
+            <TextField
+              label="عنوان"
+              value={formik.values.title}
+              onChange={(e) => formik.setFieldValue("title", e.target.value)}
+              fullWidth
+            />
+            {formik.touched.title && formik.errors.title ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.title}
+                </p>
+              </div>
+            ) : null}
+          </Grid>
+          <Grid item xs={12} sx={{ position: "relative" }} mb={"10px"}>
+            <TextField
+              label="مهلت انجام"
+              name="deadline"
+              value={formik.values.deadline ? formik.values.deadline : ""}
+              fullWidth
+              onFocus={() => setOpenBirthDay(true)}
+            />
+            {formik.touched.deadline && formik.errors.deadline ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.deadline}
+                </p>
+              </div>
+            ) : null}
+            <Picker
+              config={config}
+              isOpen={openBirthDay}
+              highlightHolidays
+              highlightWeekends
+              addDayName
+              initialValue={new Date("2021-03-20T20:30:00.000Z")}
+              onSubmit={(date) => {
+                handleSubmit(date, "deadline");
+                setOpenBirthDay(false);
+              }}
+              onCancel={() => setOpenBirthDay(false)}
+              onClose={() => setOpenBirthDay(false)}
+              theme="light"
+            />
+          </Grid>
+          <Grid item xs={12} mb={"10px"}>
+            <TextField
+              label="توضیحات"
+              value={formik.values.description}
+              onChange={(e) =>
+                formik.setFieldValue("description", e.target.value)
+              }
+              fullWidth
+              multiline
+              rows={4}
+            />
+            {formik.touched.description && formik.errors.description ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.description}
+                </p>
+              </div>
+            ) : null}
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12}>
+            {type === "create" ? (
+              <Button
+                variant="contained"
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
                 }}
-                onCancel={() => setOpenBirthDay(false)}
-                onClose={() => setOpenBirthDay(false)}
-                theme="light"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="توضیحات"
-                value={formik.values.description}
-                onChange={(e) =>
-                  formik.setFieldValue("description", e.target.value)
-                }
+                type="submit"
+                // onClick={() => add_homework().then(() => {})}
                 fullWidth
-                multiline
-                rows={4}
-              />
-              {formik.touched.description && formik.errors.description ? (
-                <div>
-                  <p style={{ fontSize: 10, color: "red" }}>
-                    {formik.errors.description}
-                  </p>
-                </div>
-              ) : null}
-            </Grid>
-            <Grid item xs={12}>
-              <Divider />
-            </Grid>
-            <Grid item xs={12}>
-              {type === "create" ? (
-                <Button
-                  variant="contained"
-                  sx={{
-                    boxShadow: "none",
-                    borderRadius: "5px",
-                    padding: "12px 0",
-                  }}
-                  type="submit"
-                  // onClick={() => add_homework().then(() => {})}
-                  fullWidth
-                  disabled={loading}
-                >
-                  ثبت تکلیف
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  sx={{
-                    boxShadow: "none",
-                    borderRadius: "5px",
-                    padding: "12px 0",
-                  }}
-                  type="submit"
-                  // onClick={() => add_homework().then(() => {})}
-                  fullWidth
-                  disabled={loading}
-                >
-                  ویرایش
-                </Button>
-              )}
-            </Grid>
-          </form>
-        </Grid>
+                disabled={loading}
+              >
+                ثبت تکلیف
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
+                type="submit"
+                // onClick={() => add_homework().then(() => {})}
+                fullWidth
+                disabled={loading}
+              >
+                ویرایش
+              </Button>
+            )}
+          </Grid>
+        </form>
+        {/* </Grid> */}
       </Dialog>
     </div>
   );

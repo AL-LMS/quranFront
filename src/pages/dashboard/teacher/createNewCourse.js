@@ -267,6 +267,14 @@ const CreateCourse = () => {
   useEffect(() => {
     formik.setFieldValue("prerequisite", prerequisite);
   }, [prerequisite]);
+  const handleOpenStart = () => {
+    setOpenStart(true);
+    setOpenEnd(false);
+  };
+  const handleOpenEnd = () => {
+    setOpenStart(false);
+    setOpenEnd(true);
+  };
   return (
     <Container>
       <Structure>
@@ -330,6 +338,7 @@ const CreateCourse = () => {
                 multiline
                 rows={5}
                 label="توضیحات"
+                placeholder="توضیحاتی درباره دوره‌ای که ارائه داده می‌شود بدهید"
                 name="explain"
                 onChange={(e) =>
                   formik.setFieldValue("explain", e.target.value)
@@ -392,7 +401,7 @@ const CreateCourse = () => {
                     name="start_date"
                     value={formik.values.start ? formik.values.start : ""}
                     fullWidth
-                    onFocus={() => setOpenStart(true)}
+                    onFocus={() => handleOpenStart()}
                     sx={{ marginTop: 1 }}
                   />
                   {formik.touched.start && formik.errors.start ? (
@@ -430,7 +439,7 @@ const CreateCourse = () => {
                     name="end_date"
                     value={formik.values.end ? formik.values.end : ""}
                     fullWidth
-                    onFocus={() => setOpenEnd(true)}
+                    onFocus={() => handleOpenEnd()}
                     sx={{ marginTop: 1 }}
                   />
                   {formik.touched.end && formik.errors.end ? (

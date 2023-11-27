@@ -89,7 +89,7 @@ const Course = () => {
           </Typography>
           <Button
             variant="contained"
-            sx={{ boxShadow: "none" }}
+            sx={{ boxShadow: "none", fontSize: "12px" }}
             onClick={() => navigate("/panel/all-courses")}
           >
             دوره‌ها

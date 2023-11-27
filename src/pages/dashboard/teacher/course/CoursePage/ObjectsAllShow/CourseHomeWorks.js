@@ -44,11 +44,11 @@ const CourseHomeWorks = () => {
     }
   };
 
-  // useEffect(() => {
-  //   get_homeworks().then(() => {
-  //     setLoading(false);
-  //   });
-  // }, [userInfo, reload]);
+  useEffect(() => {
+    get_homeworks().then(() => {
+      setLoading(false);
+    });
+  }, [userInfo, reload]);
 
   if (loading)
     return (

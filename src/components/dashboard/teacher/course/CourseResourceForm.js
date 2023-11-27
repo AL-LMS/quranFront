@@ -118,89 +118,89 @@ const TeacherResourceForm = ({ type, data, setReload }) => {
         <DialogTitle sx={{ textAlign: "center" }}>
           {type === "create" ? "افزودن منبع" : "ویرایش منبع"}
         </DialogTitle>
-        <Grid container spacing={3} padding={2}>
-          <form onSubmit={formik.handleSubmit}>
-            <Grid item xs={12}>
-              <input
-                style={{ display: "none" }}
-                id="raised-button-file"
-                multiple
-                type="file"
-                onChange={(event) => openFile(event)}
-              />
-              <label htmlFor="raised-button-file">
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  sx={{ height: "56px" }}
-                  component="span"
-                >
-                  آپلود فایل منبع
-                </Button>
-              </label>
-              {formik.touched.file && formik.errors.file ? (
-                <div>
-                  <p style={{ fontSize: 10, color: "red" }}>
-                    {formik.errors.file}
-                  </p>
-                </div>
-              ) : null}
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                label="عنوان"
-                value={formik.values.title}
-                onChange={(e) => formik.setFieldValue("title", e.target.value)}
+        {/* <Grid container spacing={3} padding={2}> */}
+        <form onSubmit={formik.handleSubmit}>
+          <Grid item xs={12} mb={"10px"}>
+            <input
+              style={{ display: "none" }}
+              id="raised-button-file"
+              multiple
+              type="file"
+              onChange={(event) => openFile(event)}
+            />
+            <label htmlFor="raised-button-file">
+              <Button
+                variant="outlined"
                 fullWidth
-              />
+                sx={{ height: "56px" }}
+                component="span"
+              >
+                آپلود فایل منبع
+              </Button>
+            </label>
+            {formik.touched.file && formik.errors.file ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.file}
+                </p>
+              </div>
+            ) : null}
+          </Grid>
 
-              {formik.touched.title && formik.errors.title ? (
-                <div>
-                  <p style={{ fontSize: 10, color: "red" }}>
-                    {formik.errors.title}
-                  </p>
-                </div>
-              ) : null}
-            </Grid>
-            <Grid item xs={12}>
-              <Divider />
-            </Grid>
-            <Grid item xs={12}>
-              {type === "create" ? (
-                <Button
-                  variant="contained"
-                  sx={{
-                    boxShadow: "none",
-                    borderRadius: "5px",
-                    padding: "12px 0",
-                  }}
-                  // onClick={() => add_resource().then(() => {})}
-                  type="submit"
-                  fullWidth
-                  disabled={loading}
-                >
-                  ثبت منبع
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  sx={{
-                    boxShadow: "none",
-                    borderRadius: "5px",
-                    padding: "12px 0",
-                  }}
-                  // onClick={() => add_resource().then(() => {})}
-                  type="submit"
-                  fullWidth
-                  disabled={loading}
-                >
-                  ویرایش
-                </Button>
-              )}
-            </Grid>
-          </form>
-        </Grid>
+          <Grid item xs={12} mb={"10px"}>
+            <TextField
+              label="عنوان"
+              value={formik.values.title}
+              onChange={(e) => formik.setFieldValue("title", e.target.value)}
+              fullWidth
+            />
+
+            {formik.touched.title && formik.errors.title ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.title}
+                </p>
+              </div>
+            ) : null}
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12}>
+            {type === "create" ? (
+              <Button
+                variant="contained"
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
+                // onClick={() => add_resource().then(() => {})}
+                type="submit"
+                fullWidth
+                disabled={loading}
+              >
+                ثبت منبع
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
+                // onClick={() => add_resource().then(() => {})}
+                type="submit"
+                fullWidth
+                disabled={loading}
+              >
+                ویرایش
+              </Button>
+            )}
+          </Grid>
+        </form>
+        {/* </Grid> */}
       </Dialog>
     </div>
   );

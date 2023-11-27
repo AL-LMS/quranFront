@@ -161,6 +161,7 @@ const CourseList = ({ data }) => {
                           variant="contained"
                           fullWidth
                           sx={{
+                            fontSize: "12px",
                             borderRadius: "5px",
                             padding: "6px 30px",
                             boxShadow: "none",
