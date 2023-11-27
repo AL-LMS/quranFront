@@ -13,8 +13,9 @@ import Loader from "../../components/site/shared/Loader";
 const CourseDetails = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const get_course = async () => {
+    console.log("DASdsasads");
     let data = {
       table: "courses",
       method_type: "get_course",
