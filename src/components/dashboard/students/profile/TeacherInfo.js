@@ -27,7 +27,6 @@ const TeacherInfo = ({ formik }) => {
     const date = format(selectedDate.date, "yyyy-MM-dd");
     formik.setFieldValue(field, date);
   }
-  console.log(degree["teacher"][0][formik.values.degree].name);
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>

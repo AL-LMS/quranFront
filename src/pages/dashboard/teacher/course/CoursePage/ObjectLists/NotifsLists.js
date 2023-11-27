@@ -17,6 +17,7 @@ const NotifsLists = ({ data }) => {
         // boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
         borderRadius: "5px",
         marginTop: "1rem",
+        minWidth: "75%",
       }}
     >
       <TableContainer sx={{ padding: 2 }}>
