@@ -119,7 +119,7 @@ const TeacherResourceForm = ({ type, data, setReload }) => {
           {type === "create" ? "افزودن منبع" : "ویرایش منبع"}
         </DialogTitle>
         {/* <Grid container spacing={3} padding={2}> */}
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit} style={{ padding: "20px" }}>
           <Grid item xs={12} mb={"10px"}>
             <input
               style={{ display: "none" }}

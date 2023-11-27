@@ -183,7 +183,7 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
           {type === "create" ? "ایجاد تکلیف" : "ویرایش تکلیف"}
         </DialogTitle>
         {/* <Grid container spacing={3} padding={2}> */}
-        <form onSubmit={formik.handleSubmit} style={{ padding: "10px" }}>
+        <form onSubmit={formik.handleSubmit} style={{ padding: "20px" }}>
           <Grid item xs={12} mb={"10px"}>
             <input
               style={{ display: "none" }}
