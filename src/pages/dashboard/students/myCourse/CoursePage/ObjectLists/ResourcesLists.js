@@ -71,7 +71,7 @@ const ResourcesLists = ({ data }) => {
                 >
                   {item?.file !== "" ? (
                     <a
-                      download={item?.title}
+                      // download={item?.title}
                       href={`http://daarolquran.com/back_request/get_resource/${item?.file}`}
                     >
                       <Button
