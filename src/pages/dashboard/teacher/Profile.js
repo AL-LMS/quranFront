@@ -28,9 +28,9 @@ const Profile = () => {
     phone: user?.phone,
     picture: role?.picture,
     description: role?.description,
-    sex: role?.sex ? role?.sex : null,
+    sex: role?.sex,
     birth_day: role?.birth_day ? role?.birth_day : null,
-    degree: role?.degree ? role?.degree : null,
+    degree: role?.degree,
     role: "teacher",
   };
   const RegistrationSchema = Yup.object().shape({

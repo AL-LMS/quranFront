@@ -25,9 +25,9 @@ const Profile = () => {
     national_id: role?.national_id,
     phone: user?.phone,
     picture: null,
-    sex: role?.sex ? role?.sex : null,
+    sex: role?.sex,
     birth_day: role?.birth_day ? role?.birth_day : null,
-    degree: role?.degree ? role?.degree : null,
+    degree: role?.degree,
     certificates: [],
     role: "student",
   };
