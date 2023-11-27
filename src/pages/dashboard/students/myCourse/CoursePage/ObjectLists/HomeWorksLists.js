@@ -105,7 +105,7 @@ const HomeWorksLists = ({ data, setReload }) => {
                 >
                   {item?.file !== "" ? (
                     <a
-                      download={item?.title}
+                      // download={item?.title}
                       href={`http://daarolquran.com/back_request/get_homework/${item?.file}`}
                     >
                       <Button>

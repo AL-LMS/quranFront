@@ -166,72 +166,72 @@ const UploadExercisesForm = ({
         <DialogTitle sx={{ textAlign: "center" }}>
           {type === "create" ? "ارسال تکلیف" : "ویرایش تکلیف"}
         </DialogTitle>
-        <Grid container spacing={3} padding={2}>
-          <form onSubmit={formik.handleSubmit}>
-            <Grid item xs={12}>
-              <input
-                style={{ display: "none" }}
-                id="raised-button-file"
-                multiple
-                type="file"
-                onChange={(event) => openFile(event)}
-              />
-              <label htmlFor="raised-button-file">
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  sx={{ height: "56px" }}
-                  component="span"
-                >
-                  ارسال تکلیف
-                </Button>
-              </label>
-              {formik.touched.file && formik.errors.file ? (
-                <div>
-                  <p style={{ fontSize: 10, color: "red" }}>
-                    {formik.errors.file}
-                  </p>
-                </div>
-              ) : null}
-            </Grid>
-            <Grid item xs={12}>
-              <Divider />
-            </Grid>
-            <Grid item xs={12}>
-              {type === "create" ? (
-                <Button
-                  variant="contained"
-                  sx={{
-                    boxShadow: "none",
-                    borderRadius: "5px",
-                    padding: "12px 0",
-                  }}
-                  // onClick={() => upload_homework().then(() => {})}
-                  type="submit"
-                  fullWidth
-                  disabled={loading}
-                >
-                  ارسال تکلیف
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  sx={{
-                    boxShadow: "none",
-                    borderRadius: "5px",
-                    padding: "12px 0",
-                  }}
-                  // onClick={() => edit_upload_homework().then(() => {})}
-                  type="submit"
-                  fullWidth
-                  disabled={loading}
-                >
-                  ارسال تکلیف
-                </Button>
-              )}
-            </Grid>
-          </form>
-        </Grid>
+        {/* <Grid container spacing={3} padding={2}> */}
+        <form onSubmit={formik.handleSubmit} style={{ padding: "20px" }}>
+          <Grid item xs={12} mb={"10px"}>
+            <input
+              style={{ display: "none" }}
+              id="raised-button-file"
+              multiple
+              type="file"
+              onChange={(event) => openFile(event)}
+            />
+            <label htmlFor="raised-button-file">
+              <Button
+                variant="outlined"
+                fullWidth
+                sx={{ height: "56px" }}
+                component="span"
+              >
+                ارسال تکلیف
+              </Button>
+            </label>
+            {formik.touched.file && formik.errors.file ? (
+              <div>
+                <p style={{ fontSize: 10, color: "red" }}>
+                  {formik.errors.file}
+                </p>
+              </div>
+            ) : null}
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12}>
+            {type === "create" ? (
+              <Button
+                variant="contained"
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
+                // onClick={() => upload_homework().then(() => {})}
+                type="submit"
+                fullWidth
+                disabled={loading}
+              >
+                ارسال تکلیف
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                sx={{
+                  boxShadow: "none",
+                  borderRadius: "5px",
+                  padding: "12px 0",
+                }}
+                // onClick={() => edit_upload_homework().then(() => {})}
+                type="submit"
+                fullWidth
+                disabled={loading}
+              >
+                ارسال تکلیف
+              </Button>
+            )}
+          </Grid>
+        </form>
+        {/* </Grid> */}
       </Dialog>
     </div>
   );
