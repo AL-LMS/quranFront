@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, Divider, Grid, Typography } from "@mui/material";
 import ShowCourseResouces from "./ShowObjects/ShowCourseResouces";
-import ResourcesLists from "./ObjectLists/ResourcesLists";
 
 const CoursePageResources = ({ data_course, id }) => {
   return (
@@ -29,8 +28,7 @@ const CoursePageResources = ({ data_course, id }) => {
             </Grid>
             <Divider />
             <Grid container spacing={3} style={{ justifyContent: "center" }}>
-              {/* <ShowCourseResouces data={data_course} id={id} /> */}
-              <ResourcesLists data={data_course} />
+              <ShowCourseResouces data={data_course} id={id} />
             </Grid>
           </Grid>
         </Grid>

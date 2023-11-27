@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, Divider, Grid, Typography } from "@mui/material";
 import ShowCourseNotif from "./ShowObjects/ShowCourseNotif";
-import NotifsLists from "./ObjectLists/NotifsLists";
 
 const CoursePageNotifs = ({ data_course, id }) => {
   return (
