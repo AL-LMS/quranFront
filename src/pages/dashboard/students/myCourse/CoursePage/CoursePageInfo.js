@@ -136,7 +136,7 @@ const CoursePageInfo = ({ data_course }) => {
               >
                 <Stack spacing={2} direction="column">
                   <Typography color="mainText" style={{ textAlign: "right" }}>
-                    روزهای برگزاری:
+                    روزهای برگزاری:{" "}
                     <span style={{ color: "black" }}>
                       {days_show(data_course["days"])}
                     </span>
@@ -153,7 +153,8 @@ const CoursePageInfo = ({ data_course }) => {
                   <Typography color="mainText" style={{ textAlign: "right" }}>
                     ساعت برگزاری:
                     <span style={{ color: "black" }}>
-                      {data_course["start_time"].slice(0, 5) +
+                      {" " +
+                        data_course["start_time"].slice(0, 5) +
                         " تا " +
                         data_course["end_time"].slice(0, 5)}
                     </span>

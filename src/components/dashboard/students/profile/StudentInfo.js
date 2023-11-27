@@ -144,12 +144,12 @@ const StudentInfo = ({ formik }) => {
       <Grid item xs={12} md={6}>
         <Autocomplete
           fullWidth
-          value={degree["student"][formik.values.degree]}
+          value={degree["student"][0][formik.values.degree]}
           onChange={(event, newValue) =>
             formik.setFieldValue("degree", newValue.id)
           }
           id="controllable-states-demo"
-          options={degree["student"]}
+          options={degree["student"][0]}
           getOptionLabel={(option) => option.name || ""}
           renderInput={(params) => (
             <TextField {...params} label="تحصیلات" required />

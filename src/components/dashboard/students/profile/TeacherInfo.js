@@ -27,7 +27,7 @@ const TeacherInfo = ({ formik }) => {
     const date = format(selectedDate.date, "yyyy-MM-dd");
     formik.setFieldValue(field, date);
   }
-
+  console.log(degree["teacher"][0][formik.values.degree].name);
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -142,12 +142,12 @@ const TeacherInfo = ({ formik }) => {
       <Grid item xs={12} md={6}>
         <Autocomplete
           fullWidth
-          value={degree["teacher"][formik.values.degree]}
+          value={degree["teacher"][0][formik.values.degree]}
           onChange={(event, newValue) =>
             formik.setFieldValue("degree", newValue.id)
           }
           id="controllable-states-demo"
-          options={degree["teacher"]}
+          options={degree["teacher"][0]}
           getOptionLabel={(option) => option.name || ""}
           renderInput={(params) => <TextField {...params} label="تحصیلات" />}
         />

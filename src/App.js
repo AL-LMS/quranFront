@@ -88,6 +88,7 @@ function App() {
         <Route path="/send-otp" element={<SendOTP />} />
         <Route path="/check-otp" element={<CheckOTP />} />
         <Route path="/meet" element={<Meet />} />
+        <Route path="/meet" element={<Meet />} />
         <Route path="/FAQ" element={<FAQ />} />
         {user?.role?.toLowerCase() === "student" ? (
           <Route element={<PrivateRoutes />}>
