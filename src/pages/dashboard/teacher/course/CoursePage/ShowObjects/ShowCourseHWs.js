@@ -5,7 +5,11 @@ import HomeWorksLists from "../ObjectLists/HomeWorksLists";
 
 const ShowCourseHWs = ({ data, id }) => {
   return (
-    <Grid container spacing={4} style={{ marginRight: 0 }}>
+    <Grid
+      container
+      spacing={4}
+      style={{ marginRight: 0, justifyContent: "center" }}
+    >
       {data.length > 0 ? (
         <HomeWorksLists data={data} />
       ) : (

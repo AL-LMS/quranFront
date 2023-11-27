@@ -5,7 +5,11 @@ import NotifsLists from "../ObjectLists/NotifsLists";
 
 const ShowCourseNotif = ({ data, id }) => {
   return (
-    <Grid container spacing={4} style={{ marginRight: 0 }}>
+    <Grid
+      container
+      spacing={4}
+      style={{ marginRight: 0, justifyContent: "center" }}
+    >
       {data.length > 0 ? (
         <NotifsLists data={data} />
       ) : (

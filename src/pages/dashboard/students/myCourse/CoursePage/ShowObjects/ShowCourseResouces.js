@@ -5,7 +5,11 @@ import ResourcesLists from "../ObjectLists/ResourcesLists";
 
 const ShowCourseResouces = ({ data, id }) => {
   return (
-    <Grid container spacing={4} style={{ marginRight: 0 }}>
+    <Grid
+      container
+      spacing={4}
+      style={{ marginRight: 0, justifyContent: "center" }}
+    >
       {data.length > 0 ? (
         <ResourcesLists data={data} />
       ) : (
