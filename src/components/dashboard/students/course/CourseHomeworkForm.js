@@ -79,7 +79,6 @@ const UploadExercisesForm = ({
     formData.append("course_id", id);
     formData.append("homework_id", homeworkId);
     formData.append("answer_id", formik.values.answer_id);
-    formData.append("teacher_id", formik.values.teacher_id);
     if (formik.values.file instanceof File) {
       let response = await axios.post(
         getUrl() + "back_request/upload_homework/",
@@ -120,7 +119,6 @@ const UploadExercisesForm = ({
       formData.append("course_id", id);
       formData.append("homework_id", homeworkId);
       formData.append("answer_id", formik.values.answer_id);
-      formData.append("teacher_id", formik.values.teacher_id);
       if (formik.values.file instanceof File) {
         let response = await axios.post(
           getUrl() + "back_request/upload_homework/",
