@@ -42,10 +42,10 @@ const UploadExercisesForm = ({
     validationSchema: RegistrationSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
       setLoading(true);
-      if (formik.values.answer_id === null) {
-        upload_homework().then(() => {});
-      } else {
+      if (formik.values.answer_id) {
         edit_upload_homework().then(() => {});
+      } else {
+        upload_homework().then(() => {});
       }
     },
   });
