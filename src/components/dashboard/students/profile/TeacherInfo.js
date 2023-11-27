@@ -27,6 +27,7 @@ const TeacherInfo = ({ formik }) => {
     const date = format(selectedDate.date, "yyyy-MM-dd");
     formik.setFieldValue(field, date);
   }
+  console.log(degree["teacher"][0][0]);
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -141,7 +142,7 @@ const TeacherInfo = ({ formik }) => {
       <Grid item xs={12} md={6}>
         <Autocomplete
           fullWidth
-          value={degree["teacher"][0][formik.values.degree]}
+          value={degree["teacher"][0][parseInt(formik.values.degree)]}
           onChange={(event, newValue) =>
             formik.setFieldValue("degree", newValue.id)
           }

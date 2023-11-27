@@ -144,7 +144,7 @@ const StudentInfo = ({ formik }) => {
       <Grid item xs={12} md={6}>
         <Autocomplete
           fullWidth
-          value={degree["student"][0][formik.values.degree]}
+          value={degree["student"][0][parseInt(formik.values.degree)]}
           onChange={(event, newValue) =>
             formik.setFieldValue("degree", newValue.id)
           }
