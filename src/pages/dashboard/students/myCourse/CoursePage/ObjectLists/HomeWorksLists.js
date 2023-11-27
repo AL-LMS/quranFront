@@ -143,6 +143,7 @@ const HomeWorksLists = ({ data, setReload }) => {
                           type="edit"
                           homeworkId={item.id}
                           answer_id={item.answer_id}
+                          teacher_id={item.teacher_id}
                           setReload={setReload}
                         />
                       ) : (
@@ -150,6 +151,7 @@ const HomeWorksLists = ({ data, setReload }) => {
                           type="create"
                           homeworkId={item.id}
                           answer_id={item.answer_id}
+                          teacher_id={item.teacher_id}
                           setReload={setReload}
                         />
                       )}

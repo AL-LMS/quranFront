@@ -22,6 +22,7 @@ const UploadExercisesForm = ({
   data,
   homeworkId,
   answer_id,
+  teacher_id,
   setReload,
 }) => {
   const { id } = useParams();
@@ -31,7 +32,7 @@ const UploadExercisesForm = ({
   const initialValues = {
     file: data ? data.fileCourse : "",
     type: data ? data.type : "",
-    teacher_id: data ? data.teacher_id : "",
+    teacher_id: teacher_id ? teacher_id : "",
     answer_id: answer_id ? answer_id : null,
   };
   const RegistrationSchema = Yup.object().shape({
