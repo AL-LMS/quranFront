@@ -13,7 +13,6 @@ import { getUrl } from "../../helper/getUrl";
 // import Data from "../../test";
 const Course = () => {
   const [data, setData] = useState([]);
-  const [item, setItem] = useState([]);
   const [params, setParams] = useSearchParams();
   const [notFound, setNotFound] = useState(false);
   const [count, setCount] = useState(0);
@@ -24,10 +23,6 @@ const Course = () => {
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("role"))
   );
-  useEffect(() => {
-    setItem(data.slice(0, 6));
-    setCount(data.length);
-  }, [data]);
   const navigate = useNavigate();
   useEffect(() => {
     if (userInfo?.national_id === null) {
@@ -60,10 +55,17 @@ const Course = () => {
       baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      setData(response?.data?.response);
+      setData(response?.data?.response?.all_course);
+      setCount(response?.data?.response?.len);
+      setFrom(response?.data?.response?.from);
+      setTo(response?.data?.response?.to);
     } else {
       toastify("error-login", response?.data?.error);
     }
+  };
+  const handlePagination = (value) => {
+    setFrom((value - 1) * 6);
+    setTo(value * 6);
   };
   return (
     <Container maxWidth="lg">
@@ -79,7 +81,7 @@ const Course = () => {
         {data.length > 0 ? (
           <Grid item xs={12} md={8}>
             <Grid container spacing={3}>
-              {item.map((course) => (
+              {data.map((course) => (
                 <Grid item xs={12} md={4} key={course.id}>
                   <CourseCard data={course} />
                 </Grid>
@@ -90,9 +92,7 @@ const Course = () => {
                 count={Math.ceil(count / 6)}
                 color="primary"
                 sx={{ display: "flex", justifyContent: "center" }}
-                onChange={(event, value) => {
-                  setItem(data.slice((value - 1) * 6, value * 6));
-                }}
+                onChange={(event, value) => handlePagination(value)}
               />
             </Grid>
           </Grid>
