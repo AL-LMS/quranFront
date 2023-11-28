@@ -14,6 +14,7 @@ import { getUrl } from "../../../../helper/getUrl";
 const CoursePage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(false);
   const { id } = useParams();
   const get_course = async () => {
     let data = {
@@ -46,7 +47,7 @@ const CoursePage = () => {
       setLoading(false);
     });
   }, [id]);
-  if (loading)
+  if ((loading, reload))
     return (
       <Container maxWidth="lg">
         <Grid container>
@@ -76,7 +77,11 @@ const CoursePage = () => {
           <CoursePageNotifs data_course={data?.notifications} id={id} />
         </Grid>
         <Grid item xs={12}>
-          <CoursePageHomeWorks data_course={data?.homeworks} id={id} />
+          <CoursePageHomeWorks
+            data_course={data?.homeworks}
+            id={id}
+            setReload={setReload}
+          />
         </Grid>
         {/* <Grid item xs={12}>
           <CoursePageQuizes data_course={data?.quiz} id={id} />

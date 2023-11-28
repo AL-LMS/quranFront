@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Divider, Grid, Typography } from "@mui/material";
 import ShowCourseHWs from "./ShowObjects/ShowCourseHWs";
 
-const CoursePageHomeWorks = ({ data_course, id }) => {
+const CoursePageHomeWorks = ({ data_course, id, setReload }) => {
   return (
     <Card
       sx={{
@@ -28,7 +28,7 @@ const CoursePageHomeWorks = ({ data_course, id }) => {
             </Grid>
             <Divider />
             <Grid container spacing={3}>
-              <ShowCourseHWs data={data_course} id={id} />
+              <ShowCourseHWs data={data_course} id={id} setReload={setReload} />
             </Grid>
           </Grid>
         </Grid>

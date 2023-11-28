@@ -13,7 +13,12 @@ import {
 import { useParams } from "react-router-dom";
 import { toastify } from "../../../../helper/toast";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { Picker, format } from "@persian-tools/persian-mobile-datepicker";
+import {
+  Picker,
+  convertDateInstanceToDateObject,
+  format,
+  newDate,
+} from "@persian-tools/persian-mobile-datepicker";
 import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
 import { getUrl } from "../../../../helper/getUrl";
 import { useFormik } from "formik";
@@ -23,6 +28,7 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const date = convertDateInstanceToDateObject(new Date());
   const initialValues = {
     file: data ? data.fileCourse : "",
     title: data ? data.title : "",
@@ -247,6 +253,11 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
               highlightWeekends
               addDayName
               initialValue={new Date("2021-03-20T20:30:00.000Z")}
+              minDate={newDate({
+                year: date.year,
+                month: date.month,
+                day: date.day,
+              })}
               onSubmit={(date) => {
                 handleSubmit(date, "deadline");
                 setOpenBirthDay(false);

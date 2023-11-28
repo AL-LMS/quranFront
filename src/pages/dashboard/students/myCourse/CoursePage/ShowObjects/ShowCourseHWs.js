@@ -3,7 +3,7 @@ import { Button, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import HomeWorksLists from "../ObjectLists/HomeWorksLists";
 
-const ShowCourseHWs = ({ data, id }) => {
+const ShowCourseHWs = ({ data, id, setReload }) => {
   return (
     <Grid
       container
@@ -11,7 +11,7 @@ const ShowCourseHWs = ({ data, id }) => {
       style={{ marginRight: 0, justifyContent: "center" }}
     >
       {data.length > 0 ? (
-        <HomeWorksLists data={data} />
+        <HomeWorksLists data={data} setReload={setReload} />
       ) : (
         <Grid item xs={12}>
           <Typography variant="h5" color="#888" textAlign="center">
