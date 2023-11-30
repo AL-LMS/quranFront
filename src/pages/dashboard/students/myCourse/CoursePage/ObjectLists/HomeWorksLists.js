@@ -11,11 +11,22 @@ import {
   TableHead,
   TableRow,
   Tooltip,
+  // TablePagination,
 } from "@mui/material";
 import UploadExercisesForm from "../../../../../../components/dashboard/students/course/CourseHomeworkForm";
 import DownloadIcon from "@mui/icons-material/Download";
 import { checkHomeWorkDeadLine } from "../../../../../../helper/checkdeadline";
 const HomeWorksLists = ({ data, setReload }) => {
+  // const [page, setPage] = React.useState(0);
+  // const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  // const handleChangePage = (event, newPage) => {
+  //   setPage(newPage);
+  // };
+
+  // const handleChangeRowsPerPage = (event) => {
+  //   setRowsPerPage(+event.target.value);
+  //   setPage(0);
+  // };
   return (
     <Card
       sx={{
@@ -167,6 +178,14 @@ const HomeWorksLists = ({ data, setReload }) => {
               </TableRow>
             ))}
           </TableBody>
+          {/* <TablePagination
+            component="div"
+            count={data.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          /> */}
         </Table>
       </TableContainer>
     </Card>
