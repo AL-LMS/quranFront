@@ -42,7 +42,7 @@ const CourseNotifes = () => {
       baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      setData(response?.data?.response?.all_notifs);
+      setData(response?.data?.response?.all_course);
       setCount(response?.data?.response?.len);
       setFrom(response?.data?.response?.from);
       setTo(response?.data?.response?.to);
