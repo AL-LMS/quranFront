@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container } from "@mui/system";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Pagination, Typography } from "@mui/material";
 import Loader from "../../../../../../components/site/shared/Loader";
 import { useParams } from "react-router-dom";
 import toastify from "../../../../../../helper/toast";
@@ -14,6 +14,10 @@ const CourseResources = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(true);
+  const [count, setCount] = useState(0);
+  const [from, setFrom] = useState(0);
+  const [to, setTo] = useState(5);
+  const [getNotifs, setGetNotifs] = useState(false);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
@@ -23,6 +27,8 @@ const CourseResources = () => {
       method_type: "get_resources",
       data: {
         course_id: id,
+        from: from,
+        to: to,
       },
     };
     let response = await axios({
@@ -38,17 +44,26 @@ const CourseResources = () => {
       baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      setData(response?.data?.response);
+      setData(response?.data?.response?.all_course);
+      setCount(response?.data?.response?.len);
+      setFrom(response?.data?.response?.from);
+      setTo(response?.data?.response?.to);
     } else {
       toastify("error-login", response?.data?.error);
     }
+  };
+
+  const handlePagination = (value) => {
+    setFrom((value - 1) * 5);
+    setTo(value * 5);
+    setGetNotifs(!getNotifs);
   };
 
   useEffect(() => {
     get_resource().then(() => {
       setLoading(false);
     });
-  }, [userInfo, reload]);
+  }, [userInfo || reload || getNotifs]);
 
   if (loading)
     return (
@@ -94,6 +109,14 @@ const CourseResources = () => {
         </Grid>
         <Grid item xs={12}>
           <ResourcesLists data={data} />
+        </Grid>
+        <Grid item xs={12} mt={6}>
+          <Pagination
+            count={Math.ceil(count / 5)}
+            color="primary"
+            sx={{ display: "flex", justifyContent: "center" }}
+            onChange={(event, value) => handlePagination(value)}
+          />
         </Grid>
       </Grid>
     </Container>

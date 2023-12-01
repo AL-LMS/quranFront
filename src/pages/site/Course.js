@@ -20,6 +20,7 @@ const Course = () => {
   const [filtered, setFiltred] = useState(false);
   const [from, setFrom] = useState(0);
   const [to, setTo] = useState(6);
+  const [getNotifs, setGetNotifs] = useState(false);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("role"))
   );
@@ -31,7 +32,7 @@ const Course = () => {
     } else {
       get_courses().then(() => {});
     }
-  }, [userInfo, query]);
+  }, [userInfo || query || getNotifs]);
   const get_courses = async () => {
     let data = {
       table: "courses",
@@ -66,6 +67,7 @@ const Course = () => {
   const handlePagination = (value) => {
     setFrom((value - 1) * 6);
     setTo(value * 6);
+    setGetNotifs(!getNotifs);
   };
   return (
     <Container maxWidth="lg">
