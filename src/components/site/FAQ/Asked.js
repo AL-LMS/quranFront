@@ -27,12 +27,12 @@ const Asked = ({ active, title, text }) => {
         expandIcon={
           <IconButton
             sx={{
-              backgroundColor: "#9126FF",
+              backgroundColor: "#3f3f97",
               borderRadius: "10px",
               padding: "5px",
               color: "#fff",
               "&:hover": {
-                backgroundColor: "#9126FF",
+                backgroundColor: "#3f3f97",
               },
             }}
           >

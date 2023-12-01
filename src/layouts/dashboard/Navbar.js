@@ -79,11 +79,11 @@ const Navbar = ({ setSidebar }) => {
                   borderRadius: "5px",
                   marginLeft: 2,
                   fontSize: "15px",
-                  backgroundColor: "#9126FF",
+                  backgroundColor: "#3f3f97",
                   boxShadow: "none",
                   color: "#fff",
                   "&:hover": {
-                    backgroundColor: "#9126FF",
+                    backgroundColor: "#3f3f97",
                     color: "#fff",
                     boxShadow: "none",
                   },

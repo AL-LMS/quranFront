@@ -13,10 +13,10 @@ export const theme = createTheme({
   direction: "rtl",
   palette: {
     primary: {
-      main: "#9126FF",
+      main: "#3f3f97",
     },
     secondary: {
-      main: "#fec101",
+      main: "#cb9f41",
     },
     mainText: "#666",
     success: { main: "#61d215" },
