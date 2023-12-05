@@ -12,10 +12,10 @@ import Loader from "../../../../components/site/shared/Loader";
 import { getUrl } from "../../../../helper/getUrl";
 
 const CoursePage = () => {
-  const [data, setData] = useState([]);
+  const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(false);
-  const { id } = useParams();
+  const [data, setData] = useState([]);
   const get_course = async () => {
     let data = {
       table: "courses",
@@ -43,10 +43,11 @@ const CoursePage = () => {
     }
   };
   useEffect(() => {
+    console.log("the api addd");
     get_course().then(() => {
       setLoading(false);
     });
-  }, []);
+  }, [id]);
   if ((loading, reload))
     return (
       <Container maxWidth="lg">
