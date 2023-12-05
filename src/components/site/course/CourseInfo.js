@@ -50,8 +50,9 @@ const CourseInfo = ({ data_course }) => {
       method_type: "register_course",
       data: {
         course_id: id,
-        student_id: user.user_id,
-        student_name: user.first_name + " " + user.last_name,
+        user_id: user.user_id,
+        user_name: user.first_name + " " + user.last_name,
+        user_type: user.role,
         teacher_id: data_course.teacher_user_id,
       },
     };

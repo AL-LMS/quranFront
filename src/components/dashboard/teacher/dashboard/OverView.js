@@ -23,7 +23,7 @@ const OverView = ({ type, count }) => {
             height: "60px",
             borderRadius: "5px",
             display: "inline-block",
-            backgroundColor: "#651fff",
+            backgroundColor: "#3f3f97",
             textAlign: "center",
             lineHeight: "75px",
           }}

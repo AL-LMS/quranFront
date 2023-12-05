@@ -49,7 +49,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .MuiButtonBase-root.Mui-selected a {
-  color: #651fff !important;
+  color: #3f3f97 !important;
 }
 
 .MuiTabs-flexContainer {
@@ -57,7 +57,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .swiper-pagination-bullet-active {
-  background-color: #651fff !important;
+  background-color: #3f3f97 !important;
 }
 
 .DatePicker {

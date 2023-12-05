@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import useAuth from "../../../hooks/useAuth";
 import { Grid } from "@mui/material";
 import { Container } from "@mui/system";
 import OverView from "../../../components/dashboard/teacher/dashboard/OverView";

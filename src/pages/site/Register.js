@@ -236,7 +236,7 @@ const Register = () => {
                   locale="fa"
                   // renderInput={studentBirth}
                   inputClassName="my-date-picker"
-                  colorPrimary="#651fff"
+                  colorPrimary="#3f3f97"
                   calendarPopperPosition="bottom"
                   selectorEndingYear={1401}
                 />
