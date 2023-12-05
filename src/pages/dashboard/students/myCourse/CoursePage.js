@@ -43,12 +43,11 @@ const CoursePage = () => {
     }
   };
   useEffect(() => {
-    console.log("the api addd");
     get_course().then(() => {
       setLoading(false);
     });
   }, [id]);
-  if ((loading, reload))
+  if (loading || reload)
     return (
       <Container maxWidth="lg">
         <Grid container>
