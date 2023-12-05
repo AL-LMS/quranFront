@@ -79,6 +79,8 @@ const StudentList = () => {
         boxShadow: "0 5px 20px rgba(112,112,112,0.3)",
         borderRadius: "5px",
         marginTop: "1rem",
+        marginRight: "2rem",
+        marginLeft: "2rem",
       }}
     >
       <TableContainer sx={{ padding: 2 }}>

@@ -46,7 +46,7 @@ const CoursePage = () => {
     get_course().then(() => {
       setLoading(false);
     });
-  }, [id]);
+  }, []);
   if ((loading, reload))
     return (
       <Container maxWidth="lg">

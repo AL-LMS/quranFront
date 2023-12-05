@@ -44,9 +44,9 @@ const ResourcesLists = ({ data }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((item, index) => (
+            {data?.map((item, index) => (
               <TableRow
-                key={item.id}
+                key={item?.id}
                 sx={{
                   transition: "0.3s",
                   borderRadius: "5px",
@@ -59,7 +59,7 @@ const ResourcesLists = ({ data }) => {
                   {index + 1}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  {item.title}
+                  {item?.title}
                 </TableCell>
                 <TableCell
                   sx={{

@@ -47,7 +47,7 @@ const NotifsLists = ({ data }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((item, index) => (
+            {data?.map((item, index) => (
               <TableRow
                 key={item.id}
                 sx={{

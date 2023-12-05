@@ -79,9 +79,9 @@ const HomeWorksLists = ({ data, setReload }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((item, index) => (
+            {data?.map((item, index) => (
               <TableRow
-                key={item.id}
+                key={item?.id}
                 sx={{
                   transition: "0.3s",
                   borderRadius: "5px",
@@ -94,7 +94,7 @@ const HomeWorksLists = ({ data, setReload }) => {
                   {index + 1}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  {item.title}
+                  {item?.title}
                 </TableCell>
                 <TableCell
                   sx={{
@@ -130,9 +130,9 @@ const HomeWorksLists = ({ data, setReload }) => {
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
                   <Chip
                     label={
-                      item.is_upload ? "تحویل داده شده" : "تحویل داده نشده"
+                      item?.is_upload ? "تحویل داده شده" : "تحویل داده نشده"
                     }
-                    color={item.is_upload ? "success" : "error"}
+                    color={item?.is_upload ? "success" : "error"}
                     variant="outlined"
                     sx={{ width: "auto" }}
                   />
@@ -140,7 +140,7 @@ const HomeWorksLists = ({ data, setReload }) => {
                 <TableCell sx={{ border: "none" }}>
                   <Stack direction="row" justifyContent="center">
                     <Tooltip title="دوره">
-                      {checkHomeWorkDeadLine(item.deadline) ? (
+                      {checkHomeWorkDeadLine(item?.deadline) ? (
                         <TableCell sx={{ border: "none", textAlign: "center" }}>
                           <Chip
                             label={"اتمام مهلت"}
@@ -149,20 +149,20 @@ const HomeWorksLists = ({ data, setReload }) => {
                             sx={{ width: "auto" }}
                           />
                         </TableCell>
-                      ) : item.is_upload ? (
+                      ) : item?.is_upload ? (
                         <UploadExercisesForm
                           type="edit"
-                          homeworkId={item.id}
-                          answer_id={item.answer_id}
-                          teacher_id={item.teacher_id}
+                          homeworkId={item?.id}
+                          answer_id={item?.answer_id}
+                          teacher_id={item?.teacher_id}
                           setReload={setReload}
                         />
                       ) : (
                         <UploadExercisesForm
                           type="create"
-                          homeworkId={item.id}
-                          answer_id={item.answer_id}
-                          teacher_id={item.teacher_id}
+                          homeworkId={item?.id}
+                          answer_id={item?.answer_id}
+                          teacher_id={item?.teacher_id}
                           setReload={setReload}
                         />
                       )}
@@ -171,8 +171,8 @@ const HomeWorksLists = ({ data, setReload }) => {
                 </TableCell>
 
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  <Tooltip title={item.explain}>
-                    {item.score ? item.score : "نمره داده نشده"}
+                  <Tooltip title={item?.explain}>
+                    {item?.score ? item.score : "نمره داده نشده"}
                   </Tooltip>
                 </TableCell>
               </TableRow>

@@ -10,7 +10,7 @@ const ShowCourseNotif = ({ data, id }) => {
       spacing={4}
       style={{ marginRight: 0, justifyContent: "center" }}
     >
-      {data.length > 0 ? (
+      {data?.length > 0 ? (
         <NotifsLists data={data} />
       ) : (
         <Grid item xs={12}>

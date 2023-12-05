@@ -118,7 +118,7 @@ const CoursePageInfo = ({ data_course }) => {
                 fontWeight={800}
                 textAlign={"center"}
               >
-                {data_course["name"]}
+                {data_course?.["name"]}
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -139,25 +139,25 @@ const CoursePageInfo = ({ data_course }) => {
                   <Typography color="mainText" style={{ textAlign: "right" }}>
                     روزهای برگزاری:{" "}
                     <span style={{ color: "black" }}>
-                      {days_show(data_course["days"])}
+                      {days_show(data_course?.["days"])}
                     </span>
                   </Typography>
                   <Typography color="mainText" style={{ textAlign: "right" }}>
                     مدت دوره:
                     <span style={{ color: "black" }}>
                       {" " +
-                        edit_show_date(data_course["start_date"]) +
+                        edit_show_date(data_course?.["start_date"]) +
                         " تا " +
-                        edit_show_date(data_course["end_date"])}
+                        edit_show_date(data_course?.["end_date"])}
                     </span>
                   </Typography>
                   <Typography color="mainText" style={{ textAlign: "right" }}>
                     ساعت برگزاری:
                     <span style={{ color: "black" }}>
                       {" " +
-                        data_course["start_time"].slice(0, 5) +
+                        data_course?.["start_time"].slice(0, 5) +
                         " تا " +
-                        data_course["end_time"].slice(0, 5)}
+                        data_course?.["end_time"].slice(0, 5)}
                     </span>
                   </Typography>
                 </Stack>
@@ -173,13 +173,13 @@ const CoursePageInfo = ({ data_course }) => {
                     fontSize="17px"
                     onClick={() =>
                       check_time_for_class(
-                        data_course["start_date"],
-                        data_course["end_date"],
-                        data_course["time"],
-                        data_course["days"]
+                        data_course?.["start_date"],
+                        data_course?.["end_date"],
+                        data_course?.["time"],
+                        data_course?.["days"]
                       )
                     }
-                    disabled={data_course.enableforbuy}
+                    disabled={data_course?.enableforbuy}
                   >
                     ورود به کلاس
                   </Button>
