@@ -65,12 +65,13 @@ import CourseHomeWorks from "./pages/dashboard/teacher/course/CoursePage/Objects
 import CourseResources from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseResources";
 import CourseQuize from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseQuize";
 import CourseNotifes from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseNotifes";
-import Meet from "./pages/site/Meet";
+// import Meet from "./pages/site/Room/Meet";
 import CourseHomeWorksAnswer from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseHomeWorksAnswer";
 import CourseQuizAnswer from "./pages/dashboard/teacher/course/CoursePage/ObjectsAllShow/CourseQuizAnswer";
 import PrePayments from "./pages/dashboard/students/prePayments";
 import "./App.css";
 import TeachersDocument from "./pages/dashboard/teacher/TeachersDocument";
+import HomePage from "./pages/site/HomePage";
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -82,13 +83,13 @@ function App() {
     <CacheProvider value={cacheRtl}>
       {!location.pathname.includes("panel") && <Navbar />}
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/confirm-phone" element={<ConfirmPhone />} />
         <Route path="/send-otp" element={<SendOTP />} />
         <Route path="/check-otp" element={<CheckOTP />} />
-        <Route path="/meet" element={<Meet />} />
-        <Route path="/meet" element={<Meet />} />
+        {/* <Route path="/meet" element={<Meet />} /> */}
         <Route path="/FAQ" element={<FAQ />} />
         {user?.role?.toLowerCase() === "student" ? (
           <Route element={<PrivateRoutes />}>

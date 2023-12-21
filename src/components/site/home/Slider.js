@@ -36,7 +36,7 @@ const Slider = () => {
       navigation={true}
       loop={true}
     >
-      {data.map((item) => (
+      {/* {data.map((item) => (
         <SwiperSlide key={item.id}>
           <a href={item?.link}>
             <img
@@ -46,7 +46,7 @@ const Slider = () => {
             />
           </a>
         </SwiperSlide>
-      ))}
+      ))} */}
     </Swiper>
   );
 };

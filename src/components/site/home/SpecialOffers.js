@@ -125,11 +125,11 @@ const SpecialOffers = () => {
             loop={true}
             rtl={"true"}
           >
-            {data.map((item) => (
+            {/* {data.map((item) => (
               <SwiperSlide key={item.id}>
                 <PackageCard data={item} />
               </SwiperSlide>
-            ))}
+            ))} */}
           </Swiper>
         </Box>
       </Grid>

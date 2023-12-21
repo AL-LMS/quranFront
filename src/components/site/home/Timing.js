@@ -49,7 +49,7 @@ const Timing = () => {
           Timing of courses
         </Typography>
       </Grid>
-      {data.map((item) => (
+      {/* {data.map((item) => (
         <Grid item xs={12} md={4} key={item.id}>
           <a href={`https://api.srvschool.ir${item.picture}`} download>
             <Card
@@ -77,7 +77,7 @@ const Timing = () => {
             </Card>
           </a>
         </Grid>
-      ))}
+      ))} */}
     </Grid>
   );
 };

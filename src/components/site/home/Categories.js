@@ -35,7 +35,7 @@ const Categories = () => {
           Category of courses
         </Typography>
       </Grid>
-      {gradeID.map((item) => (
+      {/* {gradeID.map((item) => (
         <Grid item xs={12} md={3} key={item.id}>
           <Link to={`/course?page=1&grade=${item.id}`}>
             <Card
@@ -68,7 +68,7 @@ const Categories = () => {
             </Card>
           </Link>
         </Grid>
-      ))}
+      ))} */}
     </Grid>
   );
 };
