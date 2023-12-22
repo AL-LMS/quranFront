@@ -1,69 +1,326 @@
 import React from "react";
 import { Button, Card, Grid, Stack, Typography } from "@mui/material";
-import { Container } from "@mui/system";
-import SpecialOffers from "../../components/site/home/SpecialOffers";
+import styled from "styled-components";
+import x2 from "../../assets/img/blog2.jpg";
+import x1 from "../../assets/img/featured.png";
+import quran from "../../assets/img/quran.png";
+import iso from "../../assets/img/iso.png";
+import islamic from "../../assets/img/islamic.png";
+const HeroContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+  image-opacity: 0.5;
+  background-image: url(${x2});
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+`;
 
-import Slider from "../../components/site/home/Slider";
-import Categories from "../../components/site/home/Categories";
-import Timing from "../../components/site/home/Timing";
-import WhyUs from "../../components/site/home/WhyUs";
+const Header1 = styled.span`
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 1rem;
+  }
+`;
+const Name = styled.span`
+  color: #fff;
+  font-size: 4rem;
+  font-weight: 800;
+  @media screen and (max-width: 768px) {
+    font-size: 2rem;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 2rem;
+  }
+`;
+const Explain = styled.span`
+  color: #fff;
+  font-size: 1.5rem;
+  width: 50%;
+  text-align: center;
+  margin-bottom: 1rem;
+  @media screen and (max-width: 768px) {
+    font-size: 0.7rem;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 0.7rem;
+  }
+`;
 
+const CardContainer = styled.div`
+  background-color: #e5f3ed;
+  background-image: url(${x1});
+  background-position: center;
+  background-repeat: repeat-x;
+  border-radius: 5px;
+  width: 98%;
+  height: 200px;
+  margin-top: -120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 768px) {
+    height: 400px;
+    background-repeat: repeat-y;
+  }
+  @media screen and (max-width: 480px) {
+    height: 400px;
+    background-repeat: repeat-y;
+  }
+`;
+
+const ItemContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  width: 100%;
+`;
+const Item = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  @media screen and (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
+  @media screen and (max-width: 480px) {
+    margin-bottom: 1rem;
+  }
+`;
+const Icon = styled.div`
+  border-radius: 50%;
+  background-color: #cb9f41;
+  border: 1px solid #000;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const IconImage = styled.img`
+  width: 64px;
+  height: 64px;
+`;
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+  @media screen and (max-width: 768px) {
+    margin-right: 10px;
+  }
+  @media screen and (max-width: 480px) {
+    margin-right: 10px;
+  }
+`;
+const InfoName = styled.span`
+  color: #000;
+  font-size: 1rem;
+  text-align: right;
+  @media screen and (max-width: 768px) {
+    font-size: 0.7rem;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 0.7rem;
+  }
+`;
+const InfoText = styled.span`
+  color: #000;
+  font-size: 1rem;
+  text-align: right;
+  @media screen and (max-width: 768px) {
+    font-size: 0.7rem;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 0.7rem;
+  }
+`;
+
+const WhyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const WhyTitle = styled.h1`
+  color: #000;
+  text-align: center;
+`;
+
+const WhyCards = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  @media screen and (max-width: 768px) {
+    flex-wrap: wrap;
+  }
+  @media screen and (max-width: 480px) {
+    flex-wrap: wrap;
+  }
+`;
+
+const ItemCard = styled.div`
+  border: 1px solid #000;
+  border-radius: 10px;
+  width: 20%;
+  height: 300px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  @media screen and (max-width: 768px) {
+    width: 85%;
+    height: 250px;
+    margin-bottom: 15px;
+  }
+  @media screen and (max-width: 480px) {
+    width: 85%;
+    height: 250px;
+    margin-bottom: 15px;
+  }
+`;
+
+const CardIcon = styled.div`
+  border-radius: 50%;
+  background-color: #cb9f41;
+  border: 1px solid #000;
+  width: 75px;
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const CardImage = styled.img`
+  width: 40px;
+  height: 40px;
+`;
+
+const CardTitle = styled.span`
+  font-size: 1.5rem;
+  color: #000;
+`;
+
+const CardDescription = styled.span`
+  font-size: 0.75rem;
+  color: #000;
+  text-align: center;
+`;
 const HomePage = () => {
   return (
-    <Container maxWidth="lg">
-      <Grid container spacing={8}>
-        <Grid item xs={12} mt={5}>
-          <Slider />
-        </Grid>
-        <Grid item xs={12}>
-          <a
-            href="whatsapp://send?phone=+989900199840"
-            style={{ display: "block" }}
-          >
-            <Card
-              sx={{
-                boxShadow: "0 5px 15px rgba(112,112,112,0.2)",
-                borderRadius: "15px",
-                padding: 2,
-              }}
-            >
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Stack spacing={1}>
-                  <Typography variant="h6" color="mainText">
-                    خرید اقساطی دوره ها
-                  </Typography>
-                  <Typography variant="subtitle2" color="text.secondary">
-                    همین الان دوره هایی که نیاز داری رو به صورت اقساطی بخر!
-                  </Typography>
-                </Stack>
-                <Button
-                  variant="contained"
-                  sx={{ boxShadow: "none", borderRadius: 2 }}
-                >
-                  جزییات بیشتر
-                </Button>
-              </Stack>
-            </Card>
-          </a>
-        </Grid>
-        <Grid item xs={12}>
-          <Categories />
-        </Grid>
-        <Grid item xs={12} mt={3}>
-          <SpecialOffers />
-        </Grid>
-        <Grid item xs={12}>
-          <Timing />
-        </Grid>
-        <Grid item xs={12}>
-          <WhyUs />
-        </Grid>
+    <>
+      <Grid item xs={12} mt={5}>
+        <HeroContainer>
+          <Header1>اولین مدرسه قرآنی آنلاین</Header1>
+          <Name>مدرسه قرآنی آنلاین</Name>
+          <Explain>
+            دارالقرآن، یک مدرسه قرآنی آنلاین آموزشی دارای گواهی ISO با
+            استانداردهای بین المللی است
+          </Explain>
+          <Button variant="contained">اطلاعات بیشتر</Button>
+        </HeroContainer>
       </Grid>
-    </Container>
+      <Grid item xs={12} mt={5} display={"flex"} justifyContent={"center"}>
+        <CardContainer>
+          <ItemContainer>
+            <Item>
+              <Icon>
+                <IconImage src={quran} />
+              </Icon>
+              <Info>
+                <InfoName>آموزش سریع</InfoName>
+                <InfoText>کلاس‌های قرآن</InfoText>
+              </Info>
+            </Item>
+            <Item>
+              <Icon>
+                <IconImage src={iso} />
+              </Icon>
+              <Info>
+                <InfoName>گواهینامه ISO</InfoName>
+                <InfoText>برای موسسه قرآنی</InfoText>
+              </Info>
+            </Item>
+            <Item>
+              <Icon>
+                <IconImage src={islamic} />
+              </Icon>
+              <Info>
+                <InfoName>کلاس‌های آنلاین</InfoName>
+                <InfoText>قرآنی برای کودکان</InfoText>
+              </Info>
+            </Item>
+          </ItemContainer>
+        </CardContainer>
+      </Grid>
+      <Grid item xs={12}></Grid>
+      <Grid item xs={12}></Grid>
+      <Grid item xs={12}></Grid>
+      <Grid item xs={12}></Grid>
+      <Grid item xs={12}>
+        <WhyContainer>
+          <WhyTitle>چرا موسسه قرآنی دارالقرآن</WhyTitle>
+          <WhyCards>
+            <ItemCard>
+              <CardIcon>
+                <CardImage src={quran} />
+              </CardIcon>
+              <CardTitle>مربیان آقا و خانم</CardTitle>
+              <CardDescription>
+                تمامی کلاس های آموزش آنلاین قرآن توسط علمای اسلامی مجرب برگزار
+                می شود
+              </CardDescription>
+            </ItemCard>
+            <ItemCard>
+              <CardIcon>
+                <CardImage src={quran} />
+              </CardIcon>
+              <CardTitle>مربیان آقا و خانم</CardTitle>
+              <CardDescription>
+                تمامی کلاس های آموزش آنلاین قرآن توسط علمای اسلامی مجرب برگزار
+                می شود
+              </CardDescription>
+            </ItemCard>
+            <ItemCard>
+              <CardIcon>
+                <CardImage src={quran} />
+              </CardIcon>
+              <CardTitle>مربیان آقا و خانم</CardTitle>
+              <CardDescription>
+                تمامی کلاس های آموزش آنلاین قرآن توسط علمای اسلامی مجرب برگزار
+                می شود
+              </CardDescription>
+            </ItemCard>
+            <ItemCard>
+              <CardIcon>
+                <CardImage src={quran} />
+              </CardIcon>
+              <CardTitle>مربیان آقا و خانم</CardTitle>
+              <CardDescription>
+                تمامی کلاس های آموزش آنلاین قرآن توسط علمای اسلامی مجرب برگزار
+                می شود
+              </CardDescription>
+            </ItemCard>
+          </WhyCards>
+        </WhyContainer>
+      </Grid>
+    </>
   );
 };
 

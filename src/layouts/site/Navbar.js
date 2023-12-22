@@ -28,18 +28,35 @@ const NavbarButton = styled(Box)(({ theme }) => ({
   marginRight: "75px",
 }));
 
+const AppBarContainer = styled(AppBar)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+  },
+  [theme.breakpoints.up("md")]: {
+    width: "80%",
+  },
+  [theme.breakpoints.up("lg")]: {
+    width: "90%",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+}));
 const Navbar = () => {
   const { user } = useAuth();
   const [sidebar, setSidebar] = useState(false);
   return (
     <>
-      <AppBar
+      <AppBarContainer
         position="sticky"
         sx={{
           backgroundColor: "#ffffffa6",
           backdropFilter: "blur(30px)",
           boxShadow: "none",
-          padding: "1rem 0",
+          borderTopRightRadius: "100px",
+          borderBottomRightRadius: "100px",
+          borderTopLeftRadius: "100px",
+          borderBottomLeftRadius: "100px",
+          marginTop: "2rem",
         }}
       >
         <Container>
@@ -95,7 +112,7 @@ const Navbar = () => {
             </NavbarButton>
           </StyledToolbar>
         </Container>
-      </AppBar>
+      </AppBarContainer>
       <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
     </>
   );
