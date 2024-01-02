@@ -304,6 +304,7 @@ const CreateCourse = () => {
                 id="controllable-states-demo"
                 options={courseType}
                 getOptionLabel={(option) => option || ""}
+                sx={{ marginTop: 1 }}
                 renderInput={(params) => (
                   <TextField {...params} label="دسته‌بندی موضوعی" />
                 )}
