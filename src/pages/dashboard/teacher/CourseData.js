@@ -1,4 +1,12 @@
-export const courseType = ["حفظ", "قرائت", "ترتیل"];
+export const courseType = [
+  "حفظ",
+  "ترتیل",
+  "قرائت",
+  "تفسیر",
+  "مفاهیم",
+  "تدبر",
+  "احکام",
+];
 export const Days = [
   "شنبه",
   "یکشنبه",

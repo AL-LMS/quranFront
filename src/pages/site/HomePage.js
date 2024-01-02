@@ -453,8 +453,8 @@ const HomePage = () => {
           <Header1>اولین مدرسه قرآنی آنلاین</Header1>
           <Name>مدرسه قرآنی آنلاین</Name>
           <Explain>
-            دارالقرآن، یک مدرسه قرآنی آنلاین آموزشی دارای گواهی ISO با
-            استانداردهای بین المللی است
+            دارالقرآن نیک‌اندیشان، یک مدرسه قرآنی آنلاین آموزشی دارای گواهی ISO
+            با استانداردهای بین المللی است
           </Explain>
           <Button variant="contained">اطلاعات بیشتر</Button>
         </HeroContainer>
@@ -497,7 +497,9 @@ const HomePage = () => {
       <Grid item xs={12}></Grid>
       <Grid item xs={12}>
         <ServiceContainer>
-          <ServiceHeader>خدماتی که دارالقرآن ارائه می‌دهد</ServiceHeader>
+          <ServiceHeader>
+            خدماتی که دارالقرآن نیک‌اندیشان ارائه می‌دهد
+          </ServiceHeader>
           <ServiceCards>
             <ServiceCard>
               <ServiceCardHeader>
@@ -537,7 +539,7 @@ const HomePage = () => {
       </Grid>
       <Grid item xs={12}>
         <WhyContainer>
-          <WhyTitle>چرا موسسه قرآنی دارالقرآن</WhyTitle>
+          <WhyTitle>چرا موسسه قرآنی دارالقرآن نیک‌اندیشان</WhyTitle>
           <WhyCards>
             <ItemCard>
               <CardIcon>

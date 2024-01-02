@@ -14,6 +14,7 @@ import NoImage from "../../../assets/img/class1.jpeg";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import Slide from "@mui/material/Slide";
+import "./courseCardStyle.css";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -135,7 +136,11 @@ const CourseCard = ({ data }) => {
         style={{ direction: "rtl", padding: "10px" }}
       >
         <div
-          style={{ display: "flex", flexDirection: "column", padding: "20px" }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            padding: "20px",
+          }}
         >
           <div
             style={{

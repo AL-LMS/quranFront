@@ -295,7 +295,27 @@ const CreateCourse = () => {
                   </p>
                 </div>
               ) : null}
-              <FormControl style={{ marginTop: "0.5rem" }}>
+              <Autocomplete
+                fullWidth
+                value={formik.values.type}
+                onChange={(event, newValue) => {
+                  formik.setFieldValue("type", newValue);
+                }}
+                id="controllable-states-demo"
+                options={courseType}
+                getOptionLabel={(option) => option || ""}
+                renderInput={(params) => (
+                  <TextField {...params} label="دسته‌بندی موضوعی" />
+                )}
+              />
+              {formik.touched.type && formik.errors.type ? (
+                <div>
+                  <p style={{ fontSize: 10, color: "red" }}>
+                    {formik.errors.type}
+                  </p>
+                </div>
+              ) : null}
+              {/* <FormControl style={{ marginTop: "0.5rem" }}>
                 <FormLabel>
                   کدام یک از موضوعات زیر در این دوره ارئه می‌شود؟
                 </FormLabel>
@@ -332,7 +352,7 @@ const CreateCourse = () => {
                     {formik.errors.type}
                   </p>
                 </div>
-              ) : null}
+              ) : null} */}
               <TextField
                 fullWidth
                 multiline
@@ -725,7 +745,9 @@ const CreateCourse = () => {
               >
                 <ContainerX>
                   <FormControl style={{ marginTop: "0.5rem" }}>
-                    <FormLabel>دوره رایگان باشد؟</FormLabel>
+                    <FormLabel>
+                      علاقه‌مند به برگزاری دوره فی سبیل الله می‌باشم؟
+                    </FormLabel>
                     <RadioGroup
                       style={{
                         display: "flex",
