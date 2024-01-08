@@ -15,7 +15,6 @@ const CourseDetails = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const get_course = async () => {
-    console.log("DASdsasads");
     let data = {
       table: "courses",
       method_type: "get_course",
