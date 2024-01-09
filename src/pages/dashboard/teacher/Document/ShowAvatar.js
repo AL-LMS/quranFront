@@ -1,7 +1,11 @@
 import React from "react";
 import { Avatar, Typography } from "@mui/material";
 import pdfImage from "../../../../assets/img/pdf.png";
+import remove from "../../../../assets/img/remove.png";
 const ShowAvatar = ({ formik, showLastCertificate, fileType }) => {
+  const handleRemove = () => {
+    formik.setFieldValue("certificate", "");
+  };
   return (
     <>
       {formik?.values?.certificate ? (
@@ -13,6 +17,11 @@ const ShowAvatar = ({ formik, showLastCertificate, fileType }) => {
               alignItems: "center",
             }}
           >
+            <img
+              onClick={() => handleRemove()}
+              src={remove}
+              style={{ width: "20px", height: "20px", marginRight: "100px" }}
+            />
             <Avatar
               alt="LastCertificate"
               src={showLastCertificate}
@@ -36,6 +45,11 @@ const ShowAvatar = ({ formik, showLastCertificate, fileType }) => {
               alignItems: "center",
             }}
           >
+            <img
+              onClick={() => handleRemove()}
+              src={remove}
+              style={{ width: "20px", height: "20px", marginRight: "100px" }}
+            />
             <Avatar
               alt="LastCertificate"
               src={pdfImage}

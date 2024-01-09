@@ -5,7 +5,6 @@ import { Button, Divider, Grid } from "@mui/material";
 import { Container } from "@mui/system";
 import { toastify } from "../../../helper/toast";
 import { ToastContainer } from "react-toastify";
-import { setLocalStorageLogin } from "../../localStorage";
 import { useNavigate } from "react-router-dom";
 import { getUrl } from "../../../helper/getUrl";
 import { useFormik } from "formik";
@@ -14,13 +13,15 @@ import styled from "styled-components";
 import TDocumnets from "./Document/TDocumnets";
 import TMultiDocumnets from "./Document/TMultiDocumnets";
 const TeachersDocument = () => {
-  const { user, role, setRole, setAuth, setUser } = useAuth();
+  const { user, role } = useAuth();
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
   const [showLastCertificate, setShowLastCertificate] = useState("");
   const [showDocuments, setShowDocuments] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+
   const certificateFormik = useFormik({
     initialValues: {
       phone: user?.phone,

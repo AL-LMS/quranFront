@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Grid, Stack, Typography } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import styled from "styled-components";
 import x2 from "../../assets/img/hero.jpg";
 import service from "../../assets/img/service-bg.png";
@@ -14,6 +14,7 @@ import praying from "../../assets/img/praying.png";
 import timemanagement from "../../assets/img/timemanagement.png";
 import schedule from "../../assets/img/scholar.png";
 import training from "../../assets/img/training.png";
+import footerbg from "../../assets/img/footer-bg.jpg";
 import CourseCard from "../../components/site/course/CourseCard";
 const HeroContainer = styled.div`
   width: 100%;
@@ -368,6 +369,34 @@ const CourseCards = styled.div`
   }
 `;
 
+const FooterContainer = styled.div`
+  background-color: rgb(250, 248, 243);
+  background-image: url(${footerbg});
+  background-size: cover;
+  border-radius: 5px;
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 70px 120px 100px;
+  @media screen and (max-width: 768px) {
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 20px;
+    height: auto;
+    background-position: center center;
+  }
+  @media screen and (max-width: 480px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 20px;
+    height: auto;
+    background-position: center center;
+  }
+`;
+
 const data = [
   {
     course_id: 12,
@@ -595,6 +624,9 @@ const HomePage = () => {
             </Grid>
           </CourseCards>
         </CourseContainer>
+      </Grid>
+      <Grid item xs={12}>
+        <FooterContainer></FooterContainer>
       </Grid>
     </>
   );

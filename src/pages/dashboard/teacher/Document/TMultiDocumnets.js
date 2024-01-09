@@ -69,18 +69,6 @@ const TMultiDocumnets = ({
               borderRadius: 2,
             }}
           />
-        ) : formik?.values?.documents.lenght > 0 ? (
-          <Avatar
-            alt="Certificate"
-            src={formik.cvalues?.documents.slice(-1)}
-            sx={{
-              width: 140,
-              height: 140,
-              display: "block",
-              margin: "10px auto",
-              borderRadius: 2,
-            }}
-          />
         ) : (
           <Typography color="text.secondary" textAlign="center" mt={2}>
             هیچ تصویری آپلود نشده
