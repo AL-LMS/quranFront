@@ -378,36 +378,44 @@ const FooterContainer = styled.div`
   background-color: rgb(250, 248, 243);
   background-image: url(${footerbg});
   background-size: cover;
-  border-radius: 5px;
   width: 100%;
   height: 400px;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding: 70px 120px 100px;
   direction: ltr;
   @media screen and (max-width: 768px) {
     flex-wrap: wrap;
-    flex-direction: row;
-    padding: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     height: auto;
+    padding: 0px;
     background-position: center center;
   }
   @media screen and (max-width: 480px) {
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
-    padding: 20px;
+    justify-content: center;
+    align-items: center;
     height: auto;
+    padding: 0px;
     background-position: center center;
   }
 `;
-
 const FooterFirstSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media screen and (max-width: 768px) {
+    margin-top: 30px;
+  }
+  @media screen and (max-width: 480px) {
+    margin-top: 30px;
+  }
 `;
 const FooterInfo = styled.div`
   display: flex;
@@ -433,11 +441,6 @@ const Image = styled.img`
     width: 75px;
     height: 75px;
   }
-`;
-const FooterTitle = styled.span`
-  font-size: 20px;
-  font-weight: bold;
-  color: #fff;
 `;
 const FooterAddress = styled.span`
   font-size: 16px;
@@ -465,8 +468,41 @@ const A = styled.a`
   justify-content: center;
 `;
 const I = styled.img`
-  width: 70%;
-  height: 70%;
+  width: 50%;
+  height: 50%;
+`;
+const FooterSecondSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  @media screen and (max-width: 768px) {
+    margin-top: 20px;
+  }
+  @media screen and (max-width: 480px) {
+    margin-top: 20px;
+  }
+`;
+const FooterTitle = styled.span`
+  font-size: 26px;
+  font-weight: bold;
+  color: #fff;
+  @media screen and (max-width: 768px) {
+    font-size: 24px;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 24px;
+  }
+`;
+const FooterLinks = styled.a`
+  font-size: 16px;
+  color: #fff;
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 14px;
+  }
 `;
 const data = [
   {
@@ -722,6 +758,17 @@ const HomePage = () => {
               </FooterSocialMedia>
             </FooterInfo>
           </FooterFirstSection>
+          <FooterSecondSection>
+            <FooterTitle>لینک‌ها</FooterTitle>
+            <FooterLinks>درباره ما</FooterLinks>
+            <FooterLinks>ارتباط با ما</FooterLinks>
+            <FooterLinks>آخرین آخبار</FooterLinks>
+          </FooterSecondSection>
+          <FooterSecondSection>
+            <FooterTitle>دیگر لینک‌ها</FooterTitle>
+            <FooterLinks>دوره‌ها</FooterLinks>
+            <FooterLinks>رویدادها</FooterLinks>
+          </FooterSecondSection>
         </FooterContainer>
       </Grid>
     </>
