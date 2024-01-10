@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Grid } from "@mui/material";
+import { Button, Divider, Grid } from "@mui/material";
 import styled from "styled-components";
 import x2 from "../../assets/img/hero.jpg";
 import service from "../../assets/img/service-bg.png";
@@ -15,6 +15,11 @@ import timemanagement from "../../assets/img/timemanagement.png";
 import schedule from "../../assets/img/scholar.png";
 import training from "../../assets/img/training.png";
 import footerbg from "../../assets/img/footer-bg.jpg";
+import logoPic from "../../assets/img/logo.png";
+import rubika from "../../assets/img/rubika.png";
+import bale from "../../assets/img/bale.png";
+import eitta from "../../assets/img/eitaa.png";
+import aparat from "../../assets/img/aparat.png";
 import CourseCard from "../../components/site/course/CourseCard";
 const HeroContainer = styled.div`
   width: 100%;
@@ -377,10 +382,11 @@ const FooterContainer = styled.div`
   width: 100%;
   height: 400px;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
   padding: 70px 120px 100px;
+  direction: ltr;
   @media screen and (max-width: 768px) {
     flex-wrap: wrap;
     flex-direction: row;
@@ -397,6 +403,71 @@ const FooterContainer = styled.div`
   }
 `;
 
+const FooterFirstSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+const FooterInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+`;
+const Hr = styled.hr`
+  width: 100%;
+  color: #344e46;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+const Image = styled.img`
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  @media screen and (max-width: 768px) {
+    width: 100px;
+    height: 100px;
+  }
+  @media screen and (max-width: 480px) {
+    width: 75px;
+    height: 75px;
+  }
+`;
+const FooterTitle = styled.span`
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+`;
+const FooterAddress = styled.span`
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #fff;
+`;
+const FooterPhone = styled.span`
+  font-size: 14px;
+  color: #fff;
+`;
+const FooterSocialMedia = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+`;
+const A = styled.a`
+  background-color: #344e46;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const I = styled.img`
+  width: 70%;
+  height: 70%;
+`;
 const data = [
   {
     course_id: 12,
@@ -626,7 +697,32 @@ const HomePage = () => {
         </CourseContainer>
       </Grid>
       <Grid item xs={12}>
-        <FooterContainer></FooterContainer>
+        <FooterContainer>
+          <FooterFirstSection>
+            <Image src={logoPic} alt="دارالقرآن نیک‌اندیشان" />
+            <Hr />
+            <FooterInfo>
+              <FooterAddress>
+                تهران-خیابان انقلاب-دکتر قریب-پلاک 18
+              </FooterAddress>
+              <FooterPhone>(+98)21-55555555</FooterPhone>
+              <FooterSocialMedia>
+                <A href="">
+                  <I src={bale} alt="bale" />
+                </A>
+                <A href="">
+                  <I src={eitta} alt="eitta" />
+                </A>
+                <A href="">
+                  <I src={rubika} alt="rubika" />
+                </A>
+                <A href="">
+                  <I src={aparat} alt="aparat" />
+                </A>
+              </FooterSocialMedia>
+            </FooterInfo>
+          </FooterFirstSection>
+        </FooterContainer>
       </Grid>
     </>
   );
