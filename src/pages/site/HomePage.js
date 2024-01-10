@@ -15,6 +15,7 @@ import timemanagement from "../../assets/img/timemanagement.png";
 import schedule from "../../assets/img/scholar.png";
 import training from "../../assets/img/training.png";
 import footerbg from "../../assets/img/footer-bg.jpg";
+import footer2bg from "../../assets/img/footer-bg_2.jpg";
 import logoPic from "../../assets/img/logo.png";
 import rubika from "../../assets/img/rubika.png";
 import bale from "../../assets/img/bale.png";
@@ -457,6 +458,7 @@ const FooterSocialMedia = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: 20px;
+  width: 100%;
 `;
 const A = styled.a`
   background-color: #344e46;
@@ -502,6 +504,40 @@ const FooterLinks = styled.a`
   }
   @media screen and (max-width: 480px) {
     font-size: 14px;
+  }
+`;
+const Footer2Container = styled.div`
+  background-color: rgb(250, 248, 243);
+  background-image: url(${footer2bg});
+  background-size: cover;
+  width: 100%;
+  height: 70px;
+  align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  direction: rtl;
+  @media screen and (max-width: 768px) {
+    height: auto;
+    padding: 0px;
+    background-position: center center;
+  }
+  @media screen and (max-width: 480px) {
+    height: auto;
+    padding: 0px;
+    background-position: center center;
+  }
+`;
+const FooterPv = styled.span`
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  margin-right: 20px;
+  @media screen and (max-width: 768px) {
+    margin-right: 0px;
+  }
+  @media screen and (max-width: 480px) {
+    margin-right: 0px;
   }
 `;
 const data = [
@@ -770,6 +806,12 @@ const HomePage = () => {
             <FooterLinks>رویدادها</FooterLinks>
           </FooterSecondSection>
         </FooterContainer>
+        <Footer2Container>
+          <FooterPv>
+            تمام حقوق مادی و معنوی این وبسایت متعلق به دارالقرآن نیک‌اندیشان
+            است.
+          </FooterPv>
+        </Footer2Container>
       </Grid>
     </>
   );
