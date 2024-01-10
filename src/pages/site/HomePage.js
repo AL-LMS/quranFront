@@ -534,9 +534,11 @@ const FooterPv = styled.span`
   text-align: center;
   margin-right: 20px;
   @media screen and (max-width: 768px) {
+    font-size: 14px;
     margin-right: 0px;
   }
   @media screen and (max-width: 480px) {
+    font-size: 14px;
     margin-right: 0px;
   }
 `;
