@@ -10,6 +10,7 @@ const ShowMultiAvatar = ({ formik }) => {
     });
     formik.setFieldValue("documents", lists);
   };
+  console.log("formik for show multi", formik.values);
   return (
     <div
       style={{

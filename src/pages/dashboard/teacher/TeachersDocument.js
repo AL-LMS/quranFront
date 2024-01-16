@@ -19,7 +19,6 @@ const TeachersDocument = () => {
     JSON.parse(localStorage.getItem("user"))
   );
   const [showLastCertificate, setShowLastCertificate] = useState("");
-  const [showDocuments, setShowDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const certificateFormik = useFormik({
     initialValues: {
@@ -110,6 +109,7 @@ const TeachersDocument = () => {
   }, [role]);
   const upload_certificate = async () => {
     const formData = new FormData();
+    console.log("certificateFormik.values", certificateFormik.values);
     formData.append("phone", userInfo?.phone);
     formData.append("role", userInfo?.role);
     formData.append("user_id", userInfo?.user_id);
@@ -118,6 +118,8 @@ const TeachersDocument = () => {
     formData.append(
       "last_certificate",
       certificateFormik.values.last_certificate
+        ? certificateFormik.values.last_certificate
+        : ""
     );
     if (certificateFormik.values.certificate instanceof File) {
       let response = await axios.post(
@@ -139,7 +141,8 @@ const TeachersDocument = () => {
         } else {
           toastify("success", response?.data?.response?.message);
         }
-        navigate("/panel/dashboard");
+        setLoading(false);
+        // navigate("/panel/dashboard");
       } else {
         setLoading(false);
         toastify("error-login", response?.data?.error);
@@ -150,17 +153,7 @@ const TeachersDocument = () => {
     }
   };
   const upload_documents = async () => {
-    let arr_file = [];
-    for (
-      let index = 0;
-      index < documentsFormik.values.documents.length;
-      index++
-    ) {
-      const file = documentsFormik.values.documents[index].file;
-      if (file instanceof File) {
-        arr_file.push(file);
-      }
-    }
+    console.log("documentsFormik.values", documentsFormik.values);
     const formData = new FormData();
     formData.append("phone", userInfo?.phone);
     formData.append("role", userInfo?.role);
@@ -197,6 +190,7 @@ const TeachersDocument = () => {
         } else {
           toastify("success", response?.data?.response?.message);
         }
+        setLoading(false);
         // navigate("/panel/dashboard");
       } else {
         setLoading(false);
