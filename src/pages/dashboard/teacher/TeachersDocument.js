@@ -81,13 +81,13 @@ const TeachersDocument = () => {
         "documents",
         response.data.response.data.documents
           ? response.data.response.data.documents
-          : null
+          : []
       );
       documentsFormik.setFieldValue(
         "last_documents",
         response.data.response.data.documents
           ? response.data.response.data.documents
-          : null
+          : []
       );
     } else {
       toastify("error-login", response?.data?.error);
