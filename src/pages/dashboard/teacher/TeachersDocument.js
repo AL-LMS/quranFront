@@ -97,6 +97,7 @@ const TeachersDocument = () => {
     formData.append("phone", userInfo?.phone);
     formData.append("role", userInfo?.role);
     formData.append("user_id", userInfo?.user_id);
+    formData.append("teacher_id", userInfo?.user_id);
     formData.append("certificate", certificateFormik.values.certificate);
     if (certificateFormik.values.certificate instanceof File) {
       let response = await axios.post(
