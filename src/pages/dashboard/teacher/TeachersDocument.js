@@ -69,10 +69,14 @@ const TeachersDocument = () => {
       baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      let certificate = response?.data.response.data.certificate;
-      let documents = response?.data.response.data.documents;
-      certificateFormik.values.certificate = certificate ? certificate : "";
-      documentsFormik.values.documents = documents ? documents : null;
+      certificateFormik.values.certificate = response?.data?.response?.data
+        ?.certificate
+        ? response?.data?.response?.data?.certificate
+        : "";
+      documentsFormik.values.documents = response?.data?.response?.data
+        ?.documents
+        ? response?.data?.response?.data?.documents
+        : null;
     } else {
       toastify("error-login", response?.data?.error);
     }
