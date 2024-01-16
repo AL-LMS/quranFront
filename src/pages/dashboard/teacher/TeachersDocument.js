@@ -69,8 +69,8 @@ const TeachersDocument = () => {
       baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      let certificate = response?.data?.response?.data?.certificate;
-      let documents = response?.data?.response?.data?.documents;
+      let certificate = response?.data.response.data.certificate;
+      let documents = response?.data.response.data.documents;
       certificateFormik.values.certificate = certificate ? certificate : "";
       documentsFormik.values.documents = documents ? documents : null;
     } else {
@@ -88,11 +88,6 @@ const TeachersDocument = () => {
         "warning",
         "برای افزودن دوره ابتدا بایستی اکانت شما توسط ادمین تایید شود."
       );
-      // let certificate = "Screenshot from 2024-01-11 13-06-56.png";
-      // let documents = null;
-      // certificateFormik.values.certificate = certificate ? certificate : "";
-      // documentsFormik.values.documents = documents ? documents : "";
-
       get_user_certificate_documents().then(() => {});
     }
     setLoading(false);
@@ -154,7 +149,6 @@ const TeachersDocument = () => {
         </Grid>
       </Container>
     );
-  console.log(certificateFormik.values);
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={3}>
