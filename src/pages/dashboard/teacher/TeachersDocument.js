@@ -21,13 +21,11 @@ const TeachersDocument = () => {
   const [showLastCertificate, setShowLastCertificate] = useState("");
   const [showDocuments, setShowDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
 
   const certificateFormik = useFormik({
     initialValues: {
-      phone: user?.phone,
+      last_certificate: "",
       certificate: "",
-      role: "teacher",
     },
     validationSchema: Yup.object().shape({}),
     onSubmit: (values, { setStatus, setSubmitting }) => {
@@ -37,9 +35,8 @@ const TeachersDocument = () => {
   });
   const documentsFormik = useFormik({
     initialValues: {
-      phone: user?.phone,
+      last_documents: [],
       documents: [],
-      role: "teacher",
     },
     validationSchema: Yup.object().shape({}),
     onSubmit: (values, { setStatus, setSubmitting }) => {
@@ -69,15 +66,26 @@ const TeachersDocument = () => {
       baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      console.log(response.data);
       certificateFormik.setFieldValue(
         "certificate",
         response.data.response.data.certificate
           ? response.data.response.data.certificate
           : ""
       );
+      certificateFormik.setFieldValue(
+        "last_certificate",
+        response.data.response.data.certificate
+          ? response.data.response.data.certificate
+          : ""
+      );
       documentsFormik.setFieldValue(
         "documents",
+        response.data.response.data.documents
+          ? response.data.response.data.documents
+          : null
+      );
+      documentsFormik.setFieldValue(
+        "last_documents",
         response.data.response.data.documents
           ? response.data.response.data.documents
           : null
@@ -108,6 +116,10 @@ const TeachersDocument = () => {
     formData.append("user_id", userInfo?.user_id);
     formData.append("teacher_id", userInfo?.user_id);
     formData.append("certificate", certificateFormik.values.certificate);
+    formData.append(
+      "last_certificate",
+      certificateFormik.values.last_certificate
+    );
     if (certificateFormik.values.certificate instanceof File) {
       let response = await axios.post(
         getUrl() + "back_request/update_teacher_certificate/",
