@@ -29,9 +29,7 @@ const TDocumnets = ({
 
     reader.readAsDataURL(input.files[0]);
   };
-  useEffect(() => {
-    console.log("formik.values", formik.values);
-  }, [formik]);
+  useEffect(() => {}, [formik]);
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>

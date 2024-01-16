@@ -1,5 +1,6 @@
 import React from "react";
 import { Avatar, Button, Grid, Typography } from "@mui/material";
+import ShowMultiAvatar from "./ShowMultiAvatar";
 
 const TMultiDocumnets = ({
   formik,
@@ -8,27 +9,25 @@ const TMultiDocumnets = ({
   nameOfSection,
   nameOfButtonField,
 }) => {
+  console.log(formik.values);
   const openFile = (file) => {
-    const input = file.target;
-    const reader = new FileReader();
+    const files = file.target.files;
+    let cert = formik.values.documents;
 
-    reader.onload = function () {
-      const dataURL = reader.result;
-      let image = input.files[0].type;
-
+    for (let i = 0; i < files.length; i++) {
+      let item = files[i];
+      let image = item.type;
       let data = {
-        file: dataURL,
+        id: cert.length + 1,
+        file_show: URL.createObjectURL(item),
         file_type: image.split("/")[1],
-        file_name: input.files[0].name,
-        file_size: input.files[0].size,
+        file_name: item.name,
+        file_size: item.size,
+        file: item,
       };
-
-      let cert = formik.values.documents;
-      cert.push(data.file);
-      formik.setFieldValue("documents", cert);
-    };
-
-    reader.readAsDataURL(input.files[0]);
+      cert.push(data);
+    }
+    formik.setFieldValue("documents", cert);
   };
   return (
     <Grid container spacing={3}>
@@ -58,20 +57,10 @@ const TMultiDocumnets = ({
           </Button>
         </label>
         {formik?.values?.documents?.length > 0 ? (
-          <Avatar
-            alt="Certificate"
-            src={formik.cvalues?.documents.slice(-1)}
-            sx={{
-              width: 140,
-              height: 140,
-              display: "block",
-              margin: "10px auto",
-              borderRadius: 2,
-            }}
-          />
+          <ShowMultiAvatar formik={formik} />
         ) : (
           <Typography color="text.secondary" textAlign="center" mt={2}>
-            هیچ تصویری آپلود نشده
+            هیچ گواهی آپلود نشده
           </Typography>
         )}
       </Grid>

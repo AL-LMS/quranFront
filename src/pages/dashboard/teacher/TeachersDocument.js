@@ -21,7 +21,6 @@ const TeachersDocument = () => {
   const [showLastCertificate, setShowLastCertificate] = useState("");
   const [showDocuments, setShowDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const certificateFormik = useFormik({
     initialValues: {
       last_certificate: "",
@@ -41,7 +40,7 @@ const TeachersDocument = () => {
     validationSchema: Yup.object().shape({}),
     onSubmit: (values, { setStatus, setSubmitting }) => {
       setLoading(true);
-      upload_certificate().then(() => {});
+      upload_documents().then(() => {});
     },
   });
   const get_user_certificate_documents = async () => {
@@ -95,18 +94,18 @@ const TeachersDocument = () => {
     }
   };
   useEffect(() => {
-    if (role?.national_id === null) {
-      toastify(
-        "warning",
-        "مربی گرامی، برای فعال سازی امکانات سامانه لطفا اطلاعات خود را در بخش پروفایل ثبت نمایید."
-      );
-    } else if (role?.confirm !== 1) {
-      toastify(
-        "warning",
-        "برای افزودن دوره ابتدا بایستی اکانت شما توسط ادمین تایید شود."
-      );
-      get_user_certificate_documents().then(() => {});
-    }
+    // if (role?.national_id === null) {
+    //   toastify(
+    //     "warning",
+    //     "مربی گرامی، برای فعال سازی امکانات سامانه لطفا اطلاعات خود را در بخش پروفایل ثبت نمایید."
+    //   );
+    // } else if (role?.confirm !== 1) {
+    //   toastify(
+    //     "warning",
+    //     "برای افزودن دوره ابتدا بایستی اکانت شما توسط ادمین تایید شود."
+    //   );
+    //   get_user_certificate_documents().then(() => {});
+    // }
     setLoading(false);
   }, [role]);
   const upload_certificate = async () => {
@@ -123,6 +122,44 @@ const TeachersDocument = () => {
     if (certificateFormik.values.certificate instanceof File) {
       let response = await axios.post(
         getUrl() + "back_request/update_teacher_certificate/",
+        formData,
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+      if (response?.data?.tracking_code !== null) {
+        if (role?.confirm !== 1) {
+          toastify(
+            "success",
+            "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
+          );
+        } else {
+          toastify("success", response?.data?.response?.message);
+        }
+        navigate("/panel/dashboard");
+      } else {
+        setLoading(false);
+        toastify("error-login", response?.data?.error);
+      }
+    } else {
+      setLoading(false);
+      toastify("error-login", "محتوای آپلود شده مناسب نیست.");
+    }
+  };
+  const upload_documents = async () => {
+    const formData = new FormData();
+    formData.append("phone", userInfo?.phone);
+    formData.append("role", userInfo?.role);
+    formData.append("user_id", userInfo?.user_id);
+    formData.append("teacher_id", userInfo?.user_id);
+    formData.append("documents", documentsFormik.values.documents);
+    formData.append("last_documents", documentsFormik.values.last_documents);
+    if (documentsFormik.values.documents.length > 0) {
+      let response = await axios.post(
+        getUrl() + "back_request/upload_teacher_documents/",
         formData,
         {
           headers: {
@@ -238,7 +275,7 @@ const TeachersDocument = () => {
                 borderRadius: "8px",
               }}
             >
-              ذخیره اطلاعات
+              بارگذاری گواهی‌های مربی
             </Button>
           </Grid>
         </form>
