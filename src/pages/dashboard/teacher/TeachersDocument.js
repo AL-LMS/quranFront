@@ -257,8 +257,6 @@ const TeachersDocument = () => {
         >
           <TMultiDocumnets
             formik={documentsFormik}
-            showDocuments={showDocuments}
-            setShowDocuments={setShowDocuments}
             nameOfSection={"گواهی‌های مربی"}
             nameOfButtonField={"آپلود تصاویر گواهی"}
           />

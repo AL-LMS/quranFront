@@ -2,23 +2,16 @@ import React from "react";
 import { Avatar, Button, Grid, Typography } from "@mui/material";
 import ShowMultiAvatar from "./ShowMultiAvatar";
 
-const TMultiDocumnets = ({
-  formik,
-  showDocuments,
-  setShowDocuments,
-  nameOfSection,
-  nameOfButtonField,
-}) => {
+const TMultiDocumnets = ({ formik, nameOfSection, nameOfButtonField }) => {
   console.log(formik.values);
   const openFile = (file) => {
     const files = file.target.files;
     let cert = formik.values.documents;
-
     for (let i = 0; i < files.length; i++) {
       let item = files[i];
       let image = item.type;
       let data = {
-        id: cert.length + 1,
+        id: cert.length ? cert.length + 1 : i + 1,
         file_show: URL.createObjectURL(item),
         file_type: image.split("/")[1],
         file_name: item.name,
