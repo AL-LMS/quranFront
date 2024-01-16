@@ -69,14 +69,19 @@ const TeachersDocument = () => {
       baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      certificateFormik.values.certificate = response?.data?.response?.data
-        ?.certificate
-        ? response?.data?.response?.data?.certificate
-        : "";
-      documentsFormik.values.documents = response?.data?.response?.data
-        ?.documents
-        ? response?.data?.response?.data?.documents
-        : null;
+      console.log(response.data);
+      certificateFormik.setFieldValue(
+        "certificate",
+        response.data.response.data.certificate
+          ? response.data.response.data.certificate
+          : ""
+      );
+      documentsFormik.setFieldValue(
+        "documents",
+        response.data.response.data.documents
+          ? response.data.response.data.documents
+          : null
+      );
     } else {
       toastify("error-login", response?.data?.error);
     }
