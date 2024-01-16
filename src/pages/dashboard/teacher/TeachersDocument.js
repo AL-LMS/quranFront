@@ -94,18 +94,18 @@ const TeachersDocument = () => {
     }
   };
   useEffect(() => {
-    // if (role?.national_id === null) {
-    //   toastify(
-    //     "warning",
-    //     "مربی گرامی، برای فعال سازی امکانات سامانه لطفا اطلاعات خود را در بخش پروفایل ثبت نمایید."
-    //   );
-    // } else if (role?.confirm !== 1) {
-    //   toastify(
-    //     "warning",
-    //     "برای افزودن دوره ابتدا بایستی اکانت شما توسط ادمین تایید شود."
-    //   );
-    //   get_user_certificate_documents().then(() => {});
-    // }
+    if (role?.national_id === null) {
+      toastify(
+        "warning",
+        "مربی گرامی، برای فعال سازی امکانات سامانه لطفا اطلاعات خود را در بخش پروفایل ثبت نمایید."
+      );
+    } else if (role?.confirm !== 1) {
+      toastify(
+        "warning",
+        "برای افزودن دوره ابتدا بایستی اکانت شما توسط ادمین تایید شود."
+      );
+      get_user_certificate_documents().then(() => {});
+    }
     setLoading(false);
   }, [role]);
   const upload_certificate = async () => {
