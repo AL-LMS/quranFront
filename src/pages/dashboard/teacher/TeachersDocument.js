@@ -150,6 +150,18 @@ const TeachersDocument = () => {
     }
   };
   const upload_documents = async () => {
+    let arr_file = [];
+    for (
+      let index = 0;
+      index < documentsFormik.values.documents.length;
+      index++
+    ) {
+      const file = documentsFormik.values.documents[index].file;
+      if (file instanceof File) {
+        arr_file.push(file);
+      }
+    }
+    console.log("arr_file", arr_file);
     const formData = new FormData();
     formData.append("phone", userInfo?.phone);
     formData.append("role", userInfo?.role);
