@@ -161,13 +161,21 @@ const TeachersDocument = () => {
         arr_file.push(file);
       }
     }
-    console.log("arr_file", arr_file);
     const formData = new FormData();
     formData.append("phone", userInfo?.phone);
     formData.append("role", userInfo?.role);
     formData.append("user_id", userInfo?.user_id);
     formData.append("teacher_id", userInfo?.user_id);
-    formData.append("documents", arr_file);
+    for (
+      let index = 0;
+      index < documentsFormik.values.documents.length;
+      index++
+    ) {
+      const file = documentsFormik.values.documents[index].file;
+      if (file instanceof File) {
+        formData.append("documents", file);
+      }
+    }
     // formData.append("last_documents", documentsFormik.values.last_documents);
     if (documentsFormik.values.documents.length > 0) {
       let response = await axios.post(
@@ -189,7 +197,7 @@ const TeachersDocument = () => {
         } else {
           toastify("success", response?.data?.response?.message);
         }
-        navigate("/panel/dashboard");
+        // navigate("/panel/dashboard");
       } else {
         setLoading(false);
         toastify("error-login", response?.data?.error);
@@ -272,6 +280,7 @@ const TeachersDocument = () => {
             nameOfSection={"گواهی‌های مربی"}
             nameOfButtonField={"آپلود تصاویر گواهی"}
           />
+          <Divider style={{ marginTop: "20px", marginBottom: "20px" }} />
           <Grid item xs={12}>
             <Button
               variant="contained"
