@@ -57,7 +57,7 @@ const TMultiDocumnets = ({
             {nameOfButtonField}
           </Button>
         </label>
-        {formik?.values?.documents.length > 0 ? (
+        {formik?.values?.documents?.length > 0 ? (
           <Avatar
             alt="Certificate"
             src={formik.cvalues?.documents.slice(-1)}

@@ -90,6 +90,7 @@ const TeachersDocument = () => {
       );
       get_user_certificate_documents().then(() => {});
     }
+    setData({});
   }, [role]);
   const upload_certificate = async () => {
     const formData = new FormData();

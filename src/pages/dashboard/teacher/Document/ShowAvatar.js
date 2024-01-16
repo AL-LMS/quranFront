@@ -12,9 +12,14 @@ const ShowAvatar = ({ formik, showLastCertificate, fileType }) => {
         ["jpg", "png", "jpeg"].includes(fileType) ? (
           <div
             style={{
+              marginTop: "10px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              width: "150px",
+              height: "150px",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
             }}
           >
             <img
@@ -34,15 +39,20 @@ const ShowAvatar = ({ formik, showLastCertificate, fileType }) => {
               }}
             />
             <span style={{ fontSize: "12px", textAlign: "center" }}>
-              {formik?.values?.certificate?.name}
+              {formik?.values?.certificate?.name.substring(0, 17) + "..."}
             </span>
           </div>
         ) : (
           <div
             style={{
+              marginTop: "10px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              width: "150px",
+              height: "150px",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
             }}
           >
             <img
@@ -62,7 +72,7 @@ const ShowAvatar = ({ formik, showLastCertificate, fileType }) => {
               }}
             />
             <span style={{ fontSize: "12px", textAlign: "center" }}>
-              {formik?.values?.certificate?.name}
+              {formik?.values?.certificate?.name.substring(0, 17) + "..."}
             </span>
           </div>
         )
