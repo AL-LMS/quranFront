@@ -167,7 +167,7 @@ const TeachersDocument = () => {
     formData.append("role", userInfo?.role);
     formData.append("user_id", userInfo?.user_id);
     formData.append("teacher_id", userInfo?.user_id);
-    formData.append("documents", documentsFormik.values.documents);
+    formData.append("documents", arr_file);
     formData.append("last_documents", documentsFormik.values.last_documents);
     if (documentsFormik.values.documents.length > 0) {
       let response = await axios.post(
