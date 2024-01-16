@@ -73,7 +73,10 @@ const TeachersDocument = () => {
       toastify("error-login", response?.data?.error);
     }
   };
-  console.log(data);
+  useEffect(() => {
+    certificateFormik.initialValues.certificate = data ? data.certificate : "";
+    documentsFormik.initialValues.documents = data ? data.documents : "";
+  }, [data]);
   useEffect(() => {
     if (role?.national_id === null) {
       toastify(
