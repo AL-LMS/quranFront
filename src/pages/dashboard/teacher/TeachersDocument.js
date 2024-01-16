@@ -46,7 +46,34 @@ const TeachersDocument = () => {
       upload_certificate().then(() => {});
     },
   });
+  const get_user_certificate_documents = async () => {
+    let data = {
+      table: "courses",
+      method_type: "get_user_certificate_documents",
+      data: {
+        phone: user?.phone,
+        role: "teacher",
+      },
+    };
+    let response = await axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        ...data,
+      },
 
+      baseURL: getUrl() + "back_request/select_request/",
+    });
+    if (response?.data?.tracking_code !== null) {
+      setData(response?.data?.response?.data);
+    } else {
+      toastify("error-login", response?.data?.error);
+    }
+  };
+  console.log(data);
   useEffect(() => {
     if (role?.national_id === null) {
       toastify(
@@ -58,6 +85,7 @@ const TeachersDocument = () => {
         "warning",
         "برای افزودن دوره ابتدا بایستی اکانت شما توسط ادمین تایید شود."
       );
+      get_user_certificate_documents().then(() => {});
     }
   }, [role]);
   const upload_certificate = async () => {
@@ -84,7 +112,7 @@ const TeachersDocument = () => {
             "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
           );
         } else {
-          toastify("success", "اطلاعات شما با موفقیت ثبت شد");
+          toastify("success", response?.data?.response?.message);
         }
         navigate("/panel/dashboard");
       } else {
