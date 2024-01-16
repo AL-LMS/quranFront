@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar, Button, Grid, Typography } from "@mui/material";
 import ShowAvatar from "./ShowAvatar";
 
@@ -29,6 +29,9 @@ const TDocumnets = ({
 
     reader.readAsDataURL(input.files[0]);
   };
+  useEffect(() => {
+    console.log("formik.values", formik.values);
+  }, [formik]);
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
