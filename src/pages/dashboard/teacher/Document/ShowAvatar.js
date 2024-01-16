@@ -6,6 +6,7 @@ const ShowAvatar = ({ formik, showLastCertificate, fileType }) => {
   const handleRemove = () => {
     formik.setFieldValue("certificate", "");
   };
+  console.log(formik.values);
   return (
     <>
       {formik?.values?.certificate ? (
