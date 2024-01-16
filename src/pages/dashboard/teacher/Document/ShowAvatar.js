@@ -7,6 +7,7 @@ const ShowAvatar = ({ formik, showLastCertificate, fileType }) => {
     formik.setFieldValue("certificate", "");
   };
   console.log(formik.values);
+  console.log("fileType", fileType === "");
   return (
     <>
       {formik?.values?.certificate ? (
@@ -42,6 +43,39 @@ const ShowAvatar = ({ formik, showLastCertificate, fileType }) => {
             <span style={{ fontSize: "12px", textAlign: "center" }}>
               {formik?.values?.certificate?.name.substring(0, 17) + "..."}
             </span>
+          </div>
+        ) : fileType === "" ? (
+          <div
+            style={{
+              marginTop: "10px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "150px",
+              height: "150px",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+            }}
+          >
+            <img
+              onClick={() => handleRemove()}
+              src={remove}
+              style={{ width: "20px", height: "20px", marginRight: "100px" }}
+            />
+            <Avatar
+              alt="LastCertificate"
+              src={`http://daarolquran.com/back_request/get_uploaded_teacher_certificate/${formik?.values?.certificate}`}
+              sx={{
+                width: 75,
+                height: 75,
+                display: "block",
+                margin: "10px auto",
+                borderRadius: 2,
+              }}
+            />
+            {/* <span style={{ fontSize: "12px", textAlign: "center" }}>
+              String(formik?.values?.certificate?).substring(0, 17)
+            </span> */}
           </div>
         ) : (
           <div

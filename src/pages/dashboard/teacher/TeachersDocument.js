@@ -12,6 +12,7 @@ import * as Yup from "yup";
 import styled from "styled-components";
 import TDocumnets from "./Document/TDocumnets";
 import TMultiDocumnets from "./Document/TMultiDocumnets";
+import Loader from "../../../components/site/shared/Loader";
 const TeachersDocument = () => {
   const { user, role } = useAuth();
   const [userInfo, setUserInfo] = useState(
@@ -19,7 +20,7 @@ const TeachersDocument = () => {
   );
   const [showLastCertificate, setShowLastCertificate] = useState("");
   const [showDocuments, setShowDocuments] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
   const certificateFormik = useFormik({
@@ -68,15 +69,14 @@ const TeachersDocument = () => {
       baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      setData(response?.data?.response?.data);
+      let certificate = response?.data?.response?.data?.certificate;
+      let documents = response?.data?.response?.data?.documents;
+      certificateFormik.values.certificate = certificate ? certificate : "";
+      documentsFormik.values.documents = documents ? documents : null;
     } else {
       toastify("error-login", response?.data?.error);
     }
   };
-  useEffect(() => {
-    certificateFormik.initialValues.certificate = data ? data.certificate : "";
-    documentsFormik.initialValues.documents = data ? data.documents : "";
-  }, [data]);
   useEffect(() => {
     if (role?.national_id === null) {
       toastify(
@@ -88,8 +88,14 @@ const TeachersDocument = () => {
         "warning",
         "برای افزودن دوره ابتدا بایستی اکانت شما توسط ادمین تایید شود."
       );
+      // let certificate = "Screenshot from 2024-01-11 13-06-56.png";
+      // let documents = null;
+      // certificateFormik.values.certificate = certificate ? certificate : "";
+      // documentsFormik.values.documents = documents ? documents : "";
+
       get_user_certificate_documents().then(() => {});
     }
+    setLoading(false);
   }, [role]);
   const upload_certificate = async () => {
     const formData = new FormData();
@@ -129,6 +135,26 @@ const TeachersDocument = () => {
     }
   };
   const navigate = useNavigate();
+  if (loading)
+    return (
+      <Container maxWidth="lg">
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100vh",
+            }}
+          >
+            <Loader />
+          </Grid>
+        </Grid>
+      </Container>
+    );
+  console.log(certificateFormik.values);
   return (
     <Container maxWidth="lg">
       <Grid container spacing={3} mt={3}>
