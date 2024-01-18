@@ -19,6 +19,7 @@ const TeachersDocument = () => {
     JSON.parse(localStorage.getItem("user"))
   );
   const [showLastCertificate, setShowLastCertificate] = useState("");
+  const [showDocuments, setShowDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const certificateFormik = useFormik({
     initialValues: {
@@ -269,6 +270,8 @@ const TeachersDocument = () => {
         >
           <TMultiDocumnets
             formik={documentsFormik}
+            showDocuments={showDocuments}
+            setShowDocuments={setShowDocuments}
             nameOfSection={"گواهی‌های مربی"}
             nameOfButtonField={"آپلود تصاویر گواهی"}
           />

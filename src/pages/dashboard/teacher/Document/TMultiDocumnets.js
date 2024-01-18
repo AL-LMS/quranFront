@@ -2,7 +2,13 @@ import React from "react";
 import { Avatar, Button, Grid, Typography } from "@mui/material";
 import ShowMultiAvatar from "./ShowMultiAvatar";
 
-const TMultiDocumnets = ({ formik, nameOfSection, nameOfButtonField }) => {
+const TMultiDocumnets = ({
+  formik,
+  showDocuments,
+  setShowDocuments,
+  nameOfSection,
+  nameOfButtonField,
+}) => {
   console.log(formik.values);
   const openFile = (file) => {
     const files = file.target.files;
