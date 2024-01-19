@@ -1,6 +1,5 @@
 import React from "react";
-import { Avatar, Typography } from "@mui/material";
-import pdfImage from "../../../../assets/img/pdf.png";
+import { Avatar } from "@mui/material";
 import remove from "../../../../assets/img/remove.png";
 const ShowMultiAvatar = ({ formik }) => {
   const handleRemove = (id) => {
@@ -20,43 +19,6 @@ const ShowMultiAvatar = ({ formik }) => {
         justifyContent: "center",
       }}
     >
-      {formik?.values?.last_documents.map((doc, index) => (
-        <div
-          style={{
-            marginTop: "10px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            width: "150px",
-            height: "150px",
-            marginRight: "10px",
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-          }}
-        >
-          <img
-            onClick={() => handleRemove(doc.index)}
-            src={remove}
-            style={{ width: "20px", height: "20px", marginRight: "100px" }}
-          />
-          <Avatar
-            alt="LastCertificate"
-            src={
-              doc
-                ? doc
-                : `http://daarolquran.com/back_request/get_uploaded_teacher_certificate/${doc}`
-            }
-            sx={{
-              width: 75,
-              height: 75,
-              display: "block",
-              margin: "10px auto",
-              borderRadius: 2,
-            }}
-          />
-          <span style={{ fontSize: "12px", textAlign: "center" }}>{doc}</span>
-        </div>
-      ))}
       {formik?.values?.documents.map((doc, index) => (
         <div
           style={{

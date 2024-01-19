@@ -4,8 +4,8 @@ import ShowMultiAvatar from "./ShowMultiAvatar";
 
 const TMultiDocumnets = ({
   formik,
-  showDocuments,
-  setShowDocuments,
+  // showDocuments,
+  // setShowDocuments,
   nameOfSection,
   nameOfButtonField,
 }) => {

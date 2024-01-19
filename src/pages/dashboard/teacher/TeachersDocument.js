@@ -19,7 +19,11 @@ const TeachersDocument = () => {
     JSON.parse(localStorage.getItem("user"))
   );
   const [showLastCertificate, setShowLastCertificate] = useState("");
-  const [showDocuments, setShowDocuments] = useState([]);
+  // const [showDocuments, setShowDocuments] = useState([
+  //   "setting.png",
+  //   "report.png",
+  //   "quiz.png",
+  // ]);
   const [loading, setLoading] = useState(true);
   const certificateFormik = useFormik({
     initialValues: {
@@ -89,6 +93,11 @@ const TeachersDocument = () => {
           ? response.data.response.data.documents
           : []
       );
+      // setShowDocuments(
+      //   response.data.response.data.documents
+      //     ? response.data.response.data.documents
+      //     : []
+      // );
     } else {
       toastify("error-login", response?.data?.error);
     }
@@ -104,7 +113,7 @@ const TeachersDocument = () => {
         "warning",
         "برای افزودن دوره ابتدا بایستی اکانت شما توسط ادمین تایید شود."
       );
-      get_user_certificate_documents().then(() => {});
+      // get_user_certificate_documents().then(() => {});
     }
     setLoading(false);
   }, [role]);
@@ -270,8 +279,8 @@ const TeachersDocument = () => {
         >
           <TMultiDocumnets
             formik={documentsFormik}
-            showDocuments={showDocuments}
-            setShowDocuments={setShowDocuments}
+            // showDocuments={showDocuments}
+            // setShowDocuments={setShowDocuments}
             nameOfSection={"گواهی‌های مربی"}
             nameOfButtonField={"آپلود تصاویر گواهی"}
           />
