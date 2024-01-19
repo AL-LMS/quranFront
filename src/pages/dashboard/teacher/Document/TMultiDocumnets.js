@@ -24,7 +24,7 @@ const TMultiDocumnets = ({
         file_size: item.size,
         file: item,
       };
-      showdoc.push(data.file_show);
+      showdoc.push(URL.createObjectURL(item));
       cert.push(data);
     }
     console.log("showdoc", showdoc);
