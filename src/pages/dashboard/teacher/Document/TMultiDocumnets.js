@@ -16,14 +16,14 @@ const TMultiDocumnets = ({
     for (let i = 0; i < files.length; i++) {
       let item = files[i];
       let image = item.type;
-      let data = {
-        id: cert ? cert.length + 1 : i + 1,
-        file_show: URL.createObjectURL(item),
-        file_type: image.split("/")[1],
-        file_name: item.name,
-        file_size: item.size,
-        file: item,
-      };
+      // let data = {
+      //   id: cert ? cert.length + 1 : i + 1,
+      //   file_show: URL.createObjectURL(item),
+      //   file_type: image.split("/")[1],
+      //   file_name: item.name,
+      //   file_size: item.size,
+      //   file: item,
+      // };
       // console.log(URL.createObjectURL(item));
       showdoc.push(URL.createObjectURL(item));
       // cert.push(data);
