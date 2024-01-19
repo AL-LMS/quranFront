@@ -60,7 +60,7 @@ const TMultiDocumnets = ({
             {nameOfButtonField}
           </Button>
         </label>
-        {formik?.values?.documents?.length > 0 ? (
+        {showDocuments?.length > 0 ? (
           <ShowMultiAvatar showDocuments={showDocuments} formik={formik} />
         ) : (
           <Typography color="text.secondary" textAlign="center" mt={2}>
