@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import ShowMultiAvatar from "./ShowMultiAvatar";
 
 const TMultiDocumnets = ({
@@ -28,7 +28,6 @@ const TMultiDocumnets = ({
     formik.setFieldValue("documents", cert);
     for (let index = 0; index < cert.length; index++) {
       if (cert[index] instanceof Object) {
-        console.log(cert[index]);
         showDocuments.push(cert[index].file_show);
       }
     }
@@ -62,7 +61,11 @@ const TMultiDocumnets = ({
           </Button>
         </label>
         {showDocuments?.length > 0 ? (
-          <ShowMultiAvatar showDocuments={showDocuments} formik={formik} />
+          <ShowMultiAvatar
+            setShowDocuments={setShowDocuments}
+            showDocuments={showDocuments}
+            formik={formik}
+          />
         ) : (
           <Typography color="text.secondary" textAlign="center" mt={2}>
             هیچ گواهی آپلود نشده

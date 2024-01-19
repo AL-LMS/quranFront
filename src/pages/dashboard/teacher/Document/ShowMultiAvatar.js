@@ -1,15 +1,13 @@
 import React from "react";
 import { Avatar } from "@mui/material";
 import remove from "../../../../assets/img/remove.png";
-const ShowMultiAvatar = ({ formik, showDocuments }) => {
-  console.log("showDocuments in show", showDocuments);
+const ShowMultiAvatar = ({ formik, showDocuments, setShowDocuments }) => {
   const handleRemove = (id) => {
-    console.log("id", id);
-    // let cert = formik.values.documents;
-    // var lists = cert.filter((x) => {
-    //   return x.id != id;
-    // });
-    // formik.setFieldValue("documents", lists);
+    let cert = formik.values.documents;
+    cert.splice(id, 1);
+    showDocuments.splice(id, 1);
+    formik.setFieldValue("documents", cert);
+    setShowDocuments(showDocuments);
   };
   return (
     <div
@@ -41,7 +39,12 @@ const ShowMultiAvatar = ({ formik, showDocuments }) => {
             <img
               onClick={() => handleRemove(index)}
               src={remove}
-              style={{ width: "20px", height: "20px", marginRight: "100px" }}
+              style={{
+                width: "20px",
+                height: "20px",
+                marginRight: "100px",
+                cursor: "pointer",
+              }}
             />
             <Avatar
               alt="LastCertificate"

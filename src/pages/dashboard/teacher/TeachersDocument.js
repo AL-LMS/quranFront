@@ -110,23 +110,11 @@ const TeachersDocument = () => {
         "برای افزودن دوره ابتدا بایستی اکانت شما توسط ادمین تایید شود."
       );
       get_user_certificate_documents().then(() => {});
-      // documentsFormik.setFieldValue("documents", [
-      //   "setting.png",
-      //   "report.png",
-      //   "quiz.png",
-      // ]);
-      // documentsFormik.setFieldValue("last_documents", [
-      //   "setting.png",
-      //   "report.png",
-      //   "quiz.png",
-      // ]);
-      // setShowDocuments(["setting.png", "report.png", "quiz.png"]);
     }
     setLoading(false);
   }, [role]);
   const upload_certificate = async () => {
     const formData = new FormData();
-    // console.log("certificateFormik.values", certificateFormik.values);
     formData.append("phone", userInfo?.phone);
     formData.append("role", userInfo?.role);
     formData.append("user_id", userInfo?.user_id);
@@ -168,7 +156,6 @@ const TeachersDocument = () => {
     }
   };
   const upload_documents = async () => {
-    // console.log("documentsFormik.values", documentsFormik.values);
     const formData = new FormData();
     formData.append("phone", userInfo?.phone);
     formData.append("role", userInfo?.role);
@@ -184,7 +171,7 @@ const TeachersDocument = () => {
         formData.append("documents", file);
       }
     }
-    // formData.append("last_documents", documentsFormik.values.last_documents);
+    formData.append("last_documents", documentsFormik.values.last_documents);
     if (documentsFormik.values.documents.length > 0) {
       let response = await axios.post(
         getUrl() + "back_request/upload_teacher_documents/",
