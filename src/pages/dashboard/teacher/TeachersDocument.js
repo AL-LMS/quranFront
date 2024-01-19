@@ -19,11 +19,7 @@ const TeachersDocument = () => {
     JSON.parse(localStorage.getItem("user"))
   );
   const [showLastCertificate, setShowLastCertificate] = useState("");
-  const [showDocuments, setShowDocuments] = useState([
-    "setting.png",
-    "report.png",
-    "quiz.png",
-  ]);
+  const [showDocuments, setShowDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const certificateFormik = useFormik({
     initialValues: {

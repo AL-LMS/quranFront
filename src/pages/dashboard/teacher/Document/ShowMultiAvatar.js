@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar } from "@mui/material";
 import remove from "../../../../assets/img/remove.png";
 const ShowMultiAvatar = ({ formik, showDocuments }) => {
-  console.log("showDocuments", showDocuments);
+  console.log("showDocuments in show", showDocuments);
   const handleRemove = (id) => {
     console.log("id", id);
     // let cert = formik.values.documents;
