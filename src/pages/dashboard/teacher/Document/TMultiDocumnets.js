@@ -12,7 +12,6 @@ const TMultiDocumnets = ({
   const openFile = (file) => {
     const files = file.target.files;
     let cert = formik.values.documents;
-    let showdoc = showDocuments;
     for (let i = 0; i < files.length; i++) {
       let item = files[i];
       let image = item.type;
@@ -24,13 +23,10 @@ const TMultiDocumnets = ({
         file_size: item.size,
         file: item,
       };
-      console.log(URL.createObjectURL(item));
-      showdoc.push(URL.createObjectURL(item));
+      showDocuments.push(URL.createObjectURL(item));
       cert.push(data);
-      console.log("in loop", showdoc);
     }
-    console.log("showdoc", showdoc);
-    setShowDocuments(showdoc);
+    setShowDocuments(showDocuments);
     formik.setFieldValue("documents", cert);
   };
   return (
