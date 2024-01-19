@@ -113,7 +113,7 @@ const TeachersDocument = () => {
         "warning",
         "برای افزودن دوره ابتدا بایستی اکانت شما توسط ادمین تایید شود."
       );
-      // get_user_certificate_documents().then(() => {});
+      get_user_certificate_documents().then(() => {});
     }
     setLoading(false);
   }, [role]);
