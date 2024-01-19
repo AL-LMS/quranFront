@@ -2,6 +2,7 @@ import React from "react";
 import { Avatar } from "@mui/material";
 import remove from "../../../../assets/img/remove.png";
 const ShowMultiAvatar = ({ formik, showDocuments }) => {
+  console.log("showDocuments", showDocuments);
   const handleRemove = (id) => {
     console.log("id", id);
     // let cert = formik.values.documents;
@@ -20,7 +21,7 @@ const ShowMultiAvatar = ({ formik, showDocuments }) => {
         justifyContent: "center",
       }}
     >
-      {showDocuments.map((doc, index) => (
+      {showDocuments?.map((doc, index) => (
         <div
           style={{
             marginTop: "10px",
