@@ -119,7 +119,7 @@ const TeachersDocument = () => {
   }, [role]);
   const upload_certificate = async () => {
     const formData = new FormData();
-    console.log("certificateFormik.values", certificateFormik.values);
+    // console.log("certificateFormik.values", certificateFormik.values);
     formData.append("phone", userInfo?.phone);
     formData.append("role", userInfo?.role);
     formData.append("user_id", userInfo?.user_id);
@@ -161,7 +161,7 @@ const TeachersDocument = () => {
     }
   };
   const upload_documents = async () => {
-    console.log("documentsFormik.values", documentsFormik.values);
+    // console.log("documentsFormik.values", documentsFormik.values);
     const formData = new FormData();
     formData.append("phone", userInfo?.phone);
     formData.append("role", userInfo?.role);

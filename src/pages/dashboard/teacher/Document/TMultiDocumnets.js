@@ -9,12 +9,10 @@ const TMultiDocumnets = ({
   nameOfSection,
   nameOfButtonField,
 }) => {
-  console.log(formik.values);
   const openFile = (file) => {
     const files = file.target.files;
     let cert = formik.values.documents;
     let showdoc = showDocuments;
-    console.log(cert);
     for (let i = 0; i < files.length; i++) {
       let item = files[i];
       let image = item.type;
@@ -29,6 +27,7 @@ const TMultiDocumnets = ({
       showdoc.push(data.file_show);
       cert.push(data);
     }
+    console.log("showdoc", showdoc);
     setShowDocuments(showdoc);
     formik.setFieldValue("documents", cert);
   };
