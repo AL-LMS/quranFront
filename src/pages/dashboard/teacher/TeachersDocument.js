@@ -110,6 +110,17 @@ const TeachersDocument = () => {
         "برای افزودن دوره ابتدا بایستی اکانت شما توسط ادمین تایید شود."
       );
       get_user_certificate_documents().then(() => {});
+      // documentsFormik.setFieldValue("documents", [
+      //   "setting.png",
+      //   "report.png",
+      //   "quiz.png",
+      // ]);
+      // documentsFormik.setFieldValue("last_documents", [
+      //   "setting.png",
+      //   "report.png",
+      //   "quiz.png",
+      // ]);
+      // setShowDocuments(["setting.png", "report.png", "quiz.png"]);
     }
     setLoading(false);
   }, [role]);

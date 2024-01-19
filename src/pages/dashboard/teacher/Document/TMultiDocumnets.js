@@ -11,27 +11,27 @@ const TMultiDocumnets = ({
 }) => {
   const openFile = (file) => {
     const files = file.target.files;
-    // let cert = formik.values.documents;
+    let cert = formik.values.documents;
     let showdoc = showDocuments;
     for (let i = 0; i < files.length; i++) {
       let item = files[i];
       let image = item.type;
-      // let data = {
-      //   id: cert ? cert.length + 1 : i + 1,
-      //   file_show: URL.createObjectURL(item),
-      //   file_type: image.split("/")[1],
-      //   file_name: item.name,
-      //   file_size: item.size,
-      //   file: item,
-      // };
-      // console.log(URL.createObjectURL(item));
+      let data = {
+        id: cert ? cert.length + 1 : i + 1,
+        file_show: URL.createObjectURL(item),
+        file_type: image.split("/")[1],
+        file_name: item.name,
+        file_size: item.size,
+        file: item,
+      };
+      console.log(URL.createObjectURL(item));
       showdoc.push(URL.createObjectURL(item));
-      // cert.push(data);
+      cert.push(data);
       console.log("in loop", showdoc);
     }
     console.log("showdoc", showdoc);
     setShowDocuments(showdoc);
-    // formik.setFieldValue("documents", cert);
+    formik.setFieldValue("documents", cert);
   };
   return (
     <Grid container spacing={3}>
