@@ -60,7 +60,7 @@ const TMultiDocumnets = ({
           </Button>
         </label>
         {formik?.values?.documents?.length > 0 ? (
-          <ShowMultiAvatar formik={formik} />
+          <ShowMultiAvatar showDocuments={showDocuments} formik={formik} />
         ) : (
           <Typography color="text.secondary" textAlign="center" mt={2}>
             هیچ گواهی آپلود نشده
