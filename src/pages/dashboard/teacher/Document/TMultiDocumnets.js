@@ -23,8 +23,12 @@ const TMultiDocumnets = ({
         file_size: item.size,
         file: item,
       };
-      showDocuments.push(URL.createObjectURL(item));
       cert.push(data);
+    }
+    for (let index = 0; index < cert.length; index++) {
+      if (cert[index] instanceof Object) {
+        showDocuments.push(cert[index].file_show);
+      }
     }
     setShowDocuments(showDocuments);
     formik.setFieldValue("documents", cert);
