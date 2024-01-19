@@ -4,8 +4,8 @@ import ShowMultiAvatar from "./ShowMultiAvatar";
 
 const TMultiDocumnets = ({
   formik,
-  // showDocuments,
-  // setShowDocuments,
+  showDocuments,
+  setShowDocuments,
   nameOfSection,
   nameOfButtonField,
 }) => {
@@ -13,6 +13,7 @@ const TMultiDocumnets = ({
   const openFile = (file) => {
     const files = file.target.files;
     let cert = formik.values.documents;
+    let showdoc = showDocuments;
     console.log(cert);
     for (let i = 0; i < files.length; i++) {
       let item = files[i];
@@ -25,8 +26,10 @@ const TMultiDocumnets = ({
         file_size: item.size,
         file: item,
       };
+      showdoc.push(data.file_show);
       cert.push(data);
     }
+    setShowDocuments(showdoc);
     formik.setFieldValue("documents", cert);
   };
   return (

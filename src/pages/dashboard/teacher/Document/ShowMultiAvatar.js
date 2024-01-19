@@ -1,13 +1,14 @@
 import React from "react";
 import { Avatar } from "@mui/material";
 import remove from "../../../../assets/img/remove.png";
-const ShowMultiAvatar = ({ formik }) => {
+const ShowMultiAvatar = ({ formik, showDocuments }) => {
   const handleRemove = (id) => {
-    let cert = formik.values.documents;
-    var lists = cert.filter((x) => {
-      return x.id != id;
-    });
-    formik.setFieldValue("documents", lists);
+    console.log("id", id);
+    // let cert = formik.values.documents;
+    // var lists = cert.filter((x) => {
+    //   return x.id != id;
+    // });
+    // formik.setFieldValue("documents", lists);
   };
   return (
     <div
@@ -19,7 +20,7 @@ const ShowMultiAvatar = ({ formik }) => {
         justifyContent: "center",
       }}
     >
-      {formik?.values?.documents.map((doc, index) => (
+      {showDocuments.map((doc, index) => (
         <div
           style={{
             marginTop: "10px",
@@ -34,16 +35,16 @@ const ShowMultiAvatar = ({ formik }) => {
           }}
         >
           <img
-            onClick={() => handleRemove(doc.id)}
+            onClick={() => handleRemove(index)}
             src={remove}
             style={{ width: "20px", height: "20px", marginRight: "100px" }}
           />
           <Avatar
             alt="LastCertificate"
             src={
-              doc.file_show
-                ? doc.file_show
-                : `http://daarolquran.com/back_request/get_uploaded_teacher_certificate/${doc.file_name}`
+              doc.substring(0, 5) === "blob:"
+                ? doc
+                : `http://daarolquran.com/back_request/get_uploaded_teacher_certificate/${doc}`
             }
             sx={{
               width: 75,
@@ -54,7 +55,7 @@ const ShowMultiAvatar = ({ formik }) => {
             }}
           />
           <span style={{ fontSize: "12px", textAlign: "center" }}>
-            {doc.file_name}
+            {"doc.file_name"}
           </span>
         </div>
       ))}
