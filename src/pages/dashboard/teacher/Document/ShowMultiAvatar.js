@@ -21,7 +21,7 @@ const ShowMultiAvatar = ({ formik, showDocuments }) => {
         justifyContent: "center",
       }}
     >
-      {showDocuments?.map((doc, index) => {
+      {showDocuments?.map((doc, index) =>
         doc instanceof Object ? (
           <></>
         ) : (
@@ -62,8 +62,8 @@ const ShowMultiAvatar = ({ formik, showDocuments }) => {
               {"doc.file_name"}
             </span>
           </div>
-        );
-      })}
+        )
+      )}
     </div>
   );
 };

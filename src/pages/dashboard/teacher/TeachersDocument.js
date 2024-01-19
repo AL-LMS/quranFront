@@ -109,18 +109,32 @@ const TeachersDocument = () => {
         "warning",
         "برای افزودن دوره ابتدا بایستی اکانت شما توسط ادمین تایید شود."
       );
-      get_user_certificate_documents().then(() => {});
-      // documentsFormik.setFieldValue("documents", [
-      //   "setting.png",
-      //   "report.png",
-      //   "quiz.png",
-      // ]);
-      // documentsFormik.setFieldValue("last_documents", [
-      //   "setting.png",
-      //   "report.png",
-      //   "quiz.png",
-      // ]);
-      // setShowDocuments(["setting.png", "report.png", "quiz.png"]);
+      // get_user_certificate_documents().then(() => {});
+      documentsFormik.setFieldValue("documents", [
+        "setting.png",
+        "report.png",
+        "quiz.png",
+      ]);
+      documentsFormik.setFieldValue("last_documents", [
+        "setting.png",
+        "report.png",
+        "quiz.png",
+      ]);
+      setShowDocuments([
+        "setting.png",
+        "report.png",
+        "quiz.png",
+        {
+          id: 4,
+          file_show:
+            "blob:http://daarolquran.com/6a4f8af4-d7d5-4748-897c-867120a734bc",
+          file_type: "png",
+          file_name: "Screenshot from 2024-01-18 04-28-54.png",
+          file_size: 76137,
+          file: {},
+        },
+        "blob:http://daarolquran.com/6a4f8af4-d7d5-4748-897c-867120a734bc",
+      ]);
     }
     setLoading(false);
   }, [role]);
