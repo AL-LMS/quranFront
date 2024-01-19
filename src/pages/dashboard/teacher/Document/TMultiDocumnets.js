@@ -25,13 +25,14 @@ const TMultiDocumnets = ({
       };
       cert.push(data);
     }
+    formik.setFieldValue("documents", cert);
     for (let index = 0; index < cert.length; index++) {
       if (cert[index] instanceof Object) {
+        console.log(cert[index]);
         showDocuments.push(cert[index].file_show);
       }
     }
     setShowDocuments(showDocuments);
-    formik.setFieldValue("documents", cert);
   };
   return (
     <Grid container spacing={3}>
