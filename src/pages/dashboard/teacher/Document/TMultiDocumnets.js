@@ -12,6 +12,7 @@ const TMultiDocumnets = ({
   const openFile = (file) => {
     const files = file.target.files;
     let cert = formik.values.documents;
+    console.log(cert, "cert");
     for (let i = 0; i < files.length; i++) {
       let item = files[i];
       let image = item.type;
@@ -25,6 +26,7 @@ const TMultiDocumnets = ({
       };
       cert.push(data);
     }
+    console.log(cert, "cert");
     formik.setFieldValue("documents", cert);
     for (let index = 0; index < cert.length; index++) {
       if (cert[index] instanceof Object) {
