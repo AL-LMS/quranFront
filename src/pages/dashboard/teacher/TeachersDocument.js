@@ -159,9 +159,11 @@ const TeachersDocument = () => {
       index < documentsFormik.values.documents.length;
       index++
     ) {
-      const file = documentsFormik.values.documents[index].file;
-      if (file instanceof File) {
-        formData.append("documents", file);
+      if (documentsFormik.values.documents[index]?.file instanceof File) {
+        formData.append(
+          "documents",
+          documentsFormik.values.documents[index]?.file
+        );
       } else if (file.substring(0, 5) !== "blob:") {
         formData.append("documents", file);
       }
