@@ -34,7 +34,6 @@ const TeachersDocument = () => {
   });
   const documentsFormik = useFormik({
     initialValues: {
-      last_documents: [],
       documents: [],
     },
     validationSchema: Yup.object().shape({}),
@@ -79,12 +78,6 @@ const TeachersDocument = () => {
       );
       documentsFormik.setFieldValue(
         "documents",
-        response.data.response.data.documents
-          ? response.data.response.data.documents
-          : []
-      );
-      documentsFormik.setFieldValue(
-        "last_documents",
         response.data.response.data.documents
           ? response.data.response.data.documents
           : []
@@ -171,7 +164,6 @@ const TeachersDocument = () => {
         formData.append("documents", file);
       }
     }
-    formData.append("last_documents", documentsFormik.values.last_documents);
     if (documentsFormik.values.documents.length > 0) {
       let response = await axios.post(
         getUrl() + "back_request/upload_teacher_documents/",
