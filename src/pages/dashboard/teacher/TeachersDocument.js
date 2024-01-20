@@ -164,8 +164,10 @@ const TeachersDocument = () => {
           "documents",
           documentsFormik.values.documents[index]?.file
         );
-      } else if (file.substring(0, 5) !== "blob:") {
-        formData.append("documents", file);
+      } else if (
+        documentsFormik.values.documents[index].substring(0, 5) !== "blob:"
+      ) {
+        formData.append("documents", documentsFormik.values.documents[index]);
       }
     }
     if (documentsFormik.values.documents.length > 0) {
