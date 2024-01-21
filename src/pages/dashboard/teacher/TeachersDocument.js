@@ -35,6 +35,7 @@ const TeachersDocument = () => {
   const documentsFormik = useFormik({
     initialValues: {
       documents: [],
+      last_documents: [],
     },
     validationSchema: Yup.object().shape({}),
     onSubmit: (values, { setStatus, setSubmitting }) => {
@@ -167,7 +168,10 @@ const TeachersDocument = () => {
       } else if (
         documentsFormik.values.documents[index].substring(0, 5) !== "blob:"
       ) {
-        formData.append("documents", documentsFormik.values.documents[index]);
+        formData.append(
+          "last_documents",
+          documentsFormik.values.documents[index]
+        );
       }
     }
     if (documentsFormik.values.documents.length > 0) {
