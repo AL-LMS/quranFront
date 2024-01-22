@@ -27,6 +27,7 @@ const TMultiDocumnets = ({
       cert.push(data);
     }
     console.log(cert, "cert");
+    console.log(showDocuments, "showDocuments");
     formik.setFieldValue("documents", cert);
     for (let index = 0; index < cert.length; index++) {
       if (cert[index] instanceof Object) {
