@@ -207,7 +207,7 @@ const TeachersDocument = () => {
         }
       } else {
         let response = await axios.post(
-          getUrl() + "back_request/upload_teacher_documents/",
+          getUrl() + "back_request/update_upload_teacher_documents/",
           formData,
           {
             headers: {
