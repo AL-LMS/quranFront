@@ -75,7 +75,7 @@ const TeachersDocument = () => {
         "last_certificate",
         response.data.response.data.certificate
           ? response.data.response.data.certificate
-          : ""
+          : "def"
       );
       documentsFormik.setFieldValue(
         "documents",
@@ -117,6 +117,8 @@ const TeachersDocument = () => {
     formData.append(
       "last_certificate",
       certificateFormik.values.last_certificate
+        ? certificateFormik.values.last_certificate
+        : "def"
     );
     if (certificateFormik.values.certificate instanceof File) {
       let response = await axios.post(
