@@ -5,9 +5,10 @@ const ShowMultiAvatar = ({ formik, showDocuments, setShowDocuments }) => {
   const handleRemove = (id) => {
     let cert = formik.values.documents;
     cert.splice(id, 1);
-    showDocuments.splice(id, 1);
+    // showDocuments.splice(id, 1);
     formik.setFieldValue("documents", cert);
-    setShowDocuments(showDocuments);
+    console.log(formik.values);
+    // setShowDocuments(showDocuments);
   };
   return (
     <div
@@ -19,7 +20,7 @@ const ShowMultiAvatar = ({ formik, showDocuments, setShowDocuments }) => {
         justifyContent: "center",
       }}
     >
-      {showDocuments?.map((doc, index) =>
+      {formik?.values?.documents?.map((doc, index) =>
         doc instanceof Object ? (
           <></>
         ) : (
