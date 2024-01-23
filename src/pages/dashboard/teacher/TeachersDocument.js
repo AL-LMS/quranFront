@@ -153,6 +153,7 @@ const TeachersDocument = () => {
   };
   const upload_documents = async () => {
     const formData = new FormData();
+    let lenght_of_docs = 0;
     formData.append("phone", userInfo?.phone);
     formData.append("role", userInfo?.role);
     formData.append("user_id", userInfo?.user_id);
@@ -167,6 +168,7 @@ const TeachersDocument = () => {
           "documents",
           documentsFormik.values.documents[index]?.file
         );
+        lenght_of_docs++;
       } else if (
         documentsFormik.values.documents[index].substring(0, 5) !== "blob:"
       ) {
@@ -177,30 +179,58 @@ const TeachersDocument = () => {
       }
     }
     if (documentsFormik.values.documents.length > 0) {
-      let response = await axios.post(
-        getUrl() + "back_request/upload_teacher_documents/",
-        formData,
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      );
-      if (response?.data?.tracking_code !== null) {
-        if (role?.confirm !== 1) {
-          toastify(
-            "success",
-            "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
-          );
+      if (lenght_of_docs > 0) {
+        let response = await axios.post(
+          getUrl() + "back_request/upload_teacher_documents/",
+          formData,
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        );
+        if (response?.data?.tracking_code !== null) {
+          if (role?.confirm !== 1) {
+            toastify(
+              "success",
+              "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
+            );
+          } else {
+            toastify("success", response?.data?.response?.message);
+          }
+          setLoading(false);
+          // navigate("/panel/dashboard");
         } else {
-          toastify("success", response?.data?.response?.message);
+          setLoading(false);
+          toastify("error-login", response?.data?.error);
         }
-        setLoading(false);
-        // navigate("/panel/dashboard");
       } else {
-        setLoading(false);
-        toastify("error-login", response?.data?.error);
+        let response = await axios.post(
+          getUrl() + "back_request/upload_teacher_documents/",
+          formData,
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        );
+        if (response?.data?.tracking_code !== null) {
+          if (role?.confirm !== 1) {
+            toastify(
+              "success",
+              "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
+            );
+          } else {
+            toastify("success", response?.data?.response?.message);
+          }
+          setLoading(false);
+          // navigate("/panel/dashboard");
+        } else {
+          setLoading(false);
+          toastify("error-login", response?.data?.error);
+        }
       }
     } else {
       setLoading(false);
