@@ -5,7 +5,6 @@ import { Backdrop, Button, Grid } from "@mui/material";
 import { Container } from "@mui/system";
 import { toastify } from "../../../helper/toast";
 import StudentInfo from "../../../components/dashboard/students/profile/StudentInfo";
-import Documnets from "../../../components/dashboard/students/profile/Documnets";
 import { ToastContainer } from "react-toastify";
 import { setLocalStorageLogin } from "../../localStorage";
 import { useNavigate } from "react-router-dom";
@@ -53,7 +52,7 @@ const Profile = () => {
 
   const edit_user = async () => {
     let data = {
-      table: "teachers",
+      table: "students",
       method_type: "edit_user",
       data: {
         user_id: userInfo?.user_id,
@@ -70,8 +69,7 @@ const Profile = () => {
     let response = await axios({
       method: "POST",
       headers: {
-        // "content-type": "application/json",
-        "content-type": "multipart/form-data",
+        "content-type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
       data: {
