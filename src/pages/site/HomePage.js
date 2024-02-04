@@ -583,7 +583,7 @@ const HomePage = () => {
     }
   };
   useEffect(() => {
-    // get_courses().then(() => {});
+    get_courses().then(() => {});
   }, []);
   return (
     <>
