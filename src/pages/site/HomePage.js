@@ -554,7 +554,7 @@ const HomePage = () => {
       table: "courses",
       method_type: "get_courses",
       data: {
-        query: query,
+        query: {},
         from: 0,
         to: 3,
       },
