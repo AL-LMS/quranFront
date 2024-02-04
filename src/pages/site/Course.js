@@ -32,9 +32,25 @@ const Course = () => {
     } else {
       get_courses().then(() => {});
     }
-  }, [userInfo || query || getNotifs || params]);
-  console.log("qury", query);
+  }, [userInfo]);
+  useEffect(() => {
+    if (userInfo?.national_id === null) {
+      toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
+      navigate("/panel/profile");
+    } else {
+      get_courses().then(() => {});
+    }
+  }, [query]);
+  useEffect(() => {
+    if (userInfo?.national_id === null) {
+      toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
+      navigate("/panel/profile");
+    } else {
+      get_courses().then(() => {});
+    }
+  }, [getNotifs]);
   const get_courses = async () => {
+    console.log(query);
     let data = {
       table: "courses",
       method_type: "get_courses",
