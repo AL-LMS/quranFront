@@ -208,6 +208,9 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
                 آپلود فایل تکلیف
               </Button>
             </label>
+            {formik.values.file?.name && (
+              <span>{formik.values.file?.name}</span>
+            )}
             {formik.touched.file && formik.errors.file ? (
               <div>
                 <p style={{ fontSize: 10, color: "red" }}>

@@ -45,10 +45,18 @@ const CourseHomeWorks = () => {
       baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      setData(response?.data?.response?.all_course);
-      setCount(response?.data?.response?.len);
-      setFrom(response?.data?.response?.from);
-      setTo(response?.data?.response?.to);
+      if (data.lenght === 0) {
+        setData(response?.data?.response?.all_course);
+        setCount(response?.data?.response?.len);
+        setFrom(response?.data?.response?.from);
+        setTo(response?.data?.response?.to);
+        window.location.reload();
+      } else {
+        setData(response?.data?.response?.all_course);
+        setCount(response?.data?.response?.len);
+        setFrom(response?.data?.response?.from);
+        setTo(response?.data?.response?.to);
+      }
     } else {
       toastify("error-login", response?.data?.error);
     }
