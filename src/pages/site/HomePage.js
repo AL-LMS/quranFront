@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Divider, Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import styled from "styled-components";
-import x2 from "../../assets/img/hero.jpg";
+import x2 from "../../assets/img/hero1.jpg";
 import service from "../../assets/img/service-bg.png";
 import x1 from "../../assets/img/featured.png";
 import quran from "../../assets/img/quran.png";
@@ -388,7 +388,7 @@ const FooterContainer = styled.div`
   height: 400px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 70px 120px 100px;
   direction: ltr;
@@ -416,11 +416,14 @@ const FooterFirstSection = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 25%;
   @media screen and (max-width: 768px) {
     margin-top: 30px;
+    width: 75%;
   }
   @media screen and (max-width: 480px) {
     margin-top: 30px;
+    width: 75%;
   }
 `;
 const FooterInfo = styled.div`
@@ -473,6 +476,7 @@ const A = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: "pointer";
 `;
 const I = styled.img`
   width: 50%;
@@ -538,6 +542,7 @@ const FooterPv = styled.span`
   color: #fff;
   text-align: center;
   margin-right: 20px;
+  width: 100%;
   @media screen and (max-width: 768px) {
     font-size: 14px;
     margin-right: 0px;
@@ -578,7 +583,7 @@ const HomePage = () => {
     }
   };
   useEffect(() => {
-    get_courses().then(() => {});
+    // get_courses().then(() => {});
   }, []);
   return (
     <>
@@ -620,7 +625,7 @@ const HomePage = () => {
               </Icon>
               <Info>
                 <InfoName>کلاس‌های آنلاین</InfoName>
-                <InfoText>قرآنی برای کودکان</InfoText>
+                <InfoText>قرآنی برای تمامی سنین</InfoText>
               </Info>
             </Item>
           </ItemContainer>
@@ -643,7 +648,9 @@ const HomePage = () => {
                 <ServiceCardTitle>دوره‌های حفظ</ServiceCardTitle>
               </ServiceCardHeader>
               <ServiceCardBody>
-                تنوع زیادی از پاساژهای لورم ایپسوم وجود دارد
+                دوره آموزشهای تکمیلی مخصوص افرادی برگزار می شود که حفظ قرآن خود
+                را به پایان رسانده اند و در عین حال نیاز به کسب مهارتهای جدید در
+                زمینه حفظ قرآن دارند .{" "}
               </ServiceCardBody>
             </ServiceCard>
             <ServiceCard>
@@ -654,7 +661,9 @@ const HomePage = () => {
                 <ServiceCardTitle>دوره‌های تفسیر</ServiceCardTitle>
               </ServiceCardHeader>
               <ServiceCardBody>
-                تنوع زیادی از پاساژهای لورم ایپسوم وجود دارد
+                تفسیر قرآن یکی از مهم‌ترین شاخه‌های علوم و معارف قرآنی است که
+                پرده‌های ابهام را از چهره الفاظ و عبارات نورانی قرآن کریم
+                برمی‌دارد و زمینه‌های فهم و تدبر بیشتر را فراهم سازد.
               </ServiceCardBody>
             </ServiceCard>
             <ServiceCard>
@@ -665,7 +674,8 @@ const HomePage = () => {
                 <ServiceCardTitle>دوره‌های ترتیل</ServiceCardTitle>
               </ServiceCardHeader>
               <ServiceCardBody>
-                تنوع زیادی از پاساژهای لورم ایپسوم وجود دارد
+                دوره روخوانی و روانخوانی اولین مرحله یادگیری قرآن کریم می باشد و
+                در عین حال پیش نیاز آموزشی سطوح بالاتر محسوب می شود.
               </ServiceCardBody>
             </ServiceCard>
           </ServiceCards>
@@ -679,10 +689,9 @@ const HomePage = () => {
               <CardIcon>
                 <CardImage src={quran} />
               </CardIcon>
-              <CardTitle>مربیان آقا و خانم</CardTitle>
+              <CardTitle>کلاس‌های قرآن</CardTitle>
               <CardDescription>
-                تمامی کلاس های آموزش آنلاین قرآن توسط علمای اسلامی مجرب برگزار
-                می شود
+                با کلاس‌های غنی قرآن ما سفر تحول آفرین رشد معنوی را آغاز کنید.
               </CardDescription>
             </ItemCard>
             <ItemCard>
@@ -699,20 +708,21 @@ const HomePage = () => {
               <CardIcon>
                 <CardImage src={training} />
               </CardIcon>
-              <CardTitle>مربیان آقا و خانم</CardTitle>
+              <CardTitle>بهترین آموزش آنلاین</CardTitle>
               <CardDescription>
-                تمامی کلاس های آموزش آنلاین قرآن توسط علمای اسلامی مجرب برگزار
-                می شود
+                مربیان متخصص قرآنی برای همه اعضای خانواده. تمامی مربیان ما
+                مدارکی از دانشگاه و مراکز برتر اسلامی دارا هستند.
               </CardDescription>
             </ItemCard>
             <ItemCard>
               <CardIcon>
                 <CardImage src={timemanagement} />
               </CardIcon>
-              <CardTitle>مربیان آقا و خانم</CardTitle>
+              <CardTitle>زمانبندی منعطف</CardTitle>
               <CardDescription>
-                تمامی کلاس های آموزش آنلاین قرآن توسط علمای اسلامی مجرب برگزار
-                می شود
+                ما در دارالقرآن نیک‌اندیشان به زما شما بسیار اهمیت می‌دهیم،
+                بنابراین به قرآن آموز این اجازه را می‌دهیمکه زمان یادگییری مناسب
+                را برای خود تعیین کند.
               </CardDescription>
             </ItemCard>
           </WhyCards>
@@ -736,6 +746,24 @@ const HomePage = () => {
             <Image src={logoPic} alt="دارالقرآن نیک‌اندیشان" />
             <Hr />
             <FooterInfo>
+              <FooterAddress style={{ direction: "rtl" }}>
+                دارالقرآن نیک‌اندیشان بستری قرآنی است که محیطی مبتنی بر فناوری
+                اطلاعات و ارتباطات، آموزش الکترونیکی و آموزش یکپارچه را فراهم می
+                کند. این به شما و فرزندتان کمک می کند تا مبانی اسلام، تجوید و
+                عربی را نزد دانشمندان و متخصصان برتر بیاموزید.
+              </FooterAddress>
+            </FooterInfo>
+          </FooterFirstSection>
+          {/* <FooterSecondSection>
+            <FooterTitle>لینک‌ها</FooterTitle>
+            <FooterLinks>درباره ما</FooterLinks>
+            <FooterLinks>ارتباط با ما</FooterLinks>
+            <FooterLinks>آخرین آخبار</FooterLinks>
+          </FooterSecondSection> */}
+          <FooterSecondSection>
+            <FooterTitle>دیگر لینک‌ها</FooterTitle>
+            <Hr />
+            <FooterInfo>
               <FooterAddress>
                 تهران-خیابان انقلاب-دکتر قریب-پلاک 18
               </FooterAddress>
@@ -755,17 +783,6 @@ const HomePage = () => {
                 </A>
               </FooterSocialMedia>
             </FooterInfo>
-          </FooterFirstSection>
-          <FooterSecondSection>
-            <FooterTitle>لینک‌ها</FooterTitle>
-            <FooterLinks>درباره ما</FooterLinks>
-            <FooterLinks>ارتباط با ما</FooterLinks>
-            <FooterLinks>آخرین آخبار</FooterLinks>
-          </FooterSecondSection>
-          <FooterSecondSection>
-            <FooterTitle>دیگر لینک‌ها</FooterTitle>
-            <FooterLinks>دوره‌ها</FooterLinks>
-            <FooterLinks>رویدادها</FooterLinks>
           </FooterSecondSection>
         </FooterContainer>
         <Footer2Container>
