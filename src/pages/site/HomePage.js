@@ -22,6 +22,11 @@ import bale from "../../assets/img/bale.png";
 import eitta from "../../assets/img/eitaa.png";
 import aparat from "../../assets/img/aparat.png";
 import CourseCard from "../../components/site/course/CourseCard";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { getUrl } from "../../helper/getUrl";
+import toastify from "../../helper/toast";
 const HeroContainer = styled.div`
   width: 100%;
   height: 100vh;
@@ -542,84 +547,39 @@ const FooterPv = styled.span`
     margin-right: 0px;
   }
 `;
-const data = [
-  {
-    course_id: 12,
-    days: ["شنبه", "دوشنبه"],
-    end_date: "1402-11-29",
-    start_date: "1402-09-29",
-    teacher_name: "علیرضا محمدی",
-    teacher_user_id: 3,
-    explain: "این دوره ",
-    is_online: true,
-    ages: 1,
-    degree: 1,
-    sex: 0,
-    type: "قرائت",
-    name: "قرائت",
-    min: 1,
-    max: 5,
-    price: 0,
-    prerequisite: [],
-    start_time: "05:00:00",
-    end_time: "10:00:00",
-    teacher_description: "هیچ توضحی ندارم",
-    teacher_pic: "",
-    course_sCount: 0,
-    picture: "default",
-  },
-  {
-    course_id: 11,
-    days: ["یکشنبه", "دوشنبه", "سه شنبه"],
-    end_date: "1402-11-28",
-    start_date: "1402-08-28",
-    teacher_name: "محمدرضا قادری",
-    teacher_user_id: 1,
-    explain: "قرائت بایستی بتوانیم انجام دهیم.",
-    is_online: false,
-    ages: 2,
-    degree: 1,
-    sex: 0,
-    type: "قرائت",
-    name: "دوره تست قرائت",
-    min: 1,
-    max: 50,
-    price: 0,
-    prerequisite: [],
-    start_time: "09:00:00",
-    end_time: "11:00:00",
-    teacher_description: "سوابق من",
-    teacher_pic: "IMG_20220707_103753.jpg",
-    course_sCount: 1,
-    picture: "catsee.jpg",
-  },
-  {
-    course_id: 10,
-    days: ["شنبه", "دوشنبه", "چهار شنبه"],
-    end_date: "1402-09-29",
-    start_date: "1402-08-27",
-    teacher_name: "محمدرضا قادری",
-    teacher_user_id: 1,
-    explain: "این دوره برای حفظ و تست می‌باشد.",
-    is_online: true,
-    ages: 2,
-    degree: 1,
-    sex: 1,
-    type: "حفظ",
-    name: "دوره تست حفظ",
-    min: 1,
-    max: 5,
-    price: 0,
-    prerequisite: [],
-    start_time: "06:00:00",
-    end_time: "08:00:00",
-    teacher_description: "سوابق من",
-    teacher_pic: "IMG_20220707_103753.jpg",
-    course_sCount: 0,
-    picture: "default",
-  },
-];
 const HomePage = () => {
+  const [data, setData] = useState([]);
+  const get_courses = async () => {
+    let data = {
+      table: "courses",
+      method_type: "get_courses",
+      data: {
+        query: query,
+        from: 0,
+        to: 3,
+      },
+    };
+    let response = await axios({
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        ...data,
+      },
+
+      baseURL: getUrl() + "back_request/select_request/",
+    });
+    if (response?.data?.tracking_code !== null) {
+      setData(response?.data?.response?.all_course);
+    } else {
+      toastify("error-login", response?.data?.error);
+    }
+  };
+  useEffect(() => {
+    get_courses().then(() => {});
+  }, []);
   return (
     <>
       <Grid item xs={12} mt={5}>

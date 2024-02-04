@@ -50,7 +50,6 @@ const Course = () => {
     }
   }, [getNotifs]);
   const get_courses = async () => {
-    console.log(query);
     let data = {
       table: "courses",
       method_type: "get_courses",
