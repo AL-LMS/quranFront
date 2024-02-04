@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Grid } from "@mui/material";
 import styled from "styled-components";
-import x2 from "../../assets/img/hero1.jpg";
+import x2 from "../../assets/img/hero1.jpeg";
 import service from "../../assets/img/service-bg.png";
 import x1 from "../../assets/img/featured.png";
 import quran from "../../assets/img/quran.png";
