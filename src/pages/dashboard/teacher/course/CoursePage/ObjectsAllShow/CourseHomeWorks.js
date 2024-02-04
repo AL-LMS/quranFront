@@ -8,7 +8,6 @@ import toastify from "../../../../../../helper/toast";
 import HomeWorksLists from "../ObjectLists/HomeWorksLists";
 import { useParams } from "react-router-dom";
 import { getUrl } from "../../../../../../helper/getUrl";
-import NoDataImage from "../../../../../../assets/img/no-data.png";
 
 const CourseHomeWorks = () => {
   const { id } = useParams();
@@ -45,18 +44,10 @@ const CourseHomeWorks = () => {
       baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      if (data.lenght === 0) {
-        setData(response?.data?.response?.all_course);
-        setCount(response?.data?.response?.len);
-        setFrom(response?.data?.response?.from);
-        setTo(response?.data?.response?.to);
-        window.location.reload();
-      } else {
-        setData(response?.data?.response?.all_course);
-        setCount(response?.data?.response?.len);
-        setFrom(response?.data?.response?.from);
-        setTo(response?.data?.response?.to);
-      }
+      setData(response?.data?.response?.all_course);
+      setCount(response?.data?.response?.len);
+      setFrom(response?.data?.response?.from);
+      setTo(response?.data?.response?.to);
     } else {
       toastify("error-login", response?.data?.error);
     }
@@ -116,43 +107,17 @@ const CourseHomeWorks = () => {
           </Typography>
           <CourseHomeworkForm type="create" setReload={setReload} />
         </Grid>
-        {data?.lenght > 0 ? (
-          <>
-            <Grid item xs={12}>
-              <HomeWorksLists data={data} />
-            </Grid>
-            <Grid item xs={12} mt={6}>
-              <Pagination
-                count={Math.ceil(count / 5)}
-                color="primary"
-                sx={{ display: "flex", justifyContent: "center" }}
-                onChange={(event, value) => handlePagination(value)}
-              />
-            </Grid>
-          </>
-        ) : (
-          <Grid item xs={12}>
-            <img
-              src={NoDataImage}
-              alt="no-data"
-              style={{
-                width: "220px",
-                height: "220px",
-                display: "block",
-                margin: "0 auto",
-              }}
-            />
-            <Typography
-              variant="h5"
-              color="#ccc"
-              fontWeight={500}
-              textAlign="center"
-              marginTop={1}
-            >
-              اطلاعات تکالیف یافت نشد
-            </Typography>
-          </Grid>
-        )}
+        <Grid item xs={12}>
+          <HomeWorksLists data={data} />
+        </Grid>
+        <Grid item xs={12} mt={6}>
+          <Pagination
+            count={Math.ceil(count / 5)}
+            color="primary"
+            sx={{ display: "flex", justifyContent: "center" }}
+            onChange={(event, value) => handlePagination(value)}
+          />
+        </Grid>
       </Grid>
     </Container>
   );
