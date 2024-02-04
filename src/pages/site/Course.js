@@ -32,7 +32,8 @@ const Course = () => {
     } else {
       get_courses().then(() => {});
     }
-  }, [userInfo || query || getNotifs]);
+  }, [userInfo || query || getNotifs || params]);
+  console.log("qury", query);
   const get_courses = async () => {
     let data = {
       table: "courses",
