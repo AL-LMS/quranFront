@@ -8,6 +8,7 @@ import toastify from "../../../../../../helper/toast";
 import ResourcesLists from "../ObjectLists/ResourcesLists";
 import CourseResourceForm from "../../../../../../components/dashboard/teacher/course/CourseResourceForm";
 import { getUrl } from "../../../../../../helper/getUrl";
+import NoDataImage from "../../../../../../assets/img/no-data.png";
 
 const CourseResources = () => {
   const [data, setData] = useState([]);
@@ -107,17 +108,43 @@ const CourseResources = () => {
           </Typography>
           <CourseResourceForm type="create" setReload={setReload} />
         </Grid>
-        <Grid item xs={12}>
-          <ResourcesLists data={data} />
-        </Grid>
-        <Grid item xs={12} mt={6}>
-          <Pagination
-            count={Math.ceil(count / 5)}
-            color="primary"
-            sx={{ display: "flex", justifyContent: "center" }}
-            onChange={(event, value) => handlePagination(value)}
-          />
-        </Grid>
+        {data?.length ? (
+          <>
+            <Grid item xs={12}>
+              <ResourcesLists data={data} />
+            </Grid>
+            <Grid item xs={12} mt={6}>
+              <Pagination
+                count={Math.ceil(count / 5)}
+                color="primary"
+                sx={{ display: "flex", justifyContent: "center" }}
+                onChange={(event, value) => handlePagination(value)}
+              />
+            </Grid>
+          </>
+        ) : (
+          <Grid item xs={12}>
+            <img
+              src={NoDataImage}
+              alt="no-data"
+              style={{
+                width: "220px",
+                height: "220px",
+                display: "block",
+                margin: "0 auto",
+              }}
+            />
+            <Typography
+              variant="h5"
+              color="#ccc"
+              fontWeight={500}
+              textAlign="center"
+              marginTop={1}
+            >
+              اطلاعات منابع یافت نشد
+            </Typography>
+          </Grid>
+        )}
       </Grid>
     </Container>
   );

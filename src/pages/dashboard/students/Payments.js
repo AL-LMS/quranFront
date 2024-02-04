@@ -71,7 +71,7 @@ const Payments = () => {
             fontWeight={500}
             color="mainText"
           >
-            پرداخت ها
+            پرداخت‌ها
           </Typography>
         </Grid>
         {data.length > 0 ? (

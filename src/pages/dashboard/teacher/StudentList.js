@@ -10,12 +10,15 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { convert_gender } from "../../../helper/converter";
 import Loader from "../../../components/site/shared/Loader";
 import toastify from "../../../helper/toast";
 import axios from "axios";
 import { getUrl } from "../../../helper/getUrl";
+import NoDataImage from "../../../assets/img/no-data.png";
+
 const StudentList = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
@@ -83,7 +86,8 @@ const StudentList = () => {
         marginLeft: "2rem",
       }}
     >
-      <TableContainer sx={{ padding: 2 }}>
+      {data_students?.length > 0 ? (
+        <TableContainer sx={{ padding: 2 }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -149,6 +153,29 @@ const StudentList = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      ) : (
+        <Grid item xs={12}>
+            <img
+              src={NoDataImage}
+              alt="no-data"
+              style={{
+                width: "220px",
+                height: "220px",
+                display: "block",
+                margin: "0 auto",
+              }}
+            />
+            <Typography
+              variant="h5"
+              color="#ccc"
+              fontWeight={500}
+              textAlign="center"
+              marginTop={1}
+            >
+              اطلاعاتی یافت نشد
+            </Typography>
+          </Grid>
+      )}
     </Card>
   );
 };

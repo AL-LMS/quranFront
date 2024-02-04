@@ -38,13 +38,13 @@ export const tcRoutes = [
   },
   {
     id: 5,
-    name: "تراکنش‌ها",
+    name: "سابقه پرداخت‌ها",
     route: "payments",
     icon: <PaymentOutlinedIcon />,
   },
   {
     id: 6,
-    name: "سابقه پرداخت‌ها",
+    name: "تراکنش‌ها",
     route: "wallet",
     icon: <AccountBalanceWalletOutlinedIcon />,
   },

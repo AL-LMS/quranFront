@@ -11,7 +11,7 @@ const CourseDescrption = ({ data }) => {
         padding: 2,
       }}
     >
-      <Typography variant="h6" fontWeight={500} color="mainText">
+      <Typography variant="h6" color="mainText" style={{fontWeight: "600 !important"}}>
         توضیحات دوره
       </Typography>
       <div

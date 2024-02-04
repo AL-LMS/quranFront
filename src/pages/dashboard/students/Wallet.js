@@ -72,7 +72,7 @@ const Wallet = () => {
               fontWeight={600}
               fontSize="18px"
             >
-              {data?.amount?.toLocaleString()} تومان
+              {data?.amount ? data?.amount?.toLocaleString() : "-"} تومان
             </Typography>
             <Divider sx={{ padding: "10px 0" }} />
             <IncreaseWallet />
@@ -86,7 +86,7 @@ const Wallet = () => {
             textAlign="center"
             color="mainText"
           >
-            تراکنش های شما
+            تراکنش‌ها شما
           </Typography>
         </Grid>
         <Grid item xs={12}>

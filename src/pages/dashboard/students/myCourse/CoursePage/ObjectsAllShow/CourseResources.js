@@ -7,6 +7,7 @@ import toastify from "../../../../../../helper/toast";
 import ResourcesLists from "../ObjectLists/ResourcesLists";
 import { useParams } from "react-router-dom";
 import { getUrl } from "../../../../../../helper/getUrl";
+import NoDataImage from "../../../../../../assets/img/no-data.png";
 
 const CourseResources = () => {
   const [data, setData] = useState([]);
@@ -101,17 +102,43 @@ const CourseResources = () => {
             منابع دوره
           </Typography>
         </Grid>
-        <Grid item xs={12}>
-          <ResourcesLists data={data} />
-        </Grid>
-        <Grid item xs={12} mt={6}>
-          <Pagination
-            count={Math.ceil(count / 5)}
-            color="primary"
-            sx={{ display: "flex", justifyContent: "center" }}
-            onChange={(event, value) => handlePagination(value)}
-          />
-        </Grid>
+        {data?.length > 0 ? (
+          <>
+            <Grid item xs={12}>
+              <ResourcesLists data={data} />
+            </Grid>
+            <Grid item xs={12} mt={6}>
+              <Pagination
+                count={Math.ceil(count / 5)}
+                color="primary"
+                sx={{ display: "flex", justifyContent: "center" }}
+                onChange={(event, value) => handlePagination(value)}
+              />
+            </Grid>
+          </>
+        ) : (
+          <Grid item xs={12}>
+            <img
+              src={NoDataImage}
+              alt="no-data"
+              style={{
+                width: "220px",
+                height: "220px",
+                display: "block",
+                margin: "0 auto",
+              }}
+            />
+            <Typography
+              variant="h5"
+              color="#ccc"
+              fontWeight={500}
+              textAlign="center"
+              marginTop={1}
+            >
+              اطلاعات منابع یافت نشد
+            </Typography>
+          </Grid>
+        )}
       </Grid>
     </Container>
   );
