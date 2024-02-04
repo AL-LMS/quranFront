@@ -23,7 +23,7 @@ const CourseResources = () => {
     JSON.parse(localStorage.getItem("user"))
   );
   const get_resource = async () => {
-    let data = {
+    let data1 = {
       table: "courses",
       method_type: "get_resources",
       data: {
@@ -39,16 +39,24 @@ const CourseResources = () => {
         "Access-Control-Allow-Origin": "*",
       },
       data: {
-        ...data,
+        ...data1,
       },
 
       baseURL: getUrl() + "back_request/select_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      setData(response?.data?.response?.all_course);
-      setCount(response?.data?.response?.len);
-      setFrom(response?.data?.response?.from);
-      setTo(response?.data?.response?.to);
+      if (data.length === 0) {
+        setData(response?.data?.response?.all_course);
+        setCount(response?.data?.response?.len);
+        setFrom(response?.data?.response?.from);
+        setTo(response?.data?.response?.to);
+        window.location.reload();
+      } else {
+        setData(response?.data?.response?.all_course);
+        setCount(response?.data?.response?.len);
+        setFrom(response?.data?.response?.from);
+        setTo(response?.data?.response?.to);
+      }
     } else {
       toastify("error-login", response?.data?.error);
     }

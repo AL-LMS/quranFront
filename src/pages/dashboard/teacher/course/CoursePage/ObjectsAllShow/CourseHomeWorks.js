@@ -23,7 +23,7 @@ const CourseHomeWorks = () => {
     JSON.parse(localStorage.getItem("user"))
   );
   const get_homeworks = async () => {
-    let data = {
+    let data1 = {
       table: "courses",
       method_type: "get_homeworks",
       data: {
@@ -39,7 +39,7 @@ const CourseHomeWorks = () => {
         "Access-Control-Allow-Origin": "*",
       },
       data: {
-        ...data,
+        ...data1,
       },
 
       baseURL: getUrl() + "back_request/select_request/",
