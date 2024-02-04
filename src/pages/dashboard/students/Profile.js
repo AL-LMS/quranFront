@@ -94,7 +94,7 @@ const Profile = () => {
       setRole(response?.data?.response?.role_data);
       toastify(
         "success",
-        "مربی گرامی،اطلاعات شما در سامانه ثبت شد. پس از تائید مدیر سامانه امکانات سایت برای شما فعال خواهد شد."
+        "اطلاعات شما با موفقیت در سامانه ثبت شد."
       );
       navigate("/panel/dashboard");
     } else {
