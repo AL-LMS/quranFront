@@ -66,7 +66,7 @@ const Quiz = () => {
                 fontWeight={500}
                 color="mainText"
               >
-                دوره های من
+                دوره‌های من
               </Typography>
             </Grid>
             {course.length > 0 ? (

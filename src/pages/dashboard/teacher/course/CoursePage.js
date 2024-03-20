@@ -9,17 +9,20 @@ import axios from "axios";
 import toastify from "../../../../helper/toast";
 import Loader from "../../../../components/site/shared/Loader";
 import { getUrl } from "../../../../helper/getUrl";
+import useAuth from "../../../../hooks/useAuth";
 
 const CoursePage = () => {
+  const { id } = useParams();
+  const { user } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { id } = useParams();
   const get_course = async () => {
     let data = {
       table: "courses",
       method_type: "get_course_page",
       data: {
         id: id,
+        user_id: user.user_id,
       },
     };
     let response = await axios({

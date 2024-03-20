@@ -55,7 +55,8 @@ const CourseList = ({ data }) => {
             : `http://daarolquran.com/back_request/get_course_pic/${data.picture}`
         }
         sx={{
-          borderRadius: "5px",
+          borderBottomRightRadius: "5px",
+          borderTopLeftRadius: "5px",
           maxWidth: "100%",
           height: { xs: "0px", sm: "95px", md: "160px" },
           width: { xs: "0px", sm: "80px", md: "160px" },

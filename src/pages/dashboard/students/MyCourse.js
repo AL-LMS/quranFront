@@ -77,7 +77,7 @@ const MyCourse = () => {
             fontWeight={500}
             color="mainText"
           >
-            دوره های من
+            دوره‌های من
           </Typography>
         </Grid>
         {data.length > 0 ? (

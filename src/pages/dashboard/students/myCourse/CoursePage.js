@@ -3,16 +3,18 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CoursePageInfo from "./CoursePage/CoursePageInfo";
 import CoursePageNotifs from "./CoursePage/CoursePageNotifs";
-import CoursePageQuizes from "./CoursePage/CoursePageQuizes";
+// import CoursePageQuizes from "./CoursePage/CoursePageQuizes";
 import CoursePageHomeWorks from "./CoursePage/CoursePageHomeWorks";
 import CoursePageResources from "./CoursePage/CoursePageResources";
 import axios from "axios";
 import toastify from "../../../../helper/toast";
 import Loader from "../../../../components/site/shared/Loader";
 import { getUrl } from "../../../../helper/getUrl";
+import useAuth from "../../../../hooks/useAuth";
 
 const CoursePage = () => {
   const { id } = useParams();
+  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(false);
   const [data, setData] = useState([]);
@@ -22,6 +24,7 @@ const CoursePage = () => {
       method_type: "get_course_page",
       data: {
         id: id,
+        user_id: user.user_id,
       },
     };
     let response = await axios({

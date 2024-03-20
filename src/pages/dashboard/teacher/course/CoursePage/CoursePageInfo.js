@@ -105,7 +105,7 @@ const CoursePageInfo = ({ data_course }) => {
                 : `http://daarolquran.com/back_request/get_course_pic/${data_course?.picture}`
             }
             alt="course"
-            style={{ maxWidth: "100%", borderRadius: "5px" }}
+            style={{ maxWidth: "100%", borderRadius: "5px", height: "100%" }}
           />
         </Grid>
         <Grid item xs={12} md={8}>
