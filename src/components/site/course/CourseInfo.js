@@ -139,7 +139,7 @@ const CourseInfo = ({ data_course }) => {
                     <Typography color="mainText">
                       پیشنیازها:
                       <span style={{ color: "black" }}>
-                        {" " + data_course["prerequisite"]}
+                        {data_course["prerequisite"].length !== 0 ? " " + data_course["prerequisite"] : "-"}
                       </span>
                     </Typography>
                     <Typography color="mainText">

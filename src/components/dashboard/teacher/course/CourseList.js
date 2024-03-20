@@ -153,7 +153,7 @@ const CourseList = ({ data }) => {
                         </Button>
                       </Link>
                     </Tooltip>
-                    <Tooltip title="دانش آموزان">
+                    <Tooltip title="دانش‌آموزان">
                       <Link to={`/panel/course/students/${item.course_id}`}>
                         {/* <Button><GroupsOutlinedIcon /></Button> */}
                         <Button
@@ -167,7 +167,7 @@ const CourseList = ({ data }) => {
                             boxShadow: "none",
                           }}
                         >
-                          دانش آموزان
+                          دانش‌آموزان
                         </Button>
                       </Link>
                     </Tooltip>

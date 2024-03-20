@@ -37,7 +37,7 @@ const OverView = ({ type, count }) => {
       </Stack>
       <Stack direction="row" justifyContent="space-between" mt={2}>
         <Typography variant="h6" fontWeight={400} color="mainText">
-          {type === "student" ? " تعداد دانش آموزان :" : "دوره‌های آموزشی :"}
+          {type === "student" ? " تعداد دانش‌آموزان :" : "دوره‌های آموزشی :"}
         </Typography>
         <Typography
           variant="h6"

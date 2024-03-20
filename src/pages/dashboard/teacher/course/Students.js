@@ -84,7 +84,7 @@ const Students = () => {
             color="mainText"
             fontWeight={500}
           >
-            لیست دانش آموزان دوره
+            لیست دانش‌آموزان دوره
           </Typography>
         </Grid>
         {students.length === 0 ? (
