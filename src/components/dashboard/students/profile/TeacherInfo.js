@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextField, Grid, Typography, Autocomplete } from "@mui/material";
 import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
 import { degree, sex } from "../../../../pages/dashboard/teacher/CourseData";
-import { Picker, format } from "@persian-tools/persian-mobile-datepicker";
+import { Picker, format, newDate } from "@persian-tools/persian-mobile-datepicker";
 
 const TeacherInfo = ({ formik }) => {
   const [openBirthDay, setOpenBirthDay] = useState(false);
@@ -128,6 +128,7 @@ const TeacherInfo = ({ formik }) => {
           highlightHolidays
           highlightWeekends
           addDayName
+          minDate={newDate({ year: 1330, month: 1, day: 27 })}
           initialValue={new Date("2021-03-20T20:30:00.000Z")}
           onSubmit={(date) => {
             handleSubmit(date, "birth_day");
