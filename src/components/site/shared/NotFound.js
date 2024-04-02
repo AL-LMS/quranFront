@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@mui/material";
 
-import NotFoundImage from "../../../assets/img/error.png";
+import NotFoundImage from "../../../assets/img/notfound.png";
 import { Typography } from "@mui/material";
 
 const NotFound = () => {
