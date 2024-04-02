@@ -74,6 +74,11 @@ const Course = () => {
     if (response?.data?.tracking_code !== null) {
       setData(response?.data?.response?.all_course);
       setCount(response?.data?.response?.len);
+      if (response?.data?.response?.len == 0) {
+        setNotFound(true);
+      } else {
+        setNotFound(false);
+      }
       setFrom(response?.data?.response?.from);
       setTo(response?.data?.response?.to);
     } else {
