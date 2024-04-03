@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
+import { getUrlWs } from '../../helper/getUrl';
 
 const WebSocketDemo = () => {
     useEffect(() => {
         // Create WebSocket connection.
-        const ws = new WebSocket('ws://127.0.01:5000/back_request/ws');
+        const ws = new WebSocket(getUrlWs() + 'back_request/ws');
         console.log("the conncetion,", ws)
         // Connection opened
         ws.addEventListener('open', () => {
