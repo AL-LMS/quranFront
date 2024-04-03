@@ -14,5 +14,5 @@ export function getUrlWs() {
   if (!protocol || !hostName || hostName === "localhost") {
     return "ws://127.0.01:5000/";
   }
-  return `${protocol}//${hostName}/`;
+  return `ws://${hostName}/`;
 }
