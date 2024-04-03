@@ -90,7 +90,7 @@ function App() {
         <Route path="/confirm-phone" element={<ConfirmPhone />} />
         <Route path="/send-otp" element={<SendOTP />} />
         <Route path="/check-otp" element={<CheckOTP />} />
-        <Route path="/websocet" element={<WebSocketDemo />} />
+        <Route path="/websocket" element={<WebSocketDemo />} />
 
         {/* <Route path="/meet" element={<Meet />} /> */}
         <Route path="/FAQ" element={<FAQ />} />

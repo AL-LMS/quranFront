@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 const WebSocketDemo = () => {
     useEffect(() => {
         // Create WebSocket connection.
-        const ws = new WebSocket('ws://localhost:8000/ws');
-
+        const ws = new WebSocket('ws://127.0.01:5000/back_request/ws');
+        console.log("the conncetion,", ws)
         // Connection opened
         ws.addEventListener('open', () => {
             console.log('Connected to the server');
