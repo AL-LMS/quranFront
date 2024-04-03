@@ -21,7 +21,7 @@ const NotFound = () => {
         <img
           src={NotFoundImage}
           alt="404"
-          style={{ width: "330px", display: "block", margin: "0 auto" }}
+          style={{ width: "113px", height: "84px", display: "block", margin: "0 auto" }}
         />
         <Typography
           varinat="h4"

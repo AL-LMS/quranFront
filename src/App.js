@@ -72,6 +72,7 @@ import PrePayments from "./pages/dashboard/students/prePayments";
 import "./App.css";
 import TeachersDocument from "./pages/dashboard/teacher/TeachersDocument";
 import HomePage from "./pages/site/HomePage";
+import WebSocketDemo from "./pages/site/Websocket";
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -89,6 +90,8 @@ function App() {
         <Route path="/confirm-phone" element={<ConfirmPhone />} />
         <Route path="/send-otp" element={<SendOTP />} />
         <Route path="/check-otp" element={<CheckOTP />} />
+        <Route path="/websocet" element={<WebSocketDemo />} />
+
         {/* <Route path="/meet" element={<Meet />} /> */}
         <Route path="/FAQ" element={<FAQ />} />
         {user?.role?.toLowerCase() === "student" ? (
