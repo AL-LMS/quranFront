@@ -1,35 +1,91 @@
-import React, { useEffect } from 'react';
-import { getUrlWs } from '../../helper/getUrl';
-
+import React, { useEffect, useRef, useState } from "react";
+import Peer from "peerjs";
 const WebSocketDemo = () => {
-    useEffect(() => {
-        // Create WebSocket connection.
-        const ws = new WebSocket(getUrlWs() + 'back_request/ws');
-        console.log("the conncetion,", ws)
-        // Connection opened
-        ws.addEventListener('open', () => {
-            console.log('Connected to the server');
-            // Send a message to the server
-            ws.send('Hello, server!');
+  const [peerId, setPeerId] = useState("");
+  const [remotePeerIdValue, setRemotePeerIdValue] = useState("");
+  const remoteVideoRef = useRef(null);
+  const currentUserVideoRef = useRef(null);
+  const peerInstance = useRef(null);
+  const peer = new Peer();
+  peer.on("open", (id) => {
+    setPeerId(id);
+  });
+  peer.on("call", (call) => {
+    var getUserMedia =
+      navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia;
+
+    getUserMedia({ video: true, audio: true }, (mediaStream) => {
+      currentUserVideoRef.current.srcObject = mediaStream;
+      currentUserVideoRef.current.play();
+      call.answer(mediaStream);
+      call.on("stream", function (remoteStream) {
+        remoteVideoRef.current.srcObject = remoteStream;
+        remoteVideoRef.current.play();
+      });
+    });
+  });
+  useEffect(() => {
+    const peer = new Peer();
+
+    peer.on("open", (id) => {
+      setPeerId(id);
+    });
+
+    peer.on("call", (call) => {
+      var getUserMedia =
+        navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia;
+
+      getUserMedia({ video: true, audio: true }, (mediaStream) => {
+        currentUserVideoRef.current.srcObject = mediaStream;
+        currentUserVideoRef.current.play();
+        call.answer(mediaStream);
+        call.on("stream", function (remoteStream) {
+          remoteVideoRef.current.srcObject = remoteStream;
+          remoteVideoRef.current.play();
         });
+      });
+    });
+    peerInstance.current = peer;
+  }, []);
+  const call = (remotePeerId) => {
+    var getUserMedia =
+      navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia;
 
-        // Listen for messages
-        ws.addEventListener('message', (event) => {
-            console.log('Message from server:', event.data);
-        });
+    getUserMedia({ video: true, audio: true }, (mediaStream) => {
+      currentUserVideoRef.current.srcObject = mediaStream;
+      currentUserVideoRef.current.play();
 
-        // Clean up on component unmount
-        return () => {
-            ws.close();
-            console.log('Disconnected from the server');
-        };
-    }, []); // Empty array ensures this runs once on mount only
+      const call = peerInstance.current.call(remotePeerId, mediaStream);
 
-    return (
-        <div>
-            Check the console for WebSocket messages.
-        </div>
-    );
+      call.on("stream", (remoteStream) => {
+        remoteVideoRef.current.srcObject = remoteStream;
+        remoteVideoRef.current.play();
+      });
+    });
+  };
+  return (
+    <div className="App">
+      <h1>Current user id is {peerId}</h1>
+      <input
+        type="text"
+        value={remotePeerIdValue}
+        onChange={(e) => setRemotePeerIdValue(e.target.value)}
+      />
+      <button onClick={() => call(remotePeerIdValue)}>Call</button>
+      <div>
+        <video ref={currentUserVideoRef} />
+      </div>
+      <div>
+        <video ref={remoteVideoRef} />
+      </div>
+    </div>
+  );
 };
 
 export default WebSocketDemo;

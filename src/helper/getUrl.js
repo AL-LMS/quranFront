@@ -12,7 +12,7 @@ export function getUrlWs() {
   let hostName = window.location.hostname;
 
   if (!protocol || !hostName || hostName === "localhost") {
-    return "ws://127.0.01:5000/";
+    return "wss://127.0.01:5000/";
   }
-  return `ws://${hostName}/`;
+  return `wss://${hostName}/`;
 }
