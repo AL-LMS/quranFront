@@ -55,17 +55,14 @@ const CoursePageInfo = ({ data_course }) => {
   const { auth, user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const register_course = async () => {
+  const create_new_session = async () => {
     setLoading(true);
     let data = {
-      table: "courses",
-      method_type: "register_course",
+      table: "room_name",
+      method_type: "create_new_session",
       data: {
         course_id: data_course.course_id,
-        user_id: user.user_id,
-        user_name: user.first_name + " " + user.last_name,
-        user_type: user.role,
-        teacher_id: data_course.teacher_user_id,
+        id: id,
       },
     };
     let response = await axios({
@@ -81,8 +78,9 @@ const CoursePageInfo = ({ data_course }) => {
       baseURL: getUrl() + "back_request/insert_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      toastify("success", response?.data?.response);
-      navigate("/panel/dashboard");
+      toastify("success", response?.data?.response?.message);
+      // navigate("/meet.html?room="+response?.data?.response?.data);
+      window.location.replace('https://daarolquran.com/meet.html?room='+response?.data?.response?.data)
     } else {
       toastify("error-login", response?.data?.error);
     }
@@ -172,12 +170,13 @@ const CoursePageInfo = ({ data_course }) => {
                     fullWidth
                     fontSize="17px"
                     onClick={() =>
-                      check_time_for_class(
-                        data_course["start_date"],
-                        data_course["end_date"],
-                        data_course["time"],
-                        data_course["days"]
-                      )
+                      create_new_session().then(()=>{})
+                      // check_time_for_class(
+                      //   data_course["start_date"],
+                      //   data_course["end_date"],
+                      //   data_course["time"],
+                      //   data_course["days"]
+                      // )
                     }
                     disabled={data_course.enableforbuy}
                   >
