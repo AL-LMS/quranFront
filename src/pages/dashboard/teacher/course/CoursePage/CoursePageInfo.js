@@ -80,7 +80,7 @@ const CoursePageInfo = ({ data_course }) => {
     if (response?.data?.tracking_code !== null) {
       toastify("success", response?.data?.response?.message);
       // navigate("/meet.html?room="+response?.data?.response?.data);
-      window.location.replace('https://daarolquran.com/meet.html?room='+response?.data?.response?.data)
+      window.location.replace('https://meet.daarolquran.com/room.html?room='+response?.data?.response?.data)
     } else {
       toastify("error-login", response?.data?.error);
     }
