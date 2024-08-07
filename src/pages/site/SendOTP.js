@@ -87,7 +87,19 @@ const SendOTP = () => {
                 name="phone"
                 value={formik.values.phone}
                 fullWidth
-                onChange={(e) => formik.setFieldValue("phone", e.target.value)}
+                onChange={(event) => {
+                  const englishDigits =
+                    event.target.value.replace(/[۰-۹]/g, (char) =>
+                      String.fromCharCode(
+                        char.charCodeAt(0) - 0x06f0 + 0x0030
+                      )
+                    );
+                  formik.setFieldValue(
+                    "phone",
+                    englishDigits.replace(/[^0-9]/g, "")
+                  );
+                }}
+                // onChange={(e) => formik.setFieldValue("phone", e.target.value)}
                 size="small"
               />
               {formik.touched.phone && formik.errors.phone ? (
