@@ -26,28 +26,31 @@ const Course = () => {
   );
   const navigate = useNavigate();
   useEffect(() => {
-    if (userInfo?.national_id === null) {
-      toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
-      navigate("/panel/profile");
-    } else {
-      get_courses().then(() => {});
-    }
+    // if (userInfo?.national_id === null) {
+    //   toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
+    //   navigate("/panel/profile");
+    // } else {
+    //   get_courses().then(() => {});
+    // }
+    get_courses().then(() => {});
   }, [userInfo]);
   useEffect(() => {
-    if (userInfo?.national_id === null) {
-      toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
-      navigate("/panel/profile");
-    } else {
-      get_courses().then(() => {});
-    }
+    // if (userInfo?.national_id === null) {
+    //   toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
+    //   navigate("/panel/profile");
+    // } else {
+    //   get_courses().then(() => {});
+    // }
+    get_courses().then(() => {});
   }, [query]);
   useEffect(() => {
-    if (userInfo?.national_id === null) {
-      toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
-      navigate("/panel/profile");
-    } else {
-      get_courses().then(() => {});
-    }
+    // if (userInfo?.national_id === null) {
+    //   toastify("warning", "لطفا اطلاعات خود را تکمیل کنید.");
+    //   navigate("/panel/profile");
+    // } else {
+    //   get_courses().then(() => {});
+    // }
+    get_courses().then(() => {});
   }, [getNotifs]);
   const get_courses = async () => {
     let data = {

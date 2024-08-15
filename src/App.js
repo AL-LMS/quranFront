@@ -91,7 +91,8 @@ function App() {
         <Route path="/send-otp" element={<SendOTP />} />
         <Route path="/check-otp" element={<CheckOTP />} />
         <Route path="/websocket" element={<WebSocketDemo />} />
-
+        <Route path="/panel/course/details/:id" element={<CourseDetails />} />
+        <Route path="/panel/all-courses" element={<StudentDash />} />
         {/* <Route path="/meet" element={<Meet />} /> */}
         <Route path="/FAQ" element={<FAQ />} />
         {user?.role?.toLowerCase() === "student" ? (

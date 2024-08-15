@@ -27,6 +27,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { getUrl } from "../../helper/getUrl";
 import toastify from "../../helper/toast";
+import { Link } from "react-router-dom";
 const HeroContainer = styled.div`
   width: 100%;
   height: 100vh;
@@ -738,6 +739,15 @@ const HomePage = () => {
               ))}
             </Grid>
           </CourseCards>
+          <Grid
+            item
+            xs={12}
+            sx={{ display: "flex", justifyContent: "flex-end" }}
+          >
+            <Link to="/panel/my-coures">
+              <Button>مشاهده همه دوره‌ها</Button>
+            </Link>
+          </Grid>
         </CourseContainer>
       </Grid>
       <Grid item xs={12}>
