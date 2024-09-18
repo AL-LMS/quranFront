@@ -742,9 +742,13 @@ const HomePage = () => {
           <Grid
             item
             xs={12}
-            sx={{ display: "flex", justifyContent: "flex-end" }}
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "20px",
+            }}
           >
-            <Link to="/panel/my-coures">
+            <Link to="/panel/all-courses">
               <Button>مشاهده همه دوره‌ها</Button>
             </Link>
           </Grid>
