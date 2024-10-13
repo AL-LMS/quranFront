@@ -91,7 +91,7 @@ const ShowMultiAvatar = ({ formik, showDocuments, setShowDocuments }) => {
               src={
                 doc.substring(0, 5) === "blob:"
                   ? doc
-                  : `http://daarolquran.com/back_request/get_uploaded_teacher_certificate/${doc}`
+                  : `https://daarolquran.com/back_request/get_uploaded_teacher_certificate/${doc}`
               }
               sx={{
                 width: 75,

@@ -100,7 +100,7 @@ const HomeWorksAnswerLists = ({ data, setReload }) => {
                   {item?.file !== "" ? (
                     <a
                       download={item?.name}
-                      href={`http://daarolquran.com/back_request/get_uploaded_homework/${item?.file}`}
+                      href={`https://daarolquran.com/back_request/get_uploaded_homework/${item?.file}`}
                     >
                       <Button>
                         <DownloadIcon />

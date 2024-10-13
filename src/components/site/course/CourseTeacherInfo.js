@@ -30,7 +30,7 @@ const CourseTeacherInfo = ({ data }) => {
           <img
             src={
               data.teacher_pic
-                ? `http://daarolquran.com/back_request/get_teacher_pic/${data.teacher_pic}`
+                ? `https://daarolquran.com/back_request/get_teacher_pic/${data.teacher_pic}`
                 : NoImage
             }
             style={{ width: "50px", height: "50px", borderRadius: "50%" }}

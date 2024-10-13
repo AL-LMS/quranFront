@@ -52,7 +52,7 @@ const CourseList = ({ data }) => {
         src={
           data.picture === "default"
             ? NoImage
-            : `http://daarolquran.com/back_request/get_course_pic/${data.picture}`
+            : `https://daarolquran.com/back_request/get_course_pic/${data.picture}`
         }
         sx={{
           borderBottomRightRadius: "5px",

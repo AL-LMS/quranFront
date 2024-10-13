@@ -12,6 +12,15 @@ import {
 import DownloadIcon from "@mui/icons-material/Download";
 
 const ResourcesLists = ({ data }) => {
+  const onButtonClick = () => {
+    const pdfUrl = "Sample.pdf";
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = "document.pdf"; // specify the filename
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
   return (
     <Card
       sx={{
@@ -71,9 +80,10 @@ const ResourcesLists = ({ data }) => {
                 >
                   {item?.file !== "" ? (
                     <a
-                      download={item?.title}
-                      href={`http://daarolquran.com/back_request/get_resource/${item?.file}`}
+                      download={'xzcfghjk'}
+                      href={`https://daarolquran.com/back_request/get_resource/${item?.file}`}
                     >
+                      {console.log({item})}
                       <Button
                         // variant="contained"
                         // sx={{ boxShadow: "none", borderRadius: "5px" }}

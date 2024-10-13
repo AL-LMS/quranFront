@@ -92,7 +92,7 @@ export default function Index({ formik, pic, setPic }) {
           <img
             src={
               formik.values.picture
-                ? `http://daarolquran.com/back_request/get_teacher_pic/${formik.values.picture}`
+                ? `https://daarolquran.com/back_request/get_teacher_pic/${formik.values.picture}`
                 : AvatarSVG
             }
             style={{

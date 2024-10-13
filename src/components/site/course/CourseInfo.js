@@ -90,7 +90,7 @@ const CourseInfo = ({ data_course }) => {
               src={
                 data_course?.picture === "default"
                   ? NoImage
-                  : `http://daarolquran.com/back_request/get_course_pic/${data_course?.picture}`
+                  : `https://daarolquran.com/back_request/get_course_pic/${data_course?.picture}`
               }
               alt="course"
               style={{ maxWidth: "100%", height: "100%", borderRadius: "5px" }}

@@ -62,7 +62,7 @@ const ShowAvatar = ({ formik, showLastCertificate, fileType }) => {
             />
             <Avatar
               alt="LastCertificate"
-              src={`http://daarolquran.com/back_request/get_uploaded_teacher_certificate/${formik?.values?.certificate}`}
+              src={`https://daarolquran.com/back_request/get_uploaded_teacher_certificate/${formik?.values?.certificate}`}
               sx={{
                 width: 75,
                 height: 75,

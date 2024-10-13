@@ -3,7 +3,8 @@ export function getUrl() {
   let hostName = window.location.hostname;
 
   if (!protocol || !hostName || hostName === "localhost") {
-    return "http://127.0.01:5000/";
+    // return "http://127.0.0.1:5000/";
+    return "https://daarolquran.com/";
   }
   return `${protocol}//${hostName}/`;
 }
@@ -12,7 +13,7 @@ export function getUrlWs() {
   let hostName = window.location.hostname;
 
   if (!protocol || !hostName || hostName === "localhost") {
-    return "wss://127.0.01:5000/";
+    return "wss://127.0.0.1:5000/";
   }
   return `wss://${hostName}/`;
 }
