@@ -44,7 +44,7 @@ const ResourcesLists = ({ data }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((item, index) => (
+            {data?.map((item, index) => (
               <TableRow
                 key={item.id}
                 sx={{
@@ -59,7 +59,7 @@ const ResourcesLists = ({ data }) => {
                   {index + 1}
                 </TableCell>
                 <TableCell sx={{ border: "none", textAlign: "center" }}>
-                  {item.title}
+                  {item?.title}
                 </TableCell>
                 <TableCell
                   sx={{
@@ -71,7 +71,7 @@ const ResourcesLists = ({ data }) => {
                 >
                   {item?.file !== "" ? (
                     <a
-                      download={item?.title}
+                      // download={item?.title}
                       href={`http://daarolquran.com/back_request/get_resource/${item?.file}`}
                     >
                       <Button
