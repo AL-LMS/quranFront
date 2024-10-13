@@ -9,6 +9,7 @@ import {
   Grid,
   TextField,
   Tooltip,
+  LinearProgress,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { toastify } from "../../../../helper/toast";
@@ -23,12 +24,15 @@ import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
 import { getUrl } from "../../../../helper/getUrl";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+
 const TeacherExercisesForm = ({ type, data, setReload }) => {
   const { id } = useParams();
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0); // Added state for progress tracking
   const date = convertDateInstanceToDateObject(new Date());
+
   const initialValues = {
     file: data ? data.fileCourse : "",
     title: data ? data.title : "",
@@ -36,6 +40,7 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
     type: data ? data.type : "",
     description: data ? data.description : "",
   };
+
   const RegistrationSchema = Yup.object().shape({
     file: Yup.mixed().required("افزودن فایل ضروری است."),
     title: Yup.string().required("عنوان تکلیف باید ذکر شود."),
@@ -51,29 +56,21 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
       add_homework().then(() => {});
     },
   });
+
   const [openBirthDay, setOpenBirthDay] = useState(false);
   const config = {
-    year: {
-      caption: {
-        text: "سال",
-      },
-    },
-    month: {
-      caption: {
-        text: "ماه",
-      },
-    },
-    day: {
-      caption: {
-        text: "روز",
-      },
-    },
+    year: { caption: { text: "سال" } },
+    month: { caption: { text: "ماه" } },
+    day: { caption: { text: "روز" } },
   };
+
   function handleSubmit(selectedDate, field) {
     const date = format(selectedDate.date, "yyyy-MM-dd");
     formik.setFieldValue(field, date);
   }
+
   let myRef = useRef();
+
   const openFile = (file) => {
     const input = file.target;
     const reader = new FileReader();
@@ -92,6 +89,7 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
     formik.setFieldValue("file", file.target.files[0]);
     reader.readAsDataURL(input.files[0]);
   };
+
   const add_homework = async () => {
     setLoading(true);
     if (formik.values.file instanceof File) {
@@ -103,25 +101,43 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
       formData.append("title", formik.values.title);
       formData.append("deadline", formik.values.deadline);
       formData.append("description", formik.values.description);
-      let response = await axios.post(
-        getUrl() + "back_request/add_homework/",
-        formData,
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-            "Access-Control-Allow-Origin": "*",
-          },
+
+      try {
+        let response = await axios.post(
+          getUrl() + "back_request/add_homework/",
+          formData,
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+              "Access-Control-Allow-Origin": "*",
+            },
+            onUploadProgress: (progressEvent) => {
+              const totalLength = progressEvent.lengthComputable
+                ? progressEvent.total
+                : formik.values.file.size;
+              if (totalLength !== null) {
+                setProgress(
+                  Math.round((progressEvent.loaded * 100) / totalLength)
+                ); // Update progress state
+              }
+            },
+          }
+        );
+
+        if (response?.data?.tracking_code !== null) {
+          toastify("success", response?.data?.response);
+          setLoading(false);
+          setOpen(false);
+          setReload((prev) => !prev);
+          window.location.reload();
+        } else {
+          toastify("error-login", response?.data?.error);
+          setLoading(false);
+          setOpen(false);
         }
-      );
-      if (response?.data?.tracking_code !== null) {
-        toastify("success", response?.data?.response);
+      } catch (error) {
+        toastify("error", "مشکلی در ارسال فایل به وجود آمد.");
         setLoading(false);
-        setOpen(false);
-        setReload((perv) => !perv);
-      } else {
-        toastify("error-login", response?.data?.error);
-        setLoading(false);
-        setOpen(false);
       }
     } else {
       let data = {
@@ -146,14 +162,14 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
         data: {
           ...data,
         },
-
         baseURL: getUrl() + "back_request/insert_request/",
       });
       if (response?.data?.tracking_code !== null) {
         toastify("success", response?.data?.response);
         setLoading(false);
         setOpen(false);
-        setReload((perv) => !perv);
+        setReload((prev) => !prev);
+        window.location.reload();
       } else {
         toastify("error-login", response?.data?.error);
         setLoading(false);
@@ -188,7 +204,7 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
         <DialogTitle sx={{ textAlign: "center" }}>
           {type === "create" ? "ایجاد تکلیف" : "ویرایش تکلیف"}
         </DialogTitle>
-        {/* <Grid container spacing={3} padding={2}> */}
+
         <form onSubmit={formik.handleSubmit} style={{ padding: "20px" }}>
           <Grid item xs={12} mb={"10px"}>
             <input
@@ -219,6 +235,7 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
               </div>
             ) : null}
           </Grid>
+
           <Grid item xs={12} mb={"10px"}>
             <TextField
               label="عنوان"
@@ -234,6 +251,7 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
               </div>
             ) : null}
           </Grid>
+
           <Grid item xs={12} sx={{ position: "relative" }} mb={"10px"}>
             <TextField
               label="مهلت انجام"
@@ -249,6 +267,7 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
                 </p>
               </div>
             ) : null}
+
             <Picker
               config={config}
               isOpen={openBirthDay}
@@ -270,6 +289,7 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
               theme="light"
             />
           </Grid>
+
           <Grid item xs={12} mb={"10px"}>
             <TextField
               label="توضیحات"
@@ -289,9 +309,21 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
               </div>
             ) : null}
           </Grid>
+
+          {/* Show Progress Bar */}
+          {loading && (
+            <Grid item xs={12} mb={"10px"}>
+              <LinearProgress variant="determinate" value={progress} />
+              <p style={{ textAlign: "center", marginTop: "10px" }}>
+                {progress}% در حال آپلود...
+              </p>
+            </Grid>
+          )}
+
           <Grid item xs={12}>
             <Divider />
           </Grid>
+
           <Grid item xs={12}>
             {type === "create" ? (
               <Button
@@ -302,7 +334,6 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
                   padding: "12px 0",
                 }}
                 type="submit"
-                // onClick={() => add_homework().then(() => {})}
                 fullWidth
                 disabled={loading}
               >
@@ -317,7 +348,6 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
                   padding: "12px 0",
                 }}
                 type="submit"
-                // onClick={() => add_homework().then(() => {})}
                 fullWidth
                 disabled={loading}
               >
@@ -326,7 +356,6 @@ const TeacherExercisesForm = ({ type, data, setReload }) => {
             )}
           </Grid>
         </form>
-        {/* </Grid> */}
       </Dialog>
     </div>
   );
