@@ -109,6 +109,24 @@ const Navbar = () => {
                     : "ثبت‌نام"}
                 </Button>
               </Link>
+              {!user?.first_name && (
+                <Link to={"/signup"}>
+                  <Button
+                    variant="contained"
+                    style={{
+                      marginLeft: "100px !important",
+                      marginRight: "100px !important",
+                    }}
+                    sx={{
+                      borderRadius: "5px",
+                      ml: 2,
+                      boxShadow: "none",
+                    }}
+                  >
+                    {"درخواست همکاری"}
+                  </Button>
+                </Link>
+              )}
             </NavbarButton>
           </StyledToolbar>
         </Container>

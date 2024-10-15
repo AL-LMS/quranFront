@@ -232,7 +232,7 @@ const Signup = () => {
                 </div>
               ) : null}
             </Box>
-            <FormGroup>
+            {/* <FormGroup>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -260,7 +260,7 @@ const Signup = () => {
                   marginBottom: "2rem",
                 }}
               />
-            </FormGroup>
+            </FormGroup> */}
             <Button
               type="submit"
               variant="contained"
