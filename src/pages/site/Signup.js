@@ -90,7 +90,7 @@ const Signup = () => {
     formik.setFieldValue("type", event.target.name);
   };
   return (
-    <Container maxWidth="lg" sx={{ height: "100vh" }}>
+    <Container maxWidth="lg" sx={{ height: "100vh", marginTop: "100px" }}>
       <Grid container mt={8} sx={{ height: "100vh" }}>
         <Grid item xs={12} md={4} sx={{ margin: "0 auto" }}>
           <form
@@ -163,12 +163,11 @@ const Signup = () => {
                 fullWidth
                 // onChange={(e) => formik.setFieldValue("phone", e.target.value)}
                 onChange={(event) => {
-                  const englishDigits =
-                    event.target.value.replace(/[۰-۹]/g, (char) =>
-                      String.fromCharCode(
-                        char.charCodeAt(0) - 0x06f0 + 0x0030
-                      )
-                    );
+                  const englishDigits = event.target.value.replace(
+                    /[۰-۹]/g,
+                    (char) =>
+                      String.fromCharCode(char.charCodeAt(0) - 0x06f0 + 0x0030)
+                  );
                   formik.setFieldValue(
                     "phone",
                     englishDigits.replace(/[^0-9]/g, "")

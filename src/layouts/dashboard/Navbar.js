@@ -41,7 +41,7 @@ const Navbar = ({ setSidebar }) => {
     setUser("");
     localStorage.clear("token");
     localStorage.clear("user");
-    navigate("/login");
+    navigate("/send-otp");
   };
   return (
     <AppBar

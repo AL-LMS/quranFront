@@ -6,6 +6,7 @@ import Sidebar from "../layouts/dashboard/Sidebar";
 import useAuth from "../hooks/useAuth";
 import Login from "../pages/site/Login";
 import Back from "../components/dashboard/Back";
+import SendOTP from "../pages/site/SendOTP";
 
 const PrivateRoutes = () => {
   const [sidebar, setSidebar] = useState(false);
@@ -19,7 +20,8 @@ const PrivateRoutes = () => {
     </>
   ) : (
     <>
-      <Login />
+      {/* <Login /> */}
+      <SendOTP />
     </>
   );
 };

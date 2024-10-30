@@ -82,7 +82,8 @@ function App() {
   const { user } = useAuth();
   return (
     <CacheProvider value={cacheRtl}>
-      {!location.pathname.includes("panel") && <Navbar />}
+      {/* {!location.pathname.includes("panel") && <Navbar />} */}
+      <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />

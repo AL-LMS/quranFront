@@ -83,10 +83,10 @@ const Navbar = () => {
             <NavbarButton>
               <Link
                 to={
-                  window.location.pathname === "/login"
+                  window.location.pathname === "/send-otp"
                     ? "/signup"
                     : window.location.pathname === "/signup"
-                    ? "/login"
+                    ? "/send-otp"
                     : "/panel/dashboard"
                 }
               >
@@ -104,7 +104,7 @@ const Navbar = () => {
                 >
                   {user?.first_name
                     ? `${user.first_name} ${user.last_name}`
-                    : window.location.pathname !== "/login"
+                    : window.location.pathname !== "/send-otp"
                     ? "ورود"
                     : "ثبت‌نام"}
                 </Button>
@@ -123,7 +123,7 @@ const Navbar = () => {
                       boxShadow: "none",
                     }}
                   >
-                    {"درخواست همکاری"}
+                    {"همکاری"}
                   </Button>
                 </Link>
               )}

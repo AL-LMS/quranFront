@@ -590,7 +590,7 @@ const HomePage = () => {
     <>
       <Grid item xs={12} mt={5}>
         <HeroContainer>
-          <Header1>اولین مدرسه قرآنی آنلاین</Header1>
+          <Header1>مدرسه قرآنی آنلاین</Header1>
           <Name>مدرسه قرآنی آنلاین</Name>
           <Explain>
             دارالقرآن نیک‌اندیشان، یک مدرسه قرآنی آنلاین آموزشی دارای گواهی ISO
@@ -637,9 +637,7 @@ const HomePage = () => {
       <Grid item xs={12}></Grid>
       <Grid item xs={12}>
         <ServiceContainer>
-          <ServiceHeader>
-            خدماتی که دارالقرآن نیک‌اندیشان ارائه می‌دهد
-          </ServiceHeader>
+          <ServiceHeader>خدمات دارالقرآن نیک اندیشان</ServiceHeader>
           <ServiceCards>
             <ServiceCard>
               <ServiceCardHeader>
@@ -651,7 +649,7 @@ const HomePage = () => {
               <ServiceCardBody>
                 دوره آموزشهای تکمیلی مخصوص افرادی برگزار می شود که حفظ قرآن خود
                 را به پایان رسانده اند و در عین حال نیاز به کسب مهارتهای جدید در
-                زمینه حفظ قرآن دارند .{" "}
+                زمینه حفظ قرآن دارند .
               </ServiceCardBody>
             </ServiceCard>
             <ServiceCard>
@@ -662,9 +660,11 @@ const HomePage = () => {
                 <ServiceCardTitle>دوره‌های تفسیر</ServiceCardTitle>
               </ServiceCardHeader>
               <ServiceCardBody>
-                تفسیر قرآن یکی از مهم‌ترین شاخه‌های علوم و معارف قرآنی است که
-                پرده‌های ابهام را از چهره الفاظ و عبارات نورانی قرآن کریم
-                برمی‌دارد و زمینه‌های فهم و تدبر بیشتر را فراهم سازد.
+                تفسیر قرآن یکی از شاخه‌های ارزشمند علوم قرآنی است که به منظور
+                درک عمیق‌تر و تبیین ابعاد گسترده‌تری از معارف الهی صورت می‌گیرد.
+                این علم، زمینه‌ای برای تدبر و ژرف‌نگری در مفاهیم نورانی قرآن
+                فراهم می‌سازد و مخاطبان را به ابعاد و معانی نهفته در پس آیات
+                روشن و هدایتگر این کتاب آسمانی راهنمایی می‌کند.
               </ServiceCardBody>
             </ServiceCard>
             <ServiceCard>
@@ -692,7 +692,7 @@ const HomePage = () => {
               </CardIcon>
               <CardTitle>کلاس‌های قرآن</CardTitle>
               <CardDescription>
-                با کلاس‌های غنی قرآن ما سفر تحول آفرین رشد معنوی را آغاز کنید.
+                با کلاس‌های غنی قرآن سفر تحول آفرین رشد معنوی را آغاز کنید.
               </CardDescription>
             </ItemCard>
             <ItemCard>
@@ -701,7 +701,7 @@ const HomePage = () => {
               </CardIcon>
               <CardTitle>مربیان آقا و خانم</CardTitle>
               <CardDescription>
-                تمامی کلاس های آموزش آنلاین قرآن توسط علمای اسلامی مجرب برگزار
+                تمامی کلاس های آموزش آنلاین قرآن توسط اساتید اسلامی مجرب برگزار
                 می شود
               </CardDescription>
             </ItemCard>
