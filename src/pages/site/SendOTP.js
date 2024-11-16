@@ -136,6 +136,16 @@ const SendOTP = () => {
             >
               ارسال کد
             </Button>
+            <Link to="/signup">
+              <Button
+                fullWidth
+                sx={{
+                  marginBottom: "20px",
+                }}
+              >
+                ثبت نام
+              </Button>
+            </Link>
           </form>
         </Grid>
       </Grid>
