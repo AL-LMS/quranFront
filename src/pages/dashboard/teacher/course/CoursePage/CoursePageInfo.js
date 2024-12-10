@@ -62,7 +62,7 @@ const CoursePageInfo = ({ data_course }) => {
       method_type: "create_new_session",
       data: {
         course_id: data_course.course_id,
-        id: id,
+        id: user?.user_id,
       },
     };
     let response = await axios({
