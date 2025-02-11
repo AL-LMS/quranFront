@@ -79,9 +79,20 @@ const CoursePageInfo = ({ data_course }) => {
     });
     if (response?.data?.tracking_code !== null) {
       toastify("success", response?.data?.response?.message);
-      console.log("meet page", "/meet.html?room="+response?.data?.response?.data)
+      console.log(
+        "meet page",
+        "/meet.html?room=" + response?.data?.response?.data
+      );
       // navigate("/meet.html?room="+response?.data?.response?.data);
-      window.location.replace('https://meet.daarolquran.com/room.html?room='+response?.data?.response?.data)
+      window.location.replace(
+        "https://meet.daarolquran.com/room.html?room=" +
+          response?.data?.response?.data +
+          "&name=" +
+          user?.first_name +
+          " " +
+          user?.last_name +
+          "&role=student"
+      );
     } else {
       toastify("error-login", response?.data?.error);
     }
@@ -176,7 +187,8 @@ const CoursePageInfo = ({ data_course }) => {
                     variant="contained"
                     fullWidth
                     fontSize="17px"
-                    onClick={() => get_course_room_name().then(()=>{})
+                    onClick={
+                      () => get_course_room_name().then(() => {})
                       // check_time_for_class(
                       //   data_course?.["start_date"],
                       //   data_course?.["end_date"],
