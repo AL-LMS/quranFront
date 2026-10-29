@@ -2,7 +2,7 @@
 
 ## Current foundation
 
-This is a React 18 / Create React App 5 application. This task establishes working boundaries without relocating page trees or changing browser URLs and backend contracts.
+This is a React 18 / Vite application. The migration keeps the legacy page tree, routes, provider boundaries, and backend contracts in place.
 
 ```text
 src/index.js
@@ -53,21 +53,39 @@ Baseline was captured on the requested branch before source changes, using Node 
 
 | Command | Result |
 | --- | --- |
-| `npm ci` | Failed with `ERESOLVE`: `mui-rte` peers on `@mui/styles`, whose peer requires React 17; app resolves React 18.2.0. |
-| `npm ci --legacy-peer-deps` | Completed; emitted upstream deprecation warnings. This allowed baseline tests/build to run. |
-| `CI=true npm test -- --watchAll=false --passWithNoTests` | Exit 0; no tests found. |
-| `npm run build` | Exit 0. Existing ESLint warnings across the app, outdated caniuse-lite, CRA/Babel undeclared plugin warning, missing `stylis-plugin-rtl` source map, and large JS bundle warning. |
+| `npm ci` | Exit 0 using the committed `.npmrc`; emitted upstream deprecation and audit/install-script notices. |
+| `npm test -- --watchAll=false` | Exit 0; 1 suite and 7 auth role tests passed. |
+| `CI=false npm run build` | Exit 0. Existing ESLint warnings across the app, outdated caniuse-lite, CRA/Babel undeclared plugin warning, missing `stylis-plugin-rtl` source map, and large JS bundle warning. |
 
-The repository originally tracked both `package-lock.json` and `yarn.lock` but documented neither a supported Node version nor a package manager. This foundation selects npm and makes its necessary peer resolution explicit. Build warnings outside the touched code are pre-existing cleanup work.
+The repository uses npm (`package-lock.json`) and `.npmrc` enables legacy peer resolution because the existing `mui-rte` dependency tree has a React 17 peer constraint despite the app running React 18. Clean installation is performed with `npm ci`.
 
-## Post-change validation
+## Vite toolchain and environment
 
-On Node `v24.22.1` / npm `11.19.1`, `npm ci` completed using the committed `.npmrc`, `CI=true npm test -- --watchAll=false` passed (1 suite, 7 tests), and `CI=false npm run build` completed. The build still reports the baseline CRA/Babel and source-map warnings, app-wide lint warnings, stale Browserslist data, and bundle-size warning. CRA treats any lint warning as a build failure when `CI=true`, so CI sets `CI=false` for the production build step only; warnings remain printed, while tests remain under `CI=true`. This is temporary until [the lint-warning follow-up](https://github.com/AL-LMS/quranFront/issues/3) removes the legacy warning debt. npm reports 95 dependency advisories (22 low, 22 moderate, 41 high, 10 critical) and install-script approval notices during clean installation; this task does not perform dependency upgrades or audit remediation.
+The HTML entry is the repository-root `index.html`; `public/` files are copied unchanged and `src/index.js` remains the JavaScript application entry. Vite writes the production artifact to `build/`, matching the previous CRA deployment directory. `npm run dev` (or `npm start`) starts development; `npm run build` creates production assets; `npm run preview` serves the build locally. The Vite config includes a narrowly scoped transform for the legacy convention of JSX inside `.js` files and preserves the Persian date picker’s CSS-as-text import semantics.
+
+No `REACT_APP_*` variables, `process.env` reads, Node built-in imports, or CRA `%PUBLIC_URL%` references were found in application code. No Vite variables are currently used. If public client configuration is added, use `import.meta.env.VITE_*` only for non-secret values. API endpoints stay as they are: Axios defaults to `https://api.srvschool.ir/`; legacy `getUrl()` maps localhost to `https://daarolquran.com/`; websocket localhost remains `wss://127.0.0.1:5000/`; other websocket hosts retain the current `wss://{hostname}/` behavior. `getUrl()` and `getUrlWs()` use browser location and are not replaced with build-time settings.
+
+`BrowserRouter` requires the hosting server to rewrite unknown paths to `/index.html`, including nested `/panel/...` paths. The build assumes deployment at `/`, as the prior CRA build did. Root-served icons and manifest stay under `public/`; imported application images and custom fonts are emitted under `build/assets/`. Persian `lang="fa"`, `dir="rtl"`, Emotion RTL cache, global RTL styles, Jalali helpers, and font sources remain in place.
+
+## Post-change validation (AL-01B)
+
+Validation is run on Node `v24.22.1` / npm `11.19.1`. The existing seven auth role tests remain, with five added compatibility checks for route patterns, RTL document/assets, API base URL, legacy web/socket origins, and Jalali conversion. The Vite build emits a large single-bundle warning. Lint runs separately and reports 249 warnings without errors. The pre-migration CRA build also had app-wide lint warnings, outdated Browserslist data, a missing `stylis-plugin-rtl` source map, CRA/Babel deprecation notices, and a large bundle warning. The Vite build no longer runs CRA lint or emits its missing-source-map warning. Preview smoke checks returned HTTP 200 for `/`, `/panel/dashboard`, `/logo.png`, and `/manifest.json`.
+
+The install reports inherited npm audit findings and install-script notices; no broad security/dependency upgrades are included. Tests do not make network calls to production, payment, or SMS services.
+
+## Manual verification still required
+
+- Student and teacher login, OTP, registration, and role-based direct route navigation.
+- Student and teacher course, homework, quiz, payment/wallet screens, using safe test accounts and payment sandboxing.
+- Student and teacher live class entry against an approved non-production backend. The app uses backend-returned meeting URLs; no embedded Jitsi SDK import was found. The teacher create-live form and `/websocket` demo source were already fully commented out, and are represented by inert components so existing routes/build imports remain valid.
+- Production hosting rewrite/fallback and all deployment environment values/origins.
+
+These flows are not claimed as manually verified by build/test results.
 
 ## Migration roadmap
 
-1. **AL-01A (this task):** preserve CRA and public behavior; introduce provider composition and auth feature boundary; add smoke tests, npm/Node CI, route/API documentation, migration ADR.
-2. **AL-01B:** move CRA-specific assumptions to a documented compatibility checklist, add parity checks for direct route loading, RTL, Jalali date conversion, auth/login, payments, quiz, and live-class flows; then migrate the build to Vite while preserving browser paths and environment variable semantics. CRA `REACT_APP_*` variables must be mapped deliberately to Vite `import.meta.env` names, deployment-time injection, and WebSocket/API origins. No secrets belong in either client bundle.
+1. **AL-01A:** preserve CRA and public behavior; introduce provider composition and auth feature boundary; add smoke tests, npm/Node CI, route/API documentation, migration ADR.
+2. **AL-01B (this change):** migrate the build and tests to Vite/Vitest, preserve the existing routes and endpoints, and document any manual verification still required.
 3. **AL-01C:** convert leaf utilities and isolated components to TypeScript, then feature modules incrementally. Keep JS imports and public component contracts working during transition; type API payloads only after backend contracts are verified.
 4. **AL-02+:** extract student and teacher domains and centralize API clients only alongside backend contract tests. Retire legacy paths only with an explicit route/data migration plan.
 
@@ -75,9 +93,11 @@ On Node `v24.22.1` / npm `11.19.1`, `npm ci` completed using the committed `.npm
 
 ```sh
 npm ci
-npm start
-npm test -- --watchAll=false
+npm run dev
+npm test
+npm run lint
 npm run build
+npm run preview
 ```
 
-GitHub Actions runs clean install, non-watch tests, and production build on pinned Node `24.22.1` LTS.
+GitHub Actions runs clean install, tests, standalone lint, and production build on pinned Node `24.22.1` LTS.

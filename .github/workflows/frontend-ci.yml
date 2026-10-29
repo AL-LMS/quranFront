@@ -14,11 +14,8 @@ jobs:
           node-version: 24.22.1
           cache: npm
       - run: npm ci
-      - run: npm test -- --watchAll=false
+      - run: npm test
         env:
           CI: true
-      # Keep CRA's existing ESLint warnings visible without failing this build step.
-      # Track and remove the warning debt in follow-up issue #3.
+      - run: npm run lint
       - run: npm run build
-        env:
-          CI: "false"
