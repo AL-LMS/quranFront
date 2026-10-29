@@ -62,7 +62,7 @@ The repository originally tracked both `package-lock.json` and `yarn.lock` but d
 
 ## Post-change validation
 
-On Node `v24.22.1` / npm `11.19.1`, `npm ci` completed using the committed `.npmrc`, `npm test -- --watchAll=false` passed (1 suite, 7 tests), and `npm run build` completed. The build still reports the baseline CRA/Babel and source-map warnings, app-wide lint warnings, stale Browserslist data, and bundle-size warning. npm reports 95 dependency advisories (22 low, 22 moderate, 41 high, 10 critical) and install-script approval notices during clean installation; this task does not perform dependency upgrades or audit remediation.
+On Node `v24.22.1` / npm `11.19.1`, `npm ci` completed using the committed `.npmrc`, `CI=true npm test -- --watchAll=false` passed (1 suite, 7 tests), and `CI=false npm run build` completed. The build still reports the baseline CRA/Babel and source-map warnings, app-wide lint warnings, stale Browserslist data, and bundle-size warning. CRA treats any lint warning as a build failure when `CI=true`, so CI sets `CI=false` for the production build step only; warnings remain printed, while tests remain under `CI=true`. This is temporary until [the lint-warning follow-up](https://github.com/AL-LMS/quranFront/issues/3) removes the legacy warning debt. npm reports 95 dependency advisories (22 low, 22 moderate, 41 high, 10 critical) and install-script approval notices during clean installation; this task does not perform dependency upgrades or audit remediation.
 
 ## Migration roadmap
 
