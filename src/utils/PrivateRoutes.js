@@ -7,11 +7,12 @@ import useAuth from "../hooks/useAuth";
 import Login from "../pages/site/Login";
 import Back from "../components/dashboard/Back";
 import SendOTP from "../pages/site/SendOTP";
+import { hasDashboardAccess } from "../features/auth/hasDashboardAccess";
 
 const PrivateRoutes = () => {
   const [sidebar, setSidebar] = useState(false);
   const { user } = useAuth();
-  return user?.role === "student" || user?.role === "teacher" ? (
+  return hasDashboardAccess(user) ? (
     <>
       <Navbar setSidebar={setSidebar} />
       <Back />

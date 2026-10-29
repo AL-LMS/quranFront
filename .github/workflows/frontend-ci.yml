@@ -1,0 +1,24 @@
+name: Frontend CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.22.1
+          cache: npm
+      - run: npm ci
+      - run: npm test -- --watchAll=false
+        env:
+          CI: true
+      # Keep CRA's existing ESLint warnings visible without failing this build step.
+      # Track and remove the warning debt in follow-up issue #3.
+      - run: npm run build
+        env:
+          CI: "false"

@@ -2,6 +2,7 @@
   "name": "daarolquran",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "npm@11.19.1",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
