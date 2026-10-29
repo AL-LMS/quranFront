@@ -69,7 +69,9 @@ No `REACT_APP_*` variables, `process.env` reads, Node built-in imports, or CRA `
 
 ## Post-change validation (AL-01B)
 
-Validation is run on Node `v24.22.1` / npm `11.19.1`. The existing seven auth role tests remain, with five added compatibility checks for route patterns, RTL document/assets, API base URL, legacy web/socket origins, and Jalali conversion. The Vite build emits a large single-bundle warning. Lint runs separately and reports 249 warnings without errors. The pre-migration CRA build also had app-wide lint warnings, outdated Browserslist data, a missing `stylis-plugin-rtl` source map, CRA/Babel deprecation notices, and a large bundle warning. The Vite build no longer runs CRA lint or emits its missing-source-map warning. Preview smoke checks returned HTTP 200 for `/`, `/panel/dashboard`, `/logo.png`, and `/manifest.json`.
+Validation is run on Node `v24.22.1` / npm `11.19.1`. The existing seven auth role tests remain, with five added compatibility checks for route patterns, RTL document/assets, API base URL, legacy web/socket origins, and Jalali conversion. The Vite build emits a large single-bundle warning. Lint runs separately and reports 249 warnings without errors. The pre-migration CRA build also had app-wide lint warnings, outdated Browserslist data, a missing `stylis-plugin-rtl` source map, CRA/Babel deprecation notices, and a large bundle warning. The Vite build no longer runs CRA lint or emits its missing-source-map warning.
+
+Playwright browser verification against `vite preview` exercised `/`, `/panel/all-courses`, `/login`, `/send-otp`, `/check-otp`, and `/confirm-phone`. All six routes rendered application content with the expected Persian document metadata; no uncaught exceptions, console errors, failed local requests, or missing local asset responses were observed. The browser loaded the custom IRANSans font and application stylesheet. A screenshot of the homepage was captured and visually reviewed. The browser harness fulfilled all XHR/fetch requests with local empty fixtures; no backend, payment, SMS, or production API was contacted. Consequently, the course list displayed its empty state; real course data and authenticated flows remain unverified.
 
 The install reports inherited npm audit findings and install-script notices; no broad security/dependency upgrades are included. Tests do not make network calls to production, payment, or SMS services.
 
@@ -78,6 +80,7 @@ The install reports inherited npm audit findings and install-script notices; no 
 - Student and teacher login, OTP, registration, and role-based direct route navigation.
 - Student and teacher course, homework, quiz, payment/wallet screens, using safe test accounts and payment sandboxing.
 - Student and teacher live class entry against an approved non-production backend. The app uses backend-returned meeting URLs; no embedded Jitsi SDK import was found. The teacher create-live form and `/websocket` demo source were already fully commented out, and are represented by inert components so existing routes/build imports remain valid.
+- The Persian mobile date picker’s CSS-as-text shim is compile-verified, but the picker is only present in authenticated forms and was not visually exercised by these public-route browser checks.
 - Production hosting rewrite/fallback and all deployment environment values/origins.
 
 These flows are not claimed as manually verified by build/test results.
