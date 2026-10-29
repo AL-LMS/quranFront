@@ -67,6 +67,25 @@ No `REACT_APP_*` variables, `process.env` reads, Node built-in imports, or CRA `
 
 `BrowserRouter` requires the hosting server to rewrite unknown paths to `/index.html`, including nested `/panel/...` paths. The build assumes deployment at `/`, as the prior CRA build did. Root-served icons and manifest stay under `public/`; imported application images and custom fonts are emitted under `build/assets/`. Persian `lang="fa"`, `dir="rtl"`, Emotion RTL cache, global RTL styles, Jalali helpers, and font sources remain in place.
 
+## Incremental TypeScript foundation (AL-01C)
+
+TypeScript is enabled without converting the application entry point or React pages. `tsconfig.json` uses `strict: true`, `allowJs: true`, `checkJs: false`, and `noEmit: true`; modern ES module and Bundler resolution settings match Vite. Its explicit include list currently contains only `src/features/auth/hasDashboardAccess.ts` and `src/helper/shamsi_format.ts`, so legacy JavaScript stays untyped and remains buildable. The Vite config and its JSX-in-`.js` compatibility plugin are unchanged. Existing extensionless JavaScript imports continue to resolve the TypeScript modules through Vite/Vitest.
+
+`npm run typecheck` runs `tsc --noEmit` in CI. The existing ESLint command continues to lint `.js` files; TypeScript errors are checked by the compiler and no TypeScript-specific linting is configured yet. For later feature conversions, add `.ts` or `.tsx` files to the explicit include list, keep strict mode, and add compatible `@types/react` / `@types/react-dom` only when TSX requires them. Do not broaden `checkJs` or convert the whole tree as part of this foundation step. The auth helper preserves the existing exact `student` / `teacher` role comparison. The date formatter preserves its three-part split-and-join behavior, including its existing handling of incomplete or extra parts.
+
+### AL-01C baseline before changes (2026-10-29)
+
+Commands were run on `refactor/al-01c-typescript-foundation` at base commit `d6c596f` with Node `v24.22.1` and npm `11.19.1`:
+
+| Command | Result |
+| --- | --- |
+| `npm ci` | Passed; 31 audit findings (3 low, 8 moderate, 16 high, 4 critical), dependency deprecation notices, and install-script notices. |
+| `npm test` | Passed; 2 files and 12 tests. |
+| `npm run lint` | Passed; 249 existing warnings, 0 errors. |
+| `npm run build` | Passed; Vite emitted the existing >500 kB chunk warning. |
+
+The lint run also printed the inherited Create React App Babel preset undeclared-plugin warning. These baseline warnings and audit findings are recorded separately from AL-01C changes; dependencies are not broadly upgraded here.
+
 ## Post-change validation (AL-01B)
 
 Validation is run on Node `v24.22.1` / npm `11.19.1`. The existing seven auth role tests remain, with five added compatibility checks for route patterns, RTL document/assets, API base URL, legacy web/socket origins, and Jalali conversion. The Vite build emits a large single-bundle warning. Lint runs separately and reports 249 warnings without errors. The pre-migration CRA build also had app-wide lint warnings, outdated Browserslist data, a missing `stylis-plugin-rtl` source map, CRA/Babel deprecation notices, and a large bundle warning. The Vite build no longer runs CRA lint or emits its missing-source-map warning.
@@ -89,7 +108,7 @@ These flows are not claimed as manually verified by build/test results.
 
 1. **AL-01A:** preserve CRA and public behavior; introduce provider composition and auth feature boundary; add smoke tests, npm/Node CI, route/API documentation, migration ADR.
 2. **AL-01B (this change):** migrate the build and tests to Vite/Vitest, preserve the existing routes and endpoints, and document any manual verification still required.
-3. **AL-01C:** convert leaf utilities and isolated components to TypeScript, then feature modules incrementally. Keep JS imports and public component contracts working during transition; type API payloads only after backend contracts are verified.
+3. **AL-01C:** establish strict TypeScript checking for two isolated utilities while preserving JavaScript consumers. This is an adoption foundation, not a complete TypeScript migration. Later tasks can convert leaf utilities and feature modules incrementally, adding `.tsx` files to the explicit typecheck scope and React types as needed. Keep JS imports and public component contracts working during transition; type API payloads only after backend contracts are verified.
 4. **AL-02+:** extract student and teacher domains and centralize API clients only alongside backend contract tests. Retire legacy paths only with an explicit route/data migration plan.
 
 ## Local validation
