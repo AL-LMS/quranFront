@@ -63,3 +63,8 @@
 // };
 
 // export default WebSocketDemo;
+
+// This legacy demo was fully commented out before the Vite migration.
+export default function WebSocketDemo() {
+  return null;
+}

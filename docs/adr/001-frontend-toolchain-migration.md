@@ -1,24 +1,20 @@
 # ADR 001: staged frontend toolchain migration
 
-- Status: accepted for planning; no toolchain migration in AL-01A
+- Status: accepted; implemented in AL-01B
 - Date: 2026-10-29
 
 ## Context
 
-The production application is React 18 on Create React App 5. Routes, RTL styling, Jalali date behavior, and API requests are coupled to existing modules. A build baseline succeeds only after npm legacy peer resolution because `mui-rte` brings a React 17 peer constraint through `@mui/styles`. A build-tool replacement or TypeScript conversion without parity evidence would combine too many risks for a foundation task.
+The production application is React 18 and JavaScript. Routes, RTL styling, Jalali date behavior, and API requests are coupled to existing modules. The npm install requires legacy peer resolution because `mui-rte` brings a React 17 peer constraint through `@mui/styles` despite the application using React 18.
 
 ## Decision
 
-Keep CRA, JavaScript, existing dependencies, browser routes, provider order, and endpoint calls in AL-01A. Use npm as the sole package manager, commit `package-lock.json`, and configure npm's legacy peer resolution explicitly for clean installs. Establish application and feature boundaries with a provider composition and a tested route-role predicate.
+Use Vite 6 with the React plugin, Vitest, and jsdom while retaining React 18, JavaScript, npm, the existing page architecture, browser route declarations, provider order, API call sites, and the CRA-compatible `build/` output directory. Keep a narrow transform for the existing JSX-in-`.js` convention. Keep a targeted CSS-as-text compatibility transform for `@persian-tools/persian-mobile-datepicker`, whose bundled module consumes the `rmc-picker` stylesheet as a string. Preserve npm's legacy-peer setting. TypeScript remains a separate AL-01C task.
 
-Plan Vite migration as AL-01B after direct-route and user-flow parity evidence. Plan TypeScript as AL-01C using progressive conversion after the build migration.
-
-## Environment and deployment handling
-
-Before the Vite transition, inventory every `REACT_APP_*` use and deployment injection point. CRA exposes prefixed variables at build time; Vite has different naming and access semantics. AL-01B must map names, distinguish build-time public configuration from runtime deployment configuration, and verify API and WebSocket origins in each deployment environment. No secret may be moved into browser-visible environment variables. Preserve public route fallback/rewrite behavior and verify Persian RTL CSS and Jalali date handling in production builds.
+No `REACT_APP_*` or `process.env` reads were found in the app, so no environment mapping is needed. Any future public build-time setting must use `VITE_*`; secrets remain server-side. Production hosting must rewrite BrowserRouter paths to `/index.html`. The app continues to derive legacy API and websocket origins from `window.location` as before.
 
 ## Consequences
 
-- AL-01A remains deployable by existing CRA hosting assumptions.
-- Existing unresolved peer compatibility and CRA maintenance warnings remain visible and documented.
-- The Vite change requires a separate parity-focused review; this ADR does not authorize endpoint, route, or UI changes.
+- Existing peer constraints and legacy lint warnings remain documented; no unrelated dependency upgrades are part of this decision.
+- The picker stylesheet shim restores the CSS string contract expected by the existing dependency. The legacy teacher create-live form and WebSocket demo were commented out before migration and remain inactive.
+- The build and automated compatibility checks establish toolchain parity, but do not verify authenticated production integrations or backend-returned meeting URLs.

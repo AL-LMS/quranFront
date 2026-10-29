@@ -197,3 +197,9 @@
 // };
 
 // export default CreateLive;
+
+// The feature was fully commented out before the Vite migration. Keep the
+// existing teacher live page renderable while its create form remains inactive.
+export default function CreateLive() {
+  return null;
+}

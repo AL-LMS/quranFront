@@ -1,22 +1,27 @@
 # AL-LMS frontend
 
-React 18 application built with Create React App (`react-scripts` 5). The production entry, public URLs, Persian RTL styling, and Jalali date helpers remain on the existing stack during this foundation task.
+React 18 and JavaScript application built with Vite. Browser routes, provider order, backend API behavior, Persian RTL presentation, and Jalali date helpers remain in the existing application modules.
 
 ## Development commands
 
-Use Node.js 24 LTS and npm 11 (the committed `package-lock.json` is authoritative).
+Use Node.js 24 LTS and npm 11. The committed `package-lock.json` is authoritative.
 
 ```sh
 npm ci
-npm start
-npm test -- --watchAll=false
-npm run build
+npm run dev       # or npm start
+npm test          # one-shot Vitest run
+npm run test:watch
+npm run lint      # separate from the production build
+npm run build     # writes to build/
+npm run preview   # serves the production build locally
 ```
 
-`npm ci` uses the repository `.npmrc` peer resolution setting to accommodate the existing `mui-rte` / `@mui/styles` React 17 peer declaration alongside the app's React 18 installation. This preserves the locked dependency graph; see [the baseline and known issues](docs/frontend-architecture.md#baseline-2026-10-29).
+`npm ci` uses the repository `.npmrc` peer resolution setting to accommodate the existing `mui-rte` / `@mui/styles` React 17 peer declaration alongside the app's React 18 installation. No `REACT_APP_*` or `process.env` variables are currently used. New public build-time settings use `import.meta.env.VITE_*`; never put secrets in client variables.
+
+Production hosting must serve the app from `/` and rewrite unknown BrowserRouter paths, including `/panel/...`, to `/index.html`. The output remains in `build/` to match existing deployment paths.
 
 ## Architecture
 
-See [Frontend architecture and migration roadmap](docs/frontend-architecture.md) for current boundaries, route and API maps, compatibility notes, and the staged Vite/TypeScript migration plan. An architectural decision record is in [ADR 001](docs/adr/001-frontend-toolchain-migration.md).
+See [Frontend architecture](docs/frontend-architecture.md) for route and API inventories, compatibility notes, deployment fallback requirements, and the manual verification checklist. The build decision is recorded in [ADR 001](docs/adr/001-frontend-toolchain-migration.md).
 
-The current extraction is intentionally small: provider composition lives under `src/app/`, and the shared student/teacher dashboard role predicate lives under `src/features/auth/`. Existing page modules and legacy imports remain in place.
+Provider composition remains under `src/app/`, and the shared student/teacher dashboard role predicate remains under `src/features/auth/`. Existing page modules and legacy imports remain in place.
