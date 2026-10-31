@@ -4,10 +4,16 @@ import { fileURLToPath } from "node:url";
 import { getUrl, getUrlWs } from "./helper/getUrl";
 import { miladi_be_shamsi } from "./helper/shamsi";
 import { shamsi_be_miladi } from "./helper/miladi";
+import { legacyJsxEsbuildOptions } from "../vite-legacy-jsx-options.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 describe("Vite migration compatibility", () => {
+  it("enables automatic JSX parsing for legacy JavaScript dependency scans", () => {
+    expect(legacyJsxEsbuildOptions.loader[".js"]).toBe("jsx");
+    expect(legacyJsxEsbuildOptions.jsx).toBe("automatic");
+  });
+
   it("keeps Persian document metadata and public icons", () => {
     const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
     expect(html).toContain('<html lang="fa" dir="rtl">');
