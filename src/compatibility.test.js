@@ -14,6 +14,26 @@ describe("Vite migration compatibility", () => {
     expect(legacyJsxEsbuildOptions.jsx).toBe("automatic");
   });
 
+  it("keeps the legacy date-picker stylesheet available as an imported string", () => {
+    const optimizerPlugin = legacyJsxEsbuildOptions.plugins.find(
+      ({ name }) => name === "legacy-picker-css-as-text"
+    );
+    const handlers = {};
+
+    optimizerPlugin.setup({
+      onResolve: (_options, callback) => { handlers.resolve = callback; },
+      onLoad: (_options, callback) => { handlers.load = callback; },
+    });
+
+    const resolved = handlers.resolve({ path: "rmc-picker/assets/index.css" });
+    const loaded = handlers.load(resolved);
+
+    expect(resolved.namespace).toBe("legacy-picker-css-as-text");
+    expect(loaded.loader).toBe("js");
+    expect(loaded.contents).toContain("export default ");
+    expect(loaded.contents).toContain(".rmc-picker");
+  });
+
   it("keeps Persian document metadata and public icons", () => {
     const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
     expect(html).toContain('<html lang="fa" dir="rtl">');
