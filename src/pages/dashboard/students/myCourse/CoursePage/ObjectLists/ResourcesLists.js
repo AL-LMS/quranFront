@@ -1,3 +1,4 @@
+import { legacyAssetUrl } from "../../../../../../api/localAssets.js";
 import React from "react";
 import {
   Button,
@@ -72,7 +73,7 @@ const ResourcesLists = ({ data }) => {
                   {item?.file !== "" ? (
                     <a
                       // download={item?.title}
-                      href={`https://daarolquran.com/back_request/get_resource/${item?.file}`}
+                      href={legacyAssetUrl(`/back_request/get_resource/${item?.file}`)}
                     >
                       <Button
                         // variant="contained"

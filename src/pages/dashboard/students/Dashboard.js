@@ -32,6 +32,7 @@ const Dashboard = () => {
     };
     fetchData();
     const giveIP = async () => {
+      if (import.meta.env.VITE_LOCAL_DEVELOPMENT === "true") return;
       const response = await axios.get("https://api.ipify.org/");
       setDevice({
         ip: response.data,

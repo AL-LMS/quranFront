@@ -1,3 +1,4 @@
+import { apiAssetUrl } from "../../../../api/localAssets.js";
 import React, { useContext } from "react";
 import { DefiContext } from "../../../../context/DefiContext";
 import {
@@ -29,9 +30,9 @@ const ProductCard = ({ data }) => {
     >
       <ListItemAvatar>
         <Avatar
-          src={`https://api.srvschool.ir${
+          src={apiAssetUrl(`${
             course.find((item) => item.id === data.buy_id)?.picture
-          }`}
+          }`)}
           alt="course"
           sx={{
             height: { xs: "60px", md: "150px" },

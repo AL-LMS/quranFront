@@ -4,10 +4,36 @@ import { fileURLToPath } from "node:url";
 import { getUrl, getUrlWs } from "./helper/getUrl";
 import { miladi_be_shamsi } from "./helper/shamsi";
 import { shamsi_be_miladi } from "./helper/miladi";
+import { legacyJsxEsbuildOptions } from "../vite-legacy-jsx-options.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 describe("Vite migration compatibility", () => {
+  it("enables automatic JSX parsing for legacy JavaScript dependency scans", () => {
+    expect(legacyJsxEsbuildOptions.loader[".js"]).toBe("jsx");
+    expect(legacyJsxEsbuildOptions.jsx).toBe("automatic");
+  });
+
+  it("keeps the legacy date-picker stylesheet available as an imported string", () => {
+    const optimizerPlugin = legacyJsxEsbuildOptions.plugins.find(
+      ({ name }) => name === "legacy-picker-css-as-text"
+    );
+    const handlers = {};
+
+    optimizerPlugin.setup({
+      onResolve: (_options, callback) => { handlers.resolve = callback; },
+      onLoad: (_options, callback) => { handlers.load = callback; },
+    });
+
+    const resolved = handlers.resolve({ path: "rmc-picker/assets/index.css" });
+    const loaded = handlers.load(resolved);
+
+    expect(resolved.namespace).toBe("legacy-picker-css-as-text");
+    expect(loaded.loader).toBe("js");
+    expect(loaded.contents).toContain("export default ");
+    expect(loaded.contents).toContain(".rmc-picker");
+  });
+
   it("keeps Persian document metadata and public icons", () => {
     const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
     expect(html).toContain('<html lang="fa" dir="rtl">');
@@ -26,19 +52,23 @@ describe("Vite migration compatibility", () => {
       .forEach((route) => expect(paths).toContain(route));
   });
 
-  it("preserves the configured API client origin", async () => {
+  it("preserves the production API fallback and applies the local override", async () => {
     await import("./api/axios");
     const axios = (await import("axios")).default;
-    expect(axios.defaults.baseURL).toBe("https://api.srvschool.ir/");
+    expect(axios.defaults.baseURL).toBe(
+      import.meta.env.VITE_API_BASE_URL || "https://api.srvschool.ir/"
+    );
   });
 
-  it("preserves legacy browser and websocket origins", () => {
-    expect(getUrl()).toBe("https://daarolquran.com/");
-    expect(getUrlWs()).toBe("wss://127.0.0.1:5000/");
+  it("preserves legacy production fallbacks and applies local API overrides", () => {
+    const localLegacyBase = import.meta.env.VITE_LEGACY_API_BASE_URL;
+    const localWebsocketBase = import.meta.env.VITE_LEGACY_WS_BASE_URL;
+    expect(getUrl()).toBe(localLegacyBase ? `${localLegacyBase}/` : "https://daarolquran.com/");
+    expect(getUrlWs()).toBe(localWebsocketBase ? `${localWebsocketBase}/` : "wss://127.0.0.1:5000/");
     window.history.replaceState({}, "", "/");
     Object.defineProperty(window, "location", { value: new URL("https://school.example/") });
-    expect(getUrl()).toBe("https://school.example/");
-    expect(getUrlWs()).toBe("wss://school.example/");
+    expect(getUrl()).toBe(localLegacyBase ? `${localLegacyBase}/` : "https://school.example/");
+    expect(getUrlWs()).toBe(localWebsocketBase ? `${localWebsocketBase}/` : "wss://school.example/");
   });
 
   it("preserves representative Jalali conversions", () => {

@@ -1,3 +1,4 @@
+import { legacyAssetUrl } from "../../../../../api/localAssets.js";
 import React, { useState } from "react";
 import axios from "axios";
 import useAuth from "../../../../../hooks/useAuth";
@@ -84,6 +85,11 @@ const CoursePageInfo = ({ data_course }) => {
         "/meet.html?room=" + response?.data?.response?.data
       );
       // navigate("/meet.html?room="+response?.data?.response?.data);
+      if (import.meta.env.VITE_LOCAL_DEVELOPMENT === "true") {
+        setLoading(false);
+        toastify("error-login", "External meeting service is unavailable in local development.");
+        return;
+      }
       window.location.replace(
         "https://meet.daarolquran.com/room.html?room=" +
           response?.data?.response?.data +
@@ -112,7 +118,7 @@ const CoursePageInfo = ({ data_course }) => {
             src={
               data_course?.picture === "default"
                 ? NoImage
-                : `https://daarolquran.com/back_request/get_course_pic/${data_course?.picture}`
+                : legacyAssetUrl(`/back_request/get_course_pic/${data_course?.picture}`)
             }
             alt="course"
             style={{ maxWidth: "100%", borderRadius: "5px", height: "100%" }}

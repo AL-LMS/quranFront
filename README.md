@@ -28,3 +28,33 @@ See [Frontend architecture](docs/frontend-architecture.md) for route and API inv
 Provider composition remains under `src/app/`, and the shared student/teacher dashboard role predicate remains under `src/features/auth/`. Existing page modules and legacy imports remain in place.
 
 TypeScript adoption is incremental: `tsconfig.json` enables strict checks, allows JavaScript/TypeScript coexistence, and currently includes only the migrated auth predicate and Jalali display formatter. JavaScript lint remains enabled for the existing source tree; `npm run typecheck` is the TypeScript correctness check. When converting a React feature later, add its `.tsx` source to the TypeScript include scope and add compatible React types only if the module needs them. Keep Vite's legacy JSX-in-`.js` compatibility transform unchanged while JavaScript files remain.
+# Local Docker development
+
+The local Compose profile runs Vite with hot reload on `127.0.0.1:5173` and
+connects its `/legacy` and `/api` proxies to the backend Compose stack over the
+shared private Docker network. `/legacy/*` is stripped and sent to the legacy
+FastAPI app; `/api/*` is sent unchanged to V2. It never uses historical API
+hosts in local mode. V2 only has its health route and optional catalog preview,
+so most legacy REST-style routes deliberately return 404 locally. See
+[`docs/local-development-api-routing.md`](docs/local-development-api-routing.md)
+for the endpoint ownership inventory and known gaps.
+
+First start the backend stack using the instructions in `quranBack/README.md`.
+Then, from this repository:
+
+```sh
+cp .env.local.example .env.local
+docker compose -p al-lms-front --env-file .env.local -f docker-compose.local.yml up --build -d --wait
+docker compose -p al-lms-front --env-file .env.local -f docker-compose.local.yml ps
+docker compose -p al-lms-front --env-file .env.local -f docker-compose.local.yml logs -f frontend
+docker compose -p al-lms-front --env-file .env.local -f docker-compose.local.yml down
+```
+
+Keep `.env.local` local and use only disposable development data. Stopping the
+frontend does not stop or remove backend data. Stop the backend independently
+with its own Compose command; named data volumes are retained unless
+`down --volumes` is explicitly used.
+
+Compose overrides the Vite proxy targets with backend service names. For a
+host-run Vite session, `.env.local.example` points those targets to the backend's
+loopback ports. Browser-facing API calls still use same-origin paths.

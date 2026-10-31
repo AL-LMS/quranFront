@@ -1,3 +1,4 @@
+import { apiAssetUrl } from "../../../../api/localAssets.js";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
@@ -114,7 +115,7 @@ const ForumList = () => {
                       <TableRow key={item.id}>
                         <TableCell sx={{ textAlign: "center" }}>
                           <Avatar
-                            src={`http://212.33.202.49:8001${item?.picture}`}
+                            src={apiAssetUrl(`${item?.picture}`)}
                             sx={{ display: "block", margin: "0 auto" }}
                           />
                         </TableCell>

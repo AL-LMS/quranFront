@@ -1,9 +1,11 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
-import { transformWithEsbuild } from "vite";
+import { loadEnv, transformWithEsbuild } from "vite";
 import { fileURLToPath } from "node:url";
+import { legacyJsxEsbuildOptions } from "./vite-legacy-jsx-options.mjs";
 
 const sourceDirectory = fileURLToPath(new URL("./src/", import.meta.url));
+const localProxyEnv = loadEnv("development", process.cwd(), "VITE_");
 
 const legacyJsxInJs = {
   name: "legacy-jsx-in-js",
@@ -28,6 +30,22 @@ const legacyJsxInJs = {
 export default defineConfig({
   // CRA allowed JSX in .js files throughout this application.
   plugins: [legacyJsxInJs, react()],
+  optimizeDeps: { esbuildOptions: legacyJsxEsbuildOptions },
+  server: {
+    host: process.env.VITE_SERVER_HOST || "localhost",
+    proxy: {
+      "/legacy": {
+        target: process.env.VITE_LEGACY_API_TARGET || localProxyEnv.VITE_LEGACY_API_TARGET || "http://legacy-api:8000",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/legacy/, ""),
+        ws: true,
+      },
+      "/api": {
+        target: process.env.VITE_V2_API_TARGET || localProxyEnv.VITE_V2_API_TARGET || "http://v2-api:8000",
+        changeOrigin: true,
+      },
+    },
+  },
   // Keep the deployment artifact directory compatible with the CRA hosting setup.
   build: { outDir: "build" },
   test: {

@@ -1,0 +1,9 @@
+.git
+node_modules
+build
+coverage
+.vite
+.vitest
+.env
+.env.*
+!.env.local.example

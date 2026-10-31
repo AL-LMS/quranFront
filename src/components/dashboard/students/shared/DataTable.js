@@ -1,3 +1,4 @@
+import { apiAssetUrl } from "../../../../api/localAssets.js";
 import React from "react";
 import {
   Avatar,
@@ -69,7 +70,7 @@ const DataTable = ({
                 <TableCell>
                   <Stack direction="row">
                     <a
-                      href={`https://api.srvschool.ir${item.fileCourse}`}
+                      href={apiAssetUrl(`${item.fileCourse}`)}
                       download
                       target="_blank"
                     >

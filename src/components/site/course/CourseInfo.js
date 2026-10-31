@@ -1,3 +1,4 @@
+import { legacyAssetUrl } from "../../../api/localAssets.js";
 import React, { useState } from "react";
 import { Button, Card, Divider, Grid, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
@@ -90,7 +91,7 @@ const CourseInfo = ({ data_course }) => {
               src={
                 data_course?.picture === "default"
                   ? NoImage
-                  : `https://daarolquran.com/back_request/get_course_pic/${data_course?.picture}`
+                  : legacyAssetUrl(`/back_request/get_course_pic/${data_course?.picture}`)
               }
               alt="course"
               style={{ maxWidth: "100%", height: "100%", borderRadius: "5px" }}

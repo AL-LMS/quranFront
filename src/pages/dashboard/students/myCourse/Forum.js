@@ -1,3 +1,4 @@
+import { apiAssetUrl } from "../../../../api/localAssets.js";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
@@ -211,7 +212,7 @@ const Forum = () => {
                   />
                   {item.file && (
                     <a
-                      href={`https://api.srvschool.ir${item.file}`}
+                      href={apiAssetUrl(`${item.file}`)}
                       download
                       style={{
                         display: "block",
@@ -300,7 +301,7 @@ const Forum = () => {
                   />
                   {item.file && (
                     <a
-                      href={`https://api.srvschool.ir${item.file}`}
+                      href={apiAssetUrl(`${item.file}`)}
                       download
                       target="_blank"
                       style={{

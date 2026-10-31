@@ -1,3 +1,4 @@
+import { legacyAssetUrl } from "../../api/localAssets.js";
 import { Box } from "@mui/material";
 import React, { useRef } from "react";
 import "./style.css";
@@ -92,7 +93,7 @@ export default function Index({ formik, pic, setPic }) {
           <img
             src={
               formik.values.picture
-                ? `https://daarolquran.com/back_request/get_teacher_pic/${formik.values.picture}`
+                ? legacyAssetUrl(`/back_request/get_teacher_pic/${formik.values.picture}`)
                 : AvatarSVG
             }
             style={{

@@ -1,3 +1,4 @@
+import { legacyAssetUrl } from "../../../../../../api/localAssets.js";
 import React from "react";
 import {
   Button,
@@ -100,7 +101,7 @@ const HomeWorksAnswerLists = ({ data, setReload }) => {
                   {item?.file !== "" ? (
                     <a
                       download={item?.name}
-                      href={`https://daarolquran.com/back_request/get_uploaded_homework/${item?.file}`}
+                      href={legacyAssetUrl(`/back_request/get_uploaded_homework/${item?.file}`)}
                     >
                       <Button>
                         <DownloadIcon />
