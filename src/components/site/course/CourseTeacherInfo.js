@@ -1,3 +1,4 @@
+import { legacyAssetUrl } from "../../../api/localAssets.js";
 import React from "react";
 import { Card, Divider, Typography } from "@mui/material";
 import sanitizeHtml from "sanitize-html";
@@ -30,7 +31,7 @@ const CourseTeacherInfo = ({ data }) => {
           <img
             src={
               data.teacher_pic
-                ? `https://daarolquran.com/back_request/get_teacher_pic/${data.teacher_pic}`
+                ? legacyAssetUrl(`/back_request/get_teacher_pic/${data.teacher_pic}`)
                 : NoImage
             }
             style={{ width: "50px", height: "50px", borderRadius: "50%" }}

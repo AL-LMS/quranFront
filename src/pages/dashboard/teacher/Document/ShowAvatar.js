@@ -1,3 +1,4 @@
+import { legacyAssetUrl } from "../../../../api/localAssets.js";
 import React from "react";
 import { Avatar, Typography } from "@mui/material";
 import pdfImage from "../../../../assets/img/pdf.png";
@@ -62,7 +63,7 @@ const ShowAvatar = ({ formik, showLastCertificate, fileType }) => {
             />
             <Avatar
               alt="LastCertificate"
-              src={`https://daarolquran.com/back_request/get_uploaded_teacher_certificate/${formik?.values?.certificate}`}
+              src={legacyAssetUrl(`/back_request/get_uploaded_teacher_certificate/${formik?.values?.certificate}`)}
               sx={{
                 width: 75,
                 height: 75,

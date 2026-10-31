@@ -1,6 +1,8 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://api.srvschool.ir/";
+// Vite's local Compose profile proxies `/api` to the V2 FastAPI container.
+// The production fallback remains unchanged when no local override is set.
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL || "https://api.srvschool.ir/";
 let refresh = false;
 
 axios.interceptors.response.use(

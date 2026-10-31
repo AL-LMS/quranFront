@@ -26,19 +26,23 @@ describe("Vite migration compatibility", () => {
       .forEach((route) => expect(paths).toContain(route));
   });
 
-  it("preserves the configured API client origin", async () => {
+  it("preserves the production API fallback and applies the local override", async () => {
     await import("./api/axios");
     const axios = (await import("axios")).default;
-    expect(axios.defaults.baseURL).toBe("https://api.srvschool.ir/");
+    expect(axios.defaults.baseURL).toBe(
+      import.meta.env.VITE_API_BASE_URL || "https://api.srvschool.ir/"
+    );
   });
 
-  it("preserves legacy browser and websocket origins", () => {
-    expect(getUrl()).toBe("https://daarolquran.com/");
-    expect(getUrlWs()).toBe("wss://127.0.0.1:5000/");
+  it("preserves legacy production fallbacks and applies local API overrides", () => {
+    const localLegacyBase = import.meta.env.VITE_LEGACY_API_BASE_URL;
+    const localWebsocketBase = import.meta.env.VITE_LEGACY_WS_BASE_URL;
+    expect(getUrl()).toBe(localLegacyBase ? `${localLegacyBase}/` : "https://daarolquran.com/");
+    expect(getUrlWs()).toBe(localWebsocketBase ? `${localWebsocketBase}/` : "wss://127.0.0.1:5000/");
     window.history.replaceState({}, "", "/");
     Object.defineProperty(window, "location", { value: new URL("https://school.example/") });
-    expect(getUrl()).toBe("https://school.example/");
-    expect(getUrlWs()).toBe("wss://school.example/");
+    expect(getUrl()).toBe(localLegacyBase ? `${localLegacyBase}/` : "https://school.example/");
+    expect(getUrlWs()).toBe(localWebsocketBase ? `${localWebsocketBase}/` : "wss://school.example/");
   });
 
   it("preserves representative Jalali conversions", () => {

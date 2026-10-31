@@ -1,3 +1,4 @@
+import { apiAssetUrl } from "../../../../api/localAssets.js";
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
@@ -128,7 +129,7 @@ const QuizQuestion = () => {
                       <TableRow key={item.id}>
                         <TableCell sx={{ textAlign: "center" }}>
                           <img
-                            src={`https://api.srvschool.ir${item.question}`}
+                            src={apiAssetUrl(`${item.question}`)}
                             alt="q"
                             style={{ width: "110px", height: "110px" }}
                           />

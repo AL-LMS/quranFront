@@ -1,3 +1,4 @@
+import { apiAssetUrl } from "../../../../api/localAssets.js";
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import {
@@ -100,7 +101,7 @@ const MyExercise = () => {
                       <Stack direction="row">
                         <Tooltip title="دانلود">
                           <a
-                            href={`https://api.srvschool.ir${item.file_course}`}
+                            href={apiAssetUrl(`${item.file_course}`)}
                             download
                             target="_blank"
                           >

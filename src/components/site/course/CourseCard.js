@@ -1,3 +1,4 @@
+import { legacyAssetUrl } from "../../../api/localAssets.js";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -43,7 +44,7 @@ const CourseCard = ({ data }) => {
           src={
             data.picture === "default"
               ? NoImage
-              : `https://daarolquran.com/back_request/get_course_pic/${data.picture}`
+              : legacyAssetUrl(`/back_request/get_course_pic/${data.picture}`)
           }
         />
         <CardContent>
@@ -60,7 +61,7 @@ const CourseCard = ({ data }) => {
               style={{ width: "30px", height: "30px", borderRadius: "50%" }}
               src={
                 data.teacher_pic
-                  ? `https://daarolquran.com/back_request/get_teacher_pic/${data.teacher_pic}`
+                  ? legacyAssetUrl(`/back_request/get_teacher_pic/${data.teacher_pic}`)
                   : NoImage
               }
             />
@@ -155,7 +156,7 @@ const CourseCard = ({ data }) => {
             <img
               src={
                 data.teacher_pic
-                  ? `https://daarolquran.com/back_request/get_teacher_pic/${data.teacher_pic}`
+                  ? legacyAssetUrl(`/back_request/get_teacher_pic/${data.teacher_pic}`)
                   : NoImage
               }
               style={{ width: "50px", height: "50px", borderRadius: "50%" }}

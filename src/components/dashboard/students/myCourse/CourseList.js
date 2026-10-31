@@ -1,3 +1,4 @@
+import { legacyAssetUrl } from "../../../../api/localAssets.js";
 import React, { useState } from "react";
 import {
   Button,
@@ -52,7 +53,7 @@ const CourseList = ({ data }) => {
         src={
           data.picture === "default"
             ? NoImage
-            : `https://daarolquran.com/back_request/get_course_pic/${data.picture}`
+            : legacyAssetUrl(`/back_request/get_course_pic/${data.picture}`)
         }
         sx={{
           borderBottomRightRadius: "5px",

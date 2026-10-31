@@ -1,3 +1,4 @@
+import { apiAssetUrl } from "../../../../api/localAssets.js";
 import React, { useState } from "react";
 import {
   Divider,
@@ -29,7 +30,7 @@ const Question = ({ data, setAnswers, id }) => {
     <FormControl fullWidth sx={{ marginBottom: 4 }}>
       <FormLabel sx={{ color: "#014361", marginBottom: 2 }} id={data.id}>
         <img
-          src={`https://api.srvschool.ir${data.question}`}
+          src={apiAssetUrl(`${data.question}`)}
           alt="q"
           style={{ width: "320px", display: "block", margin: "0 auto" }}
         />
