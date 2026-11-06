@@ -157,10 +157,10 @@ describe("synthetic search and pagination", () => {
   it("rejects invalid IDs before any API request and handles missing IDs", async () => {
     const fetchSpy = vi.fn();
     vi.stubGlobal("fetch", fetchSpy);
-    const invalid = showPreview("/__preview/catalog/not-an-id?source=api");
+    const view = showPreview("/__preview/catalog/not-an-id?source=api");
     expect(await screen.findByText("شناسه دوره معتبر نیست.")).toBeTruthy();
     expect(fetchSpy).not.toHaveBeenCalled();
-    invalid.unmount();
+    view.unmount();
     showPreview("/__preview/catalog/999999");
     expect(await screen.findByText("دوره موردنظر پیدا نشد.")).toBeTruthy();
   });
