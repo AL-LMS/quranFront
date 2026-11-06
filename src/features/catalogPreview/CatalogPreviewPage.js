@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert, Box, Button, CircularProgress, Container, FormControl, Grid,
   InputLabel, MenuItem, Select, Stack, TextField, Typography,
@@ -12,7 +12,7 @@ import CatalogPreviewCard from "./CatalogPreviewCard";
 
 export default function CatalogPreviewPage() {
   const [params, setParams] = useSearchParams();
-  const filters = readCatalogFilters(params);
+  const filters = useMemo(() => readCatalogFilters(params), [params]);
   const [searchInput, setSearchInput] = useState(filters.search);
   const [reload, setReload] = useState(0);
   const [result, setResult] = useState({ status: "loading", items: [], error: "" });
@@ -53,8 +53,7 @@ export default function CatalogPreviewPage() {
     }
     load();
     return () => controller.abort();
-  }, [filters.search, filters.category, filters.is_online,
-    filters.limit, filters.offset, usingApi, reload]);
+  }, [filters, usingApi, reload]);
 
   function changeParam(name, value) {
     const next = new URLSearchParams(params);
