@@ -1,139 +1,119 @@
-import React from "react";
-import useAuth from "../../hooks/useAuth";
+import React, { useState } from "react";
+import { AutoStoriesOutlined, MenuRounded } from "@mui/icons-material";
 import {
-  AppBar,
-  Button,
-  IconButton,
-  styled,
-  Toolbar,
-  Typography,
+  AppBar, Box, Button, Container, IconButton, Stack,
+  Toolbar, Typography,
 } from "@mui/material";
-import { Box, Container } from "@mui/system";
-import { Link } from "react-router-dom";
-//Icons
-import MenuIcon from "@mui/icons-material/Menu";
-import "./styleNav.css";
-import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import Sidebar from "./Sidebar";
+import "./styleNav.css";
 
-const StyledToolbar = styled(Toolbar)({
-  display: "flex",
-  justifyContent: "space-between",
-});
-
-const NavbarButton = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  marginLeft: "75px !important",
-  marginRight: "75px",
-}));
-
-const AppBarContainer = styled(AppBar)(({ theme }) => ({
-  [theme.breakpoints.down("sm")]: {
-    width: "100%",
-  },
-  [theme.breakpoints.up("md")]: {
-    width: "80%",
-  },
-  [theme.breakpoints.up("lg")]: {
-    width: "90%",
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
-}));
-const Navbar = () => {
+export default function Navbar() {
   const { user } = useAuth();
+  const location = useLocation();
   const [sidebar, setSidebar] = useState(false);
+  const pathname = location.pathname;
+  const loginTarget = pathname === "/send-otp"
+    ? "/signup"
+    : pathname === "/signup" ? "/send-otp" : "/panel/dashboard";
+
   return (
     <>
-      <AppBarContainer
+      <AppBar
         position="sticky"
+        elevation={0}
         sx={{
-          backgroundColor: "#ffffffa6",
-          backdropFilter: "blur(30px)",
-          boxShadow: "none",
-          borderTopRightRadius: "100px",
-          borderBottomRightRadius: "100px",
-          borderTopLeftRadius: "100px",
-          borderBottomLeftRadius: "100px",
-          marginTop: "2rem",
+          top: { xs: 8, md: 16 },
+          width: { xs: "calc(100% - 24px)", sm: "calc(100% - 48px)", md: "min(92%, 1180px)" },
+          mx: "auto", mt: { xs: 1.2, md: 2.5 },
+          borderRadius: { xs: 3, md: 4 },
+          color: "#27264e",
+          bgcolor: "rgba(255,255,255,.95)",
+          backdropFilter: "blur(20px)",
+          border: "1px solid rgba(221,220,238,.8)",
+          boxShadow: "0 8px 24px rgba(33,32,80,.06)",
         }}
       >
-        <Container>
-          <StyledToolbar>
-            <Box component="div" display="flex" alignItems="center">
+        <Container maxWidth="xl" disableGutters>
+          <Toolbar sx={{
+            px: { xs: 1.2, sm: 2.4, md: 3.2 },
+            minHeight: { xs: "58px !important", md: "68px !important" },
+            gap: 1.5, justifyContent: "space-between",
+          }}>
+            <Stack direction="row" alignItems="center" gap={{ xs: .7, sm: 1 }}>
               <IconButton
+                aria-label="باز کردن فهرست"
+                aria-expanded={sidebar}
                 onClick={() => setSidebar(true)}
-                sx={{ display: { sx: "block", md: "none" } }}
+                sx={{
+                  display: { xs: "inline-flex", md: "none" },
+                  color: "#4d469c", p: .75,
+                  bgcolor: "#f4f2ff", borderRadius: 2,
+                }}
               >
-                <MenuIcon fontSize="large" />
+                <MenuRounded />
               </IconButton>
-              <Link to="/">
-                <Typography
-                  component="h4"
-                  variant="h6"
-                  color="primary"
-                  fontWeight={500}
-                  sx={{ textAlign: "center" }}
-                >
+              <Stack component={Link} to="/" direction="row" alignItems="center" gap={.9}
+                sx={{ textDecoration: "none", color: "inherit" }}>
+                <Box sx={{
+                  width: { xs: 30, md: 37 }, height: { xs: 30, md: 37 },
+                  display: { xs: "none", sm: "grid" },
+                  placeItems: "center", borderRadius: 2,
+                  bgcolor: "#f0eeff", color: "#5144ba",
+                }}>
+                  <AutoStoriesOutlined sx={{ fontSize: { xs: 19, md: 22 } }} />
+                </Box>
+                <Typography component="h4" sx={{
+                  fontWeight: 900, fontSize: { xs: ".96rem", sm: "1.07rem" },
+                  whiteSpace: "nowrap", color: "#343077",
+                }}>
                   دارالقرآن
                 </Typography>
-              </Link>
-            </Box>
-            <NavbarButton>
-              <Link
-                to={
-                  window.location.pathname === "/send-otp"
-                    ? "/signup"
-                    : window.location.pathname === "/signup"
-                    ? "/send-otp"
-                    : "/panel/dashboard"
-                }
+              </Stack>
+            </Stack>
+
+            <Stack direction="row" alignItems="center" gap={{ xs: .6, sm: 1 }}>
+              <Button
+                component={Link}
+                to={loginTarget}
+                variant="contained"
+                size="small"
+                sx={{
+                  px: { xs: 1.3, sm: 2.2 }, py: { xs: .9, md: 1 },
+                  borderRadius: 2, fontSize: { xs: ".74rem", sm: ".85rem" },
+                  bgcolor: "#5144ba", color: "#fff",
+                  boxShadow: "none", fontWeight: 800,
+                  whiteSpace: "nowrap", minWidth: 0,
+                  "&:hover": { bgcolor: "#40349e", boxShadow: "none" },
+                }}
               >
+                {user?.first_name
+                  ? [user.first_name, user.last_name].filter(Boolean).join(" ")
+                  : pathname === "/send-otp" ? "ثبت‌نام" : "ورود"}
+              </Button>
+              {!user?.first_name && (
                 <Button
-                  variant="contained"
-                  style={{
-                    marginLeft: "100px !important",
-                    marginRight: "100px !important",
-                  }}
+                  component={Link}
+                  to="/signup"
+                  variant="outlined"
+                  size="small"
                   sx={{
-                    borderRadius: "5px",
-                    ml: 2,
-                    boxShadow: "none",
+                    px: { xs: 1.1, sm: 2 }, py: { xs: .9, md: 1 },
+                    borderRadius: 2, fontSize: { xs: ".73rem", sm: ".85rem" },
+                    borderColor: "#e1deef", color: "#51469c",
+                    fontWeight: 750, whiteSpace: "nowrap", minWidth: 0,
+                    "&:hover": { borderColor: "#afa7df", bgcolor: "#f6f4ff" },
                   }}
                 >
-                  {user?.first_name
-                    ? `${user.first_name} ${user.last_name}`
-                    : window.location.pathname !== "/send-otp"
-                    ? "ورود"
-                    : "ثبت‌نام"}
+                  همکاری
                 </Button>
-              </Link>
-              {!user?.first_name && (
-                <Link to={"/signup"}>
-                  <Button
-                    variant="contained"
-                    style={{
-                      marginLeft: "100px !important",
-                      marginRight: "100px !important",
-                    }}
-                    sx={{
-                      borderRadius: "5px",
-                      ml: 2,
-                      boxShadow: "none",
-                    }}
-                  >
-                    {"همکاری"}
-                  </Button>
-                </Link>
               )}
-            </NavbarButton>
-          </StyledToolbar>
+            </Stack>
+          </Toolbar>
         </Container>
-      </AppBarContainer>
+      </AppBar>
       <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
     </>
   );
-};
-
-export default Navbar;
+}
