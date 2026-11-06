@@ -76,6 +76,8 @@ import WebSocketDemo from "./pages/site/Websocket";
 import CatalogPreviewPage from "./features/catalogPreview/CatalogPreviewPage";
 import CatalogDetailPreviewPage from "./features/catalogPreview/CatalogDetailPreviewPage";
 import { catalogPreviewEnabled } from "./features/catalogPreview/catalogPreviewRoutes";
+import EnrollmentPreviewPage from "./features/enrollmentPreview/EnrollmentPreviewPage";
+import { enrollmentPreviewEnabledForBuild } from "./features/enrollmentPreview/enrollmentPreviewGate";
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -87,6 +89,7 @@ function App() {
     dev: import.meta.env.DEV,
     flag: import.meta.env.VITE_ENABLE_CATALOG_UI_PREVIEW,
   });
+  const showEnrollmentPreview = enrollmentPreviewEnabledForBuild();
   return (
     <CacheProvider value={cacheRtl}>
       {/* {!location.pathname.includes("panel") && <Navbar />} */}
@@ -97,6 +100,12 @@ function App() {
           <>
             <Route path="/__preview/catalog" element={<CatalogPreviewPage />} />
             <Route path="/__preview/catalog/:id" element={<CatalogDetailPreviewPage />} />
+          </>
+        )}
+        {showEnrollmentPreview && (
+          <>
+            <Route path="/__preview/requests" element={<EnrollmentPreviewPage />} />
+            <Route path="/__preview/admin/requests" element={<EnrollmentPreviewPage admin />} />
           </>
         )}
         <Route path="/login" element={<Login />} />
