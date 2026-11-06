@@ -124,7 +124,7 @@ describe("synthetic search and pagination", () => {
     expect(await screen.findAllByRole("link", { name: /مشاهده جزئیات/ })).toHaveLength(12);
     fireEvent.click(screen.getByRole("button", { name: "صفحه بعد" }));
     await waitFor(() => {
-      expect(screen.getByLabelText("شماره صفحه").textContent).toContain("2");
+      expect(screen.getByLabelText("شماره صفحه").textContent).toContain("۲");
     });
     expect(fetchSpy).not.toHaveBeenCalled();
     expect(screen.getByText(/داده‌های مصنوعی/)).toBeTruthy();
