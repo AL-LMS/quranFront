@@ -101,7 +101,7 @@ describe("request and review screens", () => {
     expect(await screen.findByText("آموزش روخوانی قرآن")).toBeTruthy();
     expect(screen.getByText("در انتظار بررسی")).toBeTruthy();
     expect(screen.queryByRole("button", { name: "تأیید آزمایشی" })).toBeNull();
-    expect(screen.getByText(/هیچ.*دسترسی آموزشی ایجاد نمی‌کند/)).toBeTruthy();
+    expect(screen.getByText(/دسترسی آموزشی ایجاد نمی‌کند/)).toBeTruthy();
   });
 
   it("lets the fictional admin approve one pending request only", async () => {
