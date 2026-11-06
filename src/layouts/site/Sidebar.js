@@ -1,7 +1,7 @@
 import React from "react";
 import {
   AutoStoriesOutlined, CloseRounded, HelpOutlineRounded,
-  HomeOutlined, LoginRounded, PersonAddAltOutlined,
+  HomeOutlined, LoginRounded, PersonAddAltOutlined, AssignmentOutlined,
 } from "@mui/icons-material";
 import {
   Box, Divider, Drawer, IconButton, List, ListItemButton,
@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import { catalogPreviewEnabled } from "../../features/catalogPreview/catalogPreviewRoutes";
+import { enrollmentPreviewEnabledForBuild } from "../../features/enrollmentPreview/enrollmentPreviewGate";
 
 /** Real, navigable mobile menu; previous menu contained only commented-out items. */
 export default function Sidebar({ sidebar, setSidebar }) {
@@ -18,10 +19,14 @@ export default function Sidebar({ sidebar, setSidebar }) {
     flag: import.meta.env.VITE_ENABLE_CATALOG_UI_PREVIEW,
   });
 
+  const hasEnrollmentPreview = enrollmentPreviewEnabledForBuild();
   const links = [
     { label: "صفحه اصلی", url: "/", icon: <HomeOutlined /> },
     ...(hasCatalogPreview
       ? [{ label: "دوره‌های آموزشی", url: "/__preview/catalog", icon: <AutoStoriesOutlined /> }]
+      : []),
+    ...(hasEnrollmentPreview
+      ? [{ label: "درخواست‌های آزمایشی", url: "/__preview/requests", icon: <AssignmentOutlined /> }]
       : []),
     { label: "سوالات پرتکرار", url: "/FAQ", icon: <HelpOutlineRounded /> },
   ];
