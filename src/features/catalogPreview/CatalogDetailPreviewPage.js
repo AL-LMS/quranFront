@@ -4,14 +4,15 @@ import {
   PlaceOutlined, ReplayRounded,
 } from "@mui/icons-material";
 import {
-  Alert, Box, Button, Card, CardContent, Chip, CircularProgress,
-  Container, Paper, Stack, Typography,
+  Alert, Box, Button, Chip, CircularProgress, Container,
+  Divider, Paper, Stack, Typography,
 } from "@mui/material";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { fetchCatalogDetail } from "./catalogApi";
 import { parseCourseId } from "./catalogContract";
 import { syntheticCatalogDetail } from "./catalogFixtures";
 import { localCatalogApiAllowed } from "./catalogPreviewRoutes";
+import { getCatalogVisual } from "./catalogVisuals";
 
 export default function CatalogDetailPreviewPage() {
   const { id: rawId } = useParams();
@@ -43,11 +44,7 @@ export default function CatalogDetailPreviewPage() {
           ? await fetchCatalogDetail(id, { signal: controller.signal })
           : syntheticCatalogDetail(id);
         if (!controller.signal.aborted && request === currentRequest.current) {
-          setResult({
-            status: course ? "ready" : "not-found",
-            course,
-            error: "",
-          });
+          setResult({ status: course ? "ready" : "not-found", course, error: "" });
         }
       } catch (error) {
         if (!controller.signal.aborted && request === currentRequest.current) {
@@ -64,137 +61,178 @@ export default function CatalogDetailPreviewPage() {
 
   const backToList = "/__preview/catalog" + location.search;
   const course = result.course;
+  const theme = getCatalogVisual(course?.category);
+  const ModeIcon = course?.is_online ? ComputerOutlined : PlaceOutlined;
 
   return (
-    <Box
-      dir="rtl"
-      lang="fa"
-      sx={{
-        minHeight: "100vh",
-        pb: 9,
-        background: "linear-gradient(180deg, #f5f5fd 0%, #fafaff 380px, #f8f9fc 100%)",
-      }}
-    >
+    <Box dir="rtl" lang="fa" sx={{ minHeight: "100vh", pb: 9, bgcolor: "#f8f9fc" }}>
       <Container maxWidth="md" sx={{ pt: { xs: 3, md: 5 } }}>
         <Stack spacing={3}>
-          <Box>
-            <Button
-              component={Link}
-              to={backToList}
-              startIcon={<ArrowForwardRounded />}
-              sx={{
-                px: 2, py: 1, fontWeight: 700, borderRadius: 2,
-                color: "#44428f", bgcolor: "#fff",
-                border: "1px solid #e4e5f1",
-                "&:hover": { bgcolor: "#efeffb" },
-              }}
-            >
-              بازگشت به فهرست دوره‌ها
-            </Button>
-          </Box>
+          <Button
+            component={Link}
+            to={backToList}
+            startIcon={<ArrowForwardRounded />}
+            sx={{
+              alignSelf: "flex-start", fontWeight: 800,
+              borderRadius: 2.5, px: 2, py: 1,
+              color: "#4940a2", bgcolor: "#fff",
+              border: "1px solid #e8e6f2",
+              "&:hover": { bgcolor: "#f1efff" },
+            }}
+          >
+            بازگشت به فهرست دوره‌ها
+          </Button>
 
           {result.status === "loading" && (
-            <Paper
-              elevation={0}
-              role="status"
-              sx={{
-                border: "1px solid #e6e7ef", borderRadius: 3,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                gap: 2, p: { xs: 5, md: 8 },
-              }}
-            >
-              <CircularProgress size={26} />
+            <Paper elevation={0} role="status" sx={{
+              border: "1px solid #e8e7f1", borderRadius: 3.5,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              gap: 2, p: { xs: 5, md: 8 },
+            }}>
+              <CircularProgress size={28} />
               <Typography>در حال بارگذاری اطلاعات دوره…</Typography>
             </Paper>
           )}
-
           {result.status === "invalid" && (
-            <Alert severity="warning" sx={{ borderRadius: 2 }}>شناسه دوره معتبر نیست.</Alert>
+            <Alert severity="warning" sx={{ borderRadius: 2.5 }}>شناسه دوره معتبر نیست.</Alert>
           )}
           {result.status === "not-found" && (
-            <Alert severity="info" sx={{ borderRadius: 2 }}>دوره موردنظر پیدا نشد.</Alert>
+            <Alert severity="info" sx={{ borderRadius: 2.5 }}>دوره موردنظر پیدا نشد.</Alert>
           )}
           {result.status === "error" && (
-            <Alert severity="error" sx={{ borderRadius: 2 }}>
+            <Alert severity="error" sx={{ borderRadius: 2.5 }}>
               {result.error}
-              <Button
-                startIcon={<ReplayRounded />}
-                onClick={() => setReload((value) => value + 1)}
-              >
+              <Button startIcon={<ReplayRounded />} onClick={() => setReload((value) => value + 1)}>
                 تلاش مجدد
               </Button>
             </Alert>
           )}
 
           {result.status === "ready" && course && (
-            <Card
-              variant="outlined"
-              sx={{
-                borderRadius: 4, overflow: "hidden",
-                border: "1px solid #e5e7f2",
-                boxShadow: "0 18px 54px rgba(38,42,89,.065)",
-              }}
-            >
-              <Box
-                sx={{
-                  py: { xs: 4, md: 5 },
-                  px: { xs: 3, md: 5 },
-                  background: "linear-gradient(115deg, #eeedff, #f8f5ff 70%, #fff7ed)",
-                }}
-              >
-                <Stack spacing={2}>
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    <AutoStoriesOutlined sx={{ color: "#4d4799" }} />
-                    <Typography fontSize=".8rem" fontWeight={700} color="#514d94">
+            <Paper elevation={0} sx={{
+              borderRadius: { xs: 3.5, md: 4.5 },
+              overflow: "hidden", border: "1px solid #e8e6f1",
+              boxShadow: "0 14px 48px rgba(33,31,84,.06)",
+            }}>
+              <Box sx={{
+                position: "relative", minHeight: { xs: 220, sm: 260 },
+                p: { xs: 3, sm: 5 },
+                background: theme.gradient, overflow: "hidden",
+                display: "flex", alignItems: "center",
+              }}>
+                <Box aria-hidden="true" sx={{
+                  position: "absolute", left: { xs: -70, md: 30 },
+                  top: -86, width: 285, height: 285, borderRadius: "50%",
+                  border: "1px solid rgba(255,255,255,.9)",
+                  boxShadow: "0 0 0 25px rgba(255,255,255,.23)",
+                  pointerEvents: "none",
+                }} />
+                <Typography aria-hidden="true" sx={{
+                  position: "absolute", bottom: -85, left: { xs: 15, md: 95 },
+                  fontSize: { xs: 220, md: 280 },
+                  fontWeight: 900, lineHeight: 1,
+                  color: theme.accent, opacity: .105,
+                  pointerEvents: "none", userSelect: "none",
+                }}>
+                  {theme.glyph}
+                </Typography>
+                <Stack spacing={2.1} sx={{ zIndex: 1, position: "relative", maxWidth: 550 }}>
+                  <Stack direction="row" gap={1} alignItems="center">
+                    <Box sx={{
+                      width: 37, height: 37, display: "grid", placeItems: "center",
+                      borderRadius: 2, bgcolor: "rgba(255,255,255,.83)", color: theme.ink,
+                    }}>
+                      <AutoStoriesOutlined sx={{ fontSize: 22 }} />
+                    </Box>
+                    <Typography fontSize=".81rem" fontWeight={800} color={theme.ink}>
                       معرفی دوره آموزشی
                     </Typography>
                   </Stack>
-                  <Typography
-                    component="h1"
-                    variant="h4"
-                    sx={{
-                      fontWeight: 800, color: "#29264e",
-                      lineHeight: 1.8, overflowWrap: "anywhere",
-                    }}
-                  >
+                  <Typography component="h1" sx={{
+                    color: "#252650", fontWeight: 900,
+                    fontSize: { xs: "1.5rem", sm: "2.15rem" },
+                    lineHeight: 1.75, overflowWrap: "anywhere",
+                  }}>
                     {course.name}
                   </Typography>
-                  <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
+                  <Stack direction="row" gap={1} flexWrap="wrap">
                     <Chip
                       label={course.category || "بدون دسته‌بندی"}
-                      sx={{ bgcolor: "#fff", color: "#46418e", fontWeight: 700 }}
+                      sx={{ bgcolor: "#ffffffc9", color: theme.ink, fontWeight: 800 }}
                     />
                     <Chip
-                      icon={course.is_online ? <ComputerOutlined /> : <PlaceOutlined />}
+                      icon={<ModeIcon sx={{ fontSize: "1rem !important" }} />}
                       label={course.is_online ? "مجازی" : "حضوری"}
                       variant="outlined"
-                      sx={{ borderColor: "#d7d8eb", bgcolor: "#ffffffb8", color: "#4b5575" }}
+                      sx={{
+                        bgcolor: "#ffffffb9", borderColor: "#ffffffdb",
+                        color: theme.ink, fontWeight: 700,
+                        "& .MuiChip-icon": { color: theme.accent },
+                      }}
                     />
                   </Stack>
                 </Stack>
               </Box>
-              <CardContent sx={{ p: { xs: 3, md: 5 }, "&:last-child": { pb: { xs: 3, md: 5 } } }}>
+
+              <Box sx={{ p: { xs: 3, sm: 4.5, md: 5 } }}>
                 <Stack spacing={3}>
                   <Box>
-                    <Typography
-                      component="h2" variant="h6" fontWeight={800}
-                      sx={{ color: "#2d2e56", mb: 1.5 }}
-                    >
+                    <Typography component="h2" sx={{
+                      fontSize: "1.12rem", fontWeight: 900, color: "#2c2c52", mb: 1.3,
+                    }}>
                       درباره این دوره
                     </Typography>
-                    <Typography color="text.secondary" sx={{ lineHeight: 2.25, overflowWrap: "anywhere" }}>
+                    <Typography sx={{
+                      lineHeight: 2.2, color: "#646780",
+                      fontSize: ".94rem", overflowWrap: "anywhere",
+                    }}>
                       {course.summary || "خلاصه‌ای برای این دوره ثبت نشده است."}
                     </Typography>
                   </Box>
-                  <Alert
-                    severity="info"
-                    sx={{ borderRadius: 2, "& .MuiAlert-message": { lineHeight: 2 } }}
-                  >
-                    اطلاعات این صفحه صرفاً برای پیش‌نمایش است؛ امکان ثبت‌نام وجود ندارد.
+                  <Divider sx={{ borderColor: "#f0eff6" }} />
+                  <Stack direction={{ xs: "column", sm: "row" }} gap={2}>
+                    <Box sx={{
+                      flex: 1, bgcolor: "#fafafd", border: "1px solid #efedf6",
+                      borderRadius: 2.5, p: 2,
+                    }}>
+                      <Typography fontSize=".73rem" color="#81819a" fontWeight={700}>
+                        دسته‌بندی
+                      </Typography>
+                      <Typography fontWeight={800} color="#37335e" sx={{ mt: .6 }}>
+                        {course.category || "بدون دسته‌بندی"}
+                      </Typography>
+                    </Box>
+                    <Box sx={{
+                      flex: 1, bgcolor: "#fafafd", border: "1px solid #efedf6",
+                      borderRadius: 2.5, p: 2,
+                    }}>
+                      <Typography fontSize=".73rem" color="#81819a" fontWeight={700}>
+                        نوع برگزاری
+                      </Typography>
+                      <Typography fontWeight={800} color="#37335e" sx={{ mt: .6 }}>
+                        {course.is_online ? "مجازی" : "حضوری"}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                  <Alert severity="info" sx={{
+                    borderRadius: 2.5, bgcolor: "#eff5ff",
+                    "& .MuiAlert-message": { lineHeight: 2 },
+                  }}>
+                    این صفحه یک پیش‌نمایش آزمایشی است و امکان ثبت‌نام یا پرداخت ندارد.
                   </Alert>
+                  <Button component={Link} to={backToList}
+                    variant="contained" startIcon={<ArrowForwardRounded />}
+                    sx={{
+                      alignSelf: { xs: "stretch", sm: "flex-start" },
+                      bgcolor: "#5144ba", fontWeight: 800, borderRadius: 2.5,
+                      px: 3, py: 1.25, boxShadow: "none",
+                      "&:hover": { bgcolor: "#40349e" },
+                    }}>
+                    مرور دوره‌های دیگر
+                  </Button>
                 </Stack>
-              </CardContent>
-            </Card>
+              </Box>
+            </Paper>
           )}
         </Stack>
       </Container>

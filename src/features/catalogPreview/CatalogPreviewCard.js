@@ -1,140 +1,166 @@
 import React from "react";
 import { ArrowBackRounded, AutoStoriesOutlined, ComputerOutlined, PlaceOutlined } from "@mui/icons-material";
-import { Box, Button, Card, CardContent, Chip, Stack, Typography } from "@mui/material";
+import { Box, Card, CardActionArea, Chip, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { getCatalogVisual } from "./catalogVisuals";
 
-/** Only the five-field candidate catalog contract; no legacy assets or private fields. */
-export default function CatalogPreviewCard({ course, returnQuery = "" }) {
-  const modeLabel = course.is_online ? "مجازی" : "حضوری";
+/** Clickable card based only on public course fields. No invented photos/price/teacher. */
+export default function CatalogPreviewCard({ course, returnQuery = "", isSynthetic = false }) {
+  const theme = getCatalogVisual(course.category);
   const ModeIcon = course.is_online ? ComputerOutlined : PlaceOutlined;
-
   return (
     <Card
       component="article"
       variant="outlined"
       sx={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-        border: "1px solid #e5e8f0",
-        borderRadius: 3,
-        boxShadow: "0 8px 28px rgba(38, 42, 89, 0.035)",
+        height: "100%", borderRadius: { xs: 3, md: 3.5 },
+        overflow: "hidden", border: "1px solid #e8e9f0", bgcolor: "#fff",
+        boxShadow: "0 3px 15px rgba(28,29,68,.035)",
         transition: "transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease",
-        "&:hover": {
-          transform: "translateY(-4px)",
-          borderColor: "#b7bee2",
-          boxShadow: "0 18px 36px rgba(38, 42, 89, 0.11)",
+        "@media (hover: hover)": {
+          "&:hover": {
+            transform: "translateY(-5px)",
+            borderColor: "#cbc8e8",
+            boxShadow: "0 20px 36px rgba(32,32,83,.10)",
+          },
         },
         "&:focus-within": {
-          borderColor: "#514ca1",
-          boxShadow: "0 0 0 3px rgba(81, 76, 161, 0.16)",
+          borderColor: "#5045a8", boxShadow: "0 0 0 3px rgba(80,69,168,.14)",
         },
       }}
     >
-      <Box
-        aria-hidden="true"
+      <CardActionArea
+        component={Link}
+        to={"/__preview/catalog/" + course.id + returnQuery}
+        aria-label={"مشاهده جزئیات " + course.name}
         sx={{
-          minHeight: 84,
-          px: 2.5,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          background:
-            "linear-gradient(115deg, rgba(230,233,255,0.85), rgba(244,240,255,0.94) 68%, rgba(252,241,222,0.75))",
-          borderBottom: "1px solid #edf0f7",
+          display: "flex", flexDirection: "column", alignItems: "stretch",
+          height: "100%", textAlign: "right", borderRadius: 3,
+          "&:focus-visible": { outline: "3px solid #5045a8", outlineOffset: -3 },
         }}
       >
         <Box
           sx={{
-            width: 44,
-            height: 44,
-            display: "grid",
-            placeItems: "center",
-            bgcolor: "#ffffffd9",
-            border: "1px solid #dadcf5",
-            color: "#49458f",
-            borderRadius: 2.5,
+            minHeight: { xs: 94, sm: 116 },
+            p: { xs: 1.8, sm: 2 },
+            position: "relative", overflow: "hidden",
+            background: theme.gradient, isolation: "isolate",
+            display: "flex", justifyContent: "space-between",
+            alignItems: "flex-start",
+            borderBottom: "1px solid rgba(46,40,104,.045)",
           }}
         >
-          <AutoStoriesOutlined fontSize="medium" />
-        </Box>
-        <Typography color="#666491" fontWeight={600} fontSize="0.78rem">
-          پیش‌نمایش دوره
-        </Typography>
-      </Box>
-
-      <CardContent sx={{ p: 2.5, flexGrow: 1, display: "flex", flexDirection: "column", "&:last-child": { pb: 2.5 } }}>
-        <Stack spacing={2} sx={{ height: "100%", flexGrow: 1 }}>
-          <Typography
-            variant="h6"
-            component="h2"
+          <Box
+            aria-hidden="true"
             sx={{
-              fontSize: "1rem",
-              lineHeight: 1.95,
-              fontWeight: 700,
-              color: "#252748",
-              overflowWrap: "anywhere",
-              minHeight: "3.9em",
+              position: "absolute", top: -61, left: -30, width: 160, height: 160,
+              border: "1px solid rgba(255,255,255,.75)",
+              borderRadius: "50%", boxShadow: "0 0 0 20px rgba(255,255,255,.15)",
+            }}
+          />
+          <Box
+            aria-hidden="true"
+            sx={{
+              position: "absolute", bottom: -80, right: "28%",
+              width: 150, height: 150,
+              transform: "rotate(30deg)", borderRadius: 8,
+              background: "rgba(255,255,255,.18)",
+            }}
+          />
+          <Box
+            sx={{
+              position: "relative", zIndex: 1, display: "inline-flex",
+              alignItems: "center", gap: .7, px: 1.25, py: .55,
+              borderRadius: 5, bgcolor: "rgba(255,255,255,.83)",
+              color: theme.ink, fontWeight: 800, fontSize: ".76rem",
+              border: "1px solid rgba(255,255,255,.65)",
+            }}
+          >
+            <AutoStoriesOutlined sx={{ fontSize: 17 }} />
+            {course.category || "آموزشی"}
+          </Box>
+          <Box
+            aria-hidden="true"
+            sx={{
+              position: "absolute", bottom: { xs: -24, sm: -31 },
+              left: { xs: 25, sm: 30 }, fontFamily: "inherit",
+              fontSize: { xs: 110, sm: 138 }, fontWeight: 900, lineHeight: 1.25,
+              color: theme.accent, opacity: .12, userSelect: "none",
+            }}
+          >
+            {theme.glyph}
+          </Box>
+          {isSynthetic && (
+            <Typography
+              sx={{
+                position: "relative", zIndex: 1, fontSize: ".69rem",
+                color: theme.ink, opacity: .8, mt: .7, fontWeight: 600,
+              }}
+            >
+              نمونه نمایشی
+            </Typography>
+          )}
+        </Box>
+
+        <Stack sx={{ px: { xs: 2, sm: 2.5 }, pt: 2.1, pb: 2, flexGrow: 1, minHeight: 0 }} spacing={1.5}>
+          <Typography
+            component="h3"
+            sx={{
+              fontSize: { xs: "1.03rem", md: "1.07rem" },
+              lineHeight: 1.85, color: "#25274c", fontWeight: 800,
+              minHeight: "3.7em", overflowWrap: "anywhere",
+              display: "-webkit-box", WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical", overflow: "hidden",
             }}
           >
             {course.name}
           </Typography>
 
-          <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" alignItems="center">
-            <Chip
-              size="small"
-              variant="filled"
-              label={course.category || "بدون دسته‌بندی"}
-              sx={{ bgcolor: "#f1f2fb", color: "#454186", fontWeight: 600 }}
-            />
-            <Chip
-              size="small"
-              variant="outlined"
-              icon={<ModeIcon sx={{ fontSize: "0.95rem !important" }} />}
-              label={modeLabel}
-              sx={{ borderColor: "#dce0ea", color: "#535b6e", "& .MuiChip-icon": { color: "#5b6291" } }}
-            />
-          </Stack>
-
           <Typography
-            color="text.secondary"
             sx={{
-              flexGrow: 1,
-              lineHeight: 2,
-              fontSize: "0.87rem",
-              minHeight: "4em",
-              overflowWrap: "anywhere",
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
+              color: "#6a6c83", fontSize: ".83rem", lineHeight: 2,
+              display: "-webkit-box", WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical", overflow: "hidden",
+              minHeight: "4em", flexGrow: 1, overflowWrap: "anywhere",
             }}
           >
             {course.summary || "خلاصه‌ای برای این دوره ثبت نشده است."}
           </Typography>
 
-          <Button
-            component={Link}
-            to={"/__preview/catalog/" + course.id + returnQuery}
-            variant="contained"
-            fullWidth
-            endIcon={<ArrowBackRounded />}
-            aria-label={"مشاهده جزئیات " + course.name}
+          <Box
             sx={{
-              py: 1.15,
-              mt: "auto",
-              bgcolor: "#3d3c91",
-              borderRadius: 2,
-              fontWeight: 700,
-              boxShadow: "none",
-              "&:hover": { bgcolor: "#302f7a", boxShadow: "0 5px 13px rgba(61,60,145,0.2)" },
+              pt: 1.3, borderTop: "1px solid #f0f0f5",
+              display: "flex", justifyContent: "space-between",
+              alignItems: "center", gap: 1,
             }}
           >
-            مشاهده جزئیات
-          </Button>
+            <Chip
+              size="small"
+              icon={<ModeIcon sx={{ fontSize: "1rem !important" }} />}
+              label={course.is_online ? "مجازی" : "حضوری"}
+              variant="outlined"
+              sx={{
+                height: 27, bgcolor: "#fafafd", color: "#53566f",
+                fontWeight: 600, border: "1px solid #e6e7f0",
+                "& .MuiChip-icon": { color: "#6b67a8" },
+              }}
+            />
+            <Stack direction="row" alignItems="center" gap={.4}>
+              <Typography fontSize=".83rem" fontWeight={800} color="#463d9f">
+                مشاهده جزئیات
+              </Typography>
+              <Box
+                sx={{
+                  bgcolor: "#f0eeff", display: "grid", placeItems: "center",
+                  borderRadius: "50%", width: 29, height: 29, color: "#5148ae",
+                }}
+              >
+                <ArrowBackRounded sx={{ fontSize: 19 }} />
+              </Box>
+            </Stack>
+          </Box>
         </Stack>
-      </CardContent>
+      </CardActionArea>
     </Card>
   );
 }
