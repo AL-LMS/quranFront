@@ -17,7 +17,7 @@ npm run build     # writes to build/
 npm run preview   # serves the production build locally
 ```
 
-`npm ci` uses the repository `.npmrc` peer resolution setting to accommodate the existing `mui-rte` / `@mui/styles` React 17 peer declaration alongside the app's React 18 installation. No `REACT_APP_*` or `process.env` variables are currently used. New public build-time settings use `import.meta.env.VITE_*`; never put secrets in client variables.
+`npm ci` uses the repository `.npmrc` peer resolution setting to accommodate `@persian-tools/persian-mobile-datepicker`'s React 17 peer declaration alongside the app's React 18 installation. The unused `mui-rte` editor and its orphaned Draft.js dependencies have been removed; no replacement editor is included. No `REACT_APP_*` or `process.env` variables are currently used. New public build-time settings use `import.meta.env.VITE_*`; never put secrets in client variables.
 
 Production hosting must serve the app from `/` and rewrite unknown BrowserRouter paths, including `/panel/...`, to `/index.html`. The output remains in `build/` to match existing deployment paths.
 
