@@ -3,7 +3,7 @@ import { Grid, Typography } from "@mui/material";
 import CourseCard from "../../../components/site/course/CourseCard";
 
 //Swiper
-import { Navigation, Pagination } from "swiper";
+import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box } from "@mui/system";
 

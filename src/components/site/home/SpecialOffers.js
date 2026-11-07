@@ -4,7 +4,7 @@ import useAuth from "../../../hooks/useAuth";
 import { Box, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import { Navigation, Pagination } from "swiper";
+import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import PackageCard from "../packages/PackageCard";
 
