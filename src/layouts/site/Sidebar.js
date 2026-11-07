@@ -8,12 +8,14 @@ import {
   ListItemIcon, ListItemText, Stack, Typography,
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import { catalogPreviewEnabled } from "../../features/catalogPreview/catalogPreviewRoutes";
 import { enrollmentPreviewEnabledForBuild } from "../../features/enrollmentPreview/enrollmentPreviewGate";
 
 /** Real, navigable mobile menu; previous menu contained only commented-out items. */
 export default function Sidebar({ sidebar, setSidebar }) {
   const location = useLocation();
+  const { user } = useAuth();
   const hasCatalogPreview = catalogPreviewEnabled({
     dev: import.meta.env.DEV,
     flag: import.meta.env.VITE_ENABLE_CATALOG_UI_PREVIEW,
@@ -30,10 +32,15 @@ export default function Sidebar({ sidebar, setSidebar }) {
       : []),
     { label: "سوالات پرتکرار", url: "/FAQ", icon: <HelpOutlineRounded /> },
   ];
-  const accountLinks = [
-    { label: "ورود", url: "/login", icon: <LoginRounded /> },
-    { label: "ثبت‌نام", url: "/signup", icon: <PersonAddAltOutlined /> },
-  ];
+  const accountLinks = user?.role
+    ? [{
+      label: [user.first_name, user.last_name].filter(Boolean).join(" ") || "داشبورد",
+      url: "/panel/dashboard", icon: <AutoStoriesOutlined />,
+    }]
+    : [
+      { label: "ورود", url: "/login", icon: <LoginRounded /> },
+      { label: "ثبت‌نام", url: "/signup", icon: <PersonAddAltOutlined /> },
+    ];
 
   function menuItem(item) {
     const selected = item.url === "/"

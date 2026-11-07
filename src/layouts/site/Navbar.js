@@ -14,9 +14,11 @@ export default function Navbar() {
   const location = useLocation();
   const [sidebar, setSidebar] = useState(false);
   const pathname = location.pathname;
-  const loginTarget = pathname === "/send-otp"
-    ? "/signup"
-    : pathname === "/signup" ? "/send-otp" : "/panel/dashboard";
+  const loginTarget = user?.role
+    ? "/panel/dashboard"
+    : pathname === "/send-otp"
+      ? "/signup"
+      : pathname === "/signup" ? "/send-otp" : "/login";
 
   return (
     <>
@@ -90,9 +92,10 @@ export default function Navbar() {
               >
                 {user?.first_name
                   ? [user.first_name, user.last_name].filter(Boolean).join(" ")
-                  : pathname === "/send-otp" ? "ثبت‌نام" : "ورود"}
+                  : user?.role ? "حساب کاربری"
+                    : pathname === "/send-otp" ? "ثبت‌نام" : "ورود"}
               </Button>
-              {!user?.first_name && (
+              {!user?.role && (
                 <Button
                   component={Link}
                   to="/signup"
