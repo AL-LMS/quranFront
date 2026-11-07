@@ -553,6 +553,22 @@ const FooterPv = styled.span`
     margin-right: 0px;
   }
 `;
+
+const isOptionalText = (value) => value == null || typeof value === "string";
+
+const isValidLegacyCourse = (course) =>
+  course !== null &&
+  typeof course === "object" &&
+  !Array.isArray(course) &&
+  Number.isSafeInteger(course.course_id) &&
+  course.course_id > 0 &&
+  typeof course.name === "string" &&
+  (course.picture == null || typeof course.picture === "string") &&
+  isOptionalText(course.teacher_pic) &&
+  isOptionalText(course.teacher_name) &&
+  isOptionalText(course.explain) &&
+  isOptionalText(course.teacher_description);
+
 const HomePage = () => {
   const [data, setData] = useState([]);
   const [courseRequestState, setCourseRequestState] = useState("loading");
@@ -573,12 +589,28 @@ const HomePage = () => {
           baseURL: getUrl() + "back_request/select_request/",
           signal: controller.signal,
         });
-        const courses = response?.data?.response?.all_course;
-        const trackingCode = response?.data?.tracking_code;
-        if (trackingCode === null || trackingCode === undefined || !Array.isArray(courses)) {
+        if (controller.signal.aborted) return;
+
+        const payload = response?.data;
+        const courses = payload?.response?.all_course;
+        const validCourses =
+          Array.isArray(courses) && courses.every(isValidLegacyCourse);
+        const courseIds = validCourses ? courses.map((course) => course.course_id) : [];
+        if (
+          payload?.status !== 200 ||
+          typeof payload?.tracking_code !== "string" ||
+          payload.tracking_code.trim() === "" ||
+          !validCourses ||
+          new Set(courseIds).size !== courseIds.length
+        ) {
           throw new Error("Invalid legacy course response");
         }
-        setData(courses);
+        setData(
+          courses.map((course) => ({
+            ...course,
+            picture: course.picture ?? "default",
+          }))
+        );
         setCourseRequestState(courses.length === 0 ? "empty" : "success");
       } catch (error) {
         if (controller.signal.aborted || error?.code === "ERR_CANCELED") return;
