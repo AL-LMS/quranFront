@@ -13,6 +13,8 @@ import { parseCourseId } from "./catalogContract";
 import { syntheticCatalogDetail } from "./catalogFixtures";
 import { localCatalogApiAllowed } from "./catalogPreviewRoutes";
 import { getCatalogVisual } from "./catalogVisuals";
+import DemoRequestAction from "../enrollmentPreview/DemoRequestAction";
+import { enrollmentPreviewEnabledForBuild } from "../enrollmentPreview/enrollmentPreviewGate";
 
 export default function CatalogDetailPreviewPage() {
   const { id: rawId } = useParams();
@@ -25,6 +27,7 @@ export default function CatalogDetailPreviewPage() {
     apiFlag: import.meta.env.VITE_ALLOW_CATALOG_LOCAL_API,
   });
   const usingApi = allowApi && searchParams.get("source") === "api";
+  const demoRequestsAllowed = usingApi && enrollmentPreviewEnabledForBuild();
   const [reload, setReload] = useState(0);
   const [result, setResult] = useState({ status: "loading", course: null, error: "" });
   const currentRequest = useRef(0);
@@ -218,8 +221,11 @@ export default function CatalogDetailPreviewPage() {
                     borderRadius: 2.5, bgcolor: "#eff5ff",
                     "& .MuiAlert-message": { lineHeight: 2 },
                   }}>
-                    این صفحه یک پیش‌نمایش آزمایشی است و امکان ثبت‌نام یا پرداخت ندارد.
+                    {demoRequestsAllowed
+                      ? "ثبت درخواست در این صفحه فقط شبیه‌سازی است؛ هیچ ثبت‌نام واقعی، پرداخت یا دسترسی آموزشی ایجاد نمی‌شود."
+                      : "این صفحه یک پیش‌نمایش آزمایشی است و امکان ثبت‌نام یا پرداخت ندارد."}
                   </Alert>
+                  {demoRequestsAllowed && <DemoRequestAction courseId={course.id} />}
                   <Button component={Link} to={backToList}
                     variant="contained" startIcon={<ArrowForwardRounded />}
                     sx={{
