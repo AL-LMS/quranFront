@@ -1,69 +1,90 @@
-# AL-MVP-CATALOG-06 — browser-to-V2 local preview
+# Local catalog preview integration
 
-## What this proves
+This guide runs the catalog preview against the actual V2 FastAPI catalog
+router using only synthetic in-memory SQLite fixtures.
 
-This is an isolated integration path between the existing catalog React client
-and the **real V2 FastAPI course listing/detail endpoints**. The backend is a
-localhost-only `uvicorn` process using a disposable in-memory SQLite database
-with invented course records. No real users, database migration, or published
-course records are used.
+## Verified revisions
 
-The frontend API mode is already implemented in
-`src/features/catalogPreview/`; this milestone verifies the explicit opt-in,
-routing, query parameters, error paths, and five-field projection.
+- Backend `main`: `845bb33f00c2ee2a8d65107385f04ef7f3a5d501` (includes the
+  merged backend catalog demo entrypoint).
+- Frontend `main` baseline before this integration: `32127bf29dbb6ff4d2af6698f779cb2b4a3edca6`.
+- Frontend changes are on `feat/al-mvp-front-catalog-06-api-integration`.
 
-## Terminal 1: backend (local machine only)
-
-In `~/Dev/AL-LMS/quranBack`, use the backend Catalog-06 feature branch:
+Use separate disposable worktrees so these steps do not switch or alter an
+existing development checkout. Run the commands from each repository's
+existing clone. The destination paths must not already exist:
 
 ```bash
-git fetch origin
-git switch --track origin/feat/al-mvp-catalog-06-local-api-demo
-python -m pip install -e ".[dev]"
-python -m devtools.catalog_demo
+git -C ~/Dev/AL-LMS/quranBack fetch origin
+git -C ~/Dev/AL-LMS/quranBack worktree add --detach \
+  /tmp/quranback-catalog-demo 845bb33f00c2ee2a8d65107385f04ef7f3a5d501
+
+git -C ~/Dev/AL-LMS/quranFront fetch origin
+git -C ~/Dev/AL-LMS/quranFront worktree add --detach \
+  /tmp/quranfront-catalog-demo origin/feat/al-mvp-front-catalog-06-api-integration
 ```
 
-The server binds only to `127.0.0.1:8001`. It uses only anonymous,
-invented courses and no environment-configured database.
+The frontend branch includes the catalog-preview stack. No feature-branch
+checkout is required in the original worktrees.
 
-## Terminal 2: frontend
+## Terminal 1: local backend
 
-In `~/Dev/AL-LMS/quranFront`, switch to the frontend Catalog-06 branch and run:
+The backend demo binds specifically to `127.0.0.1:8001`. It builds an
+in-memory SQLite database and synthetic records, does not read database URL
+environment variables, and applies no migrations. Do not change its bind
+address or expose it to a network interface.
 
 ```bash
-git fetch origin
-git switch --track origin/feat/al-mvp-front-catalog-06-api-integration
-npm ci
+cd /tmp/quranback-catalog-demo
+python3 -m venv .venv
+.venv/bin/python -m pip install -e '.[dev]'
+.venv/bin/python -m devtools.catalog_demo
+```
 
+The demo prints its loopback-only identity when it starts. In another terminal,
+check the actual service directly:
+
+```bash
+curl -fsS 'http://127.0.0.1:8001/api/v2/catalog/courses?limit=2' | jq .
+curl -i 'http://127.0.0.1:8001/api/v2/catalog/courses/91001'
+curl -i 'http://127.0.0.1:8001/api/v2/catalog/courses/999999'
+```
+
+## Terminal 2: local frontend and same-origin proxy
+
+```bash
+cd /tmp/quranfront-catalog-demo
+npm ci
+VITE_SERVER_HOST=127.0.0.1 \
 VITE_ENABLE_CATALOG_UI_PREVIEW=true \
 VITE_ALLOW_CATALOG_LOCAL_API=true \
 VITE_V2_API_TARGET=http://127.0.0.1:8001 \
-npm run dev
+npm run dev -- --host 127.0.0.1 --port 5173 --strictPort
 ```
 
-Open `http://localhost:5173/__preview/catalog` or the port Vite prints.
-Choose **API محلی** in the source selector. The browser calls the local
-same-origin `/api/v2/catalog/courses` path. The Vite development proxy sends
-it to the backend process on the same machine.
+Open `http://127.0.0.1:5173/__preview/catalog`. The initial source is synthetic
+frontend data and makes no catalog HTTP request. Choose **API محلی** to enable
+the backend request. The browser requests the same-origin path
+`/api/v2/catalog/courses`; Vite proxies that path to the explicitly configured
+loopback backend. The client omits credentials and projects responses to the
+approved fields: `id`, `name`, `summary`, `category`, and `is_online`.
 
-The page defaults to **synthetic frontend fixtures** until you explicitly
-switch the source; the local API flag must also be enabled. No API mode exists
-in a production build.
+The API mode has no historical production-endpoint fallback. If the local
+backend is unavailable, the preview shows an error and retry action. Search,
+category, modality, and page offset are sent as bounded query parameters.
+Course details use the selected course ID; unknown or invalid IDs fail safely.
 
-## Manual acceptance checklist
+## Verification coverage
 
-1. Open the catalog in synthetic mode; no HTTP catalog request should occur.
-2. Select API mode; the server should receive a GET for `/api/v2/catalog/courses`.
-3. Check all displayed items; only five allowed public fields appear.
-4. Select a category, search by course title, and switch online/in-person.
-5. Open the course detail page and use the back link.
-6. Try an unknown ID; it should show a not-found state without revealing hidden rows.
-7. Stop the backend process; the frontend should show an error and retry action,
-   **not** redirect to a historical production API.
-8. Verify the old `/panel/all-courses` and `/panel/course/details/:id`
-   routes remain untouched.
-
-## Frontend automated verification
+- `catalogLocalApi.test.js`: six automated Vitest tests with mocked HTTP. They
+  cover same-origin GETs, explicit flags, omitted credentials, field
+  projection, safe IDs, 404 handling, retry behavior, and filtering parameters.
+- Other catalog Vitest tests cover offline synthetic mode, search, category and
+  modality controls, pagination, URL state, details, and return navigation.
+- The commands below are automated local checks. The curl commands above are
+  direct loopback HTTP checks through both FastAPI and the Vite proxy.
+- No browser automation package is configured in this frontend repository;
+  visual browser Network-panel verification remains a manual check.
 
 ```bash
 npm test
@@ -72,15 +93,33 @@ npm run lint
 npm run build
 ```
 
-The tests mock HTTP responses. The live browser-to-loopback integration is
-a separate manual acceptance check and is not automatically validated by
-GitHub Actions.
+Manual acceptance: in the preview, inspect synthetic mode before selecting the
+API source; then search and filter, change pages, open a course and return,
+and inspect the unknown-ID and backend-offline states. The API response and
+rendered cards must not expose any fields beyond the five-field public DTO.
+The legacy homepage and `/panel/*` routes remain separate and unchanged.
 
-## Strict boundaries
+## Stop and cleanup
 
-- No real database, remote network service, SMS, payment, or student account
-- No runtime catalog migration, historical table mapping, or legacy route change
-- No production hostname or production API traffic
-- No enrollment or course-access grant
-- G0–G8 remain PENDING and G9 remains NOT GRANTED; these files do not claim
-  deployment authorization or resolve the independent-review requirement
+Stop each foreground server with Ctrl+C. This stops only the processes started
+in these terminals. Confirm the demo no longer answers on port 8001. The SQLite
+database exists only in process memory and is discarded when the backend exits.
+
+After stopping both servers, remove only the clean temporary worktrees created
+above (omit a removal if that worktree has local changes):
+
+```bash
+git -C ~/Dev/AL-LMS/quranBack worktree remove /tmp/quranback-catalog-demo
+git -C ~/Dev/AL-LMS/quranFront worktree remove /tmp/quranfront-catalog-demo
+```
+
+## Safety boundary
+
+This is an offline development preview, not production authorization or a
+production catalog integration. It uses no real identity, student data,
+database, enrollment activation, payment, SMS, or production service. The
+backend demo also attaches a separate in-memory synthetic enrollment prototype
+under `/api/v2/__demo/enrollment`. Its fictional student/admin routes have no
+authentication and do not grant course access; they are unrelated to this
+catalog integration and must never be treated as production permissions. The
+demo does not prove production readiness.
