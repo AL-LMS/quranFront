@@ -51,7 +51,7 @@ describe("site navigation compatibility", () => {
     trigger.focus();
     fireEvent.click(trigger);
     expect(await screen.findByRole("navigation", { name: "ناوبری موبایل" })).toBeInTheDocument();
-    expect(document.querySelector(".MuiDrawer-paperAnchorRight")).toBeInTheDocument();
+    expect(screen.getByRole("presentation")).toHaveAttribute("aria-label", "فهرست ناوبری");
     expect(screen.getByRole("link", { name: "ورود" })).toHaveAttribute("href", "/login");
     fireEvent.keyDown(screen.getByRole("presentation"), { key: "Escape" });
     await waitFor(() => expect(screen.queryByRole("navigation", { name: "ناوبری موبایل" })).not.toBeInTheDocument());
