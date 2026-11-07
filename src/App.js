@@ -73,6 +73,9 @@ import "./App.css";
 import TeachersDocument from "./pages/dashboard/teacher/TeachersDocument";
 import HomePage from "./pages/site/HomePage";
 import WebSocketDemo from "./pages/site/Websocket";
+import CatalogPreviewPage from "./features/catalogPreview/CatalogPreviewPage";
+import CatalogDetailPreviewPage from "./features/catalogPreview/CatalogDetailPreviewPage";
+import { catalogPreviewEnabled } from "./features/catalogPreview/catalogPreviewRoutes";
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -80,12 +83,22 @@ const cacheRtl = createCache({
 function App() {
   const location = useLocation();
   const { user } = useAuth();
+  const showCatalogPreview = catalogPreviewEnabled({
+    dev: import.meta.env.DEV,
+    flag: import.meta.env.VITE_ENABLE_CATALOG_UI_PREVIEW,
+  });
   return (
     <CacheProvider value={cacheRtl}>
       {/* {!location.pathname.includes("panel") && <Navbar />} */}
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        {showCatalogPreview && (
+          <>
+            <Route path="/__preview/catalog" element={<CatalogPreviewPage />} />
+            <Route path="/__preview/catalog/:id" element={<CatalogDetailPreviewPage />} />
+          </>
+        )}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/confirm-phone" element={<ConfirmPhone />} />
