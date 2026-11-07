@@ -20,7 +20,7 @@
     "@types/stylis": "^4.0.2",
     "antd": "^5.11.0",
     "apexcharts": "^3.35.5",
-    "axios": "^0.27.2",
+    "axios": "^1.21.0",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.7",
     "formik": "^2.4.5",
