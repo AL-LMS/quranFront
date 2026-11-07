@@ -57,7 +57,7 @@ Baseline was captured on the requested branch before source changes, using Node 
 | `npm test -- --watchAll=false` | Exit 0; 1 suite and 7 auth role tests passed. |
 | `CI=false npm run build` | Exit 0. Existing ESLint warnings across the app, outdated caniuse-lite, CRA/Babel undeclared plugin warning, missing `stylis-plugin-rtl` source map, and large JS bundle warning. |
 
-The repository uses npm (`package-lock.json`) and `.npmrc` enables legacy peer resolution because the existing `mui-rte` dependency tree has a React 17 peer constraint despite the app running React 18. Clean installation is performed with `npm ci`.
+The repository uses npm (`package-lock.json`) and `.npmrc` enables legacy peer resolution to accommodate `@persian-tools/persian-mobile-datepicker`'s React 17 peer constraint despite the app running React 18. The unused `mui-rte` editor and its orphaned Draft.js dependency tree have been removed without adding a replacement. Clean installation is performed with `npm ci`.
 
 ## Vite toolchain and environment
 
