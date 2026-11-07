@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AdminPanelSettingsOutlined, ArrowForwardRounded, AutoStoriesOutlined,
   AssignmentOutlined, CheckCircleOutlineRounded, CloseRounded,
@@ -17,6 +17,7 @@ export default function EnrollmentPreviewPage({ admin = false }) {
   const [state, setState] = useState({
     loading: true, items: [], error: "", acting: null,
   });
+  const mutationController = useRef(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -35,23 +36,35 @@ export default function EnrollmentPreviewPage({ admin = false }) {
           }));
         }
       });
-    return () => controller.abort();
+    return () => {
+      controller.abort();
+      mutationController.current?.abort();
+      mutationController.current = null;
+    };
   }, [admin, reload]);
 
   async function decide(id, action) {
-    if (state.acting !== null) return;
+    if (state.acting !== null || mutationController.current) return;
+    const controller = new AbortController();
+    mutationController.current = controller;
     setState((previous) => ({ ...previous, acting: id, error: "" }));
     try {
-      const updated = await reviewDemoRequest(id, action);
-      setState((previous) => ({
-        ...previous, acting: null,
-        items: previous.items.map((item) => item.id === id ? updated : item),
-      }));
+      const updated = await reviewDemoRequest(id, action, { signal: controller.signal });
+      if (!controller.signal.aborted) {
+        setState((previous) => ({
+          ...previous, acting: null,
+          items: previous.items.map((item) => item.id === id ? updated : item),
+        }));
+      }
     } catch (error) {
-      setState((previous) => ({
-        ...previous, acting: null,
-        error: error instanceof Error ? error.message : "بررسی درخواست ناموفق بود.",
-      }));
+      if (!controller.signal.aborted && error?.name !== "AbortError") {
+        setState((previous) => ({
+          ...previous, acting: null,
+          error: error instanceof Error ? error.message : "بررسی درخواست ناموفق بود.",
+        }));
+      }
+    } finally {
+      if (mutationController.current === controller) mutationController.current = null;
     }
   }
 
@@ -103,7 +116,8 @@ export default function EnrollmentPreviewPage({ admin = false }) {
                 شبیه‌ساز مدیر
               </Button>
             </Stack>
-            <Button onClick={() => setReload((count) => count + 1)} startIcon={<RefreshRounded />}
+            <Button onClick={() => setReload((count) => count + 1)} disabled={state.acting !== null}
+              startIcon={<RefreshRounded />}
               sx={{ borderRadius: 2.3, fontWeight: 750 }}>
               به‌روزرسانی
             </Button>

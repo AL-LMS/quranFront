@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AssignmentTurnedInOutlined, HowToRegOutlined } from "@mui/icons-material";
 import { Alert, Box, Button, Chip, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -9,6 +9,8 @@ import {
 /** Fictional single-student request action; never creates an enrollment. */
 export default function DemoRequestAction({ courseId }) {
   const [state, setState] = useState({ loading: true, submitting: false, record: null, error: "" });
+  const [reload, setReload] = useState(0);
+  const mutationController = useRef(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -30,20 +32,32 @@ export default function DemoRequestAction({ courseId }) {
           });
         }
       });
-    return () => controller.abort();
-  }, [courseId]);
+    return () => {
+      controller.abort();
+      mutationController.current?.abort();
+      mutationController.current = null;
+    };
+  }, [courseId, reload]);
 
   async function submit() {
-    if (state.submitting || state.record) return;
+    if (state.submitting || state.record || mutationController.current) return;
+    const controller = new AbortController();
+    mutationController.current = controller;
     setState((previous) => ({ ...previous, submitting: true, error: "" }));
     try {
-      const record = await createDemoRequest(courseId);
-      setState({ loading: false, submitting: false, record, error: "" });
+      const record = await createDemoRequest(courseId, { signal: controller.signal });
+      if (!controller.signal.aborted) {
+        setState({ loading: false, submitting: false, record, error: "" });
+      }
     } catch (error) {
-      setState((previous) => ({
-        ...previous, submitting: false,
-        error: error instanceof Error ? error.message : "ثبت آزمایشی درخواست ناموفق بود.",
-      }));
+      if (!controller.signal.aborted && error?.name !== "AbortError") {
+        setState((previous) => ({
+          ...previous, submitting: false,
+          error: error instanceof Error ? error.message : "ثبت آزمایشی درخواست ناموفق بود.",
+        }));
+      }
+    } finally {
+      if (mutationController.current === controller) mutationController.current = null;
     }
   }
 
@@ -63,7 +77,14 @@ export default function DemoRequestAction({ courseId }) {
           این درخواست فقط برای نمایش فرایند ثبت‌نام با داده ساختگی است؛
           هیچ حساب واقعی، پرداخت یا دسترسی به دوره ایجاد نمی‌شود.
         </Typography>
-        {state.error && <Alert severity="error">{state.error}</Alert>}
+        {state.error && (
+          <Alert severity="error" action={(
+            <Button color="inherit" size="small" disabled={state.submitting}
+              onClick={() => setReload((value) => value + 1)}>
+              تلاش مجدد
+            </Button>
+          )}>{state.error}</Alert>
+        )}
         {state.record && (
           <Chip
             icon={<AssignmentTurnedInOutlined />}
