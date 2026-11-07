@@ -22,11 +22,11 @@ import bale from "../../assets/img/bale.png";
 import eitta from "../../assets/img/eitaa.png";
 import aparat from "../../assets/img/aparat.png";
 import CourseCard from "../../components/site/course/CourseCard";
+import CourseRequestFeedback from "../../components/site/course/CourseRequestFeedback";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { getUrl } from "../../helper/getUrl";
-import toastify from "../../helper/toast";
 import { Link } from "react-router-dom";
 const HeroContainer = styled.div`
   width: 100%;
@@ -553,39 +553,92 @@ const FooterPv = styled.span`
     margin-right: 0px;
   }
 `;
+
+const isOptionalText = (value) => value == null || typeof value === "string";
+
+const isValidLegacyCourse = (course) =>
+  course !== null &&
+  typeof course === "object" &&
+  !Array.isArray(course) &&
+  Number.isSafeInteger(course.course_id) &&
+  course.course_id > 0 &&
+  typeof course.name === "string" &&
+  (course.picture == null || typeof course.picture === "string") &&
+  isOptionalText(course.teacher_pic) &&
+  isOptionalText(course.teacher_name) &&
+  isOptionalText(course.explain) &&
+  isOptionalText(course.teacher_description);
+
 const HomePage = () => {
   const [data, setData] = useState([]);
-  const get_courses = async () => {
-    let data = {
-      table: "courses",
-      method_type: "get_courses",
-      data: {
-        query: {},
-        from: 0,
-        to: 3,
-      },
-    };
-    let response = await axios({
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      data: {
-        ...data,
-      },
-
-      baseURL: getUrl() + "back_request/select_request/",
-    });
-    if (response?.data?.tracking_code !== null) {
-      setData(response?.data?.response?.all_course);
-    } else {
-      toastify("error-login", response?.data?.error);
-    }
-  };
+  const [courseRequestState, setCourseRequestState] = useState("loading");
+  const [retryCount, setRetryCount] = useState(0);
   useEffect(() => {
-    get_courses().then(() => {});
-  }, []);
+    const controller = new AbortController();
+    const getCourses = async () => {
+      setCourseRequestState("loading");
+      try {
+        const response = await axios({
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          data: {
+            table: "courses",
+            method_type: "get_courses",
+            data: { query: {}, from: 0, to: 3 },
+          },
+          baseURL: getUrl() + "back_request/select_request/",
+          signal: controller.signal,
+        });
+        if (controller.signal.aborted) return;
+
+        const payload = response?.data;
+        const courses = payload?.response?.all_course;
+        const validCourses =
+          Array.isArray(courses) && courses.every(isValidLegacyCourse);
+        const courseIds = validCourses ? courses.map((course) => course.course_id) : [];
+        if (
+          payload?.status !== 200 ||
+          typeof payload?.tracking_code !== "string" ||
+          payload.tracking_code.trim() === "" ||
+          !validCourses ||
+          new Set(courseIds).size !== courseIds.length
+        ) {
+          throw new Error("Invalid legacy course response");
+        }
+        setData(
+          courses.map((course) => ({
+            ...course,
+            picture: course.picture ?? "default",
+          }))
+        );
+        setCourseRequestState(courses.length === 0 ? "empty" : "success");
+      } catch (error) {
+        if (controller.signal.aborted || error?.code === "ERR_CANCELED") return;
+
+        const status = error?.response?.status;
+        const requestId =
+          error?.response?.headers?.["x-request-id"] ||
+          error?.response?.headers?.["x-correlation-id"];
+        const safeRequestId =
+          typeof requestId === "string" && /^[A-Za-z0-9._:-]{1,96}$/.test(requestId)
+            ? requestId
+            : undefined;
+        console.error("Homepage course request failed", {
+          endpoint: "/legacy/back_request/select_request/",
+          category: error?.response ? "http" : error?.request ? "network" : "contract",
+          ...(Number.isInteger(status) ? { status } : {}),
+          ...(typeof error?.code === "string" && /^[A-Z0-9_]{1,48}$/.test(error.code)
+            ? { code: error.code }
+            : {}),
+          ...(safeRequestId ? { requestId: safeRequestId } : {}),
+        });
+        setCourseRequestState("error");
+      }
+    };
+
+    getCourses();
+    return () => controller.abort();
+  }, [retryCount]);
   return (
     <>
       <Grid item xs={12} mt={5}>
@@ -730,14 +783,20 @@ const HomePage = () => {
         </WhyContainer>
         <CourseContainer>
           <CourseHeader>دوره‌های قرآنی</CourseHeader>
+          <CourseRequestFeedback
+            state={courseRequestState}
+            onRetry={() => setRetryCount((count) => count + 1)}
+          />
           <CourseCards>
-            <Grid container spacing={3}>
-              {data.map((course) => (
-                <Grid item xs={12} md={4} key={course.id}>
-                  <CourseCard data={course} />
-                </Grid>
-              ))}
-            </Grid>
+            {courseRequestState === "success" && (
+              <Grid container spacing={3}>
+                {data.map((course) => (
+                  <Grid item xs={12} md={4} key={course.course_id}>
+                    <CourseCard data={course} />
+                  </Grid>
+                ))}
+              </Grid>
+            )}
           </CourseCards>
           <Grid
             item
