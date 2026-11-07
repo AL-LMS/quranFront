@@ -8,9 +8,10 @@ import {
   ListItemIcon, ListItemText, Stack, Typography,
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 import { catalogPreviewEnabled } from "../../features/catalogPreview/catalogPreviewRoutes";
 import { enrollmentPreviewEnabledForBuild } from "../../features/enrollmentPreview/enrollmentPreviewGate";
+import { hasDashboardAccess } from "../../features/auth/hasDashboardAccess";
+import useAuth from "../../hooks/useAuth";
 
 /** Real, navigable mobile menu; previous menu contained only commented-out items. */
 export default function Sidebar({ sidebar, setSidebar }) {
@@ -32,10 +33,11 @@ export default function Sidebar({ sidebar, setSidebar }) {
       : []),
     { label: "سوالات پرتکرار", url: "/FAQ", icon: <HelpOutlineRounded /> },
   ];
-  const accountLinks = user?.role
+  const accountLinks = hasDashboardAccess(user)
     ? [{
       label: [user.first_name, user.last_name].filter(Boolean).join(" ") || "داشبورد",
-      url: "/panel/dashboard", icon: <AutoStoriesOutlined />,
+      url: "/panel/dashboard",
+      icon: <AutoStoriesOutlined />,
     }]
     : [
       { label: "ورود", url: "/login", icon: <LoginRounded /> },

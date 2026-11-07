@@ -86,11 +86,49 @@ describe("request and review screens", () => {
     withRouter(<DemoRequestAction courseId={91001} />);
     const button = await screen.findByRole("button", { name: "ثبت درخواست آزمایشی" });
     fireEvent.click(button);
+    fireEvent.click(button);
     expect(await screen.findByText(/در انتظار بررسی/)).toBeTruthy();
     expect(button.disabled).toBe(true);
     expect(screen.getByRole("link", { name: "مشاهده درخواست‌های من" }).getAttribute("href"))
       .toBe("/__preview/requests");
     expect(mock).toHaveBeenCalledTimes(2);
+  });
+
+  it("retries a failed request-list read and prevents duplicate submission", async () => {
+    const mock = vi.fn()
+      .mockRejectedValueOnce(new Error("offline"))
+      .mockResolvedValueOnce({ ok: true, status: 200, json: async () => [] })
+      .mockResolvedValueOnce({ ok: true, status: 201, json: async () => record });
+    vi.stubGlobal("fetch", mock);
+    withRouter(<DemoRequestAction courseId={91001} />);
+
+    expect(await screen.findByText("اتصال به سرویس آزمایشی درخواست‌ها برقرار نشد.")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "تلاش مجدد" }));
+    const button = await screen.findByRole("button", { name: "ثبت درخواست آزمایشی" });
+    fireEvent.click(button);
+    fireEvent.click(button);
+    expect(await screen.findByText(/در انتظار بررسی/)).toBeTruthy();
+    expect(mock).toHaveBeenCalledTimes(3);
+  });
+
+  it("aborts a pending request write when leaving the course page", async () => {
+    let writeSignal;
+    const mock = vi.fn()
+      .mockResolvedValueOnce({ ok: true, status: 200, json: async () => [] })
+      .mockImplementationOnce((_url, options) => {
+        writeSignal = options.signal;
+        return new Promise((_resolve, reject) => {
+          options.signal.addEventListener("abort", () => {
+            reject(Object.assign(new Error("aborted"), { name: "AbortError" }));
+          });
+        });
+      });
+    vi.stubGlobal("fetch", mock);
+    const { unmount } = withRouter(<DemoRequestAction courseId={91001} />);
+    fireEvent.click(await screen.findByRole("button", { name: "ثبت درخواست آزمایشی" }));
+    await waitFor(() => expect(writeSignal).toBeDefined());
+    unmount();
+    expect(writeSignal.aborted).toBe(true);
   });
 
   it("shows student request status without any enrollment grant action", async () => {

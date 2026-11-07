@@ -1,6 +1,6 @@
 import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import CatalogPreviewPage from "./CatalogPreviewPage";
 import CatalogDetailPreviewPage from "./CatalogDetailPreviewPage";
@@ -108,17 +108,22 @@ describe("Catalog-06: local V2 API preview integration", () => {
     expect(fetcher).not.toHaveBeenCalled();
   });
 
-  it("sends category filtering only as bounded parameters", async () => {
+  it("sends search, category, modality, and pagination as bounded parameters", async () => {
     enableLocalApi();
     const fetcher = vi.fn().mockResolvedValue({
       ok: true, status: 200,
       json: async () => ({ items: [publicCourse], limit: 12, offset: 0 }),
     });
     vi.stubGlobal("fetch", fetcher);
-    view("/__preview/catalog?source=api&category=%D9%82%D8%B1%D8%A2%D9%86&is_online=true");
-    await waitFor(() => expect(fetcher).toHaveBeenCalled());
+    view("/__preview/catalog?source=api&search=%D8%AA%D8%AC%D9%88%DB%8C%D8%AF&category=%D9%82%D8%B1%D8%A2%D9%86&is_online=true&offset=12");
+    expect(await screen.findByRole("link", { name: /مشاهده جزئیات آموزش روخوانی قرآن/ })).toBeTruthy();
+    expect(fetcher).toHaveBeenCalledTimes(1);
     const [url] = fetcher.mock.calls[0];
-    expect(new URL(url, "http://localhost").searchParams.get("category")).toBe("قرآن");
-    expect(new URL(url, "http://localhost").searchParams.get("is_online")).toBe("true");
+    const query = new URL(url, "http://localhost").searchParams;
+    expect(query.get("search")).toBe("تجوید");
+    expect(query.get("category")).toBe("قرآن");
+    expect(query.get("is_online")).toBe("true");
+    expect(query.get("limit")).toBe("12");
+    expect(query.get("offset")).toBe("12");
   });
 });
