@@ -4,19 +4,18 @@ import {
   AppBar, Box, Button, Container, IconButton, Stack,
   Toolbar, Typography,
 } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { hasDashboardAccess } from "../../features/auth/hasDashboardAccess";
 import Sidebar from "./Sidebar";
 import "./styleNav.css";
 
 export default function Navbar() {
   const { user } = useAuth();
-  const location = useLocation();
   const [sidebar, setSidebar] = useState(false);
-  const pathname = location.pathname;
-  const loginTarget = pathname === "/send-otp"
-    ? "/signup"
-    : pathname === "/signup" ? "/send-otp" : "/panel/dashboard";
+  const canOpenDashboard = hasDashboardAccess(user);
+  const accountName = [user?.first_name, user?.last_name].filter(Boolean).join(" ");
+  const loginTarget = canOpenDashboard ? "/panel/dashboard" : "/login";
 
   return (
     <>
@@ -88,11 +87,9 @@ export default function Navbar() {
                   "&:hover": { bgcolor: "#40349e", boxShadow: "none" },
                 }}
               >
-                {user?.first_name
-                  ? [user.first_name, user.last_name].filter(Boolean).join(" ")
-                  : pathname === "/send-otp" ? "ثبت‌نام" : "ورود"}
+                {canOpenDashboard ? accountName || "حساب کاربری" : "ورود"}
               </Button>
-              {!user?.first_name && (
+              {!canOpenDashboard && (
                 <Button
                   component={Link}
                   to="/signup"
