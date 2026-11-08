@@ -1,4 +1,5 @@
 import axios from "axios";
+import { clearAuthStorage } from "../features/auth/authStorage";
 
 // Vite's local Compose profile proxies `/api` to the V2 FastAPI container.
 // The production fallback remains unchanged when no local override is set.
@@ -10,7 +11,7 @@ axios.interceptors.response.use(
   async (error) => {
     if (error.response?.status === 401 && !refresh) {
       refresh = true;
-      localStorage.clear("authTokens");
+      clearAuthStorage();
       window.location.reload();
     }
     refresh = false;
