@@ -17,32 +17,39 @@ the four authentication/session-flow keys. Logout also resets the in-memory
 `auth`, `user`, and `role` context values to `null` before navigating to the
 existing `/send-otp` route.
 
-The Axios response interceptor's code policy remains unchanged: if
-`src/api/axios.js` is loaded, any response with status 401 triggers
-authentication cleanup and a page reload. This includes a 401 from a public
-request when no token is present. A 403 or a network error without an HTTP
-response does not trigger cleanup or reload. Changing the global 401 policy
-would require a separate API/authentication contract review.
+## Active global Axios interceptor
 
-The interceptor is not currently part of the application runtime path:
-application components import Axios directly from `axios`, and no runtime
-module imports `src/api/axios.js`, `useAxiosPrivate`, or `useRefreshToken`.
-The interceptor behavior is covered as a code-level regression so that its
-storage cleanup remains safe if that module is wired into the app later.
+`index.html` loads `src/index.js`, and `src/index.js` imports
+`./api/axios` before rendering the application. That module installs a
+response interceptor on Axios's shared default client. Application modules
+also import that same client directly from `axios`, so the interceptor is
+active during application startup and its policy applies to Axios requests
+made through the shared client.
+
+The existing policy remains unchanged: any response with status 401 triggers
+authentication cleanup and a page reload, potentially including public API
+requests and requests made when no token is present. A 403 or a network error
+without an HTTP response does not trigger cleanup or reload. Whether public
+401 responses should trigger global logout/reload remains an unresolved
+authentication policy decision; this change preserves existing behavior.
 
 ## Inactive Axios auth hooks
 
-`useAxiosPrivate` and `useRefreshToken` have no application imports and are not
-part of the runtime authentication path. `useAxiosPrivate` imports a named
-`axiosPrivate` export, but `src/api/axios.js` exports only the default Axios
-instance; activating that hook as written would fail to resolve the expected
-instance. The hook assumes `auth.accessToken`, while the active login flows
-store and expose the backend token as a raw string. It also retries on 403,
+`useAxiosPrivate` and `useRefreshToken` have no application imports and are
+unused. Their presence does not control the active global interceptor,
+installed at startup as described above. `src/api/axios.js` exports neither a
+default client nor a named `axiosPrivate` client. Consequently,
+`useRefreshToken`'s default import and `useAxiosPrivate`'s named import do not
+match that module's exports; activating either hook as written would fail to
+resolve its expected Axios client.
+
+The hooks also assume `auth.accessToken`, while active login flows store and
+expose the backend token as a raw string. `useAxiosPrivate` retries on 403,
 whereas the active global interceptor handles 401.
 
 `useRefreshToken` assumes a `GET refresh` endpoint, cookie credentials, and an
 `accessToken` response field. No matching active frontend call or approved
-refresh contract was established in this review. These hooks remain inactive
-and unchanged. Do not activate or repair them until the backend/API owner
-approves token shape, endpoint, status semantics, cookie/CSRF behavior, and
-refresh/revocation lifecycle.
+backend refresh contract was established in this review. These hooks remain
+inactive and unchanged. Do not activate or repair them until the backend/API
+owner approves token shape, endpoint, status semantics, cookie/CSRF behavior,
+and refresh/revocation lifecycle.
