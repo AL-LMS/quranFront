@@ -1,0 +1,153 @@
+.local-demo-auth {
+  min-height: calc(100vh - 64px);
+  padding: clamp(1rem, 4vw, 3rem);
+  background: #f6f7f9;
+  color: #202631;
+}
+
+.local-demo-auth__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  max-width: 52rem;
+  margin: 0 auto 1.5rem;
+  font-weight: 700;
+}
+
+.local-demo-auth__badge {
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  background: #e6f3ed;
+  color: #17613f;
+  font-size: 0.85rem;
+}
+
+.local-demo-auth__card {
+  box-sizing: border-box;
+  width: min(100%, 34rem);
+  margin: 0 auto;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid #e1e5eb;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 0.75rem 2.5rem rgb(24 39 75 / 8%);
+}
+
+.local-demo-auth__card h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+}
+
+.local-demo-auth__card p {
+  line-height: 1.8;
+}
+
+.local-demo-auth__card form {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+}
+
+.local-demo-auth__card input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 2.8rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #aab3bf;
+  border-radius: 0.45rem;
+  background: #fff;
+  color: #202631;
+  font: inherit;
+  direction: ltr;
+  text-align: left;
+}
+
+.local-demo-auth__card input:focus-visible,
+.local-demo-auth__card button:focus-visible,
+.local-demo-auth__card a:focus-visible {
+  outline: 3px solid #155eef;
+  outline-offset: 2px;
+}
+
+.local-demo-auth__card button {
+  min-height: 2.8rem;
+  border: 0;
+  border-radius: 0.45rem;
+  padding: 0.55rem 1rem;
+  background: #155eef;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.local-demo-auth__card button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.local-demo-auth__card .local-demo-auth__secondary {
+  border: 1px solid #155eef;
+  background: #fff;
+  color: #155eef;
+}
+
+.local-demo-auth__links {
+  margin-top: 1.25rem;
+}
+
+.local-demo-auth__notice {
+  margin-top: 1.5rem;
+  border-right: 3px solid #e6a700;
+  padding-right: 0.75rem;
+  color: #4d5664;
+  font-size: 0.9rem;
+}
+
+.local-demo-auth__challenge {
+  display: block;
+  overflow-wrap: anywhere;
+  border-radius: 0.4rem;
+  padding: 0.7rem;
+  background: #f0f2f5;
+  direction: ltr;
+  text-align: left;
+}
+
+.local-demo-auth__identity {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.local-demo-auth__identity div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid #e8ebef;
+  padding-bottom: 0.6rem;
+}
+
+.local-demo-auth__identity dd {
+  margin: 0;
+  direction: ltr;
+}
+
+.local-demo-auth__status {
+  width: min(100%, 34rem);
+  margin: 2rem auto;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .local-demo-auth {
+    min-height: calc(100vh - 56px);
+    padding: 1rem;
+  }
+
+  .local-demo-auth__header {
+    margin-bottom: 1rem;
+  }
+}

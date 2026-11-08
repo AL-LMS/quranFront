@@ -3,9 +3,14 @@ import react from "@vitejs/plugin-react";
 import { loadEnv, transformWithEsbuild } from "vite";
 import { fileURLToPath } from "node:url";
 import { legacyJsxEsbuildOptions } from "./vite-legacy-jsx-options.mjs";
+import {
+  discoverLocalDemoAuthTarget,
+  LOCAL_DEMO_AUTH_PREFIX,
+  isLocalDemoAuthEnabled,
+  localDemoInboxBlockerPlugin,
+} from "./vite-local-demo-auth.mjs";
 
 const sourceDirectory = fileURLToPath(new URL("./src/", import.meta.url));
-const localProxyEnv = loadEnv("development", process.cwd(), "VITE_");
 
 const legacyJsxInJs = {
   name: "legacy-jsx-in-js",
@@ -27,30 +32,64 @@ const legacyJsxInJs = {
   },
 };
 
-export default defineConfig({
-  // CRA allowed JSX in .js files throughout this application.
-  plugins: [legacyJsxInJs, react()],
-  optimizeDeps: { esbuildOptions: legacyJsxEsbuildOptions },
-  server: {
-    host: process.env.VITE_SERVER_HOST || "localhost",
-    proxy: {
-      "/legacy": {
-        target: process.env.VITE_LEGACY_API_TARGET || localProxyEnv.VITE_LEGACY_API_TARGET || "http://legacy-api:8000",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/legacy/, ""),
-        ws: true,
-      },
-      "/api": {
-        target: process.env.VITE_V2_API_TARGET || localProxyEnv.VITE_V2_API_TARGET || "http://v2-api:8000",
-        changeOrigin: true,
-      },
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), ["VITE_", "AL_LMS_LOCAL_DEMO_COMPOSE_PROJECT"]);
+  const localDemoAuthEnabled = isLocalDemoAuthEnabled(
+    mode,
+    env.VITE_ENABLE_LOCAL_DEMO_AUTH
+  );
+  const localDemoAuthTarget = localDemoAuthEnabled
+    ? discoverLocalDemoAuthTarget(env.AL_LMS_LOCAL_DEMO_COMPOSE_PROJECT)
+    : null;
+
+  const proxy = {
+    ...(localDemoAuthEnabled
+      ? {
+          [LOCAL_DEMO_AUTH_PREFIX]: {
+            target: localDemoAuthTarget,
+            changeOrigin: false,
+          },
+        }
+      : {}),
+    "/legacy": {
+      target:
+        process.env.VITE_LEGACY_API_TARGET ||
+        env.VITE_LEGACY_API_TARGET ||
+        "http://legacy-api:8000",
+      changeOrigin: true,
+      rewrite: (path) => path.replace(/^\/legacy/, ""),
+      ws: true,
     },
-  },
-  // Keep the deployment artifact directory compatible with the CRA hosting setup.
-  build: { outDir: "build" },
-  test: {
-    environment: "jsdom",
-    globals: true,
-    setupFiles: "./src/testSetup.js",
-  },
+    "/api": {
+      target:
+        process.env.VITE_V2_API_TARGET ||
+        env.VITE_V2_API_TARGET ||
+        "http://v2-api:8000",
+      changeOrigin: true,
+    },
+  };
+
+  return {
+    // CRA allowed JSX in .js files throughout this application.
+    plugins: [
+      legacyJsxInJs,
+      react(),
+      ...(localDemoAuthEnabled ? [localDemoInboxBlockerPlugin()] : []),
+    ],
+    optimizeDeps: { esbuildOptions: legacyJsxEsbuildOptions },
+    server: {
+      host: localDemoAuthEnabled
+        ? "127.0.0.1"
+        : process.env.VITE_SERVER_HOST || "localhost",
+      ...(localDemoAuthEnabled ? { port: 15173, strictPort: true } : {}),
+      proxy,
+    },
+    // Keep the deployment artifact directory compatible with the CRA hosting setup.
+    build: { outDir: "build" },
+    test: {
+      environment: "jsdom",
+      globals: true,
+      setupFiles: "./src/testSetup.js",
+    },
+  };
 });
