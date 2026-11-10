@@ -85,6 +85,17 @@ const LocalDemoAuthRoutes =
   import.meta.env.DEV && import.meta.env.VITE_ENABLE_LOCAL_DEMO_AUTH === "true"
     ? lazy(() => import("./features/localDemoAuth/LocalDemoAuthRoutes"))
     : null;
+// This extra opt-in is a hardcoded build-time dev gate. The chunk and route
+// must not be reachable through the ordinary production app.
+const M5TeacherCoursePreview =
+  import.meta.env.DEV &&
+  import.meta.env.VITE_ENABLE_CATALOG_UI_PREVIEW === "true" &&
+  import.meta.env.VITE_ALLOW_CATALOG_LOCAL_API === "true" &&
+  import.meta.env.VITE_ENABLE_M5_TEACHER_PREVIEW === "true" &&
+  import.meta.env.VITE_ALLOW_M5_LOCAL_API === "true"
+    ? lazy(() => import("./features/teacherCoursePreview/TeacherCoursePreviewPage"))
+    : null;
+
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -109,6 +120,16 @@ function App() {
             <Route path="/__preview/catalog" element={<CatalogPreviewPage />} />
             <Route path="/__preview/catalog/:id" element={<CatalogDetailPreviewPage />} />
           </>
+        )}
+        {M5TeacherCoursePreview && (
+          <Route
+            path="/__preview/m5-02"
+            element={
+              <Suspense fallback={<div role="status">در حال بارگذاری پیش‌نمایش…</div>}>
+                <M5TeacherCoursePreview />
+              </Suspense>
+            }
+          />
         )}
         {showEnrollmentPreview && (
           <>
