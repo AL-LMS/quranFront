@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import { loadEnv, transformWithEsbuild } from "vite";
 import { fileURLToPath } from "node:url";
 import { legacyJsxEsbuildOptions } from "./vite-legacy-jsx-options.mjs";
+import { m5TeacherPreviewProxyTarget } from "./vite-m5-teacher-preview.mjs";
 import {
   discoverLocalDemoAuthTarget,
   LOCAL_DEMO_AUTH_PREFIX,
@@ -32,8 +33,9 @@ const legacyJsxInJs = {
   },
 };
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), ["VITE_", "AL_LMS_LOCAL_DEMO_COMPOSE_PROJECT"]);
+  const m5DemoTarget = m5TeacherPreviewProxyTarget({ command, mode, env });
   const localDemoAuthEnabled = isLocalDemoAuthEnabled(
     mode,
     env.VITE_ENABLE_LOCAL_DEMO_AUTH
@@ -43,6 +45,9 @@ export default defineConfig(({ mode }) => {
     : null;
 
   const proxy = {
+    ...(m5DemoTarget ? {
+      "/__demo/m5-02": { target: m5DemoTarget, changeOrigin: false },
+    } : {}),
     ...(localDemoAuthEnabled
       ? {
           [LOCAL_DEMO_AUTH_PREFIX]: {
@@ -78,7 +83,7 @@ export default defineConfig(({ mode }) => {
     ],
     optimizeDeps: { esbuildOptions: legacyJsxEsbuildOptions },
     server: {
-      host: localDemoAuthEnabled
+      host: localDemoAuthEnabled || m5DemoTarget
         ? "127.0.0.1"
         : process.env.VITE_SERVER_HOST || "localhost",
       ...(localDemoAuthEnabled ? { port: 15173, strictPort: true } : {}),
