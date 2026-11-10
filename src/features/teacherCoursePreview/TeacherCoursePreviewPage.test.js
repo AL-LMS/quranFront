@@ -94,7 +94,7 @@ describe("M5-03 Persian teacher/reviewer local preview", () => {
       target: { value: COURSE.name },
     });
     fireEvent.click(screen.getByRole("button", { name: "ساخت پیش‌نویس" }));
-    expect(await screen.findByRole("alert")).toHaveTextContent("سرور آزمایشی محلی");
+    expect(await screen.findByText("سرور آزمایشی محلی در دسترس نیست.")).toBeTruthy();
     expect(screen.getByRole("textbox", { name: "عنوان دوره" }).value).toBe(COURSE.name);
     expect(api.listDemoCourses).toHaveBeenCalledTimes(1);
   });
