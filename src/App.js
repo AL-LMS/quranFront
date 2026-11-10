@@ -2,6 +2,7 @@ import { CacheProvider } from "@emotion/react";
 import { prefixer } from "stylis";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import createCache from "@emotion/cache";
+import { lazy, Suspense } from "react";
 import rtlPlugin from "stylis-plugin-rtl";
 import Navbar from "./layouts/site/Navbar";
 import { ToastContainer } from "react-toastify";
@@ -78,6 +79,12 @@ import CatalogDetailPreviewPage from "./features/catalogPreview/CatalogDetailPre
 import { catalogPreviewEnabled } from "./features/catalogPreview/catalogPreviewRoutes";
 import EnrollmentPreviewPage from "./features/enrollmentPreview/EnrollmentPreviewPage";
 import { enrollmentPreviewEnabledForBuild } from "./features/enrollmentPreview/enrollmentPreviewGate";
+
+// Vite replaces DEV at build time, allowing Rollup to remove this demo-only chunk.
+const LocalDemoAuthRoutes =
+  import.meta.env.DEV && import.meta.env.VITE_ENABLE_LOCAL_DEMO_AUTH === "true"
+    ? lazy(() => import("./features/localDemoAuth/LocalDemoAuthRoutes"))
+    : null;
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -90,10 +97,11 @@ function App() {
     flag: import.meta.env.VITE_ENABLE_CATALOG_UI_PREVIEW,
   });
   const showEnrollmentPreview = enrollmentPreviewEnabledForBuild();
+  const localDemoAuthRouteActive =
+    Boolean(LocalDemoAuthRoutes) && location.pathname.startsWith("/local-demo");
   return (
     <CacheProvider value={cacheRtl}>
-      {/* {!location.pathname.includes("panel") && <Navbar />} */}
-      <Navbar />
+      {!localDemoAuthRouteActive && <Navbar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         {showCatalogPreview && (
@@ -107,6 +115,16 @@ function App() {
             <Route path="/__preview/requests" element={<EnrollmentPreviewPage />} />
             <Route path="/__preview/admin/requests" element={<EnrollmentPreviewPage admin />} />
           </>
+        )}
+        {LocalDemoAuthRoutes && (
+          <Route
+            path="/local-demo/*"
+            element={
+              <Suspense fallback={<div role="status">Loading local demo…</div>}>
+                <LocalDemoAuthRoutes />
+              </Suspense>
+            }
+          />
         )}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
