@@ -78,7 +78,7 @@ export default function TeacherCoursePreviewPage() {
   }
 
   async function doAction(operation, message) {
-    if (busy || mutation.current) return;
+    if (busy || mutation.current) return false;
     const controller = new AbortController();
     mutation.current = controller;
     setBusy(true);
@@ -89,11 +89,14 @@ export default function TeacherCoursePreviewPage() {
       if (!controller.signal.aborted) {
         setNotice(message);
         setReload((value) => value + 1);
+        return true;
       }
+      return false;
     } catch (cause) {
       if (!controller.signal.aborted && cause?.name !== "AbortError") {
         setError(cause instanceof Error ? cause.message : "عملیات آزمایشی ناموفق بود.");
       }
+      return false;
     } finally {
       if (mutation.current === controller) {
         mutation.current = null;
@@ -121,7 +124,7 @@ export default function TeacherCoursePreviewPage() {
     setForm(EMPTY_FORM);
   }
 
-  function submitForm(event) {
+  async function submitForm(event) {
     event.preventDefault();
     if (isReviewer) return;
     const input = {
@@ -130,14 +133,13 @@ export default function TeacherCoursePreviewPage() {
       category: form.category,
       is_online: form.is_online,
     };
-    doAction(
+    const saved = await doAction(
       (signal) => editingId === null
         ? createDemoCourse(actor, input, { signal })
         : editDemoCourse(actor, editingId, input, { signal }),
       editingId === null ? "پیش‌نویس آزمایشی ساخته شد." : "ویرایش ثبت شد؛ بازبینی مجدد لازم است.",
-    ).then(() => {
-      // Never clear a draft after a failed/offline mutation.
-    });
+    );
+    if (saved) cancelEdit();
   }
 
   const pending = items.filter((course) => course.status === "draft" &&
