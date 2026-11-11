@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { clearAuthStorage } from "../../features/auth/authStorage";
 import {
   AppBar,
   IconButton,
@@ -26,7 +27,7 @@ const NavbarButton = styled(Box)(({ theme }) => ({
 
 const Navbar = ({ setSidebar }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const { setAuth, setUser, user } = useAuth();
+  const { setAuth, setUser, setRole, user } = useAuth();
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const openHandler = (e) => {
@@ -37,10 +38,10 @@ const Navbar = ({ setSidebar }) => {
   };
   const logOut = () => {
     setAnchorEl(null);
-    setAuth("");
-    setUser("");
-    localStorage.clear("token");
-    localStorage.clear("user");
+    setAuth(null);
+    setUser(null);
+    setRole(null);
+    clearAuthStorage();
     navigate("/send-otp");
   };
   return (

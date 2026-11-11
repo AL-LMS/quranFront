@@ -122,9 +122,9 @@ describe("shared Axios 1.x compatibility", () => {
   });
 
   it("continues to reject 403 responses without invoking the 401 policy", async () => {
-    const clear = vi.fn();
+    const removeItem = vi.fn();
     const reload = vi.fn();
-    vi.stubGlobal("localStorage", { clear });
+    vi.stubGlobal("localStorage", { removeItem });
     vi.stubGlobal("window", { location: { reload } });
     axios.defaults.adapter = async (config) => Promise.reject(Object.assign(
       new Error("forbidden"),
@@ -134,14 +134,14 @@ describe("shared Axios 1.x compatibility", () => {
     await expect(axios.get("private/"))
       .rejects.toMatchObject({ response: { status: 403 } });
 
-    expect(clear).not.toHaveBeenCalled();
+    expect(removeItem).not.toHaveBeenCalled();
     expect(reload).not.toHaveBeenCalled();
   });
 
-  it("keeps the existing 401 clear-and-reload behavior", async () => {
-    const clear = vi.fn();
+  it("keeps the existing 401 auth-cleanup-and-reload behavior", async () => {
+    const removeItem = vi.fn();
     const reload = vi.fn();
-    vi.stubGlobal("localStorage", { clear });
+    vi.stubGlobal("localStorage", { removeItem });
     vi.stubGlobal("window", { location: { reload } });
     axios.defaults.adapter = async (config) => Promise.reject(Object.assign(
       new Error("unauthorized"),
@@ -151,7 +151,9 @@ describe("shared Axios 1.x compatibility", () => {
     await expect(axios.get("private/"))
       .rejects.toMatchObject({ response: { status: 401 } });
 
-    expect(clear).toHaveBeenCalledWith("authTokens");
+    expect(removeItem.mock.calls.map(([key]) => key).sort()).toEqual(
+      ["phone", "role", "token", "user"].sort()
+    );
     expect(reload).toHaveBeenCalledTimes(1);
   });
 

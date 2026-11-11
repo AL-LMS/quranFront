@@ -7,6 +7,7 @@ import { toastify } from "../../../helper/toast";
 import StudentInfo from "../../../components/dashboard/students/profile/StudentInfo";
 import { ToastContainer } from "react-toastify";
 import { setLocalStorageLogin } from "../../localStorage";
+import { clearAuthStorage } from "../../../features/auth/authStorage";
 import { useNavigate } from "react-router-dom";
 import { getUrl } from "../../../helper/getUrl";
 import { useFormik } from "formik";
@@ -79,9 +80,7 @@ const Profile = () => {
       baseURL: getUrl() + "back_request/update_request/",
     });
     if (response?.data?.tracking_code !== null) {
-      localStorage.clear("role");
-      localStorage.clear("user");
-      localStorage.clear("token");
+      clearAuthStorage();
       setLocalStorageLogin("token", response?.data?.response?.token, () => {});
       setLocalStorageLogin("user", response?.data?.response, () => {});
       setLocalStorageLogin(
