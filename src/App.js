@@ -77,6 +77,7 @@ import WebSocketDemo from "./pages/site/Websocket";
 import CatalogPreviewPage from "./features/catalogPreview/CatalogPreviewPage";
 import CatalogDetailPreviewPage from "./features/catalogPreview/CatalogDetailPreviewPage";
 import { catalogPreviewEnabled } from "./features/catalogPreview/catalogPreviewRoutes";
+import { m5UuidCatalogEnabled } from "./features/uuidCatalogLocal/uuidCatalogGate";
 import EnrollmentPreviewPage from "./features/enrollmentPreview/EnrollmentPreviewPage";
 import { enrollmentPreviewEnabledForBuild } from "./features/enrollmentPreview/enrollmentPreviewGate";
 
@@ -94,6 +95,16 @@ const M5TeacherCoursePreview =
   import.meta.env.VITE_ENABLE_M5_TEACHER_PREVIEW === "true" &&
   import.meta.env.VITE_ALLOW_M5_LOCAL_API === "true"
     ? lazy(() => import("./features/teacherCoursePreview/TeacherCoursePreviewPage"))
+    : null;
+
+// Independent, dev-only UUID catalog. Never share the integer-ID preview route.
+const M5UuidLocalPreview =
+  m5UuidCatalogEnabled({
+    dev: import.meta.env.DEV,
+    previewFlag: import.meta.env.VITE_ENABLE_M5_UUID_CATALOG_PREVIEW,
+    apiFlag: import.meta.env.VITE_ALLOW_M5_UUID_LOCAL_API,
+  })
+    ? lazy(() => import("./features/uuidCatalogLocal/UuidCatalogLocalPage"))
     : null;
 
 const cacheRtl = createCache({
@@ -119,6 +130,18 @@ function App() {
           <>
             <Route path="/__preview/catalog" element={<CatalogPreviewPage />} />
             <Route path="/__preview/catalog/:id" element={<CatalogDetailPreviewPage />} />
+          </>
+        )}
+        {M5UuidLocalPreview && (
+          <>
+            <Route
+              path="/__preview/m5-uuid"
+              element={<Suspense fallback={<div role="status">در حال بارگذاری…</div>}><M5UuidLocalPreview /></Suspense>}
+            />
+            <Route
+              path="/__preview/m5-uuid/:courseId"
+              element={<Suspense fallback={<div role="status">در حال بارگذاری…</div>}><M5UuidLocalPreview /></Suspense>}
+            />
           </>
         )}
         {M5TeacherCoursePreview && (
