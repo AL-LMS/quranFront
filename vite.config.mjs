@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { legacyJsxEsbuildOptions } from "./vite-legacy-jsx-options.mjs";
 import { m5TeacherPreviewProxyTarget } from "./vite-m5-teacher-preview.mjs";
 import { LOCAL_UUID_PREFIX, m5UuidCatalogTarget, rewriteM5UuidCatalogPath } from "./vite-m5-uuid-catalog.mjs";
+import { M6_LOCAL_PREFIX, m6ManagementTarget, rewriteM6ManagementPath } from "./vite-m6-management.mjs";
 import {
   discoverLocalDemoAuthTarget,
   LOCAL_DEMO_AUTH_PREFIX,
@@ -38,6 +39,7 @@ export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), ["VITE_", "AL_LMS_LOCAL_DEMO_COMPOSE_PROJECT"]);
   const m5DemoTarget = m5TeacherPreviewProxyTarget({ command, mode, env });
   const m5UuidTarget = m5UuidCatalogTarget({ command, mode, env });
+  const m6Target = m6ManagementTarget({ command, mode, env });
   const localDemoAuthEnabled = isLocalDemoAuthEnabled(
     mode,
     env.VITE_ENABLE_LOCAL_DEMO_AUTH
@@ -47,6 +49,13 @@ export default defineConfig(({ mode, command }) => {
     : null;
 
   const proxy = {
+    ...(m6Target ? {
+      [M6_LOCAL_PREFIX]: {
+        target: m6Target,
+        changeOrigin: false,
+        rewrite: rewriteM6ManagementPath,
+      },
+    } : {}),
     ...(m5UuidTarget ? {
       [LOCAL_UUID_PREFIX]: {
         target: m5UuidTarget,
@@ -92,7 +101,7 @@ export default defineConfig(({ mode, command }) => {
     ],
     optimizeDeps: { esbuildOptions: legacyJsxEsbuildOptions },
     server: {
-      host: localDemoAuthEnabled || m5DemoTarget || m5UuidTarget
+      host: localDemoAuthEnabled || m5DemoTarget || m5UuidTarget || m6Target
         ? "127.0.0.1"
         : process.env.VITE_SERVER_HOST || "localhost",
       ...(localDemoAuthEnabled ? { port: 15173, strictPort: true } : {}),
