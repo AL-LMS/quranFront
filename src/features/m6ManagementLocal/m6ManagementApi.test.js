@@ -158,16 +158,22 @@ describe("M6 synthetic course-management response contract", () => {
       .mockResolvedValueOnce(reply({ items: [ROW], limit: 20, offset: 0 }, 200, null))
       .mockResolvedValueOnce(reply({ items: [{ ...ROW, reviewer_account_id: ID }], limit: 20, offset: 0 }));
     vi.stubGlobal("fetch", fetcher);
+    const received = [];
     for (const status of [403, 409, 404, 503]) {
       try {
         await listManagedCourses({ token: TOKEN });
-        throw new Error("Expected failure");
+        received.push({ status: 0, name: "UnexpectedSuccess", secret: true });
       } catch (error) {
-        expect(error).toBeInstanceOf(ManagementError);
-        expect(error.status).toBe(status);
-        expect(error.message).not.toContain("private");
+        received.push({
+          status: error.status,
+          name: error.name,
+          secret: error.message.includes("private"),
+        });
       }
     }
+    expect(received).toEqual([403, 409, 404, 503].map((status) => ({
+      status, name: "ManagementError", secret: false,
+    })));
     await expect(listManagedCourses({ token: TOKEN })).rejects.toThrow("منبع داده");
     await expect(listManagedCourses({ token: TOKEN })).rejects.toThrow("نامعتبر");
   });
