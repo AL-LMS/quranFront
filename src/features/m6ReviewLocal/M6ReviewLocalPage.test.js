@@ -67,8 +67,8 @@ describe("M6 local reviewer RTL preview", () => {
     expect(await screen.findByText(/بررسی آزمایشی تأیید شد/)).toBeTruthy();
     await waitFor(() => {
       expect(screen.getByLabelText("UUID دوره برای لغو").value).toBe(COURSE_ID);
-      expect(screen.getByLabelText("نسخهٔ منتشرشده").value).toBe("2");
     });
+    expect(screen.getByLabelText("نسخهٔ منتشرشده").value).toBe("2");
     fireEvent.click(screen.getByRole("button", { name: "درخواست لغو انتشار" }));
     expect(screen.getByText(/با لغو تأیید/)).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "تأیید لغو انتشار" }));
