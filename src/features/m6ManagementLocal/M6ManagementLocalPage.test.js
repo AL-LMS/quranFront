@@ -72,15 +72,15 @@ describe("M6 Persian RTL local management", () => {
     connect();
     await screen.findByRole("heading", { name: "ایجاد دورهٔ جدید" });
 
-    fireEvent.change(screen.getByLabelText("عنوان دورهٔ جدید"), {
+    fireEvent.change(screen.getByRole("textbox", { name: /عنوان دورهٔ جدید/ }), {
       target: { value: FIRST.title },
     });
     fireEvent.click(screen.getByRole("button", { name: "ساخت پیش‌نویس" }));
     expect(await screen.findByText(/دورهٔ جدید به‌صورت پیش‌نویس ساخته شد/)).toBeTruthy();
     await screen.findByRole("button", { name: "مدیریت " + FIRST.title });
-    expect(screen.getByLabelText("عنوان ویرایش").value).toBe(FIRST.title);
+    expect(screen.getByRole("textbox", { name: /عنوان ویرایش/ }).value).toBe(FIRST.title);
 
-    fireEvent.change(screen.getByLabelText("عنوان ویرایش"), {
+    fireEvent.change(screen.getByRole("textbox", { name: /عنوان ویرایش/ }), {
       target: { value: "عنوان ویرایش‌شده" },
     });
     fireEvent.click(screen.getByRole("button", { name: "ذخیرهٔ ویرایش" }));
@@ -133,12 +133,12 @@ describe("M6 Persian RTL local management", () => {
     render(<M6ManagementLocalPage />);
     connect();
     fireEvent.click(await screen.findByRole("button", { name: "مدیریت " + FIRST.title }));
-    fireEvent.change(screen.getByLabelText("عنوان ویرایش"), {
+    fireEvent.change(screen.getByRole("textbox", { name: /عنوان ویرایش/ }), {
       target: { value: "عنوان اصلاح شده" },
     });
     fireEvent.click(screen.getByRole("button", { name: "ذخیرهٔ ویرایش" }));
     expect(await screen.findByText(/نسخه یا وضعیت دوره تغییر کرده است/)).toBeTruthy();
-    expect(screen.getByLabelText("عنوان ویرایش").value).toBe("عنوان اصلاح شده");
+    expect(screen.getByRole("textbox", { name: /عنوان ویرایش/ }).value).toBe("عنوان اصلاح شده");
     expect(screen.queryByText("database secret")).toBeNull();
   });
 });
