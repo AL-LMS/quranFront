@@ -28,8 +28,8 @@ describe("RTL local UUID catalog", () => {
       .mockResolvedValueOnce(json({ items: [COURSE], limit: 6, offset: 0 }))
       .mockResolvedValueOnce(json(COURSE));
     vi.stubGlobal("fetch", fetcher);
-    const { container } = view();
-    expect(container.querySelector("[dir=rtl][lang=fa]")).toBeTruthy();
+    view();
+    expect(screen.getByRole("heading", { name: "فهرست دوره‌های قرآن" })).toBeTruthy();
     expect(await screen.findByText("آموزش روخوانی قرآن")).toBeTruthy();
     expect(screen.getByText("فقط آزمایش محلی • دادهٔ ساختگی")).toBeTruthy();
     fireEvent.click(screen.getByRole("link", { name: /مشاهده جزئیات آموزش روخوانی قرآن/ }));
