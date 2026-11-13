@@ -118,6 +118,16 @@ const M6ManagementLocalPreview =
     ? lazy(() => import("./features/m6ManagementLocal/M6ManagementLocalPage"))
     : null;
 
+// A separately opted-in M6 reviewer page; always absent in production builds.
+const M6ReviewLocalPreview =
+  m6ManagementPreviewEnabled({
+    dev: import.meta.env.DEV,
+    previewFlag: import.meta.env.VITE_ENABLE_M6_MANAGEMENT_PREVIEW,
+    apiFlag: import.meta.env.VITE_ALLOW_M6_LOCAL_API,
+  }) && import.meta.env.VITE_ENABLE_M6_REVIEW_PREVIEW === "true"
+    ? lazy(() => import("./features/m6ReviewLocal/M6ReviewLocalPage"))
+    : null;
+
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -135,9 +145,13 @@ function App() {
   const m6LocalManagementRouteActive =
     Boolean(M6ManagementLocalPreview) &&
     location.pathname === "/__preview/m6-management";
+  const m6LocalReviewRouteActive =
+    Boolean(M6ReviewLocalPreview) &&
+    location.pathname === "/__preview/m6-review";
   return (
     <CacheProvider value={cacheRtl}>
-      {!localDemoAuthRouteActive && !m6LocalManagementRouteActive && <Navbar />}
+      {!localDemoAuthRouteActive && !m6LocalManagementRouteActive &&
+        !m6LocalReviewRouteActive && <Navbar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         {showCatalogPreview && (
@@ -163,7 +177,17 @@ function App() {
             path="/__preview/m6-management"
             element={
               <Suspense fallback={<div role="status">در حال بارگذاری مدیریت…</div>}>
-                <M6ManagementLocalPreview />
+                <M6ManagementLocalPreview enableLocalReview={Boolean(M6ReviewLocalPreview)} />
+              </Suspense>
+            }
+          />
+        )}
+        {M6ReviewLocalPreview && (
+          <Route
+            path="/__preview/m6-review"
+            element={
+              <Suspense fallback={<div role="status">در حال بارگذاری بررسی…</div>}>
+                <M6ReviewLocalPreview />
               </Suspense>
             }
           />

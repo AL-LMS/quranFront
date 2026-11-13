@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { legacyJsxEsbuildOptions } from "./vite-legacy-jsx-options.mjs";
 import { m5TeacherPreviewProxyTarget } from "./vite-m5-teacher-preview.mjs";
 import { LOCAL_UUID_PREFIX, m5UuidCatalogTarget, rewriteM5UuidCatalogPath } from "./vite-m5-uuid-catalog.mjs";
-import { M6_LOCAL_PREFIX, m6ManagementTarget, rewriteM6ManagementPath } from "./vite-m6-management.mjs";
+import { M6_LOCAL_PREFIX, M6_REVIEW_PREFIX, m6ManagementTarget, rewriteM6ManagementPath, rewriteM6ReviewPath } from "./vite-m6-management.mjs";
 import {
   discoverLocalDemoAuthTarget,
   LOCAL_DEMO_AUTH_PREFIX,
@@ -49,6 +49,13 @@ export default defineConfig(({ mode, command }) => {
     : null;
 
   const proxy = {
+    ...(m6Target && env.VITE_ENABLE_M6_REVIEW_PREVIEW === "true" ? {
+      [M6_REVIEW_PREFIX]: {
+        target: m6Target,
+        changeOrigin: false,
+        rewrite: rewriteM6ReviewPath,
+      },
+    } : {}),
     ...(m6Target ? {
       [M6_LOCAL_PREFIX]: {
         target: m6Target,

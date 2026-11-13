@@ -1,6 +1,7 @@
 /** M6-LOCAL-UI: development-only loopback proxy to synthetic course writes. */
 
 export const M6_LOCAL_PREFIX = "/__demo/m6-management";
+export const M6_REVIEW_PREFIX = "/__demo/m6-review";
 
 export function m6ManagementTarget({ command, mode, env }) {
   if (
@@ -43,4 +44,12 @@ export function rewriteM6ManagementPath(path) {
     throw new Error("Invalid M6 management proxy path");
   }
   return path.replace(/^\/__demo\/m6-management(?=\/|$)/, "/api/v2/local-course-management");
+}
+
+/** Separate opt-in reviewer proxy; never accepts a remote host or arbitrary path. */
+export function rewriteM6ReviewPath(path) {
+  if (path !== M6_REVIEW_PREFIX && !path.startsWith(M6_REVIEW_PREFIX + "/")) {
+    throw new Error("Invalid M6 reviewer proxy path");
+  }
+  return path.replace(/^\/__demo\/m6-review(?=\/|$)/, "/api/v2/local-course-review");
 }

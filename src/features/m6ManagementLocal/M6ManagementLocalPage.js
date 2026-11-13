@@ -11,6 +11,7 @@ import {
   archiveManagedCourse, createManagedCourse, editManagedCourse,
   listManagedCourses,
 } from "./m6ManagementApi";
+import { submitPublicationRequest } from "../m6ReviewLocal/m6ReviewApi";
 
 const PAGE_SIZE = 20;
 const LABELS = {
@@ -19,7 +20,7 @@ const LABELS = {
   archived: "بایگانی‌شده",
 };
 
-export default function M6ManagementLocalPage() {
+export default function M6ManagementLocalPage({ enableLocalReview = false }) {
   // Process/component memory only. Never put tokens in URLs, browser storage,
   // logs, error text, HTTP cookies or backend config.
   const [inputToken, setInputToken] = useState("");
@@ -149,6 +150,26 @@ export default function M6ManagementLocalPage() {
     }
   }
 
+  async function submitForReview() {
+    if (!enableLocalReview || !selected || selected.status !== "draft" || busy) return;
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      await submitPublicationRequest({
+        token, courseId: selected.id, expectedVersion: selected.version,
+      });
+      reload();
+      setNotice("درخواست انتشار برای بررسی مستقل در محیط آزمایشی ارسال شد.");
+    } catch (cause) {
+      setError(cause.message || "ارسال درخواست بررسی ناموفق بود.");
+      if (cause.status === 409) reload();
+      if (cause.status === 403) disconnect();
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function archive() {
     if (!selected || selected.status === "archived" || busy || !confirmArchive) return;
     setBusy(true);
@@ -208,12 +229,12 @@ export default function M6ManagementLocalPage() {
                 توکن موقتِ نمایش‌داده‌شده در ترمینال backend را اینجا وارد کنید.
                 توکن فقط در حافظهٔ این صفحه نگه‌داری می‌شود و با ترک صفحه پاک می‌شود.
               </Alert>
-              <Box component="form" onSubmit={connect}>
+              <Box component="form" onSubmit={connect} autoComplete="off">
                 <Stack spacing={2}>
                   <TextField
                     label="توکن مدیریت محلی"
                     type="password"
-                    autoComplete="off"
+                    autoComplete="new-password"
                     value={inputToken}
                     onChange={(event) => setInputToken(event.target.value)}
                     fullWidth
@@ -231,9 +252,16 @@ export default function M6ManagementLocalPage() {
               <Typography color="text.secondary" fontSize=".9rem">
                 اتصال موقت فعال است؛ توکن در مرورگر ذخیرهٔ دائمی نمی‌شود.
               </Typography>
-              <Button variant="outlined" onClick={disconnect} disabled={busy}>
-                قطع اتصال و پاک‌کردن توکن
-              </Button>
+              <Stack direction="row" gap={1} alignItems="center">
+                {enableLocalReview && (
+                  <Button variant="outlined" href="/__preview/m6-review">
+                    صفحهٔ بررسی انتشار
+                  </Button>
+                )}
+                <Button variant="outlined" onClick={disconnect} disabled={busy}>
+                  قطع اتصال و پاک‌کردن توکن
+                </Button>
+              </Stack>
             </Stack>
             {error && <Alert severity="error" role="alert">{error}</Alert>}
             {notice && <Alert severity="success" role="status">{notice}</Alert>}
@@ -339,6 +367,11 @@ export default function M6ManagementLocalPage() {
                           }>ذخیرهٔ ویرایش</Button>
                         </Stack>
                       </Box>
+                      {enableLocalReview && selected.status === "draft" && (
+                        <Button variant="outlined" disabled={busy} onClick={submitForReview}>
+                          ارسال برای بررسی انتشار آزمایشی
+                        </Button>
+                      )}
                       <Alert severity="info">
                         ویرایش دورهٔ منتشرشده، آن را دوباره پیش‌نویس می‌کند؛
                         هیچ انتشار خودکاری انجام نمی‌شود.
@@ -369,7 +402,8 @@ export default function M6ManagementLocalPage() {
               </Paper>
             </Box>
             <Alert severity="info" icon={<AutoStoriesOutlined />}>
-              این صفحه تنها برای آزمون محلی است؛ نقش مدیر واقعی، انتشار و دسترسی دانشجو در آن پیاده نشده است.
+              این صفحه تنها برای آزمون محلی است؛ نقش مدیر واقعی و دسترسی دانشجو
+              در آن پیاده نشده است. بررسی انتشار نیز فقط با توکن جداگانه و در دادهٔ ساختگی است.
             </Alert>
           </Stack>
         )}
