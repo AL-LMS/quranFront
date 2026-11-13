@@ -131,13 +131,9 @@ describe("M6 local independent review API", () => {
       .mockResolvedValueOnce(reply({ items: [REQUEST], limit: 20, offset: 0 }, 200, null));
     vi.stubGlobal("fetch", fetcher);
     for (const status of [403, 409, 404, 503]) {
-      try {
-        await listReviewRequests({ token: REVIEWER });
-        throw new Error("Expected denial");
-      } catch (error) {
-        expect(error.status).toBe(status);
-        expect(error.message).not.toContain("private");
-      }
+      const error = await listReviewRequests({ token: REVIEWER }).catch((cause) => cause);
+      expect(error.status).toBe(status);
+      expect(error.message).not.toContain("private");
     }
     await expect(listReviewRequests({ token: REVIEWER })).rejects.toThrow("منبع داده");
   });
