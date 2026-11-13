@@ -78,6 +78,7 @@ import CatalogPreviewPage from "./features/catalogPreview/CatalogPreviewPage";
 import CatalogDetailPreviewPage from "./features/catalogPreview/CatalogDetailPreviewPage";
 import { catalogPreviewEnabled } from "./features/catalogPreview/catalogPreviewRoutes";
 import { m5UuidCatalogEnabled } from "./features/uuidCatalogLocal/uuidCatalogGate";
+import { m6ManagementPreviewEnabled } from "./features/m6ManagementLocal/m6ManagementGate";
 import EnrollmentPreviewPage from "./features/enrollmentPreview/EnrollmentPreviewPage";
 import { enrollmentPreviewEnabledForBuild } from "./features/enrollmentPreview/enrollmentPreviewGate";
 
@@ -107,6 +108,16 @@ const M5UuidLocalPreview =
     ? lazy(() => import("./features/uuidCatalogLocal/UuidCatalogLocalPage"))
     : null;
 
+// M6 write-preview is independent, dev-only and not in a production build.
+const M6ManagementLocalPreview =
+  m6ManagementPreviewEnabled({
+    dev: import.meta.env.DEV,
+    previewFlag: import.meta.env.VITE_ENABLE_M6_MANAGEMENT_PREVIEW,
+    apiFlag: import.meta.env.VITE_ALLOW_M6_LOCAL_API,
+  })
+    ? lazy(() => import("./features/m6ManagementLocal/M6ManagementLocalPage"))
+    : null;
+
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -121,9 +132,12 @@ function App() {
   const showEnrollmentPreview = enrollmentPreviewEnabledForBuild();
   const localDemoAuthRouteActive =
     Boolean(LocalDemoAuthRoutes) && location.pathname.startsWith("/local-demo");
+  const m6LocalManagementRouteActive =
+    Boolean(M6ManagementLocalPreview) &&
+    location.pathname === "/__preview/m6-management";
   return (
     <CacheProvider value={cacheRtl}>
-      {!localDemoAuthRouteActive && <Navbar />}
+      {!localDemoAuthRouteActive && !m6LocalManagementRouteActive && <Navbar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         {showCatalogPreview && (
@@ -143,6 +157,16 @@ function App() {
               element={<Suspense fallback={<div role="status">در حال بارگذاری…</div>}><M5UuidLocalPreview /></Suspense>}
             />
           </>
+        )}
+        {M6ManagementLocalPreview && (
+          <Route
+            path="/__preview/m6-management"
+            element={
+              <Suspense fallback={<div role="status">در حال بارگذاری مدیریت…</div>}>
+                <M6ManagementLocalPreview />
+              </Suspense>
+            }
+          />
         )}
         {M5TeacherCoursePreview && (
           <Route
