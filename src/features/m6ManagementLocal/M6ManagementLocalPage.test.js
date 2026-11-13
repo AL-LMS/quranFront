@@ -42,26 +42,18 @@ describe("M6 Persian RTL local management", () => {
   it("creates, edits and confirms archive with exact version and token header", async () => {
     let current = null;
     const fetcher = vi.fn(async (url, options) => {
-      expect(options.credentials).toBe("omit");
-      expect(options.headers[HEADER]).toBe(TOKEN);
-      expect(url).not.toContain(TOKEN);
       if (options.method === "GET") {
         return reply({ items: current ? [current] : [], limit: 20, offset: 0 });
       }
       if (options.method === "POST" && url.endsWith("/courses")) {
-        expect(JSON.parse(options.body)).toEqual({ title: FIRST.title });
         current = { ...FIRST };
         return reply(current, 201);
       }
       if (options.method === "PATCH") {
-        expect(JSON.parse(options.body)).toEqual({
-          title: "عنوان ویرایش‌شده", expected_version: 1,
-        });
         current = { ...current, title: "عنوان ویرایش‌شده", version: 2 };
         return reply(current);
       }
       if (options.method === "POST" && url.endsWith("/archive")) {
-        expect(JSON.parse(options.body)).toEqual({ expected_version: 2 });
         current = { ...current, status: "archived", version: 3 };
         return reply(current);
       }
@@ -99,9 +91,31 @@ describe("M6 Persian RTL local management", () => {
     expect(screen.queryByRole("button", { name: "ذخیرهٔ ویرایش" }).disabled).toBe(true);
 
     expect(screen.getByRole("heading", { name: "مدیریت دوره‌های قرآن" })).toBeTruthy();
-    expect(fetcher.mock.calls.some(([url, options]) =>
-      url.endsWith("/archive") && options.method === "POST"
+    const allCalls = fetcher.mock.calls;
+    expect(allCalls.every(([url, options]) =>
+      options.credentials === "omit" &&
+      options.headers[HEADER] === TOKEN &&
+      !url.includes(TOKEN)
     )).toBe(true);
+    const writes = allCalls
+      .filter(([, options]) => options.method !== "GET")
+      .map(([url, options]) => ({
+        url, method: options.method, payload: JSON.parse(options.body),
+      }));
+    expect(writes).toEqual([
+      {
+        url: "/__demo/m6-management/courses", method: "POST",
+        payload: { title: FIRST.title },
+      },
+      {
+        url: "/__demo/m6-management/courses/" + ID, method: "PATCH",
+        payload: { title: "عنوان ویرایش‌شده", expected_version: 1 },
+      },
+      {
+        url: "/__demo/m6-management/courses/" + ID + "/archive", method: "POST",
+        payload: { expected_version: 2 },
+      },
+    ]);
     fireEvent.click(screen.getByRole("button", { name: "قطع اتصال و پاک‌کردن توکن" }));
     expect(screen.getByLabelText("توکن مدیریت محلی").value).toBe("");
     expect(screen.queryByRole("button", { name: "ساخت پیش‌نویس" })).toBeNull();
