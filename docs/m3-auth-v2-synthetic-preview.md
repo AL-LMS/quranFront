@@ -1,6 +1,6 @@
 # AL-M3-AUTH-01 — Persian V2 auth screen reuse (source-only preview)
 
-**Status 2026-11-15: source-only / unconnected / NOT real authentication.** Frontend issues [#35](https://github.com/AL-LMS/quranFront/issues/35), [#36](https://github.com/AL-LMS/quranFront/issues/36); backend parent [#136](https://github.com/AL-LMS/quranBack/issues/136).
+**Status 2026-11-15: source-only / local synthetic runner candidate / NOT real authentication.** Frontend issues [#35](https://github.com/AL-LMS/quranFront/issues/35), [#36](https://github.com/AL-LMS/quranFront/issues/36); backend parent [#136](https://github.com/AL-LMS/quranBack/issues/136), local integration [#141](https://github.com/AL-LMS/quranBack/issues/141).
 
 ## What is present
 
@@ -10,19 +10,32 @@
 - Phone entry accepts ASCII, Persian and Arabic-Indic digits; `+98`/`0098` user input is invalid. The server owns final canonicalization.
 - A preview-only recovery-request form records a support case. There is **no** client operation to reset a password using SMS alone.
 
-## How a developer will preview it — AFTER backend adapter exists
+## Explicit local HTTPS preview — only with the backend draft source
 
-1. Use only invented identities and the **fake** SMS provider in a private local development/test environment.
-2. Set `VITE_ENABLE_M3_AUTH_V2_PREVIEW=true` for the **Vite development server only**. `import.meta.env.DEV` is an additional mandatory compile-time guard. There is no production preview route.
-3. Configure the development proxy for the future `/api/v2/auth` FastAPI adapter with a same-origin HTTPS browser path, Secure host-only cookies and its reviewed CSRF transport. The **backend adapter is not yet mounted**; the preview currently fails closed (404/CSRF unavailable) until [backend #138](https://github.com/AL-LMS/quranBack/issues/138) is separately implemented.
-4. Open `/__preview/m3-auth/signup`, confirm the fake-sent OTP through test fixtures, sign in with password or OTP, check `/me`, logout and request support recovery.
+1. Check out the corresponding **draft backend branch from PR #140, with issue #141 changes**, next to the frontend branch. The backend is intentionally *not* available from the default backend `main` router. Install each repo's ordinary development dependencies; this runner never installs packages or configures PostgreSQL.
+2. From the frontend repository run `bash scripts/run_m3_auth_v2_local.sh`. When the backend checkout is elsewhere, supply `AL_LMS_M3_AUTH_V2_BACKEND_DIR=/absolute/backend/path` before the command.
+3. This script creates a private temporary folder (0700), generates a one-day, self-signed HTTPS certificate, starts FastAPI on `127.0.0.1:18443` and Vite on `127.0.0.1:15173`, and sets the dev-only preview gate. `/api/v2/auth` is proxied to **only** the fixed loopback FastAPI target. All other existing Vite routes are unchanged. The browser may require an explicit local self-signed certificate exception. No `http://` cookie bypass is provided.
+4. Open `https://127.0.0.1:15173/__preview/m3-auth/signup`. Only use **fictional fixture numbers** `09120000001`, `09120000002` or `09120000003` and invented names/passwords. After requesting a challenge, read the six-digit code from the private fake-SMS file path printed by the script (last field of the latest line); the code never appears in the API response or ordinary server logs.
+5. Verify phone; sign in with password; inspect `/me` and logout. Then use SMS OTP signin (subject remains the same account) and support-assisted recovery. The synthetic in-memory state disappears when the process stops.
+6. Press **Ctrl+C** to stop both child processes and delete the generated local TLS key/certificate and fake-SMS file. The script does not deploy, run database services, or contact a real SMS provider.
+
+### Repeatable local HTTPS integration smoke
+
+After installing the frontend `npm ci` dependencies and the backend's Python development dependencies, run **`python3 scripts/check_m3_auth_v2_local.py`** from the frontend checkout. This one-shot command starts and stops both loopback services automatically; it uses only fictional phone `09120000001`, reads the private fake SMS inbox, and tests the actual HTTPS Vite→FastAPI proxy, CSRF and host-only session cookies, signup, verification without auto-login, password signin, `/me`, logout, 60-second resend block and recovery. It tests real HTTP, **not** visual browser interaction. The helper requires Python `httpx` from the backend development environment and intentionally trusts a newly generated self-signed certificate only for its fixed localhost origin.
+
+The companion browser-click acceptance remains pending; it must validate the Persian form inputs, code entry, both login methods and responsive behavior against the same fake service. This local setup cannot be considered a real-user security gate or production readiness evidence.
+
+The opt-in local runner is **not** a production security review. It must never be made public or wired into `app.main`. A production build with the preview flag remains disabled by `import.meta.env.DEV` and the Vite proxy gate.
 
 This is not permission to expose the demo on any Internet host or to enable real accounts, external SMS, PostgreSQL or deployment.
 
 ## Scope / required follow-ups
 
-- [ ] Backend #138 supplies a tested **synthetic-only** HTTP adapter, `/csrf` scheme, cookie, status and reviewable origin policy; the frontend must match its pinned version.
-- [ ] A dedicated synthetic browser test should exercise signup→verification→signin→dashboard→logout and login OTP, including invalid code, revoked session and browser-back handling.
+- [x] Backend #138 supplies a **synthetic-only**, unmounted HTTP adapter, `/csrf` scheme, cookie and HTTPS/origin tests on draft PR #140. Not yet merged/authorized for production.
+- [x] React UI journey tests cover signup→verification→password or SMS signin→dashboard→logout, support recovery and revoked sessions with mocked HTTP responses (merged frontend PR #38).
+- [x] Complete a **live HTTPS HTTP integration smoke** of the Vite proxy→synthetic FastAPI app with private fake SMS, CSRF, session cookie, logout and cleanup.
+- [ ] Complete an actual browser-click run against the loopback synthetic FastAPI service, including invalid code, expiry, SMS signin, browser-back and responsive layout.
+- [ ] Complete challenge resend/cooldown affordances and friendly 401/429/expired-code UI copy.
 - [ ] Confirm phone input formatting, password policy, challenge resend UX, CSRF rotation and exact origin/HTTPS topology before any real identity release.
 - [ ] Replace demo dashboard with resource-scoped student/teacher/admin navigation **only after** an authoritative `/me` membership/grant source, independent review and separate G9 release authorization.
 

@@ -12,6 +12,7 @@ import {
   isLocalDemoAuthEnabled,
   localDemoInboxBlockerPlugin,
 } from "./vite-local-demo-auth.mjs";
+import { M3_AUTH_V2_PREFIX, m3SyntheticAuthPreview } from "./vite-m3-auth-preview.mjs";
 
 const sourceDirectory = fileURLToPath(new URL("./src/", import.meta.url));
 
@@ -36,7 +37,9 @@ const legacyJsxInJs = {
 };
 
 export default defineConfig(({ mode, command }) => {
-  const env = loadEnv(mode, process.cwd(), ["VITE_", "AL_LMS_LOCAL_DEMO_COMPOSE_PROJECT"]);
+  const env = loadEnv(mode, process.cwd(), [
+    "VITE_", "AL_LMS_LOCAL_DEMO_COMPOSE_PROJECT", "AL_LMS_M3_AUTH_V2_",
+  ]);
   const m5DemoTarget = m5TeacherPreviewProxyTarget({ command, mode, env });
   const m5UuidTarget = m5UuidCatalogTarget({ command, mode, env });
   const m6Target = m6ManagementTarget({ command, mode, env });
@@ -47,8 +50,11 @@ export default defineConfig(({ mode, command }) => {
   const localDemoAuthTarget = localDemoAuthEnabled
     ? discoverLocalDemoAuthTarget(env.AL_LMS_LOCAL_DEMO_COMPOSE_PROJECT)
     : null;
+  const m3AuthPreview = m3SyntheticAuthPreview({ command, mode, env });
 
   const proxy = {
+    // This route must precede the broad /api proxy: never reach a real API.
+    ...(m3AuthPreview ? { [M3_AUTH_V2_PREFIX]: m3AuthPreview.proxy } : {}),
     ...(m6Target && env.VITE_ENABLE_M6_REVIEW_PREVIEW === "true" ? {
       [M6_REVIEW_PREFIX]: {
         target: m6Target,
@@ -108,10 +114,11 @@ export default defineConfig(({ mode, command }) => {
     ],
     optimizeDeps: { esbuildOptions: legacyJsxEsbuildOptions },
     server: {
-      host: localDemoAuthEnabled || m5DemoTarget || m5UuidTarget || m6Target
+      host: m3AuthPreview || localDemoAuthEnabled || m5DemoTarget || m5UuidTarget || m6Target
         ? "127.0.0.1"
         : process.env.VITE_SERVER_HOST || "localhost",
-      ...(localDemoAuthEnabled ? { port: 15173, strictPort: true } : {}),
+      ...(m3AuthPreview || localDemoAuthEnabled ? { port: 15173, strictPort: true } : {}),
+      ...(m3AuthPreview ? { https: m3AuthPreview.tls } : {}),
       proxy,
     },
     // Keep the deployment artifact directory compatible with the CRA hosting setup.
