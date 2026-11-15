@@ -10,11 +10,29 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { setLocalStorageLogin } from "../localStorage";
 import useAuth from "../../hooks/useAuth";
-const ConfirmPhone = () => {
+import { useV2Preview } from "../../features/authV2/V2PreviewContext";
+import { v2AuthApi, v2AuthErrorMessage } from "../../features/authV2/v2AuthApi";
+import { toAsciiDigits } from "../../features/authV2/phoneEntry";
+const ConfirmPhone = ({ v2Preview = false }) => {
+  const v2 = useV2Preview();
   const navigate = useNavigate();
   const { setAuth, setUser, setRole } = useAuth();
   const [loading, setLoading] = useState(false);
   const confirm_phone = async () => {
+    if (v2Preview) {
+      try {
+        if (v2?.challenge?.purpose !== "verify_phone") throw new Error("missing challenge");
+        await v2AuthApi.verifyPhone(v2.challenge.challengeId, formik.values.code);
+        v2.setChallenge(null);
+        toastify("success", "شمارهٔ آزمایشی تأیید شد. اکنون وارد شوید.");
+        navigate("/__preview/m3-auth/login"); // Verification never auto-logs in.
+      } catch (error) {
+        toastify("error-login", v2AuthErrorMessage(error));
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
     let data = {
       table: "users",
       method_type: "confirm_phone",
@@ -103,7 +121,7 @@ const ConfirmPhone = () => {
                 name="code"
                 value={formik.values.code}
                 fullWidth
-                onChange={(e) => formik.setFieldValue("code", e.target.value)}
+                onChange={(e) => formik.setFieldValue("code", v2Preview ? toAsciiDigits(e.target.value) : e.target.value)}
                 size="small"
               />
               {formik.touched.code && formik.errors.code ? (

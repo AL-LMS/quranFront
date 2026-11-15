@@ -79,6 +79,7 @@ import CatalogDetailPreviewPage from "./features/catalogPreview/CatalogDetailPre
 import { catalogPreviewEnabled } from "./features/catalogPreview/catalogPreviewRoutes";
 import { m5UuidCatalogEnabled } from "./features/uuidCatalogLocal/uuidCatalogGate";
 import { m6ManagementPreviewEnabled } from "./features/m6ManagementLocal/m6ManagementGate";
+import { v2AuthPreviewEnabled } from "./features/authV2/v2AuthGate";
 import EnrollmentPreviewPage from "./features/enrollmentPreview/EnrollmentPreviewPage";
 import { enrollmentPreviewEnabledForBuild } from "./features/enrollmentPreview/enrollmentPreviewGate";
 
@@ -87,6 +88,13 @@ const LocalDemoAuthRoutes =
   import.meta.env.DEV && import.meta.env.VITE_ENABLE_LOCAL_DEMO_AUTH === "true"
     ? lazy(() => import("./features/localDemoAuth/LocalDemoAuthRoutes"))
     : null;
+// Never replace the legacy /login routes implicitly. No production V2 auth chunk.
+const V2AuthPreviewRoutes = v2AuthPreviewEnabled({
+  dev: import.meta.env.DEV,
+  enabled: import.meta.env.VITE_ENABLE_M3_AUTH_V2_PREVIEW,
+})
+  ? lazy(() => import("./features/authV2/V2AuthPreviewRoutes"))
+  : null;
 // This extra opt-in is a hardcoded build-time dev gate. The chunk and route
 // must not be reachable through the ordinary production app.
 const M5TeacherCoursePreview =
@@ -214,6 +222,16 @@ function App() {
             element={
               <Suspense fallback={<div role="status">Loading local demo…</div>}>
                 <LocalDemoAuthRoutes />
+              </Suspense>
+            }
+          />
+        )}
+        {V2AuthPreviewRoutes && (
+          <Route
+            path="/__preview/m3-auth/*"
+            element={
+              <Suspense fallback={<div role="status">در حال بارگذاری ورود آزمایشی…</div>}>
+                <V2AuthPreviewRoutes />
               </Suspense>
             }
           />
