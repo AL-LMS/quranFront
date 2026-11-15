@@ -10,11 +10,30 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { setLocalStorageLogin } from "../localStorage";
 import useAuth from "../../hooks/useAuth";
-const CheckOTP = () => {
+import { useV2Preview } from "../../features/authV2/V2PreviewContext";
+import { v2AuthApi, v2AuthErrorMessage } from "../../features/authV2/v2AuthApi";
+import { toAsciiDigits } from "../../features/authV2/phoneEntry";
+const CheckOTP = ({ v2Preview = false }) => {
+  const v2 = useV2Preview();
+  const v2Path = v2Preview ? "/__preview/m3-auth" : "";
   const navigate = useNavigate();
   const { setAuth, setUser, setRole } = useAuth();
   const [loading, setLoading] = React.useState(false);
   const check_otp = async () => {
+    if (v2Preview) {
+      try {
+        if (v2?.challenge?.purpose !== "signin") throw new Error("missing challenge");
+        const account = await v2AuthApi.signinOtp(v2.challenge.challengeId, formik.values.code);
+        v2.setChallenge(null);
+        v2.setAccount(account);
+        navigate(`${v2Path}/dashboard`);
+      } catch (error) {
+        toastify("error-login", v2AuthErrorMessage(error));
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
     let data = {
       table: "users",
       method_type: "check_otp",
@@ -105,8 +124,8 @@ const CheckOTP = () => {
                   marginBottom: "20px",
                 }}
               >
-                {"(کد 6 رقمی برای ورد به شماره تلفن " +
-                  JSON.parse(localStorage.getItem("phone")) +
+                {"(کد 6 رقمی برای ورود به شماره تلفن " +
+                  (v2Preview ? v2?.challenge?.phone || "شمارهٔ آزمایشی" : JSON.parse(localStorage.getItem("phone"))) +
                   " ارسال شد)"}
               </span>
             </div>
@@ -120,7 +139,7 @@ const CheckOTP = () => {
                 name="code"
                 value={formik.values.code}
                 fullWidth
-                onChange={(e) => formik.setFieldValue("code", e.target.value)}
+                onChange={(e) => formik.setFieldValue("code", v2Preview ? toAsciiDigits(e.target.value) : e.target.value)}
                 size="small"
               />
               {formik.touched.code && formik.errors.code ? (
@@ -131,7 +150,7 @@ const CheckOTP = () => {
                 </div>
               ) : null}
             </Box>
-            <Link to="/send-otp">
+            <Link to={`${v2Path}/send-otp`}>
               <Button
                 fullWidth
                 sx={{

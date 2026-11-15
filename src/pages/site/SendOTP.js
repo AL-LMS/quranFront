@@ -10,10 +10,27 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { setLocalStorageLogin } from "../localStorage";
 import { regex_phone } from "../../helper/regex";
-const SendOTP = () => {
+import { useV2Preview } from "../../features/authV2/V2PreviewContext";
+import { v2AuthApi, v2AuthErrorMessage } from "../../features/authV2/v2AuthApi";
+import { v2DomesticPhoneEntry, v2DomesticPhonePattern } from "../../features/authV2/phoneEntry";
+const SendOTP = ({ v2Preview = false }) => {
+  const v2 = useV2Preview();
+  const v2Path = v2Preview ? "/__preview/m3-auth" : "";
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const send_otp = async () => {
+    if (v2Preview) {
+      try {
+        const challenge = await v2AuthApi.requestSigninOtp(formik.values.phone);
+        v2.setChallenge({ ...challenge, phone: formik.values.phone, purpose: "signin" });
+        navigate(`${v2Path}/check-otp`);
+      } catch (error) {
+        toastify("error-login", v2AuthErrorMessage(error));
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
     let data = {
       table: "users",
       method_type: "send_otp",
@@ -49,7 +66,7 @@ const SendOTP = () => {
   const RegistrationSchema = Yup.object().shape({
     phone: Yup.string()
       .required("لطفا شماره تلفن خود را وارد کنید")
-      .matches(regex_phone, "شماره تلفن را به درستی وارد نمایید."),
+      .matches(v2Preview ? v2DomesticPhonePattern : regex_phone, "شماره تلفن را به درستی وارد نمایید."),
   });
 
   const formik = useFormik({
@@ -93,10 +110,9 @@ const SendOTP = () => {
                     (char) =>
                       String.fromCharCode(char.charCodeAt(0) - 0x06f0 + 0x0030)
                   );
-                  formik.setFieldValue(
-                    "phone",
-                    englishDigits.replace(/[^0-9]/g, "")
-                  );
+                  formik.setFieldValue("phone", v2Preview
+                    ? v2DomesticPhoneEntry(event.target.value)
+                    : englishDigits.replace(/[^0-9]/g, ""));
                 }}
                 // onChange={(e) => formik.setFieldValue("phone", e.target.value)}
                 size="small"
@@ -109,7 +125,7 @@ const SendOTP = () => {
                 </div>
               ) : null}
             </Box>
-            <Link to="/login">
+            <Link to={`${v2Path}/login`}>
               <Button
                 fullWidth
                 sx={{
@@ -136,7 +152,7 @@ const SendOTP = () => {
             >
               ارسال کد
             </Button>
-            <Link to="/signup">
+            <Link to={`${v2Path}/signup`}>
               <Button
                 fullWidth
                 sx={{

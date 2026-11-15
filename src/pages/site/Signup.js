@@ -13,12 +13,34 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { regex_phone } from "../../helper/regex";
 import { setLocalStorageLogin } from "../localStorage";
-const Signup = () => {
+import { useV2Preview } from "../../features/authV2/V2PreviewContext";
+import { v2AuthApi, v2AuthErrorMessage } from "../../features/authV2/v2AuthApi";
+import { v2DomesticPhoneEntry, v2DomesticPhonePattern } from "../../features/authV2/phoneEntry";
+const Signup = ({ v2Preview = false }) => {
+  const v2 = useV2Preview();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [kind, setKind] = useState("student");
 
   const signup = async () => {
+    if (v2Preview) {
+      try {
+        const challenge = await v2AuthApi.signup({
+          phone: formik.values.phone,
+          password: formik.values.password,
+          firstName: formik.values.first_name,
+          lastName: formik.values.last_name,
+        });
+        v2.setChallenge({ ...challenge, phone: formik.values.phone, purpose: "verify_phone" });
+        toastify("success", "کد تایید آزمایشی درخواست شد.");
+        navigate("/__preview/m3-auth/confirm-phone");
+      } catch (error) {
+        toastify("error-login", v2AuthErrorMessage(error));
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
     let data = {
       table: "users",
       method_type: "",
@@ -66,7 +88,7 @@ const Signup = () => {
     last_name: Yup.string().required("لطفا نام‌خانوادگی خود را وارد نمایید."),
     phone: Yup.string()
       .required("لطفا شماره تلفن خود را وارد کنید")
-      .matches(regex_phone, "شماره تلفن را به درستی وارد نمایید."),
+      .matches(v2Preview ? v2DomesticPhonePattern : regex_phone, "شماره تلفن را به درستی وارد نمایید."),
     password: Yup.string().required("لطفا رمز عبور خود را وارد نمایید."),
     repassword: Yup.string()
       .required("لطفا رمز عبور خود را وارد نمایید")
@@ -168,10 +190,9 @@ const Signup = () => {
                     (char) =>
                       String.fromCharCode(char.charCodeAt(0) - 0x06f0 + 0x0030)
                   );
-                  formik.setFieldValue(
-                    "phone",
-                    englishDigits.replace(/[^0-9]/g, "")
-                  );
+                  formik.setFieldValue("phone", v2Preview
+                    ? v2DomesticPhoneEntry(event.target.value)
+                    : englishDigits.replace(/[^0-9]/g, ""));
                 }}
                 size="small"
               />

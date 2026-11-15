@@ -11,11 +11,28 @@ import { getUrl } from "../../helper/getUrl";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { regex_phone } from "../../helper/regex";
-const Login = () => {
+import { useV2Preview } from "../../features/authV2/V2PreviewContext";
+import { v2AuthApi, v2AuthErrorMessage } from "../../features/authV2/v2AuthApi";
+import { v2DomesticPhoneEntry, v2DomesticPhonePattern } from "../../features/authV2/phoneEntry";
+const Login = ({ v2Preview = false }) => {
   const { setAuth, setUser, setRole } = useAuth();
+  const v2 = useV2Preview();
+  const v2Path = v2Preview ? "/__preview/m3-auth" : "";
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const signin = async () => {
+    if (v2Preview) {
+      try {
+        const account = await v2AuthApi.signinPassword(formik.values.phone, formik.values.password);
+        v2.setAccount(account); // In-memory preview state only; /me is authoritative.
+        navigate(`${v2Path}/dashboard`);
+      } catch (error) {
+        toastify("error-login", v2AuthErrorMessage(error));
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
     let data = {
       table: "users",
       method_type: "",
@@ -61,7 +78,7 @@ const Login = () => {
   const RegistrationSchema = Yup.object().shape({
     phone: Yup.string()
       .required("لطفا شماره تلفن خود را وارد کنید")
-      .matches(regex_phone, "شماره تلفن را به درستی وارد نمایید."),
+      .matches(v2Preview ? v2DomesticPhonePattern : regex_phone, "شماره تلفن را به درستی وارد نمایید."),
     password: Yup.string().required("لطفا رمز عبور خود را وارد نمایید."),
   });
 
@@ -70,6 +87,7 @@ const Login = () => {
     validationSchema: RegistrationSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
       setStatus(true);
+      if (v2Preview) setLoading(true);
       signin().then(() => {});
     },
   });
@@ -115,10 +133,9 @@ const Login = () => {
                         char.charCodeAt(0) - 0x06f0 + 0x0030
                       )
                     );
-                  formik.setFieldValue(
-                    "phone",
-                    englishDigits.replace(/[^0-9]/g, "")
-                  );
+                  formik.setFieldValue("phone", v2Preview
+                    ? v2DomesticPhoneEntry(event.target.value)
+                    : englishDigits.replace(/[^0-9]/g, ""));
                 }}
                 // onChange={(e) => formik.setFieldValue("phone", e.target.value)}
                 size="small"
@@ -156,7 +173,7 @@ const Login = () => {
                 </div>
               ) : null}
             </Box>
-            <Link to="/send-otp">
+            <Link to={`${v2Path}/send-otp`}>
               <Button
                 fullWidth
                 sx={{
@@ -183,7 +200,7 @@ const Login = () => {
             >
               ورود
             </Button>
-            <Link to="/signup">
+            <Link to={`${v2Path}/signup`}>
               <Button
                 fullWidth
                 sx={{
@@ -193,6 +210,11 @@ const Login = () => {
                 ثبت نام
               </Button>
             </Link>
+            {v2Preview && (
+              <Link to={`${v2Path}/recovery`}>
+                <Button fullWidth>بازیابی حساب از طریق پشتیبانی</Button>
+              </Link>
+            )}
           </form>
         </Grid>
       </Grid>
