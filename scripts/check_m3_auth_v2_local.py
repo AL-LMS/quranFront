@@ -25,7 +25,9 @@ PASSWORD = "fictional-password-2026"
 
 def expect(response: httpx.Response, status: int) -> dict:
     if response.status_code != status:
-        raise AssertionError(f"Expected {status}, got {response.status_code} at {response.url}")
+        raise AssertionError(
+            f"Expected {status}, got {response.status_code} at {response.url}"
+        )
     return response.json() if status != 204 else {}
 
 
@@ -44,12 +46,16 @@ def main() -> None:
         assert launcher.stdout is not None
         # The launcher prints its fake inbox path before the Vite readiness line.
         for line in launcher.stdout:
-            if line.startswith("Read fake OTPs from the private inbox after requesting a code: "):
+            if line.startswith(
+                "Read fake OTPs from the private inbox after requesting a code: "
+            ):
                 inbox = Path(line.strip().split(": ", 1)[1])
             if line.startswith("Press Ctrl+C"):
                 break
         if inbox is None:
-            raise RuntimeError("synthetic launcher stopped before reporting its private test inbox")
+            raise RuntimeError(
+                "synthetic launcher stopped before reporting its private test inbox"
+            )
 
         # The only intentionally unverified certificates belong to this fixed
         # loopback synthetic fixture. Never generalize verify=False to remote URLs.
@@ -63,12 +69,16 @@ def main() -> None:
                 except httpx.RequestError:
                     pass
                 if time.monotonic() >= deadline:
-                    raise RuntimeError("local synthetic HTTPS proxy did not become ready")
+                    raise RuntimeError(
+                        "local synthetic HTTPS proxy did not become ready"
+                    )
                 time.sleep(0.2)
 
             page = client.get(f"{BASE}/__preview/m3-auth/signup")
             if page.status_code != 200 or "<html" not in page.text.lower():
-                raise AssertionError("Persian preview page did not load through local Vite HTTPS")
+                raise AssertionError(
+                    "Persian preview page did not load through local Vite HTTPS"
+                )
 
             def post(path: str, data: dict, csrf: str | None = None) -> httpx.Response:
                 if csrf is None:
@@ -80,48 +90,83 @@ def main() -> None:
                 )
 
             expect(client.get(f"{API}/me"), 401)
-            signup = expect(post("/signup", {
-                "phone": PHONE,
-                "password": PASSWORD,
-                "first_name": "آزمایشی",
-                "last_name": "دانش‌آموز",
-            }), 202)
+            signup = expect(
+                post(
+                    "/signup",
+                    {
+                        "phone": PHONE,
+                        "password": PASSWORD,
+                        "first_name": "آزمایشی",
+                        "last_name": "دانش‌آموز",
+                    },
+                ),
+                202,
+            )
             challenge = signup["challenge_id"]
             if "code" in signup or "token" in signup:
                 raise AssertionError("OTP/session secret leaked into signup response")
             if not inbox.is_file() or inbox.stat().st_mode & 0o077:
-                raise AssertionError("private fake-SMS inbox missing or permissions too broad")
+                raise AssertionError(
+                    "private fake-SMS inbox missing or permissions too broad"
+                )
             entry = inbox.read_text(encoding="utf-8").splitlines()[-1].split(" ")
             if entry[:2] != [challenge, "+989120000001"]:
                 raise AssertionError("fake-SMS message did not match synthetic signup")
             code = entry[2]
 
-            verified = expect(post("/phone/verify", {
-                "challenge_id": challenge, "code": code,
-            }), 200)
+            verified = expect(
+                post(
+                    "/phone/verify",
+                    {
+                        "challenge_id": challenge,
+                        "code": code,
+                    },
+                ),
+                200,
+            )
             if verified.get("phone_verified") is not True:
                 raise AssertionError("synthetic phone was not verified")
             expect(client.get(f"{API}/me"), 401)  # no auto login
 
-            account = expect(post("/signin/password", {"phone": PHONE, "password": PASSWORD}), 200)
-            if account["account_id"] != verified["account_id"] or account["role"] != "student":
-                raise AssertionError("synthetic identity or role changed between journeys")
+            account = expect(
+                post("/signin/password", {"phone": PHONE, "password": PASSWORD}), 200
+            )
+            if (
+                account["account_id"] != verified["account_id"]
+                or account["role"] != "student"
+            ):
+                raise AssertionError(
+                    "synthetic identity or role changed between journeys"
+                )
             if "token" in account:
-                raise AssertionError("session secret leaked into password signin response")
-            if expect(client.get(f"{API}/me"), 200)["account_id"] != account["account_id"]:
-                raise AssertionError("session cookie was not accepted through Vite HTTPS proxy")
+                raise AssertionError(
+                    "session secret leaked into password signin response"
+                )
+            if (
+                expect(client.get(f"{API}/me"), 200)["account_id"]
+                != account["account_id"]
+            ):
+                raise AssertionError(
+                    "session cookie was not accepted through Vite HTTPS proxy"
+                )
 
             expect(post("/logout", {}), 204)
             expect(client.get(f"{API}/me"), 401)
             expect(post("/signin/otp/request", {"phone": PHONE}), 429)  # 60s cooldown
             recovery = expect(post("/recovery/requests", {"phone": PHONE}), 202)
             if not recovery.get("case_id"):
-                raise AssertionError("support-assisted recovery request missing tracking id")
+                raise AssertionError(
+                    "support-assisted recovery request missing tracking id"
+                )
             if len(inbox.read_text(encoding="utf-8").splitlines()) != 1:
                 raise AssertionError("recovery unexpectedly sent an SMS")
 
-        print("PASS: live loopback HTTPS Vite→FastAPI synthetic signup, fake OTP, session, logout, recovery")
-        print("PASS: 60s OTP cooldown and no auto-login, account role escalation, or token in JSON")
+        print(
+            "PASS: live loopback HTTPS Vite→FastAPI synthetic signup, fake OTP, session, logout, recovery"
+        )
+        print(
+            "PASS: 60s OTP cooldown and no auto-login, account role escalation, or token in JSON"
+        )
     finally:
         if launcher.poll() is None:
             launcher.send_signal(signal.SIGINT)
