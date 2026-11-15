@@ -19,6 +19,12 @@
 5. Verify phone; sign in with password; inspect `/me` and logout. Then use SMS OTP signin (subject remains the same account) and support-assisted recovery. The synthetic in-memory state disappears when the process stops.
 6. Press **Ctrl+C** to stop both child processes and delete the generated local TLS key/certificate and fake-SMS file. The script does not deploy, run database services, or contact a real SMS provider.
 
+### Repeatable local HTTPS integration smoke
+
+After installing the frontend `npm ci` dependencies and the backend's Python development dependencies, run **`python3 scripts/check_m3_auth_v2_local.py`** from the frontend checkout. This one-shot command starts and stops both loopback services automatically; it uses only fictional phone `09120000001`, reads the private fake SMS inbox, and tests the actual HTTPS Vite→FastAPI proxy, CSRF and host-only session cookies, signup, verification without auto-login, password signin, `/me`, logout, 60-second resend block and recovery. It tests real HTTP, **not** visual browser interaction. The helper requires Python `httpx` from the backend development environment and intentionally trusts a newly generated self-signed certificate only for its fixed localhost origin.
+
+The companion browser-click acceptance remains pending; it must validate the Persian form inputs, code entry, both login methods and responsive behavior against the same fake service. This local setup cannot be considered a real-user security gate or production readiness evidence.
+
 The opt-in local runner is **not** a production security review. It must never be made public or wired into `app.main`. A production build with the preview flag remains disabled by `import.meta.env.DEV` and the Vite proxy gate.
 
 This is not permission to expose the demo on any Internet host or to enable real accounts, external SMS, PostgreSQL or deployment.
@@ -27,7 +33,8 @@ This is not permission to expose the demo on any Internet host or to enable real
 
 - [x] Backend #138 supplies a **synthetic-only**, unmounted HTTP adapter, `/csrf` scheme, cookie and HTTPS/origin tests on draft PR #140. Not yet merged/authorized for production.
 - [x] React UI journey tests cover signup→verification→password or SMS signin→dashboard→logout, support recovery and revoked sessions with mocked HTTP responses (merged frontend PR #38).
-- [ ] Complete an actual local browser run against the loopback synthetic FastAPI service, including invalid code, expiry, browser-back, fake SMS and stop/cleanup evidence.
+- [x] Complete a **live HTTPS HTTP integration smoke** of the Vite proxy→synthetic FastAPI app with private fake SMS, CSRF, session cookie, logout and cleanup.
+- [ ] Complete an actual browser-click run against the loopback synthetic FastAPI service, including invalid code, expiry, SMS signin, browser-back and responsive layout.
 - [ ] Complete challenge resend/cooldown affordances and friendly 401/429/expired-code UI copy.
 - [ ] Confirm phone input formatting, password policy, challenge resend UX, CSRF rotation and exact origin/HTTPS topology before any real identity release.
 - [ ] Replace demo dashboard with resource-scoped student/teacher/admin navigation **only after** an authoritative `/me` membership/grant source, independent review and separate G9 release authorization.
