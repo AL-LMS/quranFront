@@ -15,16 +15,26 @@ function V2Dashboard() {
   const { setAccount } = useV2Preview();
   const [account, setViewAccount] = useState(null);
   const [error, setError] = useState("");
+  const [retry, setRetry] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
     let mounted = true;
+    setViewAccount(null);
+    setError("");
     v2AuthApi.me().then((subject) => {
       if (mounted) { setViewAccount(subject); setAccount(subject); }
     }).catch((reason) => {
-      if (mounted) { setAccount(null); setError(v2AuthErrorMessage(reason)); }
+      if (!mounted) return;
+      setAccount(null);
+      if ([401, 403].includes(reason?.status)) {
+        // A previous in-memory subject does not override server revocation.
+        navigate(`${V2_PREVIEW_PATH}/login`, { replace: true });
+      } else {
+        setError(v2AuthErrorMessage(reason));
+      }
     });
     return () => { mounted = false; };
-  }, [setAccount]);
+  }, [navigate, retry, setAccount]);
   async function logout() {
     try {
       await v2AuthApi.logout();
@@ -36,8 +46,9 @@ function V2Dashboard() {
     <main lang="fa" dir="rtl" style={{ maxWidth: 520, margin: "4rem auto", padding: "1.5rem" }}>
       <h1>داشبورد آزمایشی ورود نسخهٔ ۲</h1>
       <p>این بخش تنها برای حساب‌های ساختگی و آزمایش محلی است.</p>
-      {account ? <p>شناسهٔ حساب: {account.accountId} — نقش: {account.role}</p> : <p>در حال بررسی نشست…</p>}
+      {account ? <p>شناسهٔ حساب: {account.accountId} — نقش: {account.role}</p> : !error && <p>در حال بررسی نشست…</p>}
       {error && <p role="alert">{error}</p>}
+      {error && <button onClick={() => setRetry((value) => value + 1)}>تلاش دوباره</button>}
       <button onClick={logout} disabled={!account}>خروج از حساب</button>
       <p><Link to={`${V2_PREVIEW_PATH}/login`}>بازگشت به ورود</Link></p>
     </main>
