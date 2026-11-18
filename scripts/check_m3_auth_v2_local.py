@@ -7,6 +7,7 @@ Requires frontend npm deps and backend development Python deps already installed
 
 from __future__ import annotations
 
+import argparse
 import os
 import signal
 import subprocess
@@ -32,6 +33,13 @@ def expect(response: httpx.Response, status: int) -> dict:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Isolated local-only V2 HTTPS acceptance")
+    parser.add_argument(
+        "--extended-sms",
+        action="store_true",
+        help="also test SMS sign-in over HTTPS after the real synthetic OTP cooldown",
+    )
+    args = parser.parse_args()
     launcher = subprocess.Popen(
         ["bash", "scripts/run_m3_auth_v2_local.sh"],
         cwd=FRONT,
@@ -160,6 +168,58 @@ def main() -> None:
                 )
             if len(inbox.read_text(encoding="utf-8").splitlines()) != 1:
                 raise AssertionError("recovery unexpectedly sent an SMS")
+
+            if args.extended_sms:
+                # The actual loopback service enforces its 60s cooldown. Wait
+                # in short intervals rather than adding a test-only clock API.
+                print("Waiting for synthetic SMS cooldown (about 60 seconds)...", flush=True)
+                deadline = time.monotonic() + 61
+                while remaining := deadline - time.monotonic():
+                    if remaining <= 0:
+                        break
+                    time.sleep(min(5, remaining))
+
+                sms_challenge = expect(
+                    post("/signin/otp/request", {"phone": PHONE}), 202
+                )["challenge_id"]
+                sms_entry = inbox.read_text(encoding="utf-8").splitlines()[-1].split(" ")
+                if sms_entry[:2] != [sms_challenge, "+989120000001"]:
+                    raise AssertionError("SMS sign-in was not delivered to private fake inbox")
+                sms_code = sms_entry[2]
+                wrong_code = "000000" if sms_code != "000000" else "999999"
+                expect(
+                    post(
+                        "/signin/otp/verify",
+                        {"challenge_id": sms_challenge, "code": wrong_code},
+                    ),
+                    400,
+                )
+                expect(client.get(f"{API}/me"), 401)
+                sms_account = expect(
+                    post(
+                        "/signin/otp/verify",
+                        {"challenge_id": sms_challenge, "code": sms_code},
+                    ),
+                    200,
+                )
+                if sms_account["account_id"] != account["account_id"]:
+                    raise AssertionError("SMS signin did not preserve the same synthetic subject")
+                expect(client.get(f"{API}/me"), 200)
+                expect(
+                    post(
+                        "/signin/otp/verify",
+                        {"challenge_id": sms_challenge, "code": sms_code},
+                    ),
+                    400,
+                )
+                expect(post("/logout", {}), 204)
+                expect(client.get(f"{API}/me"), 401)
+                if len(inbox.read_text(encoding="utf-8").splitlines()) != 2:
+                    raise AssertionError("unexpected extra synthetic SMS deliveries")
+                print(
+                    "PASS: live HTTPS SMS signin, wrong/single-use code denial, "
+                    "same subject, logout revocation"
+                )
 
         print(
             "PASS: live loopback HTTPS Vite→FastAPI synthetic signup, fake OTP, session, logout, recovery"
