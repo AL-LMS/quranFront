@@ -90,16 +90,16 @@ describe("M3-AUTH-01 Persian synthetic V2 user journeys", () => {
     fireEvent.click(screen.getByRole("button", { name: "احراز هویت" }));
 
     // Phone verification creates no session and cannot enter the dashboard.
-    expect(await screen.findByText("ورود به حساب کاربری")).toBeTruthy();
+    expect(await screen.findByRole("heading", { name: "خوشحالیم دوباره می‌بینیمت!" })).toBeTruthy();
     expect(fetcher.mock.calls.some(([url]) => url === `${PREFIX}/me`)).toBe(false);
-    fill("شماره تلفن", PHONE);
+    expect(screen.getByRole("textbox", { name: "شماره تلفن" })).toHaveValue(PHONE);
     fireEvent.change(screen.getByLabelText("رمز عبور"), { target: { value: "synthetic-password" } });
-    fireEvent.click(screen.getByRole("button", { name: "ورود" }));
+    fireEvent.click(screen.getByRole("button", { name: "ورود به حساب" }));
 
     expect(await screen.findByRole("heading", { name: "داشبورد آزمایشی ورود نسخهٔ ۲" })).toBeTruthy();
     expect(await screen.findByText(new RegExp(ACCOUNT_ID))).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "خروج از حساب" }));
-    expect(await screen.findByText("ورود به حساب کاربری")).toBeTruthy();
+    expect(await screen.findByRole("heading", { name: "خوشحالیم دوباره می‌بینیمت!" })).toBeTruthy();
 
     const endpoints = mutationCalls(fetcher).map(([url]) => url.replace(PREFIX, ""));
     expect(endpoints).toEqual(["/signup", "/phone/verify", "/signin/password", "/logout"]);
@@ -147,7 +147,7 @@ describe("M3-AUTH-01 Persian synthetic V2 user journeys", () => {
     const { fetcher } = fixture();
     vi.stubGlobal("fetch", fetcher);
     renderPreview("dashboard");
-    expect(await screen.findByText("ورود به حساب کاربری")).toBeTruthy();
+    expect(await screen.findByRole("heading", { name: "خوشحالیم دوباره می‌بینیمت!" })).toBeTruthy();
     expect(screen.queryByRole("heading", { name: "داشبورد آزمایشی ورود نسخهٔ ۲" })).toBeNull();
     expect(fetcher.mock.calls.some(([url]) => url === `${PREFIX}/me`)).toBe(true);
   });
@@ -164,6 +164,20 @@ describe("M3-AUTH-01 Persian synthetic V2 user journeys", () => {
     expect(await screen.findByRole("alert")).toHaveTextContent("سرویس آزمایشی");
     fireEvent.click(screen.getByRole("button", { name: "تلاش دوباره" }));
     await waitFor(() => expect(flaky.mock.calls.filter(([url]) => url === `${PREFIX}/me`)).toHaveLength(2));
-    expect(await screen.findByText("ورود به حساب کاربری")).toBeTruthy();
+    expect(await screen.findByRole("heading", { name: "خوشحالیم دوباره می‌بینیمت!" })).toBeTruthy();
+  });
+
+  it("prevents invalid short passwords before making a signup request", async () => {
+    const { fetcher } = fixture();
+    vi.stubGlobal("fetch", fetcher);
+    renderPreview();
+    fill("نام", "دانش");
+    fill("نام خانوادگی", "آزمایشی");
+    fill("شماره تلفن", PHONE);
+    fireEvent.change(screen.getByLabelText("رمز عبور"), { target: { value: "short" } });
+    fireEvent.change(screen.getByLabelText("تکرار رمز عبور"), { target: { value: "short" } });
+    fireEvent.click(screen.getByRole("button", { name: "ثبت نام" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent("حداقل ۱۲ نویسه");
+    expect(mutationCalls(fetcher)).toHaveLength(0);
   });
 });

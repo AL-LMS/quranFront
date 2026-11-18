@@ -150,6 +150,12 @@ function App() {
   const showEnrollmentPreview = enrollmentPreviewEnabledForBuild();
   const localDemoAuthRouteActive =
     Boolean(LocalDemoAuthRoutes) && location.pathname.startsWith("/local-demo");
+  // The opt-in V2 preview owns its navigation. Never mount the legacy Navbar
+  // here: it issues legacy /back_request calls and links outside the preview.
+  const v2AuthPreviewRouteActive =
+    Boolean(V2AuthPreviewRoutes) &&
+    (location.pathname === "/__preview/m3-auth" ||
+      location.pathname.startsWith("/__preview/m3-auth/"));
   const m6LocalManagementRouteActive =
     Boolean(M6ManagementLocalPreview) &&
     location.pathname === "/__preview/m6-management";
@@ -158,7 +164,7 @@ function App() {
     location.pathname === "/__preview/m6-review";
   return (
     <CacheProvider value={cacheRtl}>
-      {!localDemoAuthRouteActive && !m6LocalManagementRouteActive &&
+      {!localDemoAuthRouteActive && !v2AuthPreviewRouteActive && !m6LocalManagementRouteActive &&
         !m6LocalReviewRouteActive && <Navbar />}
       <Routes>
         <Route path="/" element={<HomePage />} />

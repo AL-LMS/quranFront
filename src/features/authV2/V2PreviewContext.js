@@ -5,8 +5,10 @@ const V2PreviewContext = createContext(null);
 export function V2PreviewProvider({ children }) {
   const [challenge, setChallenge] = useState(null);
   const [account, setAccount] = useState(null);
+  // Ephemeral convenience only; never represents verification authority.
+  const [verifiedPhone, setVerifiedPhone] = useState("");
   return (
-    <V2PreviewContext.Provider value={{ challenge, setChallenge, account, setAccount }}>
+    <V2PreviewContext.Provider value={{ challenge, setChallenge, account, setAccount, verifiedPhone, setVerifiedPhone }}>
       {children}
     </V2PreviewContext.Provider>
   );

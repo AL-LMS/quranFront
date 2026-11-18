@@ -1,13 +1,14 @@
-# AL-M3-AUTH-01 — Persian V2 auth screen reuse (source-only preview)
+# AL-M3-AUTH-01 — Persian V2 authentication (source-only preview)
 
 **Status 2026-11-15: source-only / local synthetic runner candidate / NOT real authentication.** Frontend issues [#35](https://github.com/AL-LMS/quranFront/issues/35), [#36](https://github.com/AL-LMS/quranFront/issues/36); backend parent [#136](https://github.com/AL-LMS/quranBack/issues/136), local integration [#141](https://github.com/AL-LMS/quranBack/issues/141).
 
 ## What is present
 
-- The existing RTL Persian **Login, Signup, ConfirmPhone, SendOTP, CheckOTP** components are reused without replacing their normal production routes or calling legacy APIs from the new opt-in branch.
+- The existing RTL Persian **Login, Signup, ConfirmPhone, SendOTP, CheckOTP** components and their production/legacy routes remain unchanged. A new, dedicated responsive preview experience now lives entirely under `src/features/authV2/V2PreviewExperience.jsx` and its scoped CSS. It uses the locally bundled Yekan Bakh fonts, an editorial auth layout, accessible form labels and errors, password visibility controls, and a preview-specific header instead of the legacy Navbar.
 - A separately gated `src/features/authV2` preview route mounts those forms at `/__preview/m3-auth/{login,signup,confirm-phone,send-otp,check-otp}`. The preview uses an ephemeral React challenge context, not localStorage phones, user roles or bearer tokens. Its dashboard loads `GET /me` to determine the current synthetic server session.
 - `v2AuthApi` is a same-origin, cookie-credentials client for the **candidate** `/api/v2/auth` API contract; a server-issued `/csrf` token is required for every unsafe request. There is deliberately **no fallback** to legacy `/back_request`, demo-local auth, or credentials in localStorage. Codes/passwords stay in form memory only.
 - Phone entry accepts ASCII, Persian and Arabic-Indic digits; `+98`/`0098` user input is invalid. The server owns final canonicalization.
+- The preview form enforces the synthetic backend's minimum 12-character password length before issuing a request; phone verification pre-fills the phone number on the subsequent login screen but deliberately **never auto-logs in**. The dev-only dashboard displays server-authoritative synthetic `/me` data and truthful empty states, not invented courses/grades or an activated real LMS dashboard. Account UUID is inside collapsed technical details.
 - A preview-only recovery-request form records a support case. There is **no** client operation to reset a password using SMS alone.
 
 ## Explicit local HTTPS preview — only with the backend draft source
@@ -25,6 +26,12 @@ After installing the frontend `npm ci` dependencies and the backend's Python dev
 
 The companion browser-click acceptance remains pending; it must validate the Persian form inputs, code entry, both login methods and responsive behavior against the same fake service. This local setup cannot be considered a real-user security gate or production readiness evidence.
 
+### AL-M3-UX-01 visual preview
+
+The new auth/dash design is in the opt-in preview only. `App.js` suppresses the production Navbar on exactly `/__preview/m3-auth` and its child routes, avoiding its legacy `/back_request` calls. Normal `/login`, `/signup`, `/panel/*` and production routes are untouched. The preview provides clear local-only labels and does not imply that course/enrollment persistence is available.
+
+Source-only validation: `npm test`, `npm run typecheck`, `npm run lint`, `npm run build`; the auth journey test also checks password-length validation and the post-verification phone prefill. Visual browser acceptance at 360/390/768/1024/1440 widths remains a separate human review requirement when Chromium can launch; this environment's browser currently fails with `socket(): Operation not permitted`.
+
 The opt-in local runner is **not** a production security review. It must never be made public or wired into `app.main`. A production build with the preview flag remains disabled by `import.meta.env.DEV` and the Vite proxy gate.
 
 This is not permission to expose the demo on any Internet host or to enable real accounts, external SMS, PostgreSQL or deployment.
@@ -35,7 +42,8 @@ This is not permission to expose the demo on any Internet host or to enable real
 - [x] React UI journey tests cover signup→verification→password or SMS signin→dashboard→logout, support recovery and revoked sessions with mocked HTTP responses (merged frontend PR #38).
 - [x] Complete a **live HTTPS HTTP integration smoke** of the Vite proxy→synthetic FastAPI app with private fake SMS, CSRF, session cookie, logout and cleanup.
 - [ ] Complete an actual browser-click run against the loopback synthetic FastAPI service, including invalid code, expiry, SMS signin, browser-back and responsive layout.
-- [ ] Complete challenge resend/cooldown affordances and friendly 401/429/expired-code UI copy.
+- [x] Add the isolated responsive preview layout, inline synthetic form errors and locally consistent password validation without altering legacy forms.
+- [ ] Complete challenge resend/cooldown affordances and further refine 401/429/expired-code UI copy (backend verification-resend endpoint is not yet available).
 - [ ] Confirm phone input formatting, password policy, challenge resend UX, CSRF rotation and exact origin/HTTPS topology before any real identity release.
 - [ ] Replace demo dashboard with resource-scoped student/teacher/admin navigation **only after** an authoritative `/me` membership/grant source, independent review and separate G9 release authorization.
 
