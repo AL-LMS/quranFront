@@ -30,7 +30,9 @@ The companion browser-click acceptance remains pending; it must validate the Per
 
 The new auth/dash design is in the opt-in preview only. `App.js` suppresses the production Navbar on exactly `/__preview/m3-auth` and its child routes, avoiding its legacy `/back_request` calls. Normal `/login`, `/signup`, `/panel/*` and production routes are untouched. The preview provides clear local-only labels and does not imply that course/enrollment persistence is available.
 
-Source-only validation: `npm test`, `npm run typecheck`, `npm run lint`, `npm run build`; the auth journey test also checks password-length validation and the post-verification phone prefill. Visual browser acceptance at 360/390/768/1024/1440 widths remains a separate human review requirement when Chromium can launch; this environment's browser currently fails with `socket(): Operation not permitted`.
+Source-only validation: `npm test`, `npm run typecheck`, `npm run lint`, `npm run build`; the auth journey tests also check password-length validation, post-verification phone prefill, clearing the verification notice after sign-in/logout, bidirectional names, rejected OTP feedback and rate limits. A subsequent readability polish strengthens small-label contrast and makes the mobile dashboard header more compact.
+
+The owner provided desktop (~1838px) and mobile (400px) screenshots of signup/login/dashboard, observed a synthetic signed-in dashboard, and showed navigation back to login after logout on 2026-11-18. These are visual/interaction observations, not proof of complete server-side session revocation or the SMS-login/expiry edge cases. Browser review at 360/390/768/1024/1440 widths and the full live acceptance matrix remain pending. This environment's headless Chromium has failed with `socket(): Operation not permitted`.
 
 The opt-in local runner is **not** a production security review. It must never be made public or wired into `app.main`. A production build with the preview flag remains disabled by `import.meta.env.DEV` and the Vite proxy gate.
 
@@ -43,6 +45,7 @@ This is not permission to expose the demo on any Internet host or to enable real
 - [x] Complete a **live HTTPS HTTP integration smoke** of the Vite proxy→synthetic FastAPI app with private fake SMS, CSRF, session cookie, logout and cleanup.
 - [ ] Complete an actual browser-click run against the loopback synthetic FastAPI service, including invalid code, expiry, SMS signin, browser-back and responsive layout.
 - [x] Add the isolated responsive preview layout, inline synthetic form errors and locally consistent password validation without altering legacy forms.
+- [x] Review the initial desktop/400px screenshots and refine mobile header spacing, helper-text contrast and mixed-script account names.
 - [ ] Complete challenge resend/cooldown affordances and further refine 401/429/expired-code UI copy (backend verification-resend endpoint is not yet available).
 - [ ] Confirm phone input formatting, password policy, challenge resend UX, CSRF rotation and exact origin/HTTPS topology before any real identity release.
 - [ ] Replace demo dashboard with resource-scoped student/teacher/admin navigation **only after** an authoritative `/me` membership/grant source, independent review and separate G9 release authorization.

@@ -122,7 +122,7 @@ function SecondaryLinks({ children }) {
 }
 
 export function PreviewLogin() {
-  const { setAccount, verifiedPhone } = useV2Preview();
+  const { setAccount, verifiedPhone, setVerifiedPhone } = useV2Preview();
   const navigate = useNavigate();
   const [phone, setPhone] = useState(verifiedPhone);
   const [password, setPassword] = useState("");
@@ -142,6 +142,9 @@ export function PreviewLogin() {
     try {
       const account = await v2AuthApi.signinPassword(phone, password);
       setAccount(account);
+      // The confirmation banner only belongs to the post-signup login step.
+      // Keeping it after sign-in/logout makes an old success look current.
+      setVerifiedPhone("");
       navigate(`${ROOT}/dashboard`);
     } catch (reason) { setError(v2AuthErrorMessage(reason)); }
     finally { setBusy(false); }
@@ -226,6 +229,7 @@ function OtpForm({ kind }) {
       } else {
         const account = await v2AuthApi.signinOtp(challenge.challengeId, code);
         setAccount(account);
+        setVerifiedPhone("");
         setChallenge(null);
         navigate(`${ROOT}/dashboard`);
       }
@@ -348,7 +352,7 @@ export function PreviewDashboard() {
           {error && <div className="m3-dashboard-error" role="alert">{error}<button type="button" onClick={() => setRetry((current) => current + 1)}>تلاش دوباره</button></div>}
           {!account && !error && <div className="m3-dashboard-loading" role="status">در حال بررسی نشست امن شما…</div>}
           {account && <>
-            <section className="m3-welcome-banner"><div className="m3-welcome-content"><div className="m3-welcome-tag"><VerifiedOutlined fontSize="small" /> نشست آزمایشی فعال</div><h2>سلام {account.firstName || "قرآن‌آموز عزیز"}، خوش آمدید <span>✦</span></h2><p>مسیر یادگیری شما از اینجا آغاز می‌شود. برای دیدن دوره‌ها و پیشرفت واقعی، اتصال سرویس آموزشی لازم است.</p><div className="m3-welcome-actions"><a href="#my-courses">مشاهده دوره‌ها <ArrowBackRounded fontSize="small" /></a><span>{studentRole[account.role] || "کاربر"} دارالقرآن</span></div></div><div className="m3-welcome-visual" aria-hidden="true"><div className="m3-welcome-ring" /><div className="m3-welcome-book"><AutoStoriesRounded /></div><span className="m3-sparkle-a">✦</span><span className="m3-sparkle-b">✧</span></div></section>
+            <section className="m3-welcome-banner"><div className="m3-welcome-content"><div className="m3-welcome-tag"><VerifiedOutlined fontSize="small" /> نشست آزمایشی فعال</div><h2>سلام <bdi dir="auto">{account.firstName || "قرآن‌آموز عزیز"}</bdi>، خوش آمدید <span>✦</span></h2><p>مسیر یادگیری شما از اینجا آغاز می‌شود. برای دیدن دوره‌ها و پیشرفت واقعی، اتصال سرویس آموزشی لازم است.</p><div className="m3-welcome-actions"><a href="#my-courses">مشاهده دوره‌ها <ArrowBackRounded fontSize="small" /></a><span>{studentRole[account.role] || "کاربر"} دارالقرآن</span></div></div><div className="m3-welcome-visual" aria-hidden="true"><div className="m3-welcome-ring" /><div className="m3-welcome-book"><AutoStoriesRounded /></div><span className="m3-sparkle-a">✦</span><span className="m3-sparkle-b">✧</span></div></section>
             <section className="m3-dashboard-grid" aria-label="خلاصهٔ فضای یادگیری">
               <div className="m3-summary-card"><span className="m3-summary-icon m3-summary-purple"><MenuBookRounded /></span><div><strong>دوره‌های من</strong><small>هنوز دوره‌ای متصل نشده است</small></div><span className="m3-summary-value">—</span></div>
               <div className="m3-summary-card"><span className="m3-summary-icon m3-summary-mint"><SchoolOutlined /></span><div><strong>پیشرفت یادگیری</strong><small>پس از اتصال داده‌های آموزشی</small></div><span className="m3-summary-value">—</span></div>
