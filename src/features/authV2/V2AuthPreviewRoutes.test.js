@@ -26,7 +26,7 @@ function fixture() {
       case `${PREFIX}/signin/otp/request`:
         return json({ challenge_id: "signin-challenge", expires_in: 300 }, 202);
       case `${PREFIX}/me`:
-        return signedIn ? json({ account_id: ACCOUNT_ID, role: "student" }) : json({}, 401);
+        return signedIn ? json({ account_id: ACCOUNT_ID, role: "student", first_name: "Muhmadreza" }) : json({}, 401);
       case `${PREFIX}/logout`:
         signedIn = false;
         return new Response(null, { status: 204 });
@@ -90,16 +90,20 @@ describe("M3-AUTH-01 Persian synthetic V2 user journeys", () => {
     fireEvent.click(screen.getByRole("button", { name: "احراز هویت" }));
 
     // Phone verification creates no session and cannot enter the dashboard.
-    expect(await screen.findByText("ورود به حساب کاربری")).toBeTruthy();
+    expect(await screen.findByRole("heading", { name: "خوشحالیم دوباره می‌بینیمت!" })).toBeTruthy();
     expect(fetcher.mock.calls.some(([url]) => url === `${PREFIX}/me`)).toBe(false);
-    fill("شماره تلفن", PHONE);
+    expect(screen.getByRole("textbox", { name: "شماره تلفن" })).toHaveValue(PHONE);
+    expect(screen.getByText(/شماره شما تأیید شد/)).toBeTruthy();
     fireEvent.change(screen.getByLabelText("رمز عبور"), { target: { value: "synthetic-password" } });
-    fireEvent.click(screen.getByRole("button", { name: "ورود" }));
+    fireEvent.click(screen.getByRole("button", { name: "ورود به حساب" }));
 
     expect(await screen.findByRole("heading", { name: "داشبورد آزمایشی ورود نسخهٔ ۲" })).toBeTruthy();
     expect(await screen.findByText(new RegExp(ACCOUNT_ID))).toBeTruthy();
+    expect(screen.getByText("Muhmadreza").tagName).toBe("BDI");
+    expect(screen.getByText("Muhmadreza")).toHaveAttribute("dir", "auto");
     fireEvent.click(screen.getByRole("button", { name: "خروج از حساب" }));
-    expect(await screen.findByText("ورود به حساب کاربری")).toBeTruthy();
+    expect(await screen.findByRole("heading", { name: "خوشحالیم دوباره می‌بینیمت!" })).toBeTruthy();
+    expect(screen.queryByText(/شماره شما تأیید شد/)).toBeNull();
 
     const endpoints = mutationCalls(fetcher).map(([url]) => url.replace(PREFIX, ""));
     expect(endpoints).toEqual(["/signup", "/phone/verify", "/signin/password", "/logout"]);
@@ -131,6 +135,50 @@ describe("M3-AUTH-01 Persian synthetic V2 user journeys", () => {
     expect(localStorage.length).toBe(0);
   });
 
+  it("shows a rejected OTP inline and permits correcting it without a local session", async () => {
+    const { fetcher } = fixture();
+    let rejected = false;
+    const rejectOneCode = vi.fn(async (url, options) => {
+      if (url === `${PREFIX}/signin/otp/verify` && !rejected) {
+        rejected = true;
+        return json({ detail: "invalid_challenge" }, 400);
+      }
+      return fetcher(url, options);
+    });
+    vi.stubGlobal("fetch", rejectOneCode);
+    renderPreview("send-otp");
+
+    fill("شماره تلفن", PHONE);
+    fireEvent.click(screen.getByRole("button", { name: "ارسال کد" }));
+    expect(await screen.findByText(/کد 6 رقمی/)).toBeTruthy();
+    fill("کد", "000000");
+    fireEvent.click(screen.getByRole("button", { name: "ورود" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent("معتبر نیست");
+    expect(screen.getByText(/حساب‌ها و کدهای آزمایشی پاک می‌شوند/)).toBeTruthy();
+    expect(screen.getByRole("link", { name: "ابتدا حساب آزمایشی جدید بسازید" }).getAttribute("href"))
+      .toBe("/__preview/m3-auth/signup");
+    expect(screen.queryByRole("heading", { name: "داشبورد آزمایشی ورود نسخهٔ ۲" })).toBeNull();
+    fill("کد", "123456");
+    fireEvent.click(screen.getByRole("button", { name: "ورود" }));
+    expect(await screen.findByRole("heading", { name: "داشبورد آزمایشی ورود نسخهٔ ۲" })).toBeTruthy();
+    expect(await screen.findByText(new RegExp(ACCOUNT_ID))).toBeTruthy();
+  });
+
+  it("reports an OTP rate limit without progressing to a code challenge", async () => {
+    const { fetcher } = fixture();
+    const rateLimited = vi.fn((url, options) => url === `${PREFIX}/signin/otp/request`
+      ? Promise.resolve(json({ detail: "too_many_requests" }, 429))
+      : fetcher(url, options));
+    vi.stubGlobal("fetch", rateLimited);
+    renderPreview("send-otp");
+
+    fill("شماره تلفن", PHONE);
+    fireEvent.click(screen.getByRole("button", { name: "ارسال کد" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent("بیش از حد مجاز");
+    expect(screen.queryByRole("textbox", { name: "کد" })).toBeNull();
+    expect(localStorage.length).toBe(0);
+  });
+
   it("keeps recovery support-assisted, without SMS password reset or a session", async () => {
     const { fetcher } = fixture();
     vi.stubGlobal("fetch", fetcher);
@@ -147,7 +195,7 @@ describe("M3-AUTH-01 Persian synthetic V2 user journeys", () => {
     const { fetcher } = fixture();
     vi.stubGlobal("fetch", fetcher);
     renderPreview("dashboard");
-    expect(await screen.findByText("ورود به حساب کاربری")).toBeTruthy();
+    expect(await screen.findByRole("heading", { name: "خوشحالیم دوباره می‌بینیمت!" })).toBeTruthy();
     expect(screen.queryByRole("heading", { name: "داشبورد آزمایشی ورود نسخهٔ ۲" })).toBeNull();
     expect(fetcher.mock.calls.some(([url]) => url === `${PREFIX}/me`)).toBe(true);
   });
@@ -164,6 +212,20 @@ describe("M3-AUTH-01 Persian synthetic V2 user journeys", () => {
     expect(await screen.findByRole("alert")).toHaveTextContent("سرویس آزمایشی");
     fireEvent.click(screen.getByRole("button", { name: "تلاش دوباره" }));
     await waitFor(() => expect(flaky.mock.calls.filter(([url]) => url === `${PREFIX}/me`)).toHaveLength(2));
-    expect(await screen.findByText("ورود به حساب کاربری")).toBeTruthy();
+    expect(await screen.findByRole("heading", { name: "خوشحالیم دوباره می‌بینیمت!" })).toBeTruthy();
+  });
+
+  it("prevents invalid short passwords before making a signup request", async () => {
+    const { fetcher } = fixture();
+    vi.stubGlobal("fetch", fetcher);
+    renderPreview();
+    fill("نام", "دانش");
+    fill("نام خانوادگی", "آزمایشی");
+    fill("شماره تلفن", PHONE);
+    fireEvent.change(screen.getByLabelText("رمز عبور"), { target: { value: "short" } });
+    fireEvent.change(screen.getByLabelText("تکرار رمز عبور"), { target: { value: "short" } });
+    fireEvent.click(screen.getByRole("button", { name: "ثبت نام" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent("حداقل ۱۲ نویسه");
+    expect(mutationCalls(fetcher)).toHaveLength(0);
   });
 });
