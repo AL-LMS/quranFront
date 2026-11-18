@@ -245,6 +245,7 @@ function OtpForm({ kind }) {
         onChange={(event) => { setCode(toAsciiDigits(event.target.value).replace(/\D/g, "").slice(0, 6)); setFieldError(""); }} error={fieldError} />
       <div className="m3-code-help"><span>اعتبار هر کد: ۵ دقیقه</span><span>یک‌بارمصرف و فقط برای آزمایش</span></div>
       <Feedback error={error} /><PrimaryButton busy={busy}>{verify ? "احراز هویت" : "ورود"}</PrimaryButton>
+      {error && !verify && <p className="m3-otp-restart-hint">در پیش‌نمایش محلی، با هر بار توقف و اجرای دوبارهٔ سرور، حساب‌ها و کدهای آزمایشی پاک می‌شوند. اگر سرور را دوباره اجرا کرده‌اید، <Link to={`${ROOT}/signup`}>ابتدا حساب آزمایشی جدید بسازید</Link>.</p>}
     </form>
   </AuthShell>;
 }

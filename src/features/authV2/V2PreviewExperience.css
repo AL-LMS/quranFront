@@ -110,6 +110,8 @@
 .m3-otp-callout strong { color: #39338a; font-weight: 800; white-space: nowrap; }
 .m3-otp-callout small { display: block; color: #707a98; font-size: 12px; line-height: 1.7; margin-top: 3px; }
 .m3-code-help { display: flex; justify-content: space-between; gap: 10px; color: #707a98; font-size: 12px; margin: -5px 0 5px; }
+.m3-otp-restart-hint { margin: -8px 0 0; color: #646c88; font-size: 12px; line-height: 1.9; }
+.m3-otp-restart-hint a { color: #5145bc; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
 .m3-recovery-explain { display: flex; gap: 13px; padding: 16px; border-radius: 16px; background: #f1f0ff; margin-bottom: 24px; }
 .m3-recovery-explain > svg { color: #6558c9; font-size: 27px; }
 .m3-recovery-explain strong { color: #4b4694; font-size: 13px; }

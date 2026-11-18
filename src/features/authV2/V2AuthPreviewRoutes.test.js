@@ -154,6 +154,9 @@ describe("M3-AUTH-01 Persian synthetic V2 user journeys", () => {
     fill("کد", "000000");
     fireEvent.click(screen.getByRole("button", { name: "ورود" }));
     expect(await screen.findByRole("alert")).toHaveTextContent("معتبر نیست");
+    expect(screen.getByText(/حساب‌ها و کدهای آزمایشی پاک می‌شوند/)).toBeTruthy();
+    expect(screen.getByRole("link", { name: "ابتدا حساب آزمایشی جدید بسازید" }).getAttribute("href"))
+      .toBe("/__preview/m3-auth/signup");
     expect(screen.queryByRole("heading", { name: "داشبورد آزمایشی ورود نسخهٔ ۲" })).toBeNull();
     fill("کد", "123456");
     fireEvent.click(screen.getByRole("button", { name: "ورود" }));
