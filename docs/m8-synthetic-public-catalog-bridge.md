@@ -28,10 +28,20 @@ python3 -m devtools.m5_local_uuid_catalog
 
 Expected synthetic service on `http://127.0.0.1:8003`. If this checkout is missing dependencies or the service, stop; do not redirect to a real API.
 
-Terminal B — run the existing M3 HTTPS auth preview from the frontend branch (with dependencies already installed), using its existing separate backend worktree:
+Terminal B — fetch the exact draft frontend preview into a **new, isolated worktree** first. Run these commands from an existing `quranFront` checkout; use a different destination if `../quranFront-m8-catalog` already exists:
 
 ```bash
 cd ~/Dev/AL-LMS/quranFront
+git fetch --no-tags origin pull/41/head
+git worktree add --detach ../quranFront-m8-catalog FETCH_HEAD
+cd ../quranFront-m8-catalog
+npm ci
+```
+
+Then run the existing M3 HTTPS auth preview from that new worktree, using its separate backend worktree:
+
+```bash
+cd ~/Dev/AL-LMS/quranFront-m8-catalog
 source ~/Dev/AL-LMS/quranBack-m3-auth-preview/.venv/bin/activate
 VITE_ENABLE_M5_UUID_CATALOG_PREVIEW=true \
 VITE_ALLOW_M5_UUID_LOCAL_API=true \
