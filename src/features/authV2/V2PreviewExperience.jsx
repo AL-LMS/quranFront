@@ -19,8 +19,17 @@ import VisibilityOffRounded from "@mui/icons-material/VisibilityOffRounded";
 import { v2DomesticPhoneEntry, v2DomesticPhonePattern, toAsciiDigits } from "./phoneEntry";
 import { v2AuthApi, v2AuthErrorMessage } from "./v2AuthApi";
 import { useV2Preview } from "./V2PreviewContext";
+import { M8PublicCatalogBridge } from "./M8PublicCatalogBridge";
+import { m8CatalogBridgeEnabled } from "./m8CatalogBridgeGate";
 
 const ROOT = "/__preview/m3-auth";
+const showSyntheticPublicCatalog = m8CatalogBridgeEnabled({
+  dev: import.meta.env.DEV,
+  authPreview: import.meta.env.VITE_ENABLE_M3_AUTH_V2_PREVIEW,
+  catalogPreview: import.meta.env.VITE_ENABLE_M5_UUID_CATALOG_PREVIEW,
+  allowCatalogApi: import.meta.env.VITE_ALLOW_M5_UUID_LOCAL_API,
+  bridgeFlag: import.meta.env.VITE_ENABLE_M3_M5_PUBLIC_COURSES_BRIDGE,
+});
 
 function Mark({ light = false }) {
   return (
@@ -365,6 +374,7 @@ export function PreviewDashboard() {
                 <details className="m3-technical-details"><summary>جزئیات فنی نشست <ChevronLeftRounded fontSize="small" /></summary><small>شناسهٔ حساب: {account.accountId} — نقش: {account.role}</small></details>
               </section>
             </div>
+            {showSyntheticPublicCatalog && <M8PublicCatalogBridge />}
           </>}
           <div className="m3-dashboard-footnote"><LockOutlined fontSize="small" /> این صفحه تنها پیش‌نمایش محلی است و هیچ دوره، نمره یا دادهٔ واقعی را نمایش نمی‌دهد.</div>
         </main>

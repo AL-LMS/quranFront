@@ -1,0 +1,25 @@
+.m8-public-catalog { margin-top: 24px; padding: 26px; background: #fff; border: 1px solid #e7e8f4; border-radius: 22px; box-shadow: 0 9px 30px #28266b07; }
+.m8-public-catalog-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+.m8-public-catalog-kicker { display: inline-flex; align-items: center; gap: 5px; color: #6658cc; font-size: 12px; font-weight: 800; }
+.m8-public-catalog-kicker svg { font-size: 16px; }
+.m8-public-catalog-heading h2 { color: #2c2b64; font-size: 21px; font-weight: 850; margin: 8px 0; }
+.m8-public-catalog-heading p { color: #646d8d; font-size: 13px; line-height: 1.9; max-width: 680px; }
+.m8-public-catalog-badge { flex-shrink: 0; color: #6155bf; background: #f1efff; border: 1px solid #e7e4ff; padding: 7px 12px; border-radius: 99px; font-size: 11px; font-weight: 800; }
+.m8-public-catalog-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.m8-public-catalog-card { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 17px; padding: 19px; border-radius: 17px; background: #fafaff; border: 1px solid #ecebf9; }
+.m8-public-catalog-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; color: #6253c9; background: #eae7ff; }
+.m8-public-catalog-card small { color: #7780a0; font-size: 11px; }
+.m8-public-catalog-card h3 { color: #33316e; font-size: 15px; line-height: 1.8; margin: 6px 0 0; overflow-wrap: anywhere; }
+.m8-public-catalog-card a { display: inline-flex; align-items: center; gap: 6px; color: #5146bc; font-size: 12px; font-weight: 800; margin-top: auto; }
+.m8-public-catalog-card a:hover { text-decoration: underline; }
+.m8-public-catalog-card a svg { font-size: 15px; }
+.m8-public-catalog-status { color: #646d8d; font-size: 13px; line-height: 1.9; padding: 16px; background: #f7f7ff; border-radius: 12px; }
+.m8-public-catalog-error { display: flex; justify-content: space-between; gap: 16px; align-items: center; border: 1px solid #eadbdc; background: #fff5f6; color: #a34859; }
+.m8-public-catalog-error button { color: #4d42aa; font-weight: 800; white-space: nowrap; }
+.m8-public-catalog-pagination { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 20px; color: #6a6b97; font-size: 12px; }
+.m8-public-catalog-pagination button { border: 1px solid #e7e4fb; background: #f5f3ff; color: #5145bc; padding: 8px 12px; border-radius: 9px; }
+.m8-public-catalog-pagination button:disabled { opacity: .4; cursor: not-allowed; }
+.m8-public-catalog-disclaimer { display: flex; gap: 6px; align-items: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid #f0eff9; color: #707a98; font-size: 12px; line-height: 1.8; }
+.m8-public-catalog-disclaimer svg { flex-shrink: 0; font-size: 15px; }
+@media (max-width: 980px) { .m8-public-catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .m8-public-catalog { padding: 18px; } .m8-public-catalog-heading { flex-direction: column; } .m8-public-catalog-heading h2 { font-size: 18px; } .m8-public-catalog-grid { grid-template-columns: 1fr; } .m8-public-catalog-error { flex-direction: column; align-items: flex-start; } }
