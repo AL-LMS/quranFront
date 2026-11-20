@@ -1,0 +1,43 @@
+name: AL-M5 F1-R19 detached frontend catalog contract
+on:
+  push:
+    branches:
+      - feat/al-m5-f1-r19-frontend-public-catalog-source-20261120
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  detached-catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install exact dependencies
+        run: npm ci --ignore-scripts
+      - name: Run strict detached R19 tests
+        run: npm test -- src/features/catalogPreview/r19DetachedCatalog.test.js
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Frontend build
+        run: npm run build
+      - name: Verify R19 remains detached from active routes
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          import { execFileSync } from 'node:child_process';
+          const files = execFileSync('git', ['ls-files', 'src'], {encoding:'utf8'})
+            .trim().split('\n').filter(path => path.endsWith('.js') &&
+              !path.endsWith('r19DetachedCatalog.js') &&
+              !path.endsWith('r19DetachedCatalog.test.js'));
+          const imports = files.filter(path => readFileSync(path,'utf8')
+            .includes('r19DetachedCatalog'));
+          if (imports.length) throw new Error('Detached contract unexpectedly imported: ' + imports.join(', '));
+          NODE
