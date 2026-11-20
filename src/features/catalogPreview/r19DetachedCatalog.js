@@ -5,7 +5,12 @@
  */
 export const R19_PAGE_SIZE = 12;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
-const BIDI = /[\u202a-\u202e\u2066-\u2069]/u;
+const hasForbiddenTitleCodepoint = (title) => Array.from(title).some((character) => {
+  const code = character.codePointAt(0);
+  return code < 32 || (code >= 127 && code <= 159) ||
+    (code >= 0x202a && code <= 0x202e) ||
+    (code >= 0x2066 && code <= 0x2069);
+});
 
 export function r19CourseId(value) {
   if (typeof value !== "string" || !UUID.test(value) ||
@@ -21,7 +26,7 @@ export function r19PublicCourse(row) {
       !r19CourseId(row.id) ||
       typeof row.title !== "string" || row.title.length < 1 ||
       row.title.length > 160 || row.title.trim() !== row.title ||
-      /[\u0000-\u001f\u007f-\u009f]/u.test(row.title) || BIDI.test(row.title)) {
+      hasForbiddenTitleCodepoint(row.title)) {
     throw new Error("پاسخ عمومی دوره معتبر نیست.");
   }
   return { id: row.id, title: row.title };
