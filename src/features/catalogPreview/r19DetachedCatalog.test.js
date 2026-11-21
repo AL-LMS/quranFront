@@ -63,6 +63,63 @@ describe("R19 detached public catalog contract (not mounted)", () => {
     expect(() => r19PageUrl({ afterId: "91001" })).toThrow();
   });
 
+  it("rejects exact-shape payloads with contradictory HTTP status metadata", async () => {
+    const page = { items: [row(A)], next_after_id: null };
+    for (const status of [201, 204, 206, 299, 422, 503]) {
+      await expect(r19ListCourses({
+        transport: async () => ({ ...response(page, status), ok: true }),
+      })).rejects.toThrow("سرویس دوره‌ها در دسترس نیست.");
+    }
+    await expect(r19ListCourses({
+      transport: async () => ({ ...response(page, 200), ok: false }),
+    })).rejects.toThrow("سرویس دوره‌ها در دسترس نیست.");
+    await expect(r19ListCourses({
+      transport: async () => response({ detail: "private detail" }, 404),
+    })).rejects.toThrow("فهرست دوره‌ها در دسترس نیست.");
+    expect(await r19CourseDetail(A, {
+      transport: async () => response({ detail: "private detail" }, 404),
+    })).toBeNull();
+  });
+
+  it("preserves cancellation during JSON decoding and masks body errors", async () => {
+    const aborted = new Error("reader cancelled");
+    aborted.name = "AbortError";
+    await expect(r19ListCourses({
+      transport: async () => ({
+        ...response(null), json: async () => { throw aborted; },
+      }),
+    })).rejects.toBe(aborted);
+    await expect(r19ListCourses({
+      transport: async () => ({
+        ...response(null), json: async () => { throw new Error("private SQL details"); },
+      }),
+    })).rejects.toThrow("پاسخ سرویس معتبر نیست.");
+  });
+
+  it("rejects control, bidi and stricter local BOM title edge cases", () => {
+    for (const title of [
+      "درس\\u007f", "درس\\u009f", "درس\\u202a", "درس\\u2069",
+      "\\uFEFFدرس", "درس\\uFEFF", "درس\\n",
+    ]) {
+      expect(() => r19PublicCourse({ ...row(), title })).toThrow();
+    }
+    expect(r19PublicCourse({ ...row(), title: "درس📚" }).title).toBe("درس📚");
+  });
+
+  it("fails closed on inconsistent empty/full keyset page boundaries", () => {
+    expect(r19PublicPage({ items: [], next_after_id: null }, { afterId: A, limit: 1 }))
+      .toEqual({ items: [], next_after_id: null });
+    expect(() => r19PublicPage({ items: [], next_after_id: A }, { limit: 1 })).toThrow();
+    expect(() => r19PublicPage({ items: [row(A)], next_after_id: null }, { limit: 1 }))
+      .toThrow();
+    expect(() => r19PublicPage({ items: [row(A), row(B)], next_after_id: B }, { limit: 1 }))
+      .toThrow();
+    expect(() => r19PublicPage({ items: [row(A)], next_after_id: B }, { limit: 2 }))
+      .toThrow();
+    expect(() => r19PublicPage({ items: [row(A)], next_after_id: A }, { afterId: A, limit: 1 }))
+      .toThrow();
+  });
+
   it("uses injected transport only and omits credentials", async () => {
     const transport = vi.fn(async () => response({ items: [row(A)], next_after_id: null }));
     expect(await r19ListCourses({ transport })).toEqual({
