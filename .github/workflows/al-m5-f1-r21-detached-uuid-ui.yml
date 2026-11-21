@@ -64,7 +64,7 @@ jobs:
               entry.isDirectory() ? files(join(root, entry.name)) : [join(root, entry.name)]);
           }
           const forbidden = ['پیش‌نمایش آفلاین با شناسهٔ UUID', 'r21SyntheticCourses'];
-          for (const file of files('dist').filter((name) => /\.(js|html)$/.test(name))) {
+          for (const file of files('build').filter((name) => /\.(js|html)$/.test(name))) {
             const source = readFileSync(file, 'utf8');
             if (forbidden.some((token) => source.includes(token))) {
               throw new Error('Detached R21 content included in production bundle: ' + file);
