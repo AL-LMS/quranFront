@@ -98,8 +98,8 @@ describe("R19 detached public catalog contract (not mounted)", () => {
 
   it("rejects control, bidi and stricter local BOM title edge cases", () => {
     for (const title of [
-      "درس\\u007f", "درس\\u009f", "درس\\u202a", "درس\\u2069",
-      "\\uFEFFدرس", "درس\\uFEFF", "درس\\n",
+      "درس\u007f", "درس\u009f", "درس\u202a", "درس\u2069",
+      "\uFEFFدرس", "درس\uFEFF", "درس\n",
     ]) {
       expect(() => r19PublicCourse({ ...row(), title })).toThrow();
     }
