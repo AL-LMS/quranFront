@@ -1,7 +1,7 @@
 import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { r19CourseDetail } from "./r19DetachedCatalog";
+import { r19CourseDetail, r19CourseId } from "./r19DetachedCatalog";
 import R21DetachedCatalogPreview from "./R21DetachedCatalogPreview";
 import {
   createR21SyntheticTransport, r21SyntheticCourses,
@@ -26,7 +26,7 @@ describe("R21 synthetic UUID source (no real network)", () => {
     expect(r21SyntheticCourses).toHaveLength(25);
     expect(r21SyntheticCourses.every((row) =>
       Object.keys(row).sort().join(",") === "id,title" &&
-      /^[0-9a-f]{8}-[0-9a-f-]{18}[0-9a-f]{12}$/.test(row.id)
+      r19CourseId(row.id) === row.id
     )).toBe(true);
     expect(r21SyntheticCourses[0].title).toContain("۱");
     expect(r21SyntheticCourses.at(-1).title).toContain("۲۵");
