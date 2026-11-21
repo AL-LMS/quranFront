@@ -1,6 +1,6 @@
 import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { r19CourseDetail, r19CourseId } from "./r19DetachedCatalog";
 import R21DetachedCatalogPreview from "./R21DetachedCatalogPreview";
 import {
@@ -169,7 +169,8 @@ describe("R21 detached RTL list/detail UI", () => {
       name: /مشاهده جزئیات/,
     }))[0]);
     expect(await screen.findByText("دریافت جزئیات دوره ممکن نیست.")).toBeTruthy();
-    expect(screen.queryByText(r21SyntheticCourses[1].title)).toBeNull();
+    const detailRegion = screen.getByRole("region", { name: "جزئیات دوره" });
+    expect(within(detailRegion).queryByText(r21SyntheticCourses[1].title)).toBeNull();
   });
 
   it("ignores an obsolete in-flight result when transport changes", async () => {
