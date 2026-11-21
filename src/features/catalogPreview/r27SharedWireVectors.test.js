@@ -8,6 +8,14 @@ import vectors from "./r27SharedWireVectors.json";
 const rowsById = new Map(vectors.rows.map((row) => [row.id, row]));
 const firstId = vectors.rows[0].id;
 
+function attempt(callback) {
+  try {
+    return { accepted: true, value: callback() };
+  } catch {
+    return { accepted: false, value: null };
+  }
+}
+
 describe("R27 shared Python/JS detached wire vectors (synthetic-only)", () => {
   it("pins the backend baseline and contains no private DTO keys", () => {
     expect(Object.keys(vectors).sort()).toEqual([
@@ -33,7 +41,7 @@ describe("R27 shared Python/JS detached wire vectors (synthetic-only)", () => {
 
   it("matches R5 canonical UUID acceptance vectors", () => {
     for (const entry of vectors.uuid_cases) {
-      expect(r19CourseId(entry.value), entry.name)
+      expect(r19CourseId(entry.value))
         .toBe(entry.valid ? entry.value : null);
     }
   });
@@ -41,11 +49,9 @@ describe("R27 shared Python/JS detached wire vectors (synthetic-only)", () => {
   it("matches R5 Unicode title boundary vectors", () => {
     for (const entry of vectors.title_cases) {
       const candidate = { id: firstId, title: entry.value };
-      if (entry.valid) {
-        expect(r19PublicCourse(candidate), entry.name).toEqual(candidate);
-      } else {
-        expect(() => r19PublicCourse(candidate), entry.name).toThrow();
-      }
+      const result = attempt(() => r19PublicCourse(candidate));
+      expect([entry.name, result.accepted]).toEqual([entry.name, entry.valid]);
+      expect(result.value).toEqual(entry.valid ? candidate : null);
     }
   });
 
@@ -56,11 +62,9 @@ describe("R27 shared Python/JS detached wire vectors (synthetic-only)", () => {
         next_after_id: entry.next_after_id,
       };
       const options = { afterId: entry.after_id, limit: entry.limit };
-      if (entry.valid) {
-        expect(r19PublicPage(payload, options), entry.name).toEqual(payload);
-      } else {
-        expect(() => r19PublicPage(payload, options), entry.name).toThrow();
-      }
+      const result = attempt(() => r19PublicPage(payload, options));
+      expect([entry.name, result.accepted]).toEqual([entry.name, entry.valid]);
+      expect(result.value).toEqual(entry.valid ? payload : null);
     }
   });
 
@@ -68,11 +72,11 @@ describe("R27 shared Python/JS detached wire vectors (synthetic-only)", () => {
     for (const entry of vectors.page_cases.filter((item) => item.valid)) {
       const path = r19PageUrl({ afterId: entry.after_id, limit: entry.limit });
       const url = new URL(path, "https://synthetic.invalid");
-      expect(url.pathname, entry.name).toBe("/api/v2/courses");
-      expect([...url.searchParams.keys()], entry.name)
+      expect(url.pathname).toBe("/api/v2/courses");
+      expect([...url.searchParams.keys()])
         .toEqual(entry.after_id === null ? ["limit"] : ["limit", "after_id"]);
-      expect(url.searchParams.get("limit"), entry.name).toBe(String(entry.limit));
-      expect(url.searchParams.get("after_id"), entry.name).toBe(entry.after_id);
+      expect(url.searchParams.get("limit")).toBe(String(entry.limit));
+      expect(url.searchParams.get("after_id")).toBe(entry.after_id);
     }
   });
 });
