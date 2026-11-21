@@ -31,6 +31,19 @@ describe("R19 detached public catalog contract (not mounted)", () => {
     expect(() => r19PublicCourse({ ...row(), title: "bad\n" })).toThrow();
   });
 
+  it("matches backend Python codepoint limits for astral Unicode titles", () => {
+    // Python len(title) counts Unicode codepoints; JS string.length counts UTF-16 units.
+    const maxAstral = "📚".repeat(160);
+    const overAstral = "📚".repeat(161);
+    const maxMixed = "درس" + "📚".repeat(157);
+    expect(maxAstral.length).toBe(320);
+    expect(Array.from(maxAstral)).toHaveLength(160);
+    expect(r19PublicCourse({ ...row(), title: maxAstral }).title).toBe(maxAstral);
+    expect(r19PublicCourse({ ...row(), title: maxMixed }).title).toBe(maxMixed);
+    expect(() => r19PublicCourse({ ...row(), title: overAstral })).toThrow();
+    expect(() => r19PublicCourse({ ...row(), title: "" })).toThrow();
+  });
+
   it("requires ordered keyset pages and exact backend continuation semantics", () => {
     expect(r19PublicPage({ items: [row(A), row(B)], next_after_id: B }, { limit: 2 }))
       .toEqual({ items: [row(A), row(B)], next_after_id: B });
