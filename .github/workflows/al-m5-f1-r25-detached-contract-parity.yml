@@ -6,6 +6,9 @@ on:
   push:
     branches:
       - feat/al-m5-f1-r25-detached-unicode-contract-parity-20261121
+  pull_request:
+    branches:
+      - feat/al-m5-f1-r21-detached-uuid-catalog-ui-20261121
   workflow_dispatch:
 
 permissions:
