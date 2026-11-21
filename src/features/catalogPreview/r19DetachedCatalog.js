@@ -99,5 +99,8 @@ export async function r19ListCourses({ afterId = null, limit = R19_PAGE_SIZE, tr
 export async function r19CourseDetail(id, { transport, signal } = {}) {
   if (!r19CourseId(id)) throw new Error("شناسهٔ دوره معتبر نیست.");
   const payload = await r19GetJson("/api/v2/courses/" + id, { transport, signal });
-  return payload === null ? null : r19PublicCourse(payload);
+  if (payload === null) return null;
+  const course = r19PublicCourse(payload);
+  if (course.id !== id) throw new Error("پاسخ عمومی دوره معتبر نیست.");
+  return course;
 }
