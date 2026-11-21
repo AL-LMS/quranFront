@@ -122,10 +122,10 @@ describe("R21 detached RTL list/detail UI", () => {
       name: /مشاهده جزئیات/,
     });
     fireEvent.click(buttons[0]);
-    await waitFor(() => {
-      expect(screen.getByRole("region", { name: "جزئیات دوره" })).toBeTruthy();
-      expect(screen.getAllByText(r21SyntheticCourses[0].title)).toHaveLength(2);
-    });
+    expect(await screen.findByRole("region", { name: "جزئیات دوره" })).toBeTruthy();
+    await waitFor(() =>
+      expect(screen.getAllByText(r21SyntheticCourses[0].title)).toHaveLength(2)
+    );
     expect(transport.mock.calls.some(([path]) =>
       path === "/api/v2/courses/" + r21SyntheticCourses[0].id
     )).toBe(true);
