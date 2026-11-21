@@ -24,7 +24,7 @@ function invalidRequest() {
 
 export function createR21SyntheticTransport(source = r21SyntheticCourses) {
   if (!Array.isArray(source)) throw new Error("دادهٔ آزمایشی معتبر نیست.");
-  const rows = source.map(r19PublicCourse).sort((a, b) => a.id.localeCompare(b.id));
+  const rows = source.map(r19PublicCourse).sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
   if (rows.some((item, index) => index && rows[index - 1].id === item.id)) {
     throw new Error("شناسهٔ تکراری در دادهٔ آزمایشی.");
   }
