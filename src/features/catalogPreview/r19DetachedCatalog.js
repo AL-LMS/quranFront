@@ -82,10 +82,14 @@ export async function r19GetJson(path, { transport, signal } = {}) {
     throw new Error("اتصال به کاتالوگ برقرار نشد.");
   }
   if (response?.status === 404) return null;
-  if (!response?.ok) throw new Error("سرویس دوره‌ها در دسترس نیست.");
+  // R19 detached backend returns exactly 200 on success; never trust ok alone.
+  if (response?.status !== 200 || response?.ok !== true) {
+    throw new Error("سرویس دوره‌ها در دسترس نیست.");
+  }
   try {
     return await response.json();
-  } catch {
+  } catch (error) {
+    if (error?.name === "AbortError") throw error;
     throw new Error("پاسخ سرویس معتبر نیست.");
   }
 }
