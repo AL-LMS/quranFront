@@ -24,8 +24,8 @@ export function r19PublicCourse(row) {
   if (!row || typeof row !== "object" || Array.isArray(row) ||
       Object.keys(row).sort().join(",") !== "id,title" ||
       !r19CourseId(row.id) ||
-      typeof row.title !== "string" || row.title.length < 1 ||
-      row.title.length > 160 || row.title.trim() !== row.title ||
+      typeof row.title !== "string" || Array.from(row.title).length < 1 ||
+      Array.from(row.title).length > 160 || row.title.trim() !== row.title ||
       hasForbiddenTitleCodepoint(row.title)) {
     throw new Error("پاسخ عمومی دوره معتبر نیست.");
   }
