@@ -156,6 +156,24 @@ describe("R21 detached RTL list/detail UI", () => {
     expect(screen.queryByRole("button", { name: /مشاهده جزئیات/ })).toBeNull();
   });
 
+  it("never displays an apparently ok detail body from HTTP 503", async () => {
+    const fake = createR21SyntheticTransport();
+    const transport = async (path, options) =>
+      path.startsWith("/api/v2/courses/") ? {
+        ...reply(503, {
+          id: r21SyntheticCourses[0].id,
+          title: "PRIVATE_BACKEND_TITLE",
+        }),
+        ok: true,
+      } : fake(path, options);
+    show(transport);
+    fireEvent.click((await screen.findAllByRole("button", {
+      name: /مشاهده جزئیات/,
+    }))[0]);
+    expect(await screen.findByText("دریافت جزئیات دوره ممکن نیست.")).toBeTruthy();
+    expect(screen.queryByText("PRIVATE_BACKEND_TITLE")).toBeNull();
+  });
+
   it("rejects a detail body whose id differs from the requested UUID", async () => {
     await expect(r19CourseDetail(r21SyntheticCourses[0].id, {
       transport: async () => reply(200, r21SyntheticCourses[1]),
