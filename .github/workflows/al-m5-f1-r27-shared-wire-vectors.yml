@@ -1,0 +1,76 @@
+name: AL-M5 F1-R27 shared synthetic wire vectors
+
+# Not a production preview or backend integration. No DB, API, credentials,
+# Docker, G9, real users, merge or deployment.
+on:
+  push:
+    branches:
+      - test/al-m5-f1-r27-shared-wire-vectors-20261121
+  pull_request:
+    branches:
+      - feat/al-m5-f1-r26-detached-response-hardening-20261121
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shared-wire-vectors-offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install exact dependency lock
+        run: npm ci --ignore-scripts
+      - name: Run all frontend tests including R27 shared Python contract corpus
+        run: npm test
+      - name: Typecheck
+        run: npm run typecheck
+      - name: ESLint (inherited warning debt is tracked separately)
+        run: npm run lint
+      - name: Build existing production bundle
+        run: npm run build
+      - name: Prove detached UI is not imported by an active source module
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          import { execFileSync } from 'node:child_process';
+          const allow = new Set([
+            'src/features/catalogPreview/R21DetachedCatalogPreview.js',
+            'src/features/catalogPreview/r21SyntheticCatalogTransport.js',
+            'src/features/catalogPreview/r21DetachedCatalog.test.js',
+          ]);
+          const files = execFileSync('git', ['ls-files', 'src'], { encoding: 'utf8' })
+            .trim().split('\n').filter((path) => path.endsWith('.js') && !allow.has(path));
+          const importers = files.filter((path) => {
+            const source = readFileSync(path, 'utf8');
+            return source.includes('R21DetachedCatalogPreview') ||
+              source.includes('r21SyntheticCatalogTransport');
+          });
+          if (importers.length) {
+            throw new Error('R21 unexpectedly imported outside detached tests: ' + importers.join(', '));
+          }
+          NODE
+      - name: Prove synthetic detached catalog UI absent from production output
+        run: |
+          node --input-type=module <<'NODE'
+          import { readdirSync, readFileSync } from 'node:fs';
+          import { join } from 'node:path';
+          function files(root) {
+            return readdirSync(root, { withFileTypes: true }).flatMap((entry) =>
+              entry.isDirectory() ? files(join(root, entry.name)) : [join(root, entry.name)]);
+          }
+          const forbidden = ['پیش‌نمایش آفلاین با شناسهٔ UUID', 'r21SyntheticCourses'];
+          for (const file of files('build').filter((name) => /\.(js|html)$/.test(name))) {
+            const source = readFileSync(file, 'utf8');
+            if (forbidden.some((token) => source.includes(token))) {
+              throw new Error('Detached R21 content included in production bundle: ' + file);
+            }
+          }
+          NODE
