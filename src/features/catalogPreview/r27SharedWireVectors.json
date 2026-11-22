@@ -105,6 +105,31 @@
       "name": "line_break",
       "value": "درس\n",
       "valid": false
+    },
+    {
+      "name": "leading_feff",
+      "value": "\ufeffدرس",
+      "valid": false
+    },
+    {
+      "name": "trailing_feff",
+      "value": "درس\ufeff",
+      "valid": false
+    },
+    {
+      "name": "embedded_feff",
+      "value": "در\ufeffس",
+      "valid": false
+    },
+    {
+      "name": "leading_nbsp",
+      "value": "\u00a0درس",
+      "valid": false
+    },
+    {
+      "name": "trailing_ideographic_space",
+      "value": "درس\u3000",
+      "valid": false
     }
   ],
   "page_cases": [
@@ -203,3 +228,4 @@
     }
   ]
 }
+
