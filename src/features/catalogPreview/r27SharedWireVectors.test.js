@@ -28,7 +28,7 @@ describe("R27 shared Python/JS detached wire vectors (synthetic-only)", () => {
     });
     expect([
       vectors.uuid_cases.length, vectors.title_cases.length, vectors.page_cases.length,
-    ]).toEqual([7, 10, 9]);
+    ]).toEqual([7, 15, 9]);
     for (const row of vectors.rows) {
       expect(Object.keys(row).sort()).toEqual(["id", "title"]);
       expect(r19PublicCourse(row)).toEqual(row);
