@@ -5,9 +5,10 @@
  */
 export const R19_PAGE_SIZE = 12;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+const TITLE_BOUNDARY_WHITESPACE = /^[\u0009-\u000d\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]$/u;
 const hasForbiddenTitleCodepoint = (title) => Array.from(title).some((character) => {
   const code = character.codePointAt(0);
-  return code < 32 || (code >= 127 && code <= 159) ||
+  return code === 0xfeff || code < 32 || (code >= 127 && code <= 159) ||
     (code >= 0x202a && code <= 0x202e) ||
     (code >= 0x2066 && code <= 0x2069);
 });
@@ -25,7 +26,8 @@ export function r19PublicCourse(row) {
       Object.keys(row).sort().join(",") !== "id,title" ||
       !r19CourseId(row.id) ||
       typeof row.title !== "string" || Array.from(row.title).length < 1 ||
-      Array.from(row.title).length > 160 || row.title.trim() !== row.title ||
+      Array.from(row.title).length > 160 || TITLE_BOUNDARY_WHITESPACE.test(row.title[0]) ||
+      TITLE_BOUNDARY_WHITESPACE.test(row.title[row.title.length - 1]) ||
       hasForbiddenTitleCodepoint(row.title)) {
     throw new Error("پاسخ عمومی دوره معتبر نیست.");
   }
